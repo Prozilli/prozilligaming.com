@@ -1,26 +1,116 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-brand-red: #910000;
+  --color-brand-red-glow: #c41000;
+  --color-brand-navy: #001c3f;
+  --color-brand-gold: #c4a265;
+  --color-brand-silver: #949d9f;
+  --color-brand-dark: #0a0a0a;
+  --color-brand-darker: #050505;
+  --color-background: #0a0a0a;
+  --color-foreground: #ededed;
+  --color-muted: #888888;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--color-brand-red);
+  color: white;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Gaming gradient — heavier red glow */
+.gradient-gaming {
+  background: radial-gradient(ellipse at 30% 20%, rgba(145, 0, 0, 0.25) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(0, 28, 63, 0.3) 0%, transparent 50%),
+    var(--color-brand-dark);
+}
+
+/* Red glow text */
+.text-glow-red {
+  text-shadow: 0 0 40px rgba(145, 0, 0, 0.5), 0 0 80px rgba(145, 0, 0, 0.2);
+}
+
+/* Gold shimmer */
+.text-shimmer {
+  background: linear-gradient(135deg, var(--color-brand-gold) 0%, #e8d5a8 50%, var(--color-brand-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glassmorphism card */
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-strong {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Red border glow on hover */
+.glow-border:hover {
+  border-color: rgba(145, 0, 0, 0.4);
+  box-shadow: 0 0 20px rgba(145, 0, 0, 0.15), inset 0 0 20px rgba(145, 0, 0, 0.05);
+}
+
+/* Live pulse */
+@keyframes livePulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.animate-live-pulse {
+  animation: livePulse 2s ease-in-out infinite;
+}
+
+/* Fade in */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-delay-100 { animation-delay: 0.1s; }
+.animate-delay-200 { animation-delay: 0.2s; }
+.animate-delay-300 { animation-delay: 0.3s; }
+.animate-delay-400 { animation-delay: 0.4s; }
+
+/* Scan line overlay (subtle) */
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+  pointer-events: none;
 }

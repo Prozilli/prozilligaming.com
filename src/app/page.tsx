@@ -1,103 +1,129 @@
 import Image from "next/image";
+import Link from "next/link";
+
+const PLATFORMS = [
+  { name: "YouTube", href: "https://youtube.com/@prozilligaming" },
+  { name: "Twitch", href: "https://twitch.tv/ProzilliGaming" },
+  { name: "Kick", href: "https://kick.com/ProzilliGaming" },
+  { name: "Trovo", href: "https://trovo.live/ProzilliGaming" },
+  { name: "Facebook", href: "https://facebook.com/ProzilliGaming" },
+];
+
+const ECOSYSTEM = [
+  {
+    title: "Watch Live",
+    description: "Catch the stream on any platform. Multiplatform, multicam, multivibes.",
+    href: "/watch",
+  },
+  {
+    title: "Merch Store",
+    description: "Official Prozilli Gaming gear. Rep the brand.",
+    href: "/shop",
+  },
+  {
+    title: "ZO Syndicate",
+    description: "Cinematic FiveM roleplay. Where stories are born.",
+    href: "/zo-syndicate",
+  },
+  {
+    title: "Community",
+    description: "Join the Discord. Be part of something bigger.",
+    href: "https://discord.gg/prozillihq",
+  },
+];
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      {/* Hero */}
+      <section className="gradient-gaming scanlines relative flex min-h-[90vh] flex-col items-center justify-center px-6 text-center">
+        <div className="relative z-10">
+          <Image
+            src="/logos/ProzilliGaming_Logo.svg"
+            alt="Prozilli Gaming"
+            width={120}
+            height={120}
+            className="animate-fade-in-up mx-auto mb-8 h-24 w-24 md:h-32 md:w-32"
+            priority
+          />
+          <h1 className="animate-fade-in-up animate-delay-100 text-glow-red text-5xl font-bold tracking-tight md:text-7xl">
+            PROZILLI<span className="text-brand-red">GAMING</span>
+          </h1>
+          <p className="animate-fade-in-up animate-delay-200 mt-6 text-lg tracking-[0.2em] uppercase text-brand-silver md:text-xl">
+            Live. Create. Dominate.
+          </p>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          {/* Platform buttons */}
+          <div className="animate-fade-in-up animate-delay-300 mt-10 flex flex-wrap justify-center gap-3">
+            {PLATFORMS.map((p) => (
+              <a
+                key={p.name}
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass glow-border rounded-lg px-5 py-2.5 text-sm font-medium text-white transition-all hover:text-brand-red"
+              >
+                {p.name}
+              </a>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="animate-fade-in-up animate-delay-400 mt-8 flex flex-wrap justify-center gap-4">
+            <Link
+              href="/watch"
+              className="rounded-sm bg-brand-red px-8 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-brand-red-glow"
+            >
+              Watch Now
+            </Link>
+            <Link
+              href="/support"
+              className="rounded-sm border border-brand-gold/30 px-8 py-3 text-sm font-medium tracking-wide text-brand-gold transition-colors hover:bg-brand-gold/10"
+            >
+              Support
+            </Link>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </section>
+
+      {/* Ecosystem Grid */}
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <h2 className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">
+          The Ecosystem
+        </h2>
+        <p className="mx-auto mb-16 max-w-2xl text-center text-muted">
+          More than a stream. An entire creator ecosystem powered by cinema-grade production.
+        </p>
+        <div className="grid gap-6 md:grid-cols-2">
+          {ECOSYSTEM.map((item) => (
+            <Link
+              key={item.title}
+              href={item.href}
+              className="glass glow-border group rounded-lg p-8 transition-all"
+            >
+              <h3 className="text-lg font-semibold tracking-wide text-white transition-colors group-hover:text-brand-red">
+                {item.title}
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted">
+                {item.description}
+              </p>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* PRISMAI Powered */}
+      <section className="border-y border-white/5 bg-brand-darker">
+        <div className="mx-auto flex max-w-7xl flex-col items-center px-6 py-16 text-center">
+          <span className="mb-3 inline-block rounded-full border border-brand-gold/20 bg-brand-gold/5 px-4 py-1 text-xs font-medium tracking-wider text-brand-gold">
+            POWERED BY PRISMAI
+          </span>
+          <p className="max-w-lg text-sm leading-relaxed text-muted">
+            Every chat message, every viewer stat, every interaction — unified
+            by PRISMAI, our cross-platform intelligence engine.
+          </p>
+        </div>
+      </section>
+    </>
   );
 }
