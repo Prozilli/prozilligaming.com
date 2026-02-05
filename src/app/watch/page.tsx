@@ -32,7 +32,31 @@ export default function WatchPage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-gaming scanlines relative flex flex-col items-center px-6 pt-20 pb-12 text-center">
+      <section className="gradient-gaming scanlines relative flex flex-col items-center overflow-hidden px-6 pt-20 pb-12 text-center">
+        {/* Cinematic smoke layers */}
+        <div className="cinematic-smoke" />
+        {/* Film grain texture */}
+        <div className="film-grain" />
+        {/* Vignette */}
+        <div className="vignette" />
+        {/* Fireflies */}
+        <div className="fireflies">
+          <span className="f1" />
+          <span className="f2" />
+          <span className="f3" />
+          <span className="f4" />
+          <span className="f5" />
+          <span className="f6" />
+        </div>
+        {/* Hero background image */}
+        <div
+          className="hero-image-overlay"
+          style={{
+            backgroundImage: `url("/images/heroes/hero-watch.png")`,
+            opacity: 0.3,
+          }}
+        />
+
         <div className="relative z-10">
           <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-red/30 bg-brand-red/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-brand-red">
             <span className="animate-live-pulse h-2 w-2 rounded-full bg-brand-red" />

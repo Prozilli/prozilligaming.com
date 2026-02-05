@@ -42,16 +42,31 @@ export default function ZOSyndicatePage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
-        {/* Red/Navy gradient background */}
+      <section className="gradient-gaming scanlines relative flex min-h-[70vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
+        {/* Cinematic smoke layers */}
+        <div className="cinematic-smoke" />
+        {/* Film grain texture */}
+        <div className="film-grain" />
+        {/* Vignette */}
+        <div className="vignette" />
+        {/* Fireflies */}
+        <div className="fireflies">
+          <span className="f1" />
+          <span className="f2" />
+          <span className="f3" />
+          <span className="f4" />
+          <span className="f5" />
+          <span className="f6" />
+        </div>
+        {/* Hero background image */}
         <div
-          className="absolute inset-0"
+          className="hero-image-overlay"
           style={{
-            background:
-              "radial-gradient(ellipse at 40% 30%, rgba(145, 0, 0, 0.35) 0%, transparent 50%), radial-gradient(ellipse at 60% 70%, rgba(0, 28, 63, 0.5) 0%, transparent 50%), #050505",
+            backgroundImage: `url("/images/heroes/hero-zo.png")`,
+            opacity: 0.4,
           }}
         />
-        <div className="scanlines absolute inset-0" />
+
         <div className="relative z-10">
           <span className="animate-fade-in-up mb-6 inline-block rounded-full border border-brand-red/30 bg-brand-red/10 px-5 py-1.5 text-xs font-medium uppercase tracking-[0.2em] text-brand-red">
             FiveM Roleplay Server

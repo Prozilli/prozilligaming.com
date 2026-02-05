@@ -18,7 +18,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-brand-dark/90 backdrop-blur-xl">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-brand-navy/30 bg-brand-dark/90 backdrop-blur-2xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3">

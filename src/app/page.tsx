@@ -36,14 +36,42 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-gaming scanlines relative flex min-h-[90vh] flex-col items-center justify-center px-6 text-center">
+      <section className="gradient-gaming scanlines relative flex min-h-[90vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
+        {/* Cinematic smoke layers */}
+        <div className="cinematic-smoke" />
+
+        {/* Film grain texture */}
+        <div className="film-grain" />
+
+        {/* Vignette */}
+        <div className="vignette" />
+
+        {/* Fireflies */}
+        <div className="fireflies">
+          <span className="f1" />
+          <span className="f2" />
+          <span className="f3" />
+          <span className="f4" />
+          <span className="f5" />
+          <span className="f6" />
+        </div>
+
+        {/* Hero background image */}
+        <div
+          className="hero-image-overlay"
+          style={{
+            backgroundImage: `url("/images/heroes/hero-home.png")`,
+            opacity: 0.35,
+          }}
+        />
+
         <div className="relative z-10">
           <Image
             src="/logos/ProzilliGaming_Logo.svg"
             alt="Prozilli Gaming"
             width={120}
             height={120}
-            className="animate-fade-in-up mx-auto mb-8 h-24 w-24 md:h-32 md:w-32"
+            className="animate-fade-in-up logo-float mx-auto mb-8 h-24 w-24 md:h-32 md:w-32"
             priority
           />
           <h1 className="animate-fade-in-up animate-delay-100 text-glow-red text-5xl font-bold tracking-tight md:text-7xl">
@@ -113,8 +141,11 @@ export default function Home() {
       </section>
 
       {/* PRISMAI Powered */}
-      <section className="border-y border-white/5 bg-brand-darker">
-        <div className="mx-auto flex max-w-7xl flex-col items-center px-6 py-16 text-center">
+      <section className="relative border-y border-white/5 bg-brand-darker overflow-hidden">
+        {/* Subtle smoke in this section */}
+        <div className="cinematic-smoke opacity-50" />
+
+        <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-6 py-16 text-center">
           <span className="mb-3 inline-block rounded-full border border-brand-gold/20 bg-brand-gold/5 px-4 py-1 text-xs font-medium tracking-wider text-brand-gold">
             POWERED BY PRISMAI
           </span>

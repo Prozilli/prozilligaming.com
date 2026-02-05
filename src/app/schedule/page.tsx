@@ -60,7 +60,31 @@ export default function SchedulePage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-gaming scanlines relative flex flex-col items-center px-6 pt-20 pb-12 text-center">
+      <section className="gradient-gaming scanlines relative flex flex-col items-center overflow-hidden px-6 pt-20 pb-12 text-center">
+        {/* Cinematic smoke layers */}
+        <div className="cinematic-smoke" />
+        {/* Film grain texture */}
+        <div className="film-grain" />
+        {/* Vignette */}
+        <div className="vignette" />
+        {/* Fireflies */}
+        <div className="fireflies">
+          <span className="f1" />
+          <span className="f2" />
+          <span className="f3" />
+          <span className="f4" />
+          <span className="f5" />
+          <span className="f6" />
+        </div>
+        {/* Hero background image */}
+        <div
+          className="hero-image-overlay"
+          style={{
+            backgroundImage: `url("/images/heroes/hero-schedule.png")`,
+            opacity: 0.3,
+          }}
+        />
+
         <div className="relative z-10">
           <h1 className="animate-fade-in-up text-glow-red text-4xl font-bold tracking-tight md:text-6xl">
             STREAM <span className="text-brand-red">SCHEDULE</span>
