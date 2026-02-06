@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useTheme } from "./ThemeProvider";
+import CartButton from "./shop/CartButton";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -102,9 +103,11 @@ export default function Navbar() {
           )}
           {/* Theme Toggle */}
           {mounted && <ThemeToggle />}
+          {/* Cart Button */}
+          {mounted && <CartButton />}
         </div>
 
-        {/* Mobile: Live badge + Theme toggle + Menu toggle */}
+        {/* Mobile: Live badge + Theme toggle + Cart + Menu toggle */}
         <div className="flex items-center gap-2 lg:hidden">
           {mounted && isLive && (
             <Link
@@ -116,6 +119,7 @@ export default function Navbar() {
             </Link>
           )}
           {mounted && <ThemeToggle />}
+          {mounted && <CartButton />}
           <button
             onClick={() => setOpen(!open)}
             className="flex flex-col gap-1.5 p-1"
