@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import NextStreamCountdown from "@/components/NextStreamCountdown";
 
 const PLATFORMS = [
   { name: "YouTube", href: "https://youtube.com/@prozilligaming" },
@@ -36,7 +37,7 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-gaming scanlines relative flex min-h-[90vh] flex-col items-center justify-center overflow-hidden px-6 text-center">
+      <section className="gradient-gaming scanlines relative flex min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] flex-col items-center justify-center overflow-hidden px-4 sm:px-6 text-center">
         {/* Cinematic smoke layers */}
         <div className="cinematic-smoke" />
 
@@ -71,25 +72,25 @@ export default function Home() {
             alt="Prozilli Gaming"
             width={120}
             height={120}
-            className="animate-fade-in-up logo-float mx-auto mb-8 h-24 w-24 md:h-32 md:w-32"
+            className="animate-fade-in-up logo-float mx-auto mb-6 sm:mb-8 h-20 w-20 sm:h-24 sm:w-24 md:h-32 md:w-32"
             priority
           />
-          <h1 className="animate-fade-in-up animate-delay-100 text-glow-red text-5xl font-bold tracking-tight md:text-7xl">
+          <h1 className="animate-fade-in-up animate-delay-100 text-glow-red text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
             PROZILLI<span className="text-brand-red">GAMING</span>
           </h1>
-          <p className="animate-fade-in-up animate-delay-200 mt-6 text-lg tracking-[0.2em] uppercase text-brand-silver md:text-xl">
+          <p className="animate-fade-in-up animate-delay-200 mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl tracking-[0.1em] sm:tracking-[0.2em] uppercase text-brand-silver">
             Live. Create. Dominate.
           </p>
 
           {/* Platform buttons */}
-          <div className="animate-fade-in-up animate-delay-300 mt-10 flex flex-wrap justify-center gap-3">
+          <div className="animate-fade-in-up animate-delay-300 mt-6 sm:mt-10 flex flex-wrap justify-center gap-2 sm:gap-3">
             {PLATFORMS.map((p) => (
               <a
                 key={p.name}
                 href={p.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass glow-border rounded-lg px-5 py-2.5 text-sm font-medium text-white transition-all hover:text-brand-red"
+                className="glass glow-border rounded-lg px-3 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-medium text-white transition-all hover:text-brand-red"
               >
                 {p.name}
               </a>
@@ -97,37 +98,40 @@ export default function Home() {
           </div>
 
           {/* CTA */}
-          <div className="animate-fade-in-up animate-delay-400 mt-8 flex flex-wrap justify-center gap-4">
+          <div className="animate-fade-in-up animate-delay-400 mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
             <Link
               href="/watch"
-              className="rounded-sm bg-brand-red px-8 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-brand-red-glow"
+              className="rounded-sm bg-brand-red px-6 py-2.5 sm:px-8 sm:py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-brand-red-glow"
             >
               Watch Now
             </Link>
             <Link
               href="/support"
-              className="rounded-sm border border-brand-gold/30 px-8 py-3 text-sm font-medium tracking-wide text-brand-gold transition-colors hover:bg-brand-gold/10"
+              className="rounded-sm border border-brand-gold/30 px-6 py-2.5 sm:px-8 sm:py-3 text-sm font-medium tracking-wide text-brand-gold transition-colors hover:bg-brand-gold/10"
             >
               Support
             </Link>
           </div>
+
+          {/* Next Stream Countdown */}
+          <NextStreamCountdown />
         </div>
       </section>
 
       {/* Ecosystem Grid */}
-      <section className="mx-auto max-w-7xl px-6 py-24">
-        <h2 className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
+        <h2 className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-brand-red">
           The Ecosystem
         </h2>
-        <p className="mx-auto mb-16 max-w-2xl text-center text-muted">
+        <p className="mx-auto mb-8 sm:mb-12 md:mb-16 max-w-2xl text-center text-sm sm:text-base text-muted">
           More than a stream. An entire creator ecosystem powered by cinema-grade production.
         </p>
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2">
           {ECOSYSTEM.map((item) => (
             <Link
               key={item.title}
               href={item.href}
-              className="glass glow-border group rounded-lg p-8 transition-all"
+              className="glass glow-border group rounded-lg p-5 sm:p-6 md:p-8 transition-all"
             >
               <h3 className="text-lg font-semibold tracking-wide text-white transition-colors group-hover:text-brand-red">
                 {item.title}
@@ -145,7 +149,7 @@ export default function Home() {
         {/* Subtle smoke in this section */}
         <div className="cinematic-smoke opacity-50" />
 
-        <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-6 py-16 text-center">
+        <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-4 sm:px-6 py-10 sm:py-12 md:py-16 text-center">
           <span className="mb-3 inline-block rounded-full border border-brand-gold/20 bg-brand-gold/5 px-4 py-1 text-xs font-medium tracking-wider text-brand-gold">
             POWERED BY PRISMAI
           </span>
