@@ -5,8 +5,10 @@ import Link from "next/link";
 
 // Payment/support links
 const SUPPORT_LINKS = {
-  // Fourthwall store (tips/memberships configured in Fourthwall dashboard)
-  fourthwall: "https://prozilli-shop.fourthwall.com",
+  // Fourthwall memberships page
+  memberships: "https://prozilli-shop.fourthwall.com/supporters",
+  // Fourthwall donate page (enable in dashboard)
+  donate: "https://prozilli-shop.fourthwall.com/donate",
   // PayPal for direct tips
   paypal: "https://paypal.me/prozilli",
   // Platform subscriptions
@@ -181,7 +183,7 @@ export default function SupportPage() {
             {/* Payment Options */}
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
               <a
-                href={SUPPORT_LINKS.fourthwall}
+                href={SUPPORT_LINKS.donate}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-3 rounded-lg bg-brand-red px-6 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white transition-all hover:bg-brand-red/90 active:scale-[0.98]"
@@ -189,7 +191,7 @@ export default function SupportPage() {
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                Support on Fourthwall
+                Tip on Fourthwall
               </a>
               <a
                 href={SUPPORT_LINKS.paypal}
@@ -257,7 +259,7 @@ export default function SupportPage() {
                   ))}
                 </ul>
                 <a
-                  href={SUPPORT_LINKS.fourthwall}
+                  href={SUPPORT_LINKS.memberships}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`mt-8 block w-full rounded-sm py-3 text-sm font-medium tracking-wide transition-all ${colors.button}`}
