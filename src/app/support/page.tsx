@@ -1,38 +1,67 @@
-import type { Metadata } from "next";
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
-export const metadata: Metadata = {
-  title: "Support",
+// Payment/support links
+const SUPPORT_LINKS = {
+  // Fourthwall handles tips and memberships
+  fourthwallTip: "https://prozilli-shop.fourthwall.com/support",
+  fourthwallMembership: "https://prozilli-shop.fourthwall.com/memberships",
+  // PayPal for direct tips
+  paypal: "https://paypal.me/prozilli",
+  // Platform subscriptions
+  twitch: "https://twitch.tv/prozilligaming/subscribe",
+  youtube: "https://www.youtube.com/@prozilligaming/join",
 };
 
-const SUPPORT_TIERS = [
+// Quick tip amounts (for display)
+const QUICK_TIP_AMOUNTS = [5, 10, 25, 50, 100];
+
+// Membership tiers
+const MEMBERSHIP_TIERS = [
   {
-    name: "One-Time Support",
-    description: "Send a one-time donation to support the stream. Every bit helps fuel the production.",
-    options: [
-      { amount: "$5", label: "Coffee" },
-      { amount: "$10", label: "Snacks" },
-      { amount: "$25", label: "Gear Fund" },
-      { amount: "Custom", label: "Your Choice" },
+    name: "Supporter",
+    price: 5,
+    color: "silver",
+    perks: [
+      "Exclusive Discord role",
+      "Supporter badge on stream",
+      "Access to supporter chat",
     ],
-    accent: "brand-gold",
+    popular: false,
   },
   {
-    name: "Monthly Supporter",
-    description: "Become a recurring supporter and unlock exclusive perks, early access, and community recognition.",
-    tiers: [
-      { name: "Supporter", price: "$5/mo", perks: ["Discord role", "Supporter badge on stream"] },
-      { name: "VIP", price: "$15/mo", perks: ["All Supporter perks", "Early access to videos", "Monthly shoutout"] },
-      { name: "Producer", price: "$50/mo", perks: ["All VIP perks", "Credits in productions", "Direct Discord access"] },
+    name: "VIP",
+    price: 15,
+    color: "red",
+    perks: [
+      "All Supporter perks",
+      "Early access to videos",
+      "Monthly stream shoutout",
+      "Behind-the-scenes content",
     ],
-    accent: "brand-red",
+    popular: true,
+  },
+  {
+    name: "Producer",
+    price: 50,
+    color: "gold",
+    perks: [
+      "All VIP perks",
+      "Credits in productions",
+      "Direct Discord access",
+      "Input on future content",
+    ],
+    popular: false,
   },
 ];
 
 const DONATION_GOALS = [
   {
     title: "New Camera Lens",
-    description: "Cinema-grade glass for higher production value on stream and short films.",
+    description:
+      "Cinema-grade glass for higher production value on stream and short films.",
     current: 350,
     goal: 1000,
   },
@@ -51,10 +80,43 @@ const DONATION_GOALS = [
 ];
 
 export default function SupportPage() {
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+
+  const getColorClasses = (color: string) => {
+    switch (color) {
+      case "silver":
+        return {
+          badge: "border-brand-silver/30 bg-brand-silver/10 text-brand-silver",
+          dot: "bg-brand-silver",
+          button:
+            "border border-brand-silver/30 text-brand-silver hover:bg-brand-silver/10",
+        };
+      case "red":
+        return {
+          badge: "border-brand-red/30 bg-brand-red/10 text-brand-red",
+          dot: "bg-brand-red",
+          button: "bg-brand-red text-white hover:bg-brand-red-glow",
+        };
+      case "gold":
+        return {
+          badge: "border-brand-gold/30 bg-brand-gold/10 text-brand-gold",
+          dot: "bg-brand-gold",
+          button:
+            "border border-brand-gold/30 text-brand-gold hover:bg-brand-gold/10",
+        };
+      default:
+        return {
+          badge: "border-white/30 bg-white/10 text-white",
+          dot: "bg-white",
+          button: "border border-white/30 text-white hover:bg-white/10",
+        };
+    }
+  };
+
   return (
     <>
       {/* Hero */}
-      <section className="gradient-gaming scanlines relative flex flex-col items-center overflow-hidden px-6 pt-20 pb-12 text-center">
+      <section className="gradient-gaming scanlines relative flex flex-col items-center overflow-hidden px-4 sm:px-6 pt-16 sm:pt-20 pb-10 sm:pb-12 text-center">
         {/* Cinematic smoke layers */}
         <div className="cinematic-smoke" />
         {/* Film grain texture */}
@@ -80,169 +142,180 @@ export default function SupportPage() {
         />
 
         <div className="relative z-10">
-          <h1 className="animate-fade-in-up text-glow-red text-4xl font-bold tracking-tight md:text-6xl">
+          <h1 className="animate-fade-in-up text-glow-red text-3xl sm:text-4xl font-bold tracking-tight md:text-6xl">
             SUPPORT <span className="text-brand-red">THE STREAM</span>
           </h1>
-          <p className="animate-fade-in-up animate-delay-100 mt-4 max-w-xl text-muted">
-            Every donation fuels better content, better gear, and a bigger community.
+          <p className="animate-fade-in-up animate-delay-100 mt-3 sm:mt-4 max-w-xl text-sm sm:text-base text-muted">
+            Every tip fuels better content, better gear, and a bigger community.
           </p>
         </div>
       </section>
 
-      {/* Quick Donate */}
+      {/* Quick Tip */}
       <section className="border-b border-white/5 bg-brand-darker">
-        <div className="mx-auto max-w-4xl px-6 py-12">
-          <div className="glass-strong glow-border rounded-xl p-8 text-center">
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 py-10 sm:py-12">
+          <div className="glass-strong glow-border rounded-xl p-5 sm:p-8 text-center">
             <h2 className="text-xl font-bold tracking-wide text-white">
-              Quick Donate
+              Send a Tip
             </h2>
             <p className="mt-2 text-sm text-muted">
-              Send a one-time tip to support the stream
+              Show your support with a one-time tip
             </p>
-            <div className="mt-6 flex flex-wrap justify-center gap-3">
-              {["$5", "$10", "$25", "$50", "$100"].map((amount) => (
+
+            {/* Amount selector (visual guide) */}
+            <div className="mt-6 flex flex-wrap justify-center gap-2 sm:gap-3">
+              {QUICK_TIP_AMOUNTS.map((amount) => (
                 <button
                   key={amount}
-                  className="rounded-lg border border-brand-gold/30 bg-brand-gold/5 px-6 py-3 text-sm font-bold text-brand-gold transition-all hover:border-brand-gold hover:bg-brand-gold/20"
+                  onClick={() => setSelectedAmount(amount)}
+                  className={`rounded-lg border px-4 sm:px-6 py-2.5 sm:py-3 text-sm font-bold transition-all touch-manipulation ${
+                    selectedAmount === amount
+                      ? "border-brand-gold bg-brand-gold/20 text-brand-gold"
+                      : "border-brand-gold/30 bg-brand-gold/5 text-brand-gold hover:bg-brand-gold/20 hover:border-brand-gold/50"
+                  }`}
                 >
-                  {amount}
+                  ${amount}
                 </button>
               ))}
-              <button className="rounded-lg border border-white/10 bg-white/5 px-6 py-3 text-sm font-medium text-white transition-all hover:border-white/30 hover:bg-white/10">
-                Custom
-              </button>
             </div>
-            <button className="mt-6 rounded-sm bg-brand-red px-10 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-brand-red-glow">
-              Send Support
-            </button>
-            <p className="mt-4 text-xs text-muted">
-              Secure payment via PayPal • Your name appears on stream alerts
+
+            {/* Payment Options */}
+            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
+              <a
+                href={SUPPORT_LINKS.fourthwallTip}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 rounded-lg bg-brand-red px-6 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white transition-all hover:bg-brand-red/90 active:scale-[0.98]"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+                Tip via Fourthwall
+              </a>
+              <a
+                href={SUPPORT_LINKS.paypal}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-3 rounded-lg bg-[#003087] px-6 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white transition-all hover:bg-[#003087]/90 active:scale-[0.98]"
+              >
+                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797H9.977l-.003.003-.946 4.764c-.082.39-.417.668-.82.668h-.004zM19.867 7.862c-.066.366-.141.72-.232 1.065-1.11 4.288-4.028 5.78-8.08 5.78H9.57l-.003.003-1.074 5.412h2.584c.345 0 .64-.25.695-.587l.029-.14.543-2.741.035-.188a.702.702 0 0 1 .693-.586h.435c2.827 0 5.04-1.148 5.686-4.469.27-1.384.13-2.542-.586-3.549z"/>
+                </svg>
+                Tip via PayPal
+              </a>
+            </div>
+
+            <p className="mt-6 text-xs text-muted">
+              Secure payments processed by Fourthwall &amp; PayPal
             </p>
           </div>
         </div>
       </section>
 
       {/* Membership Tiers */}
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <h2 className="mb-2 text-center text-xs font-semibold uppercase tracking-[0.3em] text-brand-red">
+      <section className="mx-auto max-w-6xl px-4 sm:px-6 py-12 sm:py-16">
+        <h2 className="mb-2 text-center text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-brand-red">
           Monthly Membership
         </h2>
-        <p className="mb-10 text-center text-sm text-muted">
+        <p className="mb-8 sm:mb-10 text-center text-sm text-muted">
           Join the inner circle. Unlock perks and support ongoing production.
         </p>
 
-        <div className="grid gap-6 md:grid-cols-3">
-          {/* Supporter Tier */}
-          <div className="glass glow-border rounded-xl p-8 text-center">
-            <span className="inline-block rounded-full border border-brand-silver/30 bg-brand-silver/10 px-4 py-1 text-xs font-medium tracking-wider text-brand-silver">
-              SUPPORTER
-            </span>
-            <div className="mt-4">
-              <span className="text-4xl font-bold text-white">$5</span>
-              <span className="text-sm text-muted">/month</span>
-            </div>
-            <ul className="mt-6 space-y-3 text-left text-sm text-muted">
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-silver" />
-                Exclusive Discord role
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-silver" />
-                Supporter badge on stream
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-silver" />
-                Access to supporter chat
-              </li>
-            </ul>
-            <button className="mt-8 w-full rounded-sm border border-brand-silver/30 py-3 text-sm font-medium tracking-wide text-brand-silver transition-all hover:bg-brand-silver/10">
-              Join as Supporter
-            </button>
-          </div>
+        <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
+          {MEMBERSHIP_TIERS.map((tier) => {
+            const colors = getColorClasses(tier.color);
+            return (
+              <div
+                key={tier.name}
+                className={`glass glow-border relative rounded-xl p-5 sm:p-8 text-center ${
+                  tier.popular ? "border-brand-red/30" : ""
+                }`}
+              >
+                {tier.popular && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-red px-4 py-1 text-xs font-bold tracking-wider text-white">
+                    POPULAR
+                  </span>
+                )}
+                <span
+                  className={`inline-block rounded-full border px-4 py-1 text-xs font-medium tracking-wider ${colors.badge}`}
+                >
+                  {tier.name.toUpperCase()}
+                </span>
+                <div className="mt-4">
+                  <span className="text-4xl font-bold text-white">
+                    ${tier.price}
+                  </span>
+                  <span className="text-sm text-muted">/month</span>
+                </div>
+                <ul className="mt-6 space-y-3 text-left text-sm text-muted">
+                  {tier.perks.map((perk) => (
+                    <li key={perk} className="flex items-center gap-2">
+                      <span
+                        className={`h-1.5 w-1.5 rounded-full ${colors.dot}`}
+                      />
+                      {perk}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={SUPPORT_LINKS.fourthwallMembership}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`mt-8 block w-full rounded-sm py-3 text-sm font-medium tracking-wide transition-all ${colors.button}`}
+                >
+                  Join as {tier.name}
+                </a>
+              </div>
+            );
+          })}
+        </div>
 
-          {/* VIP Tier */}
-          <div className="glass glow-border relative rounded-xl border-brand-red/30 p-8 text-center">
-            <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-brand-red px-4 py-1 text-xs font-bold tracking-wider text-white">
-              POPULAR
-            </span>
-            <span className="inline-block rounded-full border border-brand-red/30 bg-brand-red/10 px-4 py-1 text-xs font-medium tracking-wider text-brand-red">
-              VIP
-            </span>
-            <div className="mt-4">
-              <span className="text-4xl font-bold text-white">$15</span>
-              <span className="text-sm text-muted">/month</span>
-            </div>
-            <ul className="mt-6 space-y-3 text-left text-sm text-muted">
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />
-                All Supporter perks
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />
-                Early access to videos
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />
-                Monthly stream shoutout
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />
-                Behind-the-scenes content
-              </li>
-            </ul>
-            <button className="mt-8 w-full rounded-sm bg-brand-red py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-brand-red-glow">
-              Join as VIP
-            </button>
-          </div>
-
-          {/* Producer Tier */}
-          <div className="glass glow-border rounded-xl p-8 text-center">
-            <span className="inline-block rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1 text-xs font-medium tracking-wider text-brand-gold">
-              PRODUCER
-            </span>
-            <div className="mt-4">
-              <span className="text-4xl font-bold text-white">$50</span>
-              <span className="text-sm text-muted">/month</span>
-            </div>
-            <ul className="mt-6 space-y-3 text-left text-sm text-muted">
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
-                All VIP perks
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
-                Credits in productions
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
-                Direct Discord access
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
-                Input on future content
-              </li>
-            </ul>
-            <button className="mt-8 w-full rounded-sm border border-brand-gold/30 py-3 text-sm font-medium tracking-wide text-brand-gold transition-all hover:bg-brand-gold/10">
-              Join as Producer
-            </button>
+        {/* Platform Support */}
+        <div className="mt-10 sm:mt-12">
+          <h3 className="mb-5 sm:mb-6 text-center text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-muted">
+            Or Subscribe on Your Favorite Platform
+          </h3>
+          <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
+            <a
+              href={SUPPORT_LINKS.twitch}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#9146FF] px-6 py-3 text-sm font-medium tracking-wide text-white transition-opacity hover:opacity-90 active:scale-[0.98]"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z" />
+              </svg>
+              Subscribe on Twitch
+            </a>
+            <a
+              href={SUPPORT_LINKS.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-sm bg-[#FF0000] px-6 py-3 text-sm font-medium tracking-wide text-white transition-opacity hover:opacity-90 active:scale-[0.98]"
+            >
+              <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+              </svg>
+              Join on YouTube
+            </a>
           </div>
         </div>
       </section>
 
       {/* Donation Goals */}
       <section className="border-t border-white/5 bg-brand-darker">
-        <div className="mx-auto max-w-4xl px-6 py-16">
-          <h2 className="mb-2 text-center text-xs font-semibold uppercase tracking-[0.3em] text-brand-gold">
-            Donation Goals
+        <div className="mx-auto max-w-4xl px-4 sm:px-6 py-12 sm:py-16">
+          <h2 className="mb-2 text-center text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-brand-gold">
+            Support Goals
           </h2>
-          <p className="mb-10 text-center text-sm text-muted">
+          <p className="mb-8 sm:mb-10 text-center text-sm text-muted">
             See where your support goes. Transparent goals, real impact.
           </p>
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {DONATION_GOALS.map((goal) => {
               const percentage = Math.round((goal.current / goal.goal) * 100);
               return (
-                <div key={goal.title} className="glass rounded-lg p-6">
+                <div key={goal.title} className="glass rounded-lg p-4 sm:p-6">
                   <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                     <div>
                       <h3 className="font-semibold tracking-wide text-white">
@@ -277,24 +350,25 @@ export default function SupportPage() {
       </section>
 
       {/* Thank You */}
-      <section className="mx-auto max-w-4xl px-6 py-16 text-center">
-        <h2 className="text-2xl font-bold tracking-tight text-white md:text-3xl">
+      <section className="mx-auto max-w-4xl px-4 sm:px-6 py-12 sm:py-16 text-center">
+        <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-white md:text-3xl">
           Thank You
         </h2>
-        <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-muted">
-          Whether you watch, share, subscribe, or donate — you are part of the Prozilli ecosystem.
-          Every bit of support matters and goes directly into making better content.
+        <p className="mx-auto mt-3 sm:mt-4 max-w-md text-sm leading-relaxed text-muted">
+          Whether you watch, share, subscribe, or tip — you are part of the
+          Prozilli ecosystem. Every bit of support matters and goes directly
+          into making better content.
         </p>
-        <div className="mt-8 flex flex-wrap justify-center gap-4">
+        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
           <Link
             href="/watch"
-            className="rounded-sm border border-brand-red/30 px-6 py-3 text-sm font-medium tracking-wide text-brand-red transition-colors hover:bg-brand-red/10"
+            className="rounded-sm border border-brand-red/30 px-6 py-3 text-sm font-medium tracking-wide text-brand-red transition-colors hover:bg-brand-red/10 active:scale-[0.98]"
           >
             Watch Live
           </Link>
           <Link
             href="/shop"
-            className="rounded-sm border border-brand-gold/30 px-6 py-3 text-sm font-medium tracking-wide text-brand-gold transition-colors hover:bg-brand-gold/10"
+            className="rounded-sm border border-brand-gold/30 px-6 py-3 text-sm font-medium tracking-wide text-brand-gold transition-colors hover:bg-brand-gold/10 active:scale-[0.98]"
           >
             Visit Shop
           </Link>

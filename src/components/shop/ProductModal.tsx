@@ -124,11 +124,11 @@ export default function ProductModal({
       />
 
       {/* Modal */}
-      <div className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-lg bg-brand-darker border border-white/10 shadow-2xl">
+      <div className="relative z-10 w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto rounded-none sm:rounded-lg bg-brand-darker border-0 sm:border border-white/10 shadow-2xl">
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 z-20 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+          className="absolute right-3 top-3 sm:right-4 sm:top-4 z-20 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
           aria-label="Close"
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -136,7 +136,7 @@ export default function ProductModal({
           </svg>
         </button>
 
-        <div className="grid gap-6 p-6 md:grid-cols-2 md:gap-8 md:p-8">
+        <div className="grid gap-4 p-4 sm:gap-6 sm:p-6 md:grid-cols-2 md:gap-8 md:p-8">
           {/* Image Gallery */}
           <div className="space-y-4">
             {/* Main image */}
@@ -166,12 +166,12 @@ export default function ProductModal({
 
             {/* Thumbnail strip */}
             {images.length > 1 && (
-              <div className="flex gap-2 overflow-x-auto pb-2">
+              <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
                 {images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setCurrentImageIndex(idx)}
-                    className={`relative h-16 w-16 flex-shrink-0 overflow-hidden rounded-md border-2 transition-colors ${
+                    className={`relative h-14 w-14 sm:h-16 sm:w-16 flex-shrink-0 overflow-hidden rounded-md border-2 transition-colors ${
                       idx === currentImageIndex
                         ? "border-brand-red"
                         : "border-transparent hover:border-white/30"
@@ -202,13 +202,13 @@ export default function ProductModal({
             </span>
 
             {/* Name */}
-            <h2 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
+            <h2 className="mt-2 text-xl sm:text-2xl font-bold tracking-tight text-white md:text-3xl">
               {product.name}
             </h2>
 
             {/* Price */}
-            <div className="mt-4 flex items-center gap-3">
-              <span className="text-2xl font-bold text-brand-gold">
+            <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
+              <span className="text-xl sm:text-2xl font-bold text-brand-gold">
                 {formatPrice(displayPrice)}
               </span>
               {displayComparePrice && (
@@ -229,14 +229,14 @@ export default function ProductModal({
             </p>
 
             {/* Variant Selectors */}
-            <div className="mt-6 space-y-4">
+            <div className="mt-4 sm:mt-6 space-y-4">
               {/* Color Selector */}
               {colors.length > 0 && (
                 <div>
                   <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-brand-silver">
                     Color: {selectedColor}
                   </label>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-2 sm:gap-2">
                     {colors.map((color) => {
                       const colorVariant = product.variants.find(
                         (v) => v.attributes.color?.name === color
@@ -248,7 +248,7 @@ export default function ProductModal({
                         <button
                           key={color}
                           onClick={() => setSelectedColor(color)}
-                          className={`relative h-10 w-10 rounded-full border-2 transition-all ${
+                          className={`relative h-9 w-9 sm:h-10 sm:w-10 rounded-full border-2 transition-all ${
                             isSelected
                               ? "border-brand-red ring-2 ring-brand-red/30"
                               : "border-white/20 hover:border-white/40"
@@ -345,14 +345,14 @@ export default function ProductModal({
             </div>
 
             {/* Add to Cart */}
-            <div className="mt-8">
+            <div className="mt-6 sm:mt-8">
               <button
                 onClick={handleAddToCart}
                 disabled={isOutOfStock || !selectedVariant}
-                className={`w-full rounded-sm px-6 py-4 text-sm font-semibold uppercase tracking-wider transition-all ${
+                className={`w-full rounded-sm px-6 py-3.5 sm:py-4 text-sm font-semibold uppercase tracking-wider transition-all ${
                   isOutOfStock || !selectedVariant
                     ? "cursor-not-allowed bg-white/10 text-white/40"
-                    : "bg-brand-red text-white hover:bg-brand-red/80"
+                    : "bg-brand-red text-white hover:bg-brand-red/80 active:scale-[0.98]"
                 }`}
               >
                 {isOutOfStock ? "Sold Out" : "Add to Cart"}

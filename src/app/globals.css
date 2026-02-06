@@ -572,3 +572,21 @@ html.light {
   animation: fireflyFloat2 21s ease-in-out infinite, fireflyGlow 2.7s ease-in-out infinite;
   animation-delay: 12s;
 }
+
+/* ============================================
+   UTILITY CLASSES
+   ============================================ */
+/* Hide scrollbar while maintaining scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Touch manipulation for better mobile tap targets */
+.touch-manipulation {
+  touch-action: manipulation;
+}

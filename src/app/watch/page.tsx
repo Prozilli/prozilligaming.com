@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import ChatPanel from "@/components/ChatPanel";
 import EventsPanel from "@/components/EventsPanel";
+import ClipsVODsSection from "@/components/ClipsVODsSection";
 
 export const metadata: Metadata = {
   title: "Watch",
@@ -151,32 +152,8 @@ export default function WatchPage() {
         </div>
       </section>
 
-      {/* VODs & Clips */}
-      <section className="border-t border-white/5 bg-brand-darker">
-        <div className="mx-auto max-w-7xl px-6 py-16 text-center">
-          <span className="mb-4 inline-block rounded-full border border-brand-gold/20 bg-brand-gold/5 px-4 py-1 text-xs font-medium tracking-wider text-brand-gold">
-            COMING SOON
-          </span>
-          <h2 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
-            VODs & Clips
-          </h2>
-          <p className="mx-auto mt-4 max-w-lg text-sm leading-relaxed text-muted">
-            Coming soon via PRISMAI — automated highlights, clip detection, and cross-platform VOD aggregation. Every moment, catalogued and searchable.
-          </p>
-          <div className="mt-10 grid gap-4 sm:grid-cols-3">
-            {[1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="glass rounded-lg p-8"
-              >
-                <div className="mx-auto mb-4 h-32 w-full rounded bg-white/5" />
-                <div className="h-4 w-3/4 rounded bg-white/5" />
-                <div className="mt-2 h-3 w-1/2 rounded bg-white/5" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* VODs & Clips - fetched from PRISMAI/Twitch */}
+      <ClipsVODsSection />
     </>
   );
 }

@@ -234,7 +234,7 @@ export default async function ShopPage() {
   return (
     <>
       {/* Hero */}
-      <section className="gradient-gaming scanlines relative flex flex-col items-center overflow-hidden px-6 pt-20 pb-12 text-center">
+      <section className="gradient-gaming scanlines relative flex flex-col items-center overflow-hidden px-4 sm:px-6 pt-16 sm:pt-20 pb-10 sm:pb-12 text-center">
         {/* Cinematic smoke layers */}
         <div className="cinematic-smoke" />
         {/* Film grain texture */}
@@ -260,10 +260,10 @@ export default async function ShopPage() {
         />
 
         <div className="relative z-10">
-          <h1 className="animate-fade-in-up text-glow-red text-4xl font-bold tracking-tight md:text-6xl">
+          <h1 className="animate-fade-in-up text-glow-red text-3xl sm:text-4xl font-bold tracking-tight md:text-6xl">
             OFFICIAL <span className="text-brand-red">MERCH</span>
           </h1>
-          <p className="animate-fade-in-up animate-delay-100 mt-4 max-w-xl text-muted">
+          <p className="animate-fade-in-up animate-delay-100 mt-3 sm:mt-4 max-w-xl text-sm sm:text-base text-muted">
             Rep the brand. Premium quality gear designed for the community.
           </p>
           {/* Direct store link */}
@@ -271,7 +271,7 @@ export default async function ShopPage() {
             href={storeUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="animate-fade-in-up animate-delay-200 mt-6 inline-flex items-center gap-2 rounded-sm bg-brand-red px-6 py-3 text-sm font-medium tracking-wide text-white transition-all hover:bg-brand-red/80"
+            className="animate-fade-in-up animate-delay-200 mt-5 sm:mt-6 inline-flex items-center gap-2 rounded-sm bg-brand-red px-5 sm:px-6 py-2.5 sm:py-3 text-sm font-medium tracking-wide text-white transition-all hover:bg-brand-red/80 active:scale-[0.98]"
           >
             Visit Full Store
             <svg
@@ -316,7 +316,7 @@ export default async function ShopPage() {
 
       {/* Fourthwall Integration Notice */}
       <section className="border-t border-white/5 bg-brand-darker">
-        <div className="mx-auto flex max-w-4xl flex-col items-center px-6 py-12 text-center">
+        <div className="mx-auto flex max-w-4xl flex-col items-center px-4 sm:px-6 py-10 sm:py-12 text-center">
           <span className="mb-3 inline-block rounded-full border border-brand-gold/20 bg-brand-gold/5 px-4 py-1 text-xs font-medium tracking-wider text-brand-gold">
             POWERED BY FOURTHWALL
           </span>
@@ -324,7 +324,7 @@ export default async function ShopPage() {
             All orders are fulfilled through our official Fourthwall store.
             Secure checkout, quality guarantee, and worldwide shipping.
           </p>
-          <div className="mt-6 flex flex-wrap justify-center gap-4">
+          <div className="mt-5 sm:mt-6 flex flex-wrap justify-center gap-3 sm:gap-4">
             <div className="flex items-center gap-2 text-xs text-brand-silver">
               <svg
                 className="h-4 w-4"

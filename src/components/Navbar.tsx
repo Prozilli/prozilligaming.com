@@ -162,14 +162,6 @@ export default function Navbar() {
               {link.label}
             </Link>
           ))}
-          {/* News link in mobile menu */}
-          <Link
-            href="/news"
-            onClick={() => setOpen(false)}
-            className="py-3 text-sm tracking-wide text-brand-silver transition-colors hover:text-white"
-          >
-            News & Updates
-          </Link>
         </div>
       </div>
     </nav>

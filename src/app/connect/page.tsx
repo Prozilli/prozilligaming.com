@@ -392,23 +392,23 @@ export default function ConnectPage() {
           <div className="lg:col-span-2">
             {platform && selectedPlatform ? (
               <div className="bg-white/5 rounded-xl border border-white/10 p-6">
-                <div className="flex items-center justify-between mb-6">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{platform.icon}</span>
-                    <h2 className="text-xl font-bold">{platform.name} Scopes</h2>
+                    <h2 className="text-lg sm:text-xl font-bold">{platform.name} Scopes</h2>
                   </div>
                   <div className="flex gap-2">
                     <button
                       onClick={() => selectRecommended(selectedPlatform, role)}
-                      className="px-3 py-1.5 bg-[#c4a265]/20 text-[#c4a265] rounded text-sm font-medium hover:bg-[#c4a265]/30"
+                      className="flex-1 sm:flex-none px-3 py-2 bg-[#c4a265]/20 text-[#c4a265] rounded text-xs sm:text-sm font-medium hover:bg-[#c4a265]/30"
                     >
-                      Select Recommended
+                      Recommended
                     </button>
                     <button
                       onClick={() => setSelectedScopes(prev => ({ ...prev, [selectedPlatform]: new Set() }))}
-                      className="px-3 py-1.5 bg-white/10 text-gray-400 rounded text-sm hover:bg-white/20"
+                      className="px-3 py-2 bg-white/10 text-gray-400 rounded text-xs sm:text-sm hover:bg-white/20"
                     >
-                      Clear All
+                      Clear
                     </button>
                   </div>
                 </div>
@@ -419,7 +419,7 @@ export default function ConnectPage() {
                   </div>
                 )}
 
-                <div className="space-y-6 max-h-[500px] overflow-y-auto pr-2">
+                <div className="space-y-6 max-h-[60vh] sm:max-h-[500px] overflow-y-auto pr-2 -mr-2">
                   {Object.entries(scopesByCategory).map(([category, scopes]) => (
                     <div key={category}>
                       <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
@@ -429,7 +429,7 @@ export default function ConnectPage() {
                         {scopes.map(scope => (
                           <label
                             key={scope.id}
-                            className={`flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-all ${
+                            className={`flex items-start gap-3 p-3 sm:p-3 rounded-lg cursor-pointer transition-all touch-manipulation ${
                               currentScopes.has(scope.id)
                                 ? "bg-white/10 border border-white/20"
                                 : "bg-white/5 border border-transparent hover:bg-white/8"
@@ -439,11 +439,11 @@ export default function ConnectPage() {
                               type="checkbox"
                               checked={currentScopes.has(scope.id)}
                               onChange={() => toggleScope(selectedPlatform, scope.id)}
-                              className="mt-1 w-4 h-4 rounded border-gray-600 text-[#910000] focus:ring-[#910000]"
+                              className="mt-0.5 w-5 h-5 sm:w-4 sm:h-4 rounded border-gray-600 text-[#910000] focus:ring-[#910000] flex-shrink-0"
                             />
-                            <div className="flex-1">
-                              <div className="flex items-center gap-2">
-                                <code className="text-xs bg-black/30 px-1.5 py-0.5 rounded text-gray-300">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex flex-wrap items-center gap-1 sm:gap-2">
+                                <code className="text-[10px] sm:text-xs bg-black/30 px-1.5 py-0.5 rounded text-gray-300 break-all">
                                   {scope.id}
                                 </code>
                                 {scope.recommended && (
