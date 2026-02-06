@@ -7,9 +7,7 @@ import Link from "next/link";
 const SUPPORT_LINKS = {
   // Fourthwall memberships page
   memberships: "https://prozilli-shop.fourthwall.com/supporters",
-  // Fourthwall donate page (enable in dashboard)
-  donate: "https://prozilli-shop.fourthwall.com/donate",
-  // PayPal for direct tips
+  // PayPal for direct tips (primary tip method)
   paypal: "https://paypal.me/prozilli",
   // Platform subscriptions
   twitch: "https://twitch.tv/prozilligaming/subscribe",
@@ -186,7 +184,7 @@ export default function SupportPage() {
             {/* Payment Options */}
             <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
               <a
-                href={SUPPORT_LINKS.donate}
+                href={SUPPORT_LINKS.paypal}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-3 rounded-lg bg-brand-red px-6 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white transition-all hover:bg-brand-red/90 active:scale-[0.98]"
@@ -194,23 +192,12 @@ export default function SupportPage() {
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                Tip on Fourthwall
-              </a>
-              <a
-                href={SUPPORT_LINKS.paypal}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 rounded-lg bg-[#003087] px-6 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white transition-all hover:bg-[#003087]/90 active:scale-[0.98]"
-              >
-                <svg className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797H9.977l-.003.003-.946 4.764c-.082.39-.417.668-.82.668h-.004zM19.867 7.862c-.066.366-.141.72-.232 1.065-1.11 4.288-4.028 5.78-8.08 5.78H9.57l-.003.003-1.074 5.412h2.584c.345 0 .64-.25.695-.587l.029-.14.543-2.741.035-.188a.702.702 0 0 1 .693-.586h.435c2.827 0 5.04-1.148 5.686-4.469.27-1.384.13-2.542-.586-3.549z"/>
-                </svg>
-                Tip via PayPal
+                Send a Tip
               </a>
             </div>
 
             <p className="mt-6 text-xs text-muted">
-              Secure payments processed by Fourthwall &amp; PayPal
+              Secure payments processed by PayPal
             </p>
           </div>
         </div>
