@@ -242,7 +242,7 @@ export default function ConnectPage() {
     setSelectedScopes(prev => ({ ...prev, [platform]: recommended }));
   };
 
-  const startOAuth = (platform: PlatformKey) => {
+  const startOAuth = async (platform: PlatformKey) => {
     const platformData = PLATFORM_SCOPES[platform];
     const scopes = selectedScopes[platform];
 
@@ -266,20 +266,20 @@ export default function ConnectPage() {
         authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}&access_type=offline&prompt=consent`;
         break;
 
-      case "kick":
-        // Kick requires PKCE - store verifier on API before starting OAuth
+      case "kick": {
+        // Kick requires PKCE with S256
         const codeVerifier = generateCodeVerifier();
-        const codeChallenge = codeVerifier; // Using plain method
-        // Send verifier to API for storage
-        fetch(`${API_BASE}/pkce/${state}`, {
+        const codeChallenge = await generateS256Challenge(codeVerifier);
+        // Store verifier on API for token exchange
+        await fetch(`${API_BASE}/pkce/${state}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ verifier: codeVerifier })
-        }).then(() => {
-          const kickUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=plain`;
-          window.open(kickUrl, `oauth_${platform}`, "width=600,height=800,left=200,top=50");
+          body: JSON.stringify({ verifier: codeVerifier }),
         });
-        return; // Early return since we handle the window.open in the callback
+        const kickUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+        window.open(kickUrl, `oauth_${platform}`, "width=600,height=800,left=200,top=50");
+        return;
+      }
 
       case "trovo":
         // Trovo scopes are joined with +
@@ -287,14 +287,23 @@ export default function ConnectPage() {
         authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${trovoScopes}&state=${state}`;
         break;
 
-      case "discord":
-        if (scopes.has("bot")) {
-          // Bot invite with permissions
-          authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&permissions=277025770560&scope=${encodeURIComponent(scopeString)}`;
-        } else {
-          authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}`;
+      case "discord": {
+        // Discord supports combined bot + user auth in a single URL
+        const hasBot = scopes.has("bot");
+        const params = new URLSearchParams({
+          client_id: platformData.clientId,
+          scope: scopeString,
+        });
+        if (hasBot) {
+          params.set("permissions", "277025770560");
         }
+        // Always include redirect_uri + response_type for user auth callback
+        params.set("redirect_uri", redirectUri);
+        params.set("response_type", "code");
+        params.set("state", state);
+        authUrl = `${platformData.authUrl}?${params.toString()}`;
         break;
+      }
     }
 
     if (authUrl) {
@@ -302,10 +311,23 @@ export default function ConnectPage() {
     }
   };
 
-  const generateCodeVerifier = () => {
+  const generateCodeVerifier = (): string => {
+    // RFC 7636: 43-128 chars from unreserved set [A-Z/a-z/0-9/-._~]
     const array = new Uint8Array(32);
     crypto.getRandomValues(array);
-    return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    return btoa(String.fromCharCode(...array))
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+  };
+
+  const generateS256Challenge = async (verifier: string): Promise<string> => {
+    const data = new TextEncoder().encode(verifier);
+    const digest = await crypto.subtle.digest("SHA-256", data);
+    return btoa(String.fromCharCode(...new Uint8Array(digest)))
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
   };
 
   const platform = selectedPlatform ? PLATFORM_SCOPES[selectedPlatform] : null;
@@ -398,6 +420,15 @@ export default function ConnectPage() {
                     <h2 className="text-lg sm:text-xl font-bold">{platform.name} Scopes</h2>
                   </div>
                   <div className="flex gap-2">
+                    <button
+                      onClick={() => {
+                        const allScopes = new Set(platform.scopes.map(s => s.id));
+                        setSelectedScopes(prev => ({ ...prev, [selectedPlatform]: allScopes }));
+                      }}
+                      className="flex-1 sm:flex-none px-3 py-2 bg-[#910000]/20 text-[#910000] rounded text-xs sm:text-sm font-medium hover:bg-[#910000]/30"
+                    >
+                      Select All
+                    </button>
                     <button
                       onClick={() => selectRecommended(selectedPlatform, role)}
                       className="flex-1 sm:flex-none px-3 py-2 bg-[#c4a265]/20 text-[#c4a265] rounded text-xs sm:text-sm font-medium hover:bg-[#c4a265]/30"
