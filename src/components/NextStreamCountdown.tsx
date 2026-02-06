@@ -94,7 +94,7 @@ export default function NextStreamCountdown() {
 
     async function fetchSchedule() {
       try {
-        const response = await fetch("/api/twitch/schedule");
+        const response = await fetch("https://api.prozilli.com/twitch/schedule");
         if (!response.ok) throw new Error("Failed to fetch");
         const data = await response.json();
         setScheduleData(data);

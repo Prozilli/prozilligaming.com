@@ -23,7 +23,7 @@ export default function Navbar() {
 
     async function checkLiveStatus() {
       try {
-        const response = await fetch("/api/twitch/schedule");
+        const response = await fetch("https://api.prozilli.com/twitch/schedule");
         if (response.ok) {
           const data = await response.json();
           setIsLive(data.isLive);
