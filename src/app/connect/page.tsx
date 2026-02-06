@@ -268,15 +268,11 @@ export default function ConnectPage() {
 
       case "kick": {
         // Kick requires PKCE with S256
+        // Embed verifier in state (KV has eventual consistency issues)
         const codeVerifier = generateCodeVerifier();
         const codeChallenge = await generateS256Challenge(codeVerifier);
-        // Store verifier on API for token exchange
-        await fetch(`${API_BASE}/pkce/${state}`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ verifier: codeVerifier }),
-        });
-        const kickUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
+        const kickState = `${state}|${codeVerifier}`;
+        const kickUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${encodeURIComponent(kickState)}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
         window.open(kickUrl, `oauth_${platform}`, "width=600,height=800,left=200,top=50");
         return;
       }
