@@ -145,16 +145,16 @@ export default function ChatPanel() {
   const activePlatform = CHAT_PLATFORMS.find((p) => p.id === activeChat);
 
   return (
-    <div className="flex flex-col h-full">
-      {/* Chat Tabs */}
-      <div className="flex gap-1 mb-2">
+    <div className="glass-strong glow-border flex flex-col h-full rounded-xl overflow-hidden">
+      {/* Chat Tabs - Outside the iframe area */}
+      <div className="flex gap-1 p-2 bg-brand-darker/50 shrink-0">
         {CHAT_PLATFORMS.map((platform) => (
           <button
             key={platform.id}
             onClick={() => setActiveChat(platform.id)}
-            className={`flex-1 flex items-center justify-center px-2 py-2.5 rounded-t-lg text-xs font-semibold transition-all ${
+            className={`flex-1 flex items-center justify-center px-2 py-2 rounded-lg text-xs font-semibold transition-all ${
               activeChat === platform.id
-                ? "bg-white/10 text-white border-b-2"
+                ? "bg-white/10 text-white"
                 : "bg-white/5 text-muted hover:bg-white/8"
             }`}
             style={{
@@ -168,24 +168,21 @@ export default function ChatPanel() {
         ))}
       </div>
 
-      {/* Chat Content */}
-      <div
-        className="rounded-xl rounded-tl-none flex-1 relative isolate bg-[#18181b]"
-        style={{ minHeight: "400px" }}
-      >
+      {/* Chat Content - Flex grow to fill remaining space */}
+      <div className="flex-1 flex flex-col min-h-[400px] bg-[#18181b]">
         {/* Twitch Chat */}
         {activeChat === "twitch" && activePlatform?.hasEmbed && (
           <iframe
             src={activePlatform.embedUrl!}
-            className="w-full h-full block absolute inset-0"
+            className="w-full flex-1 block"
             title="Twitch Chat"
-            style={{ border: "none" }}
+            style={{ border: "none", minHeight: "400px" }}
           />
         )}
 
         {/* YouTube Chat - No native embed without video ID */}
         {activeChat === "youtube" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
             <YouTubeLogo className="w-12 h-12 text-[#FF0000] mb-4" />
             <h3 className="text-lg font-semibold text-white mb-2">YouTube Live Chat</h3>
             <p className="text-sm text-muted mb-4 max-w-xs">
@@ -206,15 +203,15 @@ export default function ChatPanel() {
         {activeChat === "kick" && activePlatform?.hasEmbed && (
           <iframe
             src={activePlatform.embedUrl!}
-            className="w-full h-full block absolute inset-0"
+            className="w-full flex-1 block"
             title="Kick Chat"
-            style={{ border: "none" }}
+            style={{ border: "none", minHeight: "400px" }}
           />
         )}
 
         {/* Trovo Chat */}
         {activeChat === "trovo" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
             <TrovoLogo className="w-12 h-12 text-[#19D66B] mb-4" />
             <h3 className="text-lg font-semibold text-white mb-2">Trovo Live Chat</h3>
             <p className="text-sm text-muted mb-4 max-w-xs">
@@ -233,7 +230,7 @@ export default function ChatPanel() {
 
         {/* Facebook Chat */}
         {activeChat === "facebook" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
             <FacebookLogo className="w-12 h-12 text-[#1877F2] mb-4" />
             <h3 className="text-lg font-semibold text-white mb-2">Facebook Gaming Chat</h3>
             <p className="text-sm text-muted mb-4 max-w-xs">
@@ -252,7 +249,7 @@ export default function ChatPanel() {
 
         {/* TikTok Chat */}
         {activeChat === "tiktok" && (
-          <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
+          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
             <TikTokLogo className="w-12 h-12 text-white mb-4" />
             <h3 className="text-lg font-semibold text-white mb-2">TikTok Live Chat</h3>
             <p className="text-sm text-muted mb-4 max-w-xs">
@@ -271,7 +268,7 @@ export default function ChatPanel() {
 
         {/* Multi-Chat View - Aggregated read-only feed */}
         {activeChat === "multi" && (
-          <div className="absolute inset-0 flex flex-col">
+          <div className="flex-1 flex flex-col">
             {/* Multi-chat header */}
             <div className="flex items-center justify-between px-4 py-3 border-b border-white/10">
               <div className="flex items-center gap-2">
@@ -324,7 +321,7 @@ export default function ChatPanel() {
       </div>
 
       {/* Chat Footer */}
-      <div className="mt-2 text-center">
+      <div className="p-2 text-center bg-brand-darker/50 shrink-0">
         <p className="text-xs text-muted">
           Chat synced across all platforms via{" "}
           <span className="text-brand-gold">PRISMAI</span>
