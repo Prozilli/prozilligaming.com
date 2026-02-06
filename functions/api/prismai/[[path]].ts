@@ -3,7 +3,7 @@ const PRISMAI_ANALYTICS = "http://prismai-analytics.prozilli.com:5018";
 
 const CORS_HEADERS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
   "Content-Type": "application/json",
 };
@@ -60,4 +60,28 @@ export const onRequestGet: PagesFunction = async (context) => {
     JSON.stringify(result.data),
     { status: 502, headers: CORS_HEADERS }
   );
+};
+
+export const onRequestPost: PagesFunction = async (context) => {
+  const path = (context.params.path as string[])?.join("/") || "";
+
+  try {
+    const body = await context.request.text();
+    const res = await fetch(`${PRISMAI_CORE}/${path}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body,
+    });
+    const text = await res.text();
+    try {
+      return new Response(text, { status: res.status, headers: CORS_HEADERS });
+    } catch {
+      return new Response(text, { status: res.status, headers: CORS_HEADERS });
+    }
+  } catch (err: any) {
+    return new Response(
+      JSON.stringify({ error: "Connection failed", message: err?.message || "Unknown" }),
+      { status: 502, headers: CORS_HEADERS }
+    );
+  }
 };

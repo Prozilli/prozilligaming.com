@@ -83,6 +83,42 @@ const DONATION_GOALS = [
 
 export default function SupportPage() {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
+  const [customAmount, setCustomAmount] = useState("");
+  const [tipMessage, setTipMessage] = useState("");
+  const [tipName, setTipName] = useState("");
+  const [sending, setSending] = useState(false);
+
+  const tipValue = selectedAmount || (customAmount ? parseFloat(customAmount) : 0);
+
+  const handleSendTip = async () => {
+    if (tipValue <= 0) return;
+
+    // Save tip message to PRISMAI if there's a message
+    if (tipMessage.trim()) {
+      setSending(true);
+      try {
+        await fetch("/api/prismai/tips", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: tipName.trim() || "Anonymous",
+            amount: tipValue,
+            message: tipMessage.trim(),
+          }),
+        });
+      } catch {
+        // Don't block the PayPal redirect on API failure
+      }
+      setSending(false);
+    }
+
+    // Open PayPal with the amount
+    window.open(
+      `https://paypal.me/prozilli/${tipValue}USD`,
+      "_blank",
+      "noopener,noreferrer"
+    );
+  };
 
   const getColorClasses = (color: string) => {
     switch (color) {
@@ -164,14 +200,17 @@ export default function SupportPage() {
               Show your support with a one-time tip
             </p>
 
-            {/* Amount selector (visual guide) */}
+            {/* Quick amounts */}
             <div className="mt-6 flex flex-wrap justify-center gap-2 sm:gap-3">
               {QUICK_TIP_AMOUNTS.map((amount) => (
                 <button
                   key={amount}
-                  onClick={() => setSelectedAmount(amount)}
+                  onClick={() => {
+                    setSelectedAmount(amount);
+                    setCustomAmount("");
+                  }}
                   className={`rounded-lg border px-4 sm:px-6 py-2.5 sm:py-3 text-sm font-bold transition-all touch-manipulation ${
-                    selectedAmount === amount
+                    selectedAmount === amount && !customAmount
                       ? "border-brand-gold bg-brand-gold/20 text-brand-gold"
                       : "border-brand-gold/30 bg-brand-gold/5 text-brand-gold hover:bg-brand-gold/20 hover:border-brand-gold/50"
                   }`}
@@ -181,19 +220,68 @@ export default function SupportPage() {
               ))}
             </div>
 
-            {/* Payment Options */}
-            <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
-              <a
-                href={SUPPORT_LINKS.paypal}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3 rounded-lg bg-brand-red px-6 sm:px-8 py-3.5 sm:py-4 text-sm font-bold text-white transition-all hover:bg-brand-red/90 active:scale-[0.98]"
+            {/* Custom amount */}
+            <div className="mt-4 flex justify-center">
+              <div className="relative w-40">
+                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-brand-gold">
+                  $
+                </span>
+                <input
+                  type="number"
+                  min="1"
+                  step="1"
+                  placeholder="Custom"
+                  value={customAmount}
+                  onChange={(e) => {
+                    setCustomAmount(e.target.value);
+                    setSelectedAmount(null);
+                  }}
+                  className="w-full rounded-lg border border-brand-gold/30 bg-brand-gold/5 py-2.5 pl-7 pr-3 text-center text-sm font-bold text-brand-gold placeholder-brand-gold/40 outline-none transition-all focus:border-brand-gold focus:bg-brand-gold/10"
+                />
+              </div>
+            </div>
+
+            {/* Name + Message */}
+            <div className="mx-auto mt-6 max-w-md space-y-3 text-left">
+              <input
+                type="text"
+                placeholder="Your name (optional)"
+                value={tipName}
+                onChange={(e) => setTipName(e.target.value)}
+                maxLength={50}
+                className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-muted outline-none transition-all focus:border-brand-red/50 focus:bg-white/10"
+              />
+              <textarea
+                placeholder="Leave a message (optional)"
+                value={tipMessage}
+                onChange={(e) => setTipMessage(e.target.value)}
+                maxLength={280}
+                rows={3}
+                className="w-full resize-none rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-muted outline-none transition-all focus:border-brand-red/50 focus:bg-white/10"
+              />
+              {tipMessage.length > 0 && (
+                <p className="text-right text-xs text-muted">
+                  {tipMessage.length}/280
+                </p>
+              )}
+            </div>
+
+            {/* Send button */}
+            <div className="mt-6">
+              <button
+                onClick={handleSendTip}
+                disabled={tipValue <= 0 || sending}
+                className="inline-flex items-center justify-center gap-3 rounded-lg bg-brand-red px-8 py-4 text-sm font-bold text-white transition-all hover:bg-brand-red/90 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                 </svg>
-                Send a Tip
-              </a>
+                {sending
+                  ? "Sending..."
+                  : tipValue > 0
+                    ? "Send $" + tipValue + " Tip"
+                    : "Select an Amount"}
+              </button>
             </div>
 
             <p className="mt-6 text-xs text-muted">
