@@ -20,6 +20,7 @@ body {
   background: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
@@ -29,6 +30,131 @@ body {
 
 html {
   scroll-behavior: smooth;
+}
+
+/* ============================================
+   LIGHT MODE OVERRIDES
+   ============================================ */
+html.light {
+  --color-brand-dark: #f5f5f5;
+  --color-brand-darker: #e8e8e8;
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+  --color-muted: #666666;
+}
+
+/* Light mode specific overrides */
+.light .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .glass:hover {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.light .glass-strong {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light .glow-border:hover {
+  border-color: rgba(145, 0, 0, 0.3);
+  box-shadow: 0 0 20px rgba(145, 0, 0, 0.1);
+}
+
+.light .gradient-gaming {
+  background: radial-gradient(ellipse at 30% 20%, rgba(145, 0, 0, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(0, 28, 63, 0.06) 0%, transparent 50%),
+    #f8f8f8;
+}
+
+.light .text-glow-red {
+  text-shadow: none;
+  animation: none;
+}
+
+.light .cinematic-smoke::before,
+.light .cinematic-smoke::after {
+  opacity: 0.3;
+}
+
+.light .film-grain {
+  opacity: 0.01;
+}
+
+.light .vignette {
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.1) 100%);
+}
+
+.light .scanlines::after {
+  opacity: 0.3;
+}
+
+/* Light mode text colors */
+.light .text-white {
+  color: #1a1a1a;
+}
+
+.light .text-muted {
+  color: #666666;
+}
+
+.light .bg-brand-dark {
+  background-color: #f5f5f5;
+}
+
+.light .bg-brand-darker {
+  background-color: #e8e8e8;
+}
+
+.light .bg-\[\#0d1117\] {
+  background-color: #ffffff;
+}
+
+.light .bg-\[\#161b22\] {
+  background-color: #f5f5f5;
+}
+
+.light .bg-\[\#18181b\] {
+  background-color: #f0f0f0;
+}
+
+.light .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.light .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .hover\:bg-white\/5:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.light .hover\:bg-white\/8:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.light .hover\:bg-white\/10:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .border-white\/5 {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light .bg-brand-dark\/90 {
+  background-color: rgba(245, 245, 245, 0.95);
+}
+
+.light .bg-brand-darker\/50 {
+  background-color: rgba(232, 232, 232, 0.7);
 }
 
 /* ============================================

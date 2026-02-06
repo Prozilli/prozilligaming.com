@@ -76,9 +76,9 @@ export default function WatchPage() {
 
       {/* Stream + Chat + Events Layout */}
       <section className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 py-8 lg:py-12">
-        <div className="flex flex-col lg:flex-row gap-4">
+        <div className="flex flex-col lg:flex-row lg:items-stretch gap-4">
           {/* Left Column: Video + Events */}
-          <div className="w-full lg:w-[68%] lg:flex-shrink-0">
+          <div className="w-full lg:w-[68%] lg:flex-shrink-0 flex flex-col">
             {/* Video Player */}
             <div className="glass-strong glow-border overflow-hidden rounded-xl">
               <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
@@ -116,8 +116,8 @@ export default function WatchPage() {
             </div>
           </div>
 
-          {/* Right Column: Multi-Chat */}
-          <div className="w-full lg:flex-1 flex flex-col mt-4 lg:mt-0 isolate min-h-[500px] lg:min-h-0">
+          {/* Right Column: Chat - matches video + events height */}
+          <div className="w-full lg:flex-1 mt-4 lg:mt-0 min-h-[400px] lg:min-h-0">
             <ChatPanel />
           </div>
         </div>

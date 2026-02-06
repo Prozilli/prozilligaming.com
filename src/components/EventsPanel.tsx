@@ -184,37 +184,19 @@ export default function EventsPanel() {
   const events = PLACEHOLDER_EVENTS;
 
   return (
-    <div className="glass-strong glow-border rounded-xl p-4">
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-3">
-          <h3 className="text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.2em] text-brand-gold">
-            Recent Events
-          </h3>
-          {/* Platform indicators */}
-          <div className="hidden sm:flex items-center gap-1">
-            {Object.entries(PLATFORMS).map(([key, platform]) => {
-              const Icon = platform.icon;
-              return (
-                <div
-                  key={key}
-                  className="w-4 h-4 rounded flex items-center justify-center"
-                  style={{ backgroundColor: `${platform.color}20` }}
-                  title={platform.name}
-                >
-                  <Icon className="w-2.5 h-2.5" style={{ color: platform.color }} />
-                </div>
-              );
-            })}
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
+    <div className="glass-strong glow-border rounded-xl p-3">
+      <div className="flex items-center justify-between mb-2">
+        <h3 className="text-[10px] font-semibold uppercase tracking-wider text-brand-gold">
+          Recent Events
+        </h3>
+        <div className="flex items-center gap-1.5">
           <span className="h-1.5 w-1.5 rounded-full bg-brand-gold animate-pulse" />
-          <span className="text-xs text-muted">Live via PRISMAI</span>
+          <span className="text-[10px] text-muted">PRISMAI</span>
         </div>
       </div>
 
-      <div className="space-y-2">
-        {events.map((event) => {
+      <div className="space-y-1">
+        {events.slice(0, 5).map((event) => {
           const eventConfig = EVENT_TYPES[event.type];
           const platformConfig = PLATFORMS[event.platform];
           const PlatformIcon = platformConfig.icon;
@@ -222,54 +204,32 @@ export default function EventsPanel() {
           return (
             <div
               key={event.id}
-              className="flex items-center gap-3 rounded-lg bg-white/5 p-3 transition-colors hover:bg-white/8"
+              className="flex items-center gap-2 rounded-md bg-white/5 px-2 py-1.5 transition-colors hover:bg-white/8"
             >
-              {/* Event type icon */}
-              <div
-                className={`flex h-8 w-8 items-center justify-center rounded-full text-sm ${eventConfig.bgColor} ${eventConfig.textColor}`}
-              >
-                {eventConfig.icon}
-              </div>
-
-              {/* Event details */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <p className="text-sm font-medium text-white truncate">
-                    {eventConfig.label}
-                  </p>
-                  {/* Platform badge */}
-                  <div
-                    className="flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-medium"
-                    style={{
-                      backgroundColor: `${platformConfig.color}20`,
-                      color: platformConfig.color,
-                    }}
-                  >
-                    <PlatformIcon className="w-2.5 h-2.5" />
-                    <span className="hidden sm:inline">{platformConfig.name}</span>
-                  </div>
+              {/* Left: Avatar + Name + Platform */}
+              <div className="flex items-center gap-2 flex-1 min-w-0">
+                <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white shrink-0">
+                  {event.user.charAt(0).toUpperCase()}
                 </div>
-                <p className="text-xs text-muted truncate">
-                  {event.user}
-                  {event.amount && (
-                    <span className="text-brand-gold ml-1">• {event.amount}</span>
-                  )}
-                </p>
+                <span className="text-xs text-white truncate">{event.user}</span>
+                <PlatformIcon className="w-3 h-3 shrink-0" style={{ color: platformConfig.color }} />
               </div>
 
-              {/* Time */}
-              <span className="text-xs text-muted shrink-0">{event.time}</span>
+              {/* Right: Event icon + label + amount */}
+              <div className="flex items-center gap-1.5 shrink-0">
+                <span className="text-xs">{eventConfig.icon}</span>
+                <span className={`text-[10px] font-medium ${eventConfig.textColor}`}>
+                  {eventConfig.label}
+                </span>
+                {event.amount && (
+                  <span className="text-[10px] font-bold text-brand-gold">{event.amount}</span>
+                )}
+              </div>
             </div>
           );
         })}
       </div>
 
-      {/* View all link */}
-      <div className="mt-3 pt-3 border-t border-white/5 text-center">
-        <button className="text-xs text-brand-gold hover:text-white transition-colors">
-          View All Events →
-        </button>
-      </div>
     </div>
   );
 }
