@@ -54,6 +54,23 @@ export default function ProductModal({
     setCurrentImageIndex(0);
   }, [product, colors, sizes]);
 
+  // Update image when color changes - find first variant with that color and show its image
+  useEffect(() => {
+    if (selectedColor) {
+      const colorVariant = product.variants.find(
+        (v) => v.attributes.color?.name === selectedColor
+      );
+      if (colorVariant?.images && colorVariant.images.length > 0) {
+        // Find the index of the variant's first image in the product images
+        const variantImageUrl = colorVariant.images[0].url;
+        const imageIndex = product.images.findIndex((img) => img.url === variantImageUrl);
+        if (imageIndex >= 0) {
+          setCurrentImageIndex(imageIndex);
+        }
+      }
+    }
+  }, [selectedColor, product.variants, product.images]);
+
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
