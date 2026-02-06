@@ -30,9 +30,8 @@ const CHAT_PLATFORMS = [
     id: "trovo",
     name: "Trovo",
     color: "#19D66B",
-    embedUrl: null,
-    hasEmbed: false,
-    fallbackUrl: "https://trovo.live/ProzilliGaming",
+    embedUrl: "https://trovo.live/chat/ProzilliGaming",
+    hasEmbed: true,
   },
   {
     id: "facebook",
@@ -210,22 +209,13 @@ export default function ChatPanel() {
         )}
 
         {/* Trovo Chat */}
-        {activeChat === "trovo" && (
-          <div className="flex-1 flex flex-col items-center justify-center p-6 text-center">
-            <TrovoLogo className="w-12 h-12 text-[#19D66B] mb-4" />
-            <h3 className="text-lg font-semibold text-white mb-2">Trovo Live Chat</h3>
-            <p className="text-sm text-muted mb-4 max-w-xs">
-              Trovo chat is available during live broadcasts. Join the conversation on Trovo.
-            </p>
-            <a
-              href="https://trovo.live/ProzilliGaming"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-lg bg-[#19D66B] px-6 py-2.5 text-sm font-medium text-black transition-opacity hover:opacity-90"
-            >
-              Open Trovo
-            </a>
-          </div>
+        {activeChat === "trovo" && activePlatform?.hasEmbed && (
+          <iframe
+            src={activePlatform.embedUrl!}
+            className="w-full flex-1 block"
+            title="Trovo Chat"
+            style={{ border: "none", minHeight: "400px" }}
+          />
         )}
 
         {/* Facebook Chat */}
