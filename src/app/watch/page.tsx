@@ -5,7 +5,40 @@ import EventsPanel from "@/components/EventsPanel";
 import ClipsVODsSection from "@/components/ClipsVODsSection";
 
 export const metadata: Metadata = {
-  title: "Watch",
+  title: "Watch Live",
+  description:
+    "Watch Prozilli Gaming live on Twitch, YouTube, Kick, Trovo, and Facebook. Multiplatform streaming with chat, clips, and VODs. Catch the stream now.",
+  keywords: [
+    "Prozilli Gaming live",
+    "watch Prozilli stream",
+    "Twitch live stream",
+    "multiplatform gaming",
+    "live gaming content",
+  ],
+  openGraph: {
+    title: "Watch Live | Prozilli Gaming",
+    description:
+      "Watch Prozilli Gaming live across all platforms. Multiplatform streaming with integrated chat and real-time events.",
+    type: "website",
+    url: "https://prozilligaming.com/watch",
+    images: [
+      {
+        url: "/images/heroes/hero-watch.png",
+        width: 1200,
+        height: 630,
+        alt: "Watch Prozilli Gaming Live",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Watch Live | Prozilli Gaming",
+    description: "Watch Prozilli Gaming live on Twitch, YouTube, Kick, and more.",
+    images: ["/images/heroes/hero-watch.png"],
+  },
+  alternates: {
+    canonical: "https://prozilligaming.com/watch",
+  },
 };
 
 const SECONDARY_PLATFORMS = [

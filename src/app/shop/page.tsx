@@ -5,6 +5,40 @@ import ShopGrid from "@/components/shop/ShopGrid";
 
 export const metadata: Metadata = {
   title: "Shop",
+  description:
+    "Official Prozilli Gaming merchandise. Premium hoodies, tees, caps, and gear. Rep the brand with quality apparel designed for the community.",
+  keywords: [
+    "Prozilli Gaming merch",
+    "gaming merchandise",
+    "streamer merch",
+    "Prozilli hoodie",
+    "gaming apparel",
+    "Fourthwall store",
+  ],
+  openGraph: {
+    title: "Official Merch | Prozilli Gaming",
+    description:
+      "Shop official Prozilli Gaming merchandise. Premium quality gear designed for the community.",
+    type: "website",
+    url: "https://prozilligaming.com/shop",
+    images: [
+      {
+        url: "/images/heroes/hero-shop.png",
+        width: 1200,
+        height: 630,
+        alt: "Prozilli Gaming Official Merchandise",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Official Merch | Prozilli Gaming",
+    description: "Premium gaming merchandise. Rep the Prozilli brand.",
+    images: ["/images/heroes/hero-shop.png"],
+  },
+  alternates: {
+    canonical: "https://prozilligaming.com/shop",
+  },
 };
 
 // Fallback products when Fourthwall API is not configured

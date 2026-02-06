@@ -3,6 +3,15 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
+  description:
+    "Terms of Service for Prozilli Gaming and Prozilli Inc. services. Read our terms for website usage, community guidelines, and service agreements.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://prozilligaming.com/terms",
+  },
 };
 
 export default function TermsPage() {

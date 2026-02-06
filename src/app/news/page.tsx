@@ -2,7 +2,31 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "News",
+  title: "News & Updates",
+  description:
+    "Latest news and updates from Prozilli Gaming. Announcements, new content, events, and community highlights.",
+  keywords: [
+    "Prozilli Gaming news",
+    "streamer updates",
+    "gaming announcements",
+    "Prozilli blog",
+    "community updates",
+  ],
+  openGraph: {
+    title: "News & Updates | Prozilli Gaming",
+    description:
+      "Stay updated with the latest from Prozilli Gaming. News, announcements, and community highlights.",
+    type: "website",
+    url: "https://prozilligaming.com/news",
+  },
+  twitter: {
+    card: "summary",
+    title: "News & Updates | Prozilli Gaming",
+    description: "Latest news and updates from Prozilli Gaming.",
+  },
+  alternates: {
+    canonical: "https://prozilligaming.com/news",
+  },
 };
 
 const PLACEHOLDER_ARTICLES = [

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     url: "https://prozilligaming.com/schedule",
     images: [
       {
-        url: "/images/og/schedule.png",
+        url: "/images/heroes/hero-schedule.png",
         width: 1200,
         height: 630,
         alt: "Prozilli Gaming Stream Schedule",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Stream Schedule | Prozilli Gaming",
     description: "Weekly streaming schedule for Prozilli Gaming across all platforms.",
-    images: ["/images/og/schedule.png"],
+    images: ["/images/heroes/hero-schedule.png"],
   },
   alternates: {
     canonical: "https://prozilligaming.com/schedule",

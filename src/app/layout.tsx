@@ -57,7 +57,7 @@ export const metadata: Metadata = {
     url: "https://prozilligaming.com",
     images: [
       {
-        url: "/images/og/default.png",
+        url: "/images/heroes/hero-home.png",
         width: 1200,
         height: 630,
         alt: "Prozilli Gaming - Live. Create. Dominate.",
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     title: "Prozilli Gaming — Live. Create. Dominate.",
     description: "Multiplatform live streaming across Twitch, YouTube, Kick, Trovo, and Facebook.",
     creator: "@ProzilliGaming",
-    images: ["/images/og/default.png"],
+    images: ["/images/heroes/hero-home.png"],
   },
   robots: {
     index: true,

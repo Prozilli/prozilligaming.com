@@ -3,6 +3,15 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
+  description:
+    "Privacy Policy for Prozilli Gaming and Prozilli Inc. Learn how we collect, use, and protect your personal information across our platforms and services.",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://prozilligaming.com/privacy",
+  },
 };
 
 export default function PrivacyPage() {

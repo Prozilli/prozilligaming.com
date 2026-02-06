@@ -1,5 +1,15 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /connect
+Disallow: /api/
+Disallow: /_next/
 
+# Crawl delay for respectful crawling
+Crawl-delay: 1
+
+# Sitemaps
 Sitemap: https://prozilligaming.com/sitemap.xml
+
+# Host
+Host: https://prozilligaming.com

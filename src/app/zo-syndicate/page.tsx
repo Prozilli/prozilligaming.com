@@ -2,9 +2,42 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "ZO Syndicate",
+  title: "ZO Syndicate RP",
   description:
-    "ZO Syndicate RP - Cinematic FiveM roleplay on Qbox. 48 players, 6 gangs, full economy. Join the story.",
+    "ZO Syndicate RP - Cinematic FiveM roleplay on Qbox framework. 48 players, 6 gangs, full economy, and immersive storylines. Join the Los Santos underground.",
+  keywords: [
+    "ZO Syndicate",
+    "FiveM roleplay",
+    "GTA RP server",
+    "Qbox server",
+    "cinematic roleplay",
+    "FiveM server",
+    "GTA V RP",
+  ],
+  openGraph: {
+    title: "ZO Syndicate RP | Cinematic FiveM Roleplay",
+    description:
+      "Cinematic FiveM roleplay on Qbox. 48 players, 6 gangs, full economy. Where stories are born.",
+    type: "website",
+    url: "https://prozilligaming.com/zo-syndicate",
+    images: [
+      {
+        url: "/images/heroes/hero-zo.png",
+        width: 1200,
+        height: 630,
+        alt: "ZO Syndicate RP - Cinematic FiveM Roleplay",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ZO Syndicate RP | Cinematic FiveM Roleplay",
+    description: "Join ZO Syndicate - cinematic FiveM roleplay with 6 gangs and full economy.",
+    images: ["/images/heroes/hero-zo.png"],
+  },
+  alternates: {
+    canonical: "https://prozilligaming.com/zo-syndicate",
+  },
 };
 
 const SERVER_INFO = {

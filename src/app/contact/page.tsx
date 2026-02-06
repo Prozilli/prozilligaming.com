@@ -2,6 +2,30 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Contact",
+  description:
+    "Get in touch with Prozilli Gaming. Find us on YouTube, Twitch, Kick, Discord, and more. Business inquiries, collaborations, and community support.",
+  keywords: [
+    "contact Prozilli Gaming",
+    "Prozilli social media",
+    "Prozilli Discord",
+    "gaming collaboration",
+    "streamer contact",
+  ],
+  openGraph: {
+    title: "Contact | Prozilli Gaming",
+    description:
+      "Connect with Prozilli Gaming across all platforms. Join the community on Discord.",
+    type: "website",
+    url: "https://prozilligaming.com/contact",
+  },
+  twitter: {
+    card: "summary",
+    title: "Contact | Prozilli Gaming",
+    description: "Connect with Prozilli Gaming across all platforms.",
+  },
+  alternates: {
+    canonical: "https://prozilligaming.com/contact",
+  },
 };
 
 const SOCIAL_PLATFORMS = [
