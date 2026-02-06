@@ -361,17 +361,24 @@ export default function ProductModal({
   );
 }
 
-// Helper to convert color names to hex
-function getColorHex(colorName: string): string {
+// Helper to convert color names to hex (or pass through hex values)
+function getColorHex(colorNameOrHex: string): string {
+  // If already a hex color, return it directly
+  if (colorNameOrHex.startsWith("#")) {
+    return colorNameOrHex;
+  }
+
   const colorMap: Record<string, string> = {
     black: "#000000",
     white: "#ffffff",
     red: "#dc2626",
     blue: "#2563eb",
+    cobalt: "#0047ab",
     navy: "#001c3f",
     green: "#16a34a",
     yellow: "#eab308",
     orange: "#ea580c",
+    chestnut: "#954535",
     purple: "#9333ea",
     pink: "#ec4899",
     gray: "#6b7280",
@@ -383,13 +390,24 @@ function getColorHex(colorName: string): string {
     heather: "#9ca3af",
   };
 
-  const key = colorName.toLowerCase().split(" ")[0];
+  const key = colorNameOrHex.toLowerCase().split(" ")[0];
   return colorMap[key] || "#6b7280";
 }
 
 // Helper to determine if a color is light (for checkmark contrast)
-function isLightColor(colorName: string): boolean {
+function isLightColor(colorNameOrHex: string): boolean {
+  // If hex color, calculate luminance
+  if (colorNameOrHex.startsWith("#")) {
+    const hex = colorNameOrHex.slice(1);
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
+    // Calculate relative luminance
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance > 0.5;
+  }
+
   const lightColors = ["white", "yellow", "gold", "silver", "heather", "light"];
-  const key = colorName.toLowerCase();
+  const key = colorNameOrHex.toLowerCase();
   return lightColors.some((c) => key.includes(c));
 }
