@@ -19,7 +19,7 @@ const SUPPORT_LINKS = {
 // Quick tip amounts (for display)
 const QUICK_TIP_AMOUNTS = [5, 10, 25, 50, 100];
 
-// Membership tiers
+// Membership tiers with direct checkout URLs
 const MEMBERSHIP_TIERS = [
   {
     name: "Supporter",
@@ -31,6 +31,7 @@ const MEMBERSHIP_TIERS = [
       "Access to supporter chat",
     ],
     popular: false,
+    checkoutUrl: "https://prozilli-shop.fourthwall.com/supporters/payments/checkout?plan=plan_adDN4Vwoqkn5TeKnl3vYXWmP",
   },
   {
     name: "VIP",
@@ -43,6 +44,7 @@ const MEMBERSHIP_TIERS = [
       "Behind-the-scenes content",
     ],
     popular: true,
+    checkoutUrl: "https://prozilli-shop.fourthwall.com/supporters/payments/checkout?plan=plan_E0Y6P4jOZwV5tExK2oKXMrmn",
   },
   {
     name: "Producer",
@@ -55,6 +57,7 @@ const MEMBERSHIP_TIERS = [
       "Input on future content",
     ],
     popular: false,
+    checkoutUrl: "https://prozilli-shop.fourthwall.com/supporters/payments/checkout?plan=plan_Yp0JoMBV2xW5sjoOqKbvLemE",
   },
 ];
 
@@ -259,7 +262,7 @@ export default function SupportPage() {
                   ))}
                 </ul>
                 <a
-                  href={SUPPORT_LINKS.memberships}
+                  href={tier.checkoutUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`mt-8 block w-full rounded-sm py-3 text-sm font-medium tracking-wide transition-all ${colors.button}`}
