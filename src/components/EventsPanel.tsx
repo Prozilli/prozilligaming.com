@@ -1,8 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-// Platform icons for events
+const PRISMAI_API = "/api/prismai";
+const TWITCH_API = "https://api.prozilli.com";
+
+// Platform icons
 function TwitchIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
     <svg className={className} style={style} viewBox="0 0 24 24" fill="currentColor">
@@ -27,161 +30,113 @@ function KickIcon({ className, style }: { className?: string; style?: React.CSSP
   );
 }
 
-function FacebookIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
+function DiscordIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
   return (
     <svg className={className} style={style} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+      <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z" />
     </svg>
   );
 }
 
-function TikTokIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-    </svg>
-  );
-}
-
-function TrovoIcon({ className, style }: { className?: string; style?: React.CSSProperties }) {
-  return (
-    <svg className={className} style={style} viewBox="0 0 24 24" fill="currentColor">
-      <path d="M0 6v12h6v-2H2V8h4V6zm24 0v12h-6v-2h4V8h-4V6zM9 8h6v2h-2v6h-2v-6H9z" />
-    </svg>
-  );
-}
-
-// Event type configurations
-const EVENT_TYPES = {
-  follow: {
-    icon: "❤️",
-    label: "New Follower",
-    bgColor: "bg-brand-red/20",
-    textColor: "text-brand-red",
-  },
-  subscribe: {
-    icon: "⭐",
-    label: "Subscription",
-    bgColor: "bg-purple-500/20",
-    textColor: "text-purple-400",
-  },
-  gift: {
-    icon: "🎁",
-    label: "Gift Sub",
-    bgColor: "bg-pink-500/20",
-    textColor: "text-pink-400",
-  },
-  donate: {
-    icon: "💎",
-    label: "Donation",
-    bgColor: "bg-brand-gold/20",
-    textColor: "text-brand-gold",
-  },
-  raid: {
-    icon: "🚀",
-    label: "Raid",
-    bgColor: "bg-blue-500/20",
-    textColor: "text-blue-400",
-  },
-  bits: {
-    icon: "💜",
-    label: "Bits",
-    bgColor: "bg-purple-600/20",
-    textColor: "text-purple-300",
-  },
-  superchat: {
-    icon: "💬",
-    label: "Super Chat",
-    bgColor: "bg-yellow-500/20",
-    textColor: "text-yellow-400",
-  },
-  member: {
-    icon: "🏆",
-    label: "Member",
-    bgColor: "bg-green-500/20",
-    textColor: "text-green-400",
-  },
-  like: {
-    icon: "👍",
-    label: "Likes",
-    bgColor: "bg-blue-400/20",
-    textColor: "text-blue-300",
-  },
-};
-
-// Icon component type
 type IconComponent = (props: { className?: string; style?: React.CSSProperties }) => React.ReactElement;
 
-// Platform configurations
-const PLATFORMS: Record<string, { icon: IconComponent; color: string; name: string }> = {
+const PLATFORM_MAP: Record<string, { icon: IconComponent; color: string; name: string }> = {
   twitch: { icon: TwitchIcon, color: "#9146FF", name: "Twitch" },
   youtube: { icon: YouTubeIcon, color: "#FF0000", name: "YouTube" },
   kick: { icon: KickIcon, color: "#53FC18", name: "Kick" },
-  trovo: { icon: TrovoIcon, color: "#19D66B", name: "Trovo" },
-  facebook: { icon: FacebookIcon, color: "#1877F2", name: "Facebook" },
-  tiktok: { icon: TikTokIcon, color: "#ffffff", name: "TikTok" },
+  discord: { icon: DiscordIcon, color: "#5865F2", name: "Discord" },
 };
 
-type PlatformKey = "twitch" | "youtube" | "kick" | "trovo" | "facebook" | "tiktok";
-type EventTypeKey = keyof typeof EVENT_TYPES;
+const EVENT_STYLES: Record<string, { icon: string; label: string; color: string }> = {
+  follow: { icon: "❤️", label: "Followed", color: "text-brand-red" },
+  subscribe: { icon: "⭐", label: "Subscribed", color: "text-purple-400" },
+  gift: { icon: "🎁", label: "Gifted", color: "text-pink-400" },
+  donate: { icon: "💎", label: "Donated", color: "text-brand-gold" },
+  raid: { icon: "🚀", label: "Raided", color: "text-blue-400" },
+  bits: { icon: "💜", label: "Cheered", color: "text-purple-300" },
+  tip: { icon: "💰", label: "Tipped", color: "text-brand-gold" },
+  chat: { icon: "💬", label: "Chatted", color: "text-white/70" },
+  join: { icon: "👋", label: "Joined", color: "text-green-400" },
+};
 
-// Placeholder events - will be populated by PRISMAI
-const PLACEHOLDER_EVENTS: Array<{
+interface Event {
   id: string;
-  type: EventTypeKey;
-  platform: PlatformKey;
+  type: string;
+  platform: string;
   user: string;
   message?: string;
   amount?: string;
   time: string;
-}> = [
-  {
-    id: "1",
-    type: "follow",
-    platform: "twitch",
-    user: "Waiting for events...",
-    time: "--:--",
-  },
-  {
-    id: "2",
-    type: "subscribe",
-    platform: "youtube",
-    user: "Waiting for events...",
-    time: "--:--",
-  },
-  {
-    id: "3",
-    type: "donate",
-    platform: "kick",
-    user: "Waiting for events...",
-    time: "--:--",
-  },
-  {
-    id: "4",
-    type: "like",
-    platform: "tiktok",
-    user: "Waiting for events...",
-    time: "--:--",
-  },
-  {
-    id: "5",
-    type: "follow",
-    platform: "facebook",
-    user: "Waiting for events...",
-    time: "--:--",
-  },
-  {
-    id: "6",
-    type: "subscribe",
-    platform: "trovo",
-    user: "Waiting for events...",
-    time: "--:--",
-  },
-];
+}
 
 export default function EventsPanel() {
-  // In production, events would come from PRISMAI WebSocket
-  const events = PLACEHOLDER_EVENTS;
+  const [events, setEvents] = useState<Event[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        // Fetch from both PRISMAI (chat events) and Twitch API (followers)
+        const [chatRes, liveRes] = await Promise.allSettled([
+          fetch(`${PRISMAI_API}/chat`).then((r) => r.json()),
+          fetch(`${TWITCH_API}/twitch/live`).then((r) => r.json()),
+        ]);
+
+        const newEvents: Event[] = [];
+
+        // Parse PRISMAI chat messages into events
+        if (chatRes.status === "fulfilled" && chatRes.value.messages) {
+          const msgs = chatRes.value.messages as Array<{
+            id?: string;
+            platform?: string;
+            username?: string;
+            message?: string;
+            timestamp?: string;
+            type?: string;
+          }>;
+          msgs.slice(0, 10).forEach((msg, i) => {
+            newEvents.push({
+              id: msg.id || `chat-${i}`,
+              type: msg.type || "chat",
+              platform: msg.platform || "discord",
+              user: msg.username || "Unknown",
+              message: msg.message,
+              time: msg.timestamp
+                ? new Date(msg.timestamp).toLocaleTimeString([], {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                : "--:--",
+            });
+          });
+        }
+
+        // Add live status as event if live
+        if (liveRes.status === "fulfilled" && liveRes.value.isLive) {
+          newEvents.unshift({
+            id: "live-status",
+            type: "follow",
+            platform: "twitch",
+            user: `${liveRes.value.viewerCount || 0} viewers`,
+            message: liveRes.value.title,
+            time: "LIVE",
+          });
+        }
+
+        setEvents(newEvents);
+      } catch {
+        // Keep whatever events we have
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEvents();
+    const interval = setInterval(fetchEvents, 15000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const hasEvents = events.length > 0;
 
   return (
     <div className="glass-strong glow-border rounded-xl p-3">
@@ -195,41 +150,68 @@ export default function EventsPanel() {
         </div>
       </div>
 
-      <div className="space-y-1">
-        {events.slice(0, 5).map((event) => {
-          const eventConfig = EVENT_TYPES[event.type];
-          const platformConfig = PLATFORMS[event.platform];
-          const PlatformIcon = platformConfig.icon;
-
-          return (
+      {loading ? (
+        <div className="space-y-1">
+          {[1, 2, 3].map((i) => (
             <div
-              key={event.id}
-              className="flex items-center gap-2 rounded-md bg-white/5 px-2 py-1.5 transition-colors hover:bg-white/8"
+              key={i}
+              className="flex items-center gap-2 rounded-md bg-white/5 px-2 py-1.5 animate-pulse"
             >
-              {/* Left: Avatar + Name + Platform */}
-              <div className="flex items-center gap-2 flex-1 min-w-0">
-                <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white shrink-0">
-                  {event.user.charAt(0).toUpperCase()}
-                </div>
-                <span className="text-xs text-white truncate">{event.user}</span>
-                <PlatformIcon className="w-3 h-3 shrink-0" style={{ color: platformConfig.color }} />
-              </div>
-
-              {/* Right: Event icon + label + amount */}
-              <div className="flex items-center gap-1.5 shrink-0">
-                <span className="text-xs">{eventConfig.icon}</span>
-                <span className={`text-[10px] font-medium ${eventConfig.textColor}`}>
-                  {eventConfig.label}
-                </span>
-                {event.amount && (
-                  <span className="text-[10px] font-bold text-brand-gold">{event.amount}</span>
-                )}
-              </div>
+              <div className="w-5 h-5 rounded-full bg-white/10" />
+              <div className="h-3 w-24 rounded bg-white/10" />
+              <div className="ml-auto h-3 w-12 rounded bg-white/10" />
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      ) : !hasEvents ? (
+        <div className="rounded-md bg-white/[0.03] px-4 py-6 text-center">
+          <p className="text-xs text-muted">
+            No recent events. Events will appear here during live streams.
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-1">
+          {events.slice(0, 5).map((event) => {
+            const style = EVENT_STYLES[event.type] || EVENT_STYLES.chat;
+            const platform = PLATFORM_MAP[event.platform];
+            const PlatformIcon = platform?.icon;
 
+            return (
+              <div
+                key={event.id}
+                className="flex items-center gap-2 rounded-md bg-white/5 px-2 py-1.5 transition-colors hover:bg-white/[0.08]"
+              >
+                <div className="flex items-center gap-2 flex-1 min-w-0">
+                  <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white shrink-0">
+                    {event.user.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="text-xs text-white truncate">
+                    {event.user}
+                  </span>
+                  {PlatformIcon && (
+                    <PlatformIcon
+                      className="w-3 h-3 shrink-0"
+                      style={{ color: platform.color }}
+                    />
+                  )}
+                </div>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  <span className="text-xs">{style.icon}</span>
+                  <span className={`text-[10px] font-medium ${style.color}`}>
+                    {style.label}
+                  </span>
+                  {event.amount && (
+                    <span className="text-[10px] font-bold text-brand-gold">
+                      {event.amount}
+                    </span>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

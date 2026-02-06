@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import WatchHero from "@/components/WatchHero";
+import StreamInfo from "@/components/StreamInfo";
 import ChatPanel from "@/components/ChatPanel";
 import EventsPanel from "@/components/EventsPanel";
 import ClipsVODsSection from "@/components/ClipsVODsSection";
@@ -68,45 +69,8 @@ const SECONDARY_PLATFORMS = [
 export default function WatchPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="gradient-gaming scanlines relative flex flex-col items-center overflow-hidden px-4 sm:px-6 pt-16 sm:pt-20 pb-8 sm:pb-12 text-center">
-        {/* Cinematic smoke layers */}
-        <div className="cinematic-smoke" />
-        {/* Film grain texture */}
-        <div className="film-grain" />
-        {/* Vignette */}
-        <div className="vignette" />
-        {/* Fireflies */}
-        <div className="fireflies">
-          <span className="f1" />
-          <span className="f2" />
-          <span className="f3" />
-          <span className="f4" />
-          <span className="f5" />
-          <span className="f6" />
-        </div>
-        {/* Hero background image */}
-        <div
-          className="hero-image-overlay"
-          style={{
-            backgroundImage: `url("/images/heroes/hero-watch.png")`,
-            opacity: 0.3,
-          }}
-        />
-
-        <div className="relative z-10">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-red/30 bg-brand-red/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-brand-red">
-            <span className="animate-live-pulse h-2 w-2 rounded-full bg-brand-red" />
-            Live Now
-          </span>
-          <h1 className="animate-fade-in-up text-glow-red text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-            WATCH <span className="text-brand-red">LIVE</span>
-          </h1>
-          <p className="animate-fade-in-up animate-delay-100 mt-3 sm:mt-4 max-w-xl text-sm sm:text-base text-muted">
-            Multiplatform streaming across every major platform. Primary feed below — or catch us on your platform of choice.
-          </p>
-        </div>
-      </section>
+      {/* Dynamic Hero with live status */}
+      <WatchHero />
 
       {/* Stream + Chat + Events Layout */}
       <section className="relative z-20 mx-auto max-w-7xl px-4 sm:px-6 py-8 lg:py-12">
@@ -124,25 +88,9 @@ export default function WatchPage() {
                 />
               </div>
             </div>
-            <div className="mt-3 flex items-center justify-between">
-              <p className="text-sm text-muted">
-                Primary stream on{" "}
-                <a
-                  href="https://twitch.tv/ProzilliGaming"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-brand-red transition-colors hover:text-brand-red-glow"
-                >
-                  Twitch
-                </a>
-              </p>
-              <Link
-                href="/schedule"
-                className="text-sm text-brand-gold transition-colors hover:text-white"
-              >
-                View Schedule &rarr;
-              </Link>
-            </div>
+
+            {/* Stream Info Bar - live status, title, viewers */}
+            <StreamInfo />
 
             {/* Recent Events Panel - Multiplatform */}
             <div className="mt-4">
