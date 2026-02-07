@@ -36,6 +36,21 @@ interface LiveStatus {
   liveCount: number;
 }
 
+interface ChatMessage {
+  platform: string;
+  user: string;
+  message: string;
+  timestamp: string;
+}
+
+interface DiscordInfo {
+  id: string;
+  name: string;
+  memberCount: number;
+  icon: string | null;
+  description: string | null;
+}
+
 const PLATFORM_ICONS: Record<string, string> = {
   twitch: "🟣",
   youtube: "🔴",
@@ -51,6 +66,8 @@ export default function AdminDashboard() {
   const [platforms, setPlatforms] = useState<Platform[]>([]);
   const [stats, setStats] = useState<Stats | null>(null);
   const [liveStatus, setLiveStatus] = useState<LiveStatus | null>(null);
+  const [recentChat, setRecentChat] = useState<ChatMessage[]>([]);
+  const [discordInfo, setDiscordInfo] = useState<DiscordInfo | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
@@ -60,6 +77,8 @@ export default function AdminDashboard() {
       fetch(API_BASE + "/platforms").then((r) => r.json()),
       fetch(API_BASE + "/stats").then((r) => r.json()),
       fetch(API_BASE + "/live").then((r) => r.json()),
+      fetch(API_BASE + "/chat?limit=20").then((r) => r.json()),
+      fetch(API_BASE + "/discord/server").then((r) => r.json()),
     ]);
 
     if (results[0].status === "fulfilled") {
@@ -69,6 +88,8 @@ export default function AdminDashboard() {
     if (results[1].status === "fulfilled") setPlatforms(results[1].value.platforms || []);
     if (results[2].status === "fulfilled") setStats(results[2].value);
     if (results[3].status === "fulfilled") setLiveStatus(results[3].value);
+    if (results[4].status === "fulfilled") setRecentChat(results[4].value.messages || []);
+    if (results[5].status === "fulfilled" && !results[5].value.error) setDiscordInfo(results[5].value);
 
     setLastUpdated(new Date());
     setLoading(false);
@@ -81,9 +102,19 @@ export default function AdminDashboard() {
   }, []);
 
   const formatUptime = (seconds: number) => {
-    const h = Math.floor(seconds / 3600);
+    const d = Math.floor(seconds / 86400);
+    const h = Math.floor((seconds % 86400) / 3600);
     const m = Math.floor((seconds % 3600) / 60);
+    if (d > 0) return d + "d " + h + "h " + m + "m";
     return h + "h " + m + "m";
+  };
+
+  const formatTime = (ts: string) => {
+    try {
+      return new Date(ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    } catch {
+      return "";
+    }
   };
 
   const connectedCount = platforms.filter((p) => p.connected).length;
@@ -138,13 +169,20 @@ export default function AdminDashboard() {
         {!loading && coreHealth?.status !== "operational" && (
           <div className="mb-6 rounded-lg border border-yellow-500/30 bg-yellow-500/5 p-4">
             <p className="text-sm font-medium text-yellow-400">
-              PRISMAI servers unreachable from edge
+              PRISMAI Core unreachable
             </p>
             <p className="mt-1 text-xs text-muted">
-              The PRISMAI servers need DNS records with Cloudflare proxy enabled
-              to be accessible over HTTPS. Add A records in your Cloudflare
-              dashboard: prismai-core.prozilli.com → 5.78.106.41 and
-              prismai-analytics.prozilli.com → 5.161.119.210 (proxy enabled).
+              Cannot connect to the PRISMAI engine on Cybrancee. The server may
+              be offline or restarting. Check{" "}
+              <a
+                href="https://panel.cybrancee.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-yellow-400 underline"
+              >
+                panel.cybrancee.com
+              </a>{" "}
+              for server status.
             </p>
           </div>
         )}
@@ -164,7 +202,11 @@ export default function AdminDashboard() {
               label: "PRISMAI Analytics",
               health: analyticsHealth,
               color: "text-brand-gold",
-              extra: "Python / FastAPI",
+              extra: analyticsHealth?.uptime
+                ? "Uptime: " + formatUptime(analyticsHealth.uptime)
+                : analyticsHealth?.status === "operational"
+                  ? "Python / FastAPI"
+                  : null,
             },
           ].map((server) => (
             <div key={server.label} className="glass glow-border rounded-xl p-6">
@@ -304,7 +346,7 @@ export default function AdminDashboard() {
               { value: stats?.messagesToday ?? 0, label: "Messages Today" },
               { value: stats?.uniqueUsers ?? 0, label: "Unique Chatters" },
               {
-                value: stats?.platformsOnline ?? 0,
+                value: stats?.platformsOnline ?? connectedCount,
                 label: "Platforms Online",
               },
               { value: stats?.totalEvents ?? 0, label: "Total Events" },
@@ -319,34 +361,72 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Top Chatters */}
-        {stats?.topChatters && stats.topChatters.length > 0 && (
-          <div className="mb-8">
+        {/* Two-column: Top Chatters + Recent Chat */}
+        <div className="mb-8 grid gap-6 lg:grid-cols-2">
+          {/* Top Chatters */}
+          <div>
             <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               Top Chatters
             </h2>
             <div className="glass rounded-xl p-6">
-              <div className="space-y-3">
-                {stats.topChatters.map((chatter, i) => (
-                  <div
-                    key={chatter.username}
-                    className="flex items-center justify-between"
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-red/20 text-xs font-bold text-brand-red">
-                        {i + 1}
+              {stats?.topChatters && stats.topChatters.length > 0 ? (
+                <div className="space-y-3">
+                  {stats.topChatters.map((chatter, i) => (
+                    <div
+                      key={chatter.username}
+                      className="flex items-center justify-between"
+                    >
+                      <div className="flex items-center gap-3">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-red/20 text-xs font-bold text-brand-red">
+                          {i + 1}
+                        </span>
+                        <span className="text-white">{chatter.username}</span>
+                      </div>
+                      <span className="text-sm text-muted">
+                        {chatter.count} msgs
                       </span>
-                      <span className="text-white">{chatter.username}</span>
                     </div>
-                    <span className="text-sm text-muted">
-                      {chatter.count} msgs
-                    </span>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted">No chat data yet</p>
+              )}
             </div>
           </div>
-        )}
+
+          {/* Recent Chat Feed */}
+          <div>
+            <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
+              Recent Chat
+            </h2>
+            <div className="glass rounded-xl p-6 max-h-80 overflow-y-auto">
+              {recentChat.length > 0 ? (
+                <div className="space-y-2">
+                  {recentChat.map((msg, i) => (
+                    <div key={i} className="flex gap-2 text-sm">
+                      <span className="shrink-0 text-base">
+                        {PLATFORM_ICONS[msg.platform] || "⚪"}
+                      </span>
+                      <div className="min-w-0">
+                        <span className="font-medium text-brand-gold">
+                          {msg.user}
+                        </span>
+                        <span className="ml-2 text-xs text-muted">
+                          {formatTime(msg.timestamp)}
+                        </span>
+                        <p className="text-white/80 break-words">
+                          {msg.message}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted">No recent messages</p>
+              )}
+            </div>
+          </div>
+        </div>
 
         {/* Platform Breakdown */}
         {stats?.platformBreakdown && stats.platformBreakdown.length > 0 && (
@@ -364,7 +444,8 @@ export default function AdminDashboard() {
                   return (
                     <div key={entry.platform}>
                       <div className="flex items-center justify-between mb-1">
-                        <span className="text-sm capitalize text-white">
+                        <span className="flex items-center gap-2 text-sm capitalize text-white">
+                          <span>{PLATFORM_ICONS[entry.platform] || "⚪"}</span>
                           {entry.platform}
                         </span>
                         <span className="text-xs text-muted">
@@ -380,6 +461,35 @@ export default function AdminDashboard() {
                     </div>
                   );
                 })}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Discord Server Info */}
+        {discordInfo && (
+          <div className="mb-8">
+            <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">
+              Discord Server
+            </h2>
+            <div className="glass rounded-xl p-6">
+              <div className="flex items-center gap-4">
+                {discordInfo.icon && (
+                  <img
+                    src={`https://cdn.discordapp.com/icons/${discordInfo.id}/${discordInfo.icon}.png?size=64`}
+                    alt=""
+                    className="h-12 w-12 rounded-full"
+                  />
+                )}
+                <div>
+                  <p className="font-semibold text-white">{discordInfo.name}</p>
+                  <p className="text-sm text-muted">
+                    {discordInfo.memberCount.toLocaleString()} members
+                  </p>
+                  {discordInfo.description && (
+                    <p className="mt-1 text-xs text-muted">{discordInfo.description}</p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -416,6 +526,14 @@ export default function AdminDashboard() {
               className="rounded-sm border border-white/10 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/5"
             >
               Discord
+            </a>
+            <a
+              href="https://panel.cybrancee.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-sm border border-white/10 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/5"
+            >
+              Server Panel
             </a>
           </div>
         </div>

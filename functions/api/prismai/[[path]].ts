@@ -1,5 +1,5 @@
-const PRISMAI_CORE = "http://prismai-core.prozilli.com:5084";
-const PRISMAI_ANALYTICS = "http://prismai-analytics.prozilli.com:5018";
+const PRISMAI_CORE = "http://bot-service-na-west-01.cybrancee.com:5084";
+const PRISMAI_ANALYTICS = "http://bot-service-na-west-01.cybrancee.com:5018";
 
 const CORS_HEADERS: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
