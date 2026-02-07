@@ -196,14 +196,13 @@ const PLATFORM_SCOPES = {
     name: "Instagram",
     icon: "📸",
     color: "#E4405F",
-    authUrl: "https://www.facebook.com/v21.0/dialog/oauth",
+    authUrl: "https://api.instagram.com/oauth/authorize",
     clientId: "788626606846793",
-    note: "Uses Facebook Login. App is in development mode.",
+    note: "Instagram Platform API (Direct Login). Business or Creator account required.",
     requiresPKCE: false,
     scopes: [
-      { id: "instagram_basic", desc: "View Instagram profile info and media", category: "Basic", recommended: "broadcaster" },
-      { id: "instagram_manage_comments", desc: "Read and manage comments on your posts", category: "Basic", recommended: "broadcaster" },
-      { id: "instagram_manage_insights", desc: "View insights and analytics for your Instagram", category: "Analytics" },
+      { id: "instagram_business_basic", desc: "View your Instagram profile info and media", category: "Basic", recommended: "broadcaster" },
+      { id: "instagram_business_content_publish", desc: "Publish photos, videos, and carousels to your account", category: "Publishing", recommended: "broadcaster" },
     ]
   },
   x: {
@@ -359,8 +358,11 @@ export default function ConnectPage() {
       }
 
       case "facebook":
-      case "instagram":
         authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}`;
+        break;
+      case "instagram":
+        // Instagram Platform API uses comma-separated scopes
+        authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(Array.from(scopes).join(","))}&state=${state}`;
         break;
     }
 
