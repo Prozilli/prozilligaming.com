@@ -197,12 +197,14 @@ const PLATFORM_SCOPES = {
     icon: "📸",
     color: "#E4405F",
     authUrl: "https://api.instagram.com/oauth/authorize",
-    clientId: "788626606846793",
+    clientId: "867121056216281",
     note: "Instagram Platform API (Direct Login). Business or Creator account required.",
     requiresPKCE: false,
     scopes: [
       { id: "instagram_business_basic", desc: "View your Instagram profile info and media", category: "Basic", recommended: "broadcaster" },
       { id: "instagram_business_content_publish", desc: "Publish photos, videos, and carousels to your account", category: "Publishing", recommended: "broadcaster" },
+      { id: "instagram_manage_comments", desc: "Read and manage comments on your posts", category: "Engagement" },
+      { id: "instagram_business_manage_messages", desc: "Send and receive Instagram Direct Messages", category: "Messaging" },
     ]
   },
   x: {
