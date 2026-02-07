@@ -164,35 +164,11 @@ const PLATFORM_SCOPES = {
       { id: "guilds", desc: "View list of servers user is in", category: "Guilds" },
       { id: "guilds.join", desc: "Add user to servers (requires bot in server)", category: "Guilds" },
       { id: "guilds.members.read", desc: "View member info (nickname, roles, etc)", category: "Guilds" },
-      { id: "gdm.join", desc: "Add user to group DMs", category: "Guilds" },
       { id: "role_connections.write", desc: "Update linked roles metadata", category: "Guilds" },
       // Bot scopes
       { id: "bot", desc: "Add bot to server with permissions", category: "Bot", recommended: "bot" },
       { id: "applications.commands", desc: "Register and use slash commands", category: "Bot", recommended: "bot" },
-      { id: "applications.commands.update", desc: "Update slash commands via API", category: "Bot" },
-      { id: "applications.commands.permissions.update", desc: "Update command permissions", category: "Bot" },
-      { id: "applications.builds.read", desc: "Read application builds", category: "Bot" },
-      { id: "applications.builds.upload", desc: "Upload application builds", category: "Bot" },
-      { id: "applications.store.update", desc: "Update store listings", category: "Bot" },
-      { id: "applications.entitlements", desc: "Read app entitlements/purchases", category: "Bot" },
       { id: "webhook.incoming", desc: "Create webhook and get URL", category: "Bot" },
-      // Messages
-      { id: "messages.read", desc: "Read messages in all channels (requires approval)", category: "Messages" },
-      { id: "dm_channels.read", desc: "View DM and group DM info", category: "Messages" },
-      // RPC (Rich Presence Control) - Desktop only
-      { id: "rpc", desc: "Control local Discord client (desktop)", category: "RPC" },
-      { id: "rpc.notifications.read", desc: "Receive notifications (desktop)", category: "RPC" },
-      { id: "rpc.voice.read", desc: "Read voice settings (desktop)", category: "RPC" },
-      { id: "rpc.voice.write", desc: "Update voice settings (desktop)", category: "RPC" },
-      { id: "rpc.activities.write", desc: "Update Rich Presence activity (desktop)", category: "RPC" },
-      // Presence & Activities
-      { id: "activities.read", desc: "View user's game activity / Now Playing", category: "Presence" },
-      { id: "activities.write", desc: "Update user's activity status", category: "Presence" },
-      { id: "voice", desc: "Connect to voice on user's behalf", category: "Presence" },
-      // Social (requires approval)
-      { id: "relationships.read", desc: "View friends and blocked users (requires approval)", category: "Social" },
-      // Admin (for server management bots)
-      { id: "manage_guilds", desc: "Manage servers the user owns/administers", category: "Admin" },
     ]
   }
 };
