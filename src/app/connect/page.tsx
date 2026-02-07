@@ -133,7 +133,7 @@ const PLATFORM_SCOPES = {
     icon: "🟡",
     color: "#19D65C",
     authUrl: "https://open.trovo.live/page/login.html",
-    clientId: "74f39746d2fa39f6ddf396c3e1c8c68",
+    clientId: "aeaf81c93a5f587c797cc9bde7ffa28e",
     note: "",
     requiresPKCE: false,
     scopes: [
