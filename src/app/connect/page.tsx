@@ -185,8 +185,9 @@ const PLATFORM_SCOPES = {
       { id: "pages_read_engagement", desc: "Read engagement data on your Pages", category: "Pages", recommended: "broadcaster" },
       { id: "pages_manage_posts", desc: "Create and manage Page posts", category: "Pages" },
       { id: "pages_read_user_content", desc: "Read user-generated content on your Pages", category: "Pages" },
-      // Video
-      { id: "publish_video", desc: "Publish live video to your Page", category: "Video", recommended: "broadcaster" },
+      // Content
+      { id: "pages_read_user_content", desc: "Read user-generated content on your Pages", category: "Content" },
+      { id: "pages_manage_engagement", desc: "Manage comments and reactions on your Pages", category: "Content" },
       // Messaging
       { id: "pages_messaging", desc: "Send and receive messages via Messenger", category: "Messaging" },
     ]
