@@ -136,11 +136,10 @@ export function CartProvider({ children }: CartProviderProps) {
 
       const response = await createCart(cartItems);
 
-      // Clear cart after successful checkout creation
-      clearCart();
+      // Close drawer and redirect to Fourthwall checkout
+      // Don't clear cart before redirect — if redirect fails, cart data is preserved.
+      // Fourthwall handles checkout state independently.
       setIsOpen(false);
-
-      // Redirect to Fourthwall checkout
       window.location.href = response.checkoutUrl;
     } catch (error) {
       console.error("Checkout error:", error);

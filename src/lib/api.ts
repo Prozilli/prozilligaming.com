@@ -272,9 +272,8 @@ export function formatPrice(
     currency: price.currency || "USD",
   });
 
-  // Fourthwall prices are typically in cents
-  const amount = price.value >= 100 ? price.value / 100 : price.value;
-  return formatter.format(amount);
+  // Fourthwall prices are in dollars (e.g. value: 45 = $45.00)
+  return formatter.format(price.value);
 }
 
 /**

@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
-import { formatPriceFromCents } from "@/lib/api";
 
 export default function CartDrawer() {
   const {
@@ -156,7 +155,8 @@ export default function CartDrawer() {
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
-                          className="flex h-7 w-7 items-center justify-center rounded border border-white/20 text-white transition-colors hover:border-white/40"
+                          disabled={item.quantity <= 1}
+                          className="flex h-7 w-7 items-center justify-center rounded border border-white/20 text-white transition-colors hover:border-white/40 disabled:cursor-not-allowed disabled:opacity-30"
                         >
                           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
@@ -178,7 +178,7 @@ export default function CartDrawer() {
 
                       {/* Price */}
                       <span className="text-sm font-semibold text-brand-gold">
-                        {formatPriceFromCents(item.price * item.quantity, item.currency)}
+                        {new Intl.NumberFormat("en-US", { style: "currency", currency: item.currency || "USD" }).format(item.price * item.quantity)}
                       </span>
                     </div>
                   </div>
@@ -195,7 +195,7 @@ export default function CartDrawer() {
             <div className="mb-4 flex items-center justify-between">
               <span className="text-sm text-muted">Subtotal</span>
               <span className="text-lg font-bold text-white">
-                {formatPriceFromCents(subtotal, currency)}
+                {new Intl.NumberFormat("en-US", { style: "currency", currency }).format(subtotal)}
               </span>
             </div>
 
