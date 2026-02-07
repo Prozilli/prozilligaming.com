@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Terms of Service",
   description:
-    "Terms of Service for Prozilli Gaming and Prozilli Inc. services. Read our terms for website usage, community guidelines, and service agreements.",
+    "Terms of Service for Prozilli Gaming, PRISMAI, and Prozilli Inc. services. Read our terms for website usage, application usage, community guidelines, and service agreements.",
   robots: {
     index: true,
     follow: true,
@@ -38,7 +38,7 @@ export default function TermsPage() {
               1. Introduction
             </h2>
             <p>
-              Welcome to Prozilli Gaming (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), a division of Prozilli Entertainment operated under Prozilli Inc. These Terms of Service (&quot;Terms&quot;) govern your access to and use of the Prozilli Gaming website located at prozilligaming.com, our streaming content, community platforms, and all related services (collectively, the &quot;Services&quot;).
+              Welcome to Prozilli Gaming (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), a division of Prozilli Entertainment operated under Prozilli Inc. These Terms of Service (&quot;Terms&quot;) govern your access to and use of the Prozilli Gaming website located at prozilligaming.com, our applications including PRISMAI, our streaming content, community platforms, and all related services (collectively, the &quot;Services&quot;). PRISMAI is an application developed and operated by Prozilli Inc. that provides AI-powered content and social media services through third-party platforms, including TikTok.
             </p>
             <p className="mt-3">
               By accessing or using our Services, you agree to be bound by these Terms. If you do not agree to these Terms, you must not access or use our Services.
@@ -51,7 +51,7 @@ export default function TermsPage() {
               2. Use of Services
             </h2>
             <p>
-              You may use our Services only in compliance with these Terms and all applicable local, state, national, and international laws, rules, and regulations. You must be at least 13 years of age to use our Services. If you are under 18, you represent that you have your parent or guardian&apos;s consent to use the Services.
+              You may use our Services, including PRISMAI, only in compliance with these Terms and all applicable local, state, national, and international laws, rules, and regulations. You must be at least 13 years of age to use our Services. If you are under 18, you represent that you have your parent or guardian&apos;s consent to use the Services.
             </p>
             <p className="mt-3">
               We reserve the right to modify, suspend, or discontinue any aspect of the Services at any time, with or without notice. We shall not be liable to you or any third party for any modification, suspension, or discontinuation of the Services.
@@ -77,13 +77,13 @@ export default function TermsPage() {
               4. Content and Intellectual Property
             </h2>
             <p>
-              All content available through our Services, including but not limited to text, graphics, logos, images, audio, video, stream recordings, branding materials, and software, is the property of Prozilli Inc. or its licensors and is protected by United States and international copyright, trademark, and other intellectual property laws.
+              All content available through our Services, including but not limited to text, graphics, logos, images, audio, video, stream recordings, branding materials, software, and content generated or delivered through PRISMAI, is the property of Prozilli Inc. or its licensors and is protected by United States and international copyright, trademark, and other intellectual property laws.
             </p>
             <p className="mt-3">
               You may not reproduce, distribute, modify, create derivative works of, publicly display, publicly perform, republish, download, store, or transmit any of our content without our prior written consent, except as permitted by fair use under applicable law.
             </p>
             <p className="mt-3">
-              The Prozilli Gaming name, logo, and all related names, logos, product and service names, designs, and slogans are trademarks of Prozilli Inc. You must not use such marks without our prior written permission.
+              The Prozilli Gaming name, the PRISMAI name, and all related names, logos, product and service names, designs, and slogans are trademarks of Prozilli Inc. You must not use such marks without our prior written permission.
             </p>
           </div>
 
@@ -141,7 +141,7 @@ export default function TermsPage() {
               8. Third-Party Services and Links
             </h2>
             <p>
-              Our Services may contain links to third-party websites, services, or content that are not owned or controlled by Prozilli Inc. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that Prozilli Inc. shall not be responsible or liable for any damage or loss caused by your use of any such third-party websites or services.
+              Our Services, including PRISMAI, may contain links to or integrate with third-party websites, services, or content that are not owned or controlled by Prozilli Inc., including but not limited to TikTok and other social media platforms. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. Your use of PRISMAI in connection with third-party platforms such as TikTok is also subject to those platforms&apos; respective terms and policies. You acknowledge and agree that Prozilli Inc. shall not be responsible or liable for any damage or loss caused by your use of any such third-party websites or services.
             </p>
           </div>
 
@@ -151,7 +151,7 @@ export default function TermsPage() {
               9. Disclaimer of Warranties
             </h2>
             <p>
-              THE SERVICES ARE PROVIDED ON AN &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR COURSE OF PERFORMANCE. PROZILLI INC. DOES NOT WARRANT THAT THE SERVICES WILL BE UNINTERRUPTED, TIMELY, SECURE, OR ERROR-FREE.
+              THE SERVICES, INCLUDING PRISMAI, ARE PROVIDED ON AN &quot;AS IS&quot; AND &quot;AS AVAILABLE&quot; BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR COURSE OF PERFORMANCE. PROZILLI INC. DOES NOT WARRANT THAT THE SERVICES, INCLUDING PRISMAI, WILL BE UNINTERRUPTED, TIMELY, SECURE, OR ERROR-FREE.
             </p>
           </div>
 

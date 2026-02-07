@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Privacy Policy",
   description:
-    "Privacy Policy for Prozilli Gaming and Prozilli Inc. Learn how we collect, use, and protect your personal information across our platforms and services.",
+    "Privacy Policy for Prozilli Gaming, PRISMAI, and Prozilli Inc. Learn how we collect, use, and protect your personal information across our platforms and services, including the PRISMAI application.",
   robots: {
     index: true,
     follow: true,
@@ -38,7 +38,7 @@ export default function PrivacyPage() {
               1. Introduction
             </h2>
             <p>
-              Prozilli Gaming (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), a division of Prozilli Entertainment operated under Prozilli Inc., is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website at prozilligaming.com, use our streaming services, interact with our community platforms, or engage with any of our related services (collectively, the &quot;Services&quot;).
+              Prozilli Gaming (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;), a division of Prozilli Entertainment operated under Prozilli Inc., is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website at prozilligaming.com, use our applications including PRISMAI, use our streaming services, interact with our community platforms, or engage with any of our related services (collectively, the &quot;Services&quot;). PRISMAI is an application developed and operated by Prozilli Inc. that provides AI-powered content and social media services through third-party platforms, including TikTok.
             </p>
             <p className="mt-3">
               Please read this Privacy Policy carefully. By accessing or using our Services, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy. If you do not agree with the terms of this Privacy Policy, please do not access or use our Services.
@@ -53,10 +53,10 @@ export default function PrivacyPage() {
             <h3 className="mb-2 mt-4 font-semibold text-brand-silver">
               2.1 Information You Provide
             </h3>
-            <p>We may collect information that you voluntarily provide when using our Services, including:</p>
+            <p>We may collect information that you voluntarily provide when using our Services, including through the PRISMAI application:</p>
             <ul className="mt-3 list-inside list-disc space-y-2">
               <li>Contact information (such as email address) when you reach out for business inquiries</li>
-              <li>Account information when you register through third-party platforms (Discord, Twitch, YouTube, etc.)</li>
+              <li>Account information when you register through third-party platforms (Discord, Twitch, YouTube, TikTok, etc.) or when you authenticate with PRISMAI</li>
               <li>Payment and transaction information when you make purchases or donations through third-party services (Fourthwall, Ko-fi, Patreon, PayPal)</li>
               <li>User-generated content, including chat messages, community posts, and application submissions</li>
               <li>Any other information you choose to provide to us</li>
@@ -65,7 +65,7 @@ export default function PrivacyPage() {
             <h3 className="mb-2 mt-6 font-semibold text-brand-silver">
               2.2 Information Collected Automatically
             </h3>
-            <p>When you access our Services, we may automatically collect certain information, including:</p>
+            <p>When you access our Services, including through PRISMAI, we may automatically collect certain information, including:</p>
             <ul className="mt-3 list-inside list-disc space-y-2">
               <li>Device information (browser type, operating system, device identifiers)</li>
               <li>Log data (IP address, access times, pages viewed, referring URLs)</li>
@@ -109,9 +109,9 @@ export default function PrivacyPage() {
             <h2 className="mb-4 text-lg font-bold tracking-wide text-white">
               4. How We Use Your Information
             </h2>
-            <p>We may use the information we collect for the following purposes:</p>
+            <p>We may use the information we collect, including information collected through PRISMAI, for the following purposes:</p>
             <ul className="mt-3 list-inside list-disc space-y-2">
-              <li>To provide, maintain, and improve our Services</li>
+              <li>To provide, maintain, and improve our Services, including the PRISMAI application</li>
               <li>To process transactions and send related information</li>
               <li>To send you updates, notifications, and communications related to our Services</li>
               <li>To respond to your inquiries, comments, or requests</li>
@@ -157,7 +157,7 @@ export default function PrivacyPage() {
               <li>Community platforms (Discord)</li>
               <li>Commerce platforms (Fourthwall)</li>
               <li>Support platforms (Ko-fi, Patreon, PayPal)</li>
-              <li>Social media platforms (TikTok, Instagram, X)</li>
+              <li>Social media platforms (TikTok, Instagram, X) -- including via PRISMAI, which integrates with TikTok</li>
             </ul>
             <p className="mt-3">
               These third-party services have their own privacy policies and data collection practices. We encourage you to review the privacy policies of any third-party services you interact with through our Services. We are not responsible for the privacy practices of these third parties.
