@@ -201,10 +201,9 @@ const PLATFORM_SCOPES = {
     note: "Uses Facebook Login. App is in development mode.",
     requiresPKCE: false,
     scopes: [
-      { id: "instagram_business_basic", desc: "Basic access to Instagram Business account", category: "Business", recommended: "broadcaster" },
-      { id: "instagram_manage_comments", desc: "Read and manage comments on your posts", category: "Business", recommended: "broadcaster" },
-      { id: "instagram_business_manage_messages", desc: "Send and receive Instagram Direct Messages", category: "Messaging" },
-      { id: "instagram_content_publish", desc: "Publish content to your Instagram account", category: "Content" },
+      { id: "instagram_basic", desc: "View Instagram profile info and media", category: "Basic", recommended: "broadcaster" },
+      { id: "instagram_manage_comments", desc: "Read and manage comments on your posts", category: "Basic", recommended: "broadcaster" },
+      { id: "instagram_manage_insights", desc: "View insights and analytics for your Instagram", category: "Analytics" },
     ]
   },
   x: {
