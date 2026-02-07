@@ -48,9 +48,32 @@ export const onRequestGet: PagesFunction = async (context) => {
     );
   }
 
+  // SSE: Stream chat/stream through without buffering
+  if (path === "chat/stream") {
+    try {
+      const res = await fetch(`${PRISMAI_CORE}/chat/stream`);
+      return new Response(res.body, {
+        headers: {
+          "Content-Type": "text/event-stream",
+          "Cache-Control": "no-cache",
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET, OPTIONS",
+          "Access-Control-Allow-Headers": "Content-Type",
+        },
+      });
+    } catch {
+      return new Response(
+        JSON.stringify({ error: "SSE connection failed" }),
+        { status: 502, headers: CORS_HEADERS }
+      );
+    }
+  }
+
   // Route to appropriate backend
   const baseUrl = path.startsWith("analytics/") ? PRISMAI_ANALYTICS : PRISMAI_CORE;
-  const result = await safeFetch(`${baseUrl}/${path}`);
+  const url = new URL(context.request.url);
+  const queryString = url.search;
+  const result = await safeFetch(`${baseUrl}/${path}${queryString}`);
 
   if (result.ok) {
     return new Response(JSON.stringify(result.data), { headers: CORS_HEADERS });

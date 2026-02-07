@@ -170,6 +170,75 @@ const PLATFORM_SCOPES = {
       { id: "applications.commands", desc: "Register and use slash commands", category: "Bot", recommended: "bot" },
       { id: "webhook.incoming", desc: "Create webhook and get URL", category: "Bot" },
     ]
+  },
+  facebook: {
+    name: "Facebook",
+    icon: "🔵",
+    color: "#1877F2",
+    authUrl: "https://www.facebook.com/v21.0/dialog/oauth",
+    clientId: "788626606846793",
+    note: "App is in development mode. Requires app review for public access.",
+    requiresPKCE: false,
+    scopes: [
+      // Pages
+      { id: "pages_show_list", desc: "View list of Pages you manage", category: "Pages", recommended: "broadcaster" },
+      { id: "pages_read_engagement", desc: "Read engagement data on your Pages", category: "Pages", recommended: "broadcaster" },
+      { id: "pages_manage_posts", desc: "Create and manage Page posts", category: "Pages" },
+      { id: "pages_read_user_content", desc: "Read user-generated content on your Pages", category: "Pages" },
+      // Video
+      { id: "publish_video", desc: "Publish live video to your Page", category: "Video", recommended: "broadcaster" },
+      // Messaging
+      { id: "pages_messaging", desc: "Send and receive messages via Messenger", category: "Messaging" },
+    ]
+  },
+  instagram: {
+    name: "Instagram",
+    icon: "📸",
+    color: "#E4405F",
+    authUrl: "https://www.facebook.com/v21.0/dialog/oauth",
+    clientId: "788626606846793",
+    note: "Uses Facebook Login. App is in development mode.",
+    requiresPKCE: false,
+    scopes: [
+      { id: "instagram_business_basic", desc: "Basic access to Instagram Business account", category: "Business", recommended: "broadcaster" },
+      { id: "instagram_manage_comments", desc: "Read and manage comments on your posts", category: "Business", recommended: "broadcaster" },
+      { id: "instagram_business_manage_messages", desc: "Send and receive Instagram Direct Messages", category: "Messaging" },
+      { id: "instagram_content_publish", desc: "Publish content to your Instagram account", category: "Content" },
+    ]
+  },
+  x: {
+    name: "X (Twitter)",
+    icon: "✖",
+    color: "#000000",
+    authUrl: "https://twitter.com/i/oauth2/authorize",
+    clientId: "b2Q0dmxsWUhQMGk5ZTV6S1hqVTY6MTpjaQ",
+    note: "",
+    requiresPKCE: true,
+    scopes: [
+      // Read
+      { id: "tweet.read", desc: "View tweets, timeline, lists, and spaces", category: "Read", recommended: "both" },
+      { id: "users.read", desc: "View user profile information", category: "Read", recommended: "both" },
+      { id: "follows.read", desc: "View who you follow and who follows you", category: "Read" },
+      { id: "list.read", desc: "View your lists", category: "Read" },
+      { id: "space.read", desc: "View spaces", category: "Read" },
+      { id: "mute.read", desc: "View muted accounts", category: "Read" },
+      { id: "like.read", desc: "View liked tweets", category: "Read" },
+      { id: "block.read", desc: "View blocked accounts", category: "Read" },
+      { id: "bookmark.read", desc: "View bookmarked tweets", category: "Read" },
+      // Write
+      { id: "tweet.write", desc: "Post, retweet, and delete tweets", category: "Write", recommended: "both" },
+      { id: "follows.write", desc: "Follow and unfollow accounts", category: "Write" },
+      { id: "list.write", desc: "Create and manage lists", category: "Write" },
+      { id: "mute.write", desc: "Mute and unmute accounts", category: "Write" },
+      { id: "like.write", desc: "Like and unlike tweets", category: "Write" },
+      { id: "block.write", desc: "Block and unblock accounts", category: "Write" },
+      { id: "bookmark.write", desc: "Bookmark and remove bookmarks", category: "Write" },
+      // DMs
+      { id: "dm.read", desc: "Read direct messages", category: "Direct Messages" },
+      { id: "dm.write", desc: "Send direct messages", category: "Direct Messages" },
+      // Auth
+      { id: "offline.access", desc: "Stay connected (refresh token)", category: "Auth", recommended: "both" },
+    ]
   }
 };
 
@@ -276,6 +345,23 @@ export default function ConnectPage() {
         authUrl = `${platformData.authUrl}?${params.toString()}`;
         break;
       }
+
+      case "x": {
+        // X uses PKCE S256 — embed verifier in state (same pattern as Kick)
+        // X Developer Portal has callback registered as /callback/twitter
+        const xRedirectUri = `${API_BASE}/callback/twitter`;
+        const xVerifier = generateCodeVerifier();
+        const xChallenge = await generateS256Challenge(xVerifier);
+        const xState = `${state}|${xVerifier}`;
+        const xUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(xRedirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${encodeURIComponent(xState)}&code_challenge=${xChallenge}&code_challenge_method=S256`;
+        window.open(xUrl, `oauth_${platform}`, "width=600,height=800,left=200,top=50");
+        return;
+      }
+
+      case "facebook":
+      case "instagram":
+        authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}`;
+        break;
     }
 
     if (authUrl) {
