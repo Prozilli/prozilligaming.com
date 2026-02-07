@@ -147,7 +147,7 @@ export function CartProvider({ children }: CartProviderProps) {
     } finally {
       setIsCheckingOut(false);
     }
-  }, [items, clearCart]);
+  }, [items]);
 
   const itemCount = useMemo(
     () => items.reduce((sum, item) => sum + item.quantity, 0),

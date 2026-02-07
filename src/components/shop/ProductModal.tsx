@@ -257,6 +257,7 @@ export default function ProductModal({
                             backgroundColor: getColorHex(swatch),
                           }}
                           title={color}
+                          aria-label={`Select ${color}`}
                         >
                           {isSelected && (
                             <svg
@@ -323,6 +324,7 @@ export default function ProductModal({
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                     className="flex h-10 w-10 items-center justify-center rounded-sm border border-white/20 text-white transition-colors hover:border-white/40"
                     disabled={quantity <= 1}
+                    aria-label="Decrease quantity"
                   >
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
@@ -335,6 +337,7 @@ export default function ProductModal({
                     onClick={() => setQuantity((q) => Math.min(10, q + 1))}
                     className="flex h-10 w-10 items-center justify-center rounded-sm border border-white/20 text-white transition-colors hover:border-white/40"
                     disabled={quantity >= 10}
+                    aria-label="Increase quantity"
                   >
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
