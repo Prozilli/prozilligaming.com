@@ -277,20 +277,6 @@ export function formatPrice(
 }
 
 /**
- * Format price from cents to display value
- */
-export function formatPriceFromCents(
-  cents: number,
-  currency: string = "USD"
-): string {
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency,
-  });
-  return formatter.format(cents / 100);
-}
-
-/**
  * Fetch single product by slug
  */
 export async function getProductBySlug(
