@@ -30,6 +30,12 @@ interface Stats {
   topChatters: { username: string; count: number }[];
 }
 
+interface AnalyticsSummary {
+  revenue: { total: number; change: number };
+  messages: { total: number; change: number };
+  sparkline: number[];
+}
+
 interface LiveStatus {
   isLive: boolean;
   platforms: Platform[];
@@ -68,6 +74,7 @@ export default function AdminDashboard() {
   const [liveStatus, setLiveStatus] = useState<LiveStatus | null>(null);
   const [recentChat, setRecentChat] = useState<ChatMessage[]>([]);
   const [discordInfo, setDiscordInfo] = useState<DiscordInfo | null>(null);
+  const [analyticsSummary, setAnalyticsSummary] = useState<AnalyticsSummary | null>(null);
   const [loading, setLoading] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
@@ -79,6 +86,7 @@ export default function AdminDashboard() {
       fetch(API_BASE + "/live").then((r) => r.json()),
       fetch(API_BASE + "/chat?limit=20").then((r) => r.json()),
       fetch(API_BASE + "/discord/server").then((r) => r.json()),
+      fetch(API_BASE + "/analytics/summary?days=7").then((r) => r.json()),
     ]);
 
     if (results[0].status === "fulfilled") {
@@ -90,6 +98,7 @@ export default function AdminDashboard() {
     if (results[3].status === "fulfilled") setLiveStatus(results[3].value);
     if (results[4].status === "fulfilled") setRecentChat(results[4].value.messages || []);
     if (results[5].status === "fulfilled" && !results[5].value.error) setDiscordInfo(results[5].value);
+    if (results[6].status === "fulfilled" && !results[6].value.error) setAnalyticsSummary(results[6].value);
 
     setLastUpdated(new Date());
     setLoading(false);
@@ -360,6 +369,52 @@ export default function AdminDashboard() {
             ))}
           </div>
         </div>
+
+        {/* Analytics Summary Row */}
+        {analyticsSummary && (
+          <div className="mb-8 glass rounded-xl p-6">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">
+                Revenue Snapshot (7d)
+              </h2>
+              <Link
+                href="/admin/analytics"
+                className="text-xs font-medium text-brand-red hover:text-brand-red/80 transition-colors"
+              >
+                View Analytics &rarr;
+              </Link>
+            </div>
+            <div className="flex items-center gap-8">
+              <div>
+                <p className="text-2xl font-bold text-brand-gold">
+                  ${analyticsSummary.revenue.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                </p>
+                <p className={"text-xs font-medium " + (analyticsSummary.revenue.change >= 0 ? "text-green-400" : "text-red-400")}>
+                  {analyticsSummary.revenue.change >= 0 ? "\u25B2" : "\u25BC"} {Math.abs(analyticsSummary.revenue.change)}% vs prev 7d
+                </p>
+              </div>
+              {/* Sparkline */}
+              {analyticsSummary.sparkline.length > 1 && (
+                <div className="flex-1 h-10">
+                  <svg viewBox={`0 0 ${analyticsSummary.sparkline.length * 10} 40`} className="h-full w-full" preserveAspectRatio="none">
+                    {(() => {
+                      const data = analyticsSummary.sparkline;
+                      const max = Math.max(...data, 1);
+                      const points = data.map((v, i) => `${i * 10},${40 - (v / max) * 36}`).join(" ");
+                      const area = `0,40 ${points} ${(data.length - 1) * 10},40`;
+                      return (
+                        <>
+                          <polygon points={area} fill="rgba(212, 160, 23, 0.15)" />
+                          <polyline points={points} fill="none" stroke="#d4a017" strokeWidth="2" />
+                        </>
+                      );
+                    })()}
+                  </svg>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Two-column: Top Chatters + Recent Chat */}
         <div className="mb-8 grid gap-6 lg:grid-cols-2">

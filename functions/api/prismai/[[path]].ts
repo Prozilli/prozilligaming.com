@@ -70,7 +70,8 @@ export const onRequestGet: PagesFunction = async (context) => {
   }
 
   // Route to appropriate backend
-  const baseUrl = path.startsWith("analytics/") ? PRISMAI_ANALYTICS : PRISMAI_CORE;
+  // analytics/* endpoints are on Core (Fastify), python-analytics/* is on Python
+  const baseUrl = path.startsWith("python-analytics/") ? PRISMAI_ANALYTICS : PRISMAI_CORE;
   const url = new URL(context.request.url);
   const queryString = url.search;
   const result = await safeFetch(`${baseUrl}/${path}${queryString}`);
@@ -90,9 +91,14 @@ export const onRequestPost: PagesFunction = async (context) => {
 
   try {
     const body = await context.request.text();
+    const headers: Record<string, string> = { "Content-Type": "application/json" };
+    // Forward Authorization header for internal API calls (token storage, etc.)
+    const authHeader = context.request.headers.get("Authorization");
+    if (authHeader) headers["Authorization"] = authHeader;
+
     const res = await fetch(`${PRISMAI_CORE}/${path}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers,
       body,
     });
     const text = await res.text();

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AdminNav from "@/components/admin/AdminNav";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -14,5 +15,10 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  return (
+    <>
+      <AdminNav />
+      {children}
+    </>
+  );
 }
