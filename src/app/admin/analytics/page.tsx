@@ -93,9 +93,7 @@ export default function AnalyticsPage() {
 
   // Extract chart labels/data from engagement timeline
   const engagementLabels = engagement?.timeline.map((d) => {
-    const s = String(d.bucket);
-    // Show just month/day
-    return s.length > 10 ? s.slice(5, 10) : s.slice(5, 10);
+    return String(d.bucket).slice(5, 10);
   }) || [];
 
   const engagementSeries = [

@@ -174,7 +174,7 @@ export default function SupportPage() {
         <div
           className="hero-image-overlay"
           style={{
-            backgroundImage: `url("/images/heroes/hero-support.png")`,
+            backgroundImage: `url("/images/heroes/hero-support.webp")`,
             opacity: 0.35,
           }}
         />

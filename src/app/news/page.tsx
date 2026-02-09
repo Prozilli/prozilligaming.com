@@ -85,7 +85,7 @@ export default function NewsPage() {
         <div
           className="hero-image-overlay"
           style={{
-            backgroundImage: `url("/images/heroes/hero-news.png")`,
+            backgroundImage: `url("/images/heroes/hero-news.webp")`,
             opacity: 0.3,
           }}
         />

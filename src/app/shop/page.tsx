@@ -288,7 +288,7 @@ export default async function ShopPage() {
         <div
           className="hero-image-overlay"
           style={{
-            backgroundImage: `url("/images/heroes/hero-shop.png")`,
+            backgroundImage: `url("/images/heroes/hero-shop.webp")`,
             opacity: 0.3,
           }}
         />

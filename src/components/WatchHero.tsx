@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const API_BASE = "https://api.prozilli.com";
+const API_BASE = "/api/prismai";
 
 interface LiveData {
   isLive: boolean;
@@ -72,7 +72,7 @@ export default function WatchHero() {
       <div
         className="hero-image-overlay"
         style={{
-          backgroundImage: `url("/images/heroes/hero-watch.png")`,
+          backgroundImage: `url("/images/heroes/hero-watch.webp")`,
           opacity: 0.3,
         }}
       />

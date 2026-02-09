@@ -244,7 +244,7 @@ const PLATFORM_SCOPES = {
   }
 };
 
-const API_BASE = "https://api.prozilli.com";
+const API_BASE = "https://api.prozilli.com"; // Must use full URL for OAuth redirects (not proxy)
 
 type PlatformKey = keyof typeof PLATFORM_SCOPES;
 
@@ -589,7 +589,7 @@ export default function ConnectPage() {
         <div className="mt-8 p-6 rounded-xl bg-white/5 border border-white/10">
           <h3 className="font-bold mb-3">🔍 Connection Status</h3>
           <a
-            href="http://5.78.106.41:5084/platforms"
+            href="/api/prismai/platforms"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-4 py-2 bg-[#910000] rounded-lg text-sm font-semibold hover:bg-[#a10000] transition-colors"

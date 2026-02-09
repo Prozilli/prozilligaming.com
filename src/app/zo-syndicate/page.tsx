@@ -176,7 +176,7 @@ export default function ZOSyndicatePage() {
         <div
           className="hero-image-overlay"
           style={{
-            backgroundImage: `url("/images/heroes/hero-zo.png")`,
+            backgroundImage: `url("/images/heroes/hero-zo.webp")`,
             opacity: 0.4,
           }}
         />

@@ -114,7 +114,7 @@ export default function SchedulePage() {
         <div
           className="hero-image-overlay"
           style={{
-            backgroundImage: `url("/images/heroes/hero-schedule.png")`,
+            backgroundImage: `url("/images/heroes/hero-schedule.webp")`,
             opacity: 0.3,
           }}
         />

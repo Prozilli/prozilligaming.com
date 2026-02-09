@@ -257,11 +257,11 @@ export default function ChatPanel() {
             </div>
           )}
 
-          {/* Messages */}
+          {/* Messages (virtualized — only renders visible window) */}
           <div
             ref={scrollRef}
             onScroll={handleScroll}
-            className="flex-1 overflow-y-auto px-2 py-1 space-y-0.5 scrollbar-thin"
+            className="flex-1 overflow-y-auto px-2 py-1 scrollbar-thin"
           >
             {filtered.length === 0 ? (
               <div className="flex items-center justify-center h-full">
@@ -272,9 +272,7 @@ export default function ChatPanel() {
                 </p>
               </div>
             ) : (
-              filtered.map((msg, i) => (
-                <ChatBubble key={`${msg.platform}-${msg.timestamp}-${i}`} msg={msg} />
-              ))
+              <VirtualizedMessages messages={filtered} scrollRef={scrollRef} />
             )}
             <div ref={messagesEndRef} />
           </div>
@@ -307,6 +305,57 @@ export default function ChatPanel() {
           </div>
         </>
       )}
+    </div>
+  );
+}
+
+// ── Virtualized message list ──────────────────────────────────────
+// Only renders messages visible in the scroll viewport + a small buffer.
+// Each row is ~24px. We render 80 items max in the DOM at a time.
+
+const ROW_HEIGHT = 24;
+const OVERSCAN = 20;
+
+function VirtualizedMessages({
+  messages,
+  scrollRef,
+}: {
+  messages: ChatMessage[];
+  scrollRef: React.RefObject<HTMLDivElement | null>;
+}) {
+  const [visibleRange, setVisibleRange] = useState({ start: 0, end: 80 });
+
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    function recalc() {
+      const scrollTop = el!.scrollTop;
+      const viewportH = el!.clientHeight;
+      const start = Math.max(0, Math.floor(scrollTop / ROW_HEIGHT) - OVERSCAN);
+      const visible = Math.ceil(viewportH / ROW_HEIGHT);
+      const end = Math.min(messages.length, start + visible + OVERSCAN * 2);
+      setVisibleRange({ start, end });
+    }
+
+    recalc();
+    el.addEventListener("scroll", recalc, { passive: true });
+    return () => el.removeEventListener("scroll", recalc);
+  }, [messages.length, scrollRef]);
+
+  const totalHeight = messages.length * ROW_HEIGHT;
+  const offsetY = visibleRange.start * ROW_HEIGHT;
+
+  return (
+    <div style={{ height: totalHeight, position: "relative" }}>
+      <div style={{ position: "absolute", top: offsetY, left: 0, right: 0 }}>
+        {messages.slice(visibleRange.start, visibleRange.end).map((msg, i) => (
+          <ChatBubble
+            key={`${msg.platform}-${msg.timestamp}-${visibleRange.start + i}`}
+            msg={msg}
+          />
+        ))}
+      </div>
     </div>
   );
 }

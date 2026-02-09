@@ -1,6 +1,13 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import NextStreamCountdown from "@/components/NextStreamCountdown";
+
+export const metadata: Metadata = {
+  title: "Prozilli Gaming — Live Multiplatform Streaming",
+  description:
+    "Watch Prozilli live across Twitch, YouTube, Kick, Trovo, and more. Cinematic gaming content, community events, and the PRISMAI-powered streaming experience.",
+};
 
 const PLATFORMS = [
   { name: "YouTube", href: "https://youtube.com/@prozilligaming" },
@@ -61,7 +68,7 @@ export default function Home() {
         <div
           className="hero-image-overlay"
           style={{
-            backgroundImage: `url("/images/heroes/hero-home.png")`,
+            backgroundImage: `url("/images/heroes/hero-home.webp")`,
             opacity: 0.35,
           }}
         />
