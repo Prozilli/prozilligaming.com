@@ -141,6 +141,7 @@ const PLATFORM_SCOPES = {
       { id: "channel_details_self", desc: "View channel details including stream key", category: "Channel" },
       { id: "channel_update_self", desc: "Update channel settings", category: "Channel" },
       { id: "channel_subscriptions", desc: "View subscriber list", category: "Channel" },
+      { id: "chat_connect", desc: "Connect to chat and receive messages in real time", category: "Chat", recommended: "broadcaster" },
       { id: "chat_send_self", desc: "Send chat messages as yourself", category: "Chat", recommended: "bot" },
       { id: "send_to_my_channel", desc: "Send messages to your channel", category: "Chat", recommended: "bot" },
       { id: "manage_messages", desc: "Delete messages and run chat commands", category: "Moderation" },
@@ -196,16 +197,15 @@ const PLATFORM_SCOPES = {
     name: "Instagram",
     icon: "📸",
     color: "#E4405F",
-    authUrl: "https://www.instagram.com/oauth/authorize",
-    clientId: "867121056216281",
-    note: "Instagram Platform API (Direct Login). Business or Creator account required.",
+    authUrl: "https://www.facebook.com/v21.0/dialog/oauth",
+    clientId: "788626606846793",
+    note: "Instagram via Facebook Login. Your Instagram must be a Business/Creator account linked to a Facebook Page.",
     requiresPKCE: false,
     scopes: [
-      { id: "instagram_business_basic", desc: "View your Instagram profile info and media", category: "Basic", recommended: "broadcaster" },
-      { id: "instagram_business_content_publish", desc: "Publish photos, videos, and carousels to your account", category: "Publishing", recommended: "broadcaster" },
-      { id: "instagram_business_manage_comments", desc: "Read and manage comments on your posts", category: "Engagement" },
-      { id: "instagram_business_manage_messages", desc: "Send and receive Instagram Direct Messages", category: "Messaging" },
-      { id: "instagram_business_manage_insights", desc: "View insights and analytics for your Instagram", category: "Analytics" },
+      { id: "instagram_basic", desc: "View your Instagram profile info and media", category: "Basic", recommended: "broadcaster" },
+      { id: "instagram_manage_comments", desc: "Read and manage comments on your posts", category: "Engagement" },
+      { id: "pages_show_list", desc: "View list of Pages you manage (required for Instagram access)", category: "Pages", recommended: "broadcaster" },
+      { id: "pages_read_engagement", desc: "Read engagement data on your Pages", category: "Pages" },
     ]
   },
   x: {
@@ -364,8 +364,9 @@ export default function ConnectPage() {
         authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}`;
         break;
       case "instagram":
-        // Instagram Platform API uses comma-separated scopes
-        authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(Array.from(scopes).join(","))}&state=${state}`;
+        // Instagram via Facebook Login — uses Facebook's OAuth with Instagram scopes
+        // Redirect goes to /callback/instagram so the Worker stores tokens under the "instagram" key
+        authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}`;
         break;
     }
 

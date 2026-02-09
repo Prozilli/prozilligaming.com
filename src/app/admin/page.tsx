@@ -64,6 +64,9 @@ const PLATFORM_ICONS: Record<string, string> = {
   trovo: "🟡",
   discord: "🔵",
   facebook: "🔷",
+  instagram: "📸",
+  tiktok: "🎵",
+  x: "✖",
 };
 
 export default function AdminDashboard() {
