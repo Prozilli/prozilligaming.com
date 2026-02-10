@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ThemeProvider from "@/components/ThemeProvider";
+import ErrorBoundary from "@/components/ErrorBoundary";
 import { CartProvider } from "@/context/CartContext";
 import CartDrawer from "@/components/shop/CartDrawer";
 import "./globals.css";
@@ -94,52 +94,18 @@ export const metadata: Metadata = {
   category: "entertainment",
 };
 
-// JSON-LD for Organization
-const organizationJsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: "Prozilli Gaming",
-  alternateName: "ProzilliGaming",
-  url: "https://prozilligaming.com",
-  logo: "https://prozilligaming.com/logos/ProzilliGaming_Logo.svg",
-  description:
-    "Multiplatform live streaming across Twitch, YouTube, Kick, Trovo, and Facebook. Gaming, creative content, and community.",
-  foundingDate: "2020",
-  parentOrganization: {
-    "@type": "Organization",
-    name: "Prozilli Entertainment",
-    url: "https://prozilli.com",
-  },
-  sameAs: [
-    "https://twitch.tv/ProzilliGaming",
-    "https://youtube.com/@prozilligaming",
-    "https://kick.com/ProzilliGaming",
-    "https://trovo.live/ProzilliGaming",
-    "https://facebook.com/ProzilliGaming",
-    "https://twitter.com/ProzilliGaming",
-    "https://tiktok.com/@prozilligaming",
-    "https://discord.gg/prozillihq",
-  ],
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer support",
-    url: "https://discord.gg/prozillihq",
-  },
-};
-
-// JSON-LD for WebSite with search
+// JSON-LD for WebSite
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "Prozilli Gaming",
   url: "https://prozilligaming.com",
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: "https://prozilligaming.com/search?q={search_term_string}",
-    },
-    "query-input": "required name=search_term_string",
+  description:
+    "Official site for Prozilli Gaming — live streams, gaming content, and community.",
+  publisher: {
+    "@type": "Organization",
+    name: "Prozilli Entertainment",
+    url: "https://prozilli.com",
   },
 };
 
@@ -151,24 +117,24 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
+        <link rel="preload" as="image" href="/images/heroes/hero-home.webp" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider>
-          <CartProvider>
-            <Navbar />
-            <main className="min-h-screen pt-16">{children}</main>
-            <Footer />
-            <CartDrawer />
-          </CartProvider>
-        </ThemeProvider>
+        <CartProvider>
+          <a href="#main-content" className="skip-to-content">
+            Skip to main content
+          </a>
+          <Navbar />
+          <ErrorBoundary>
+            <main id="main-content" role="main" className="min-h-screen pt-16">{children}</main>
+          </ErrorBoundary>
+          <Footer />
+          <CartDrawer />
+        </CartProvider>
       </body>
     </html>
   );

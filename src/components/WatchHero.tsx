@@ -61,14 +61,6 @@ export default function WatchHero() {
       <div className="cinematic-smoke" />
       <div className="film-grain" />
       <div className="vignette" />
-      <div className="fireflies">
-        <span className="f1" />
-        <span className="f2" />
-        <span className="f3" />
-        <span className="f4" />
-        <span className="f5" />
-        <span className="f6" />
-      </div>
       <div
         className="hero-image-overlay"
         style={{

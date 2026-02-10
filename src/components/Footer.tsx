@@ -63,6 +63,7 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   className="text-xs text-muted transition-colors hover:text-white"
                   title={p.name}
+                  aria-label={`Follow us on ${p.name}`}
                 >
                   {p.name}
                 </a>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import AdminNav from "@/components/admin/AdminNav";
 import AdminAuth from "@/components/admin/AdminAuth";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -18,8 +18,7 @@ export default function AdminLayout({
 }) {
   return (
     <AdminAuth>
-      <AdminNav />
-      {children}
+      <AdminSidebar>{children}</AdminSidebar>
     </AdminAuth>
   );
 }

@@ -161,15 +161,6 @@ export default function SupportPage() {
         <div className="film-grain" />
         {/* Vignette */}
         <div className="vignette" />
-        {/* Fireflies */}
-        <div className="fireflies">
-          <span className="f1" />
-          <span className="f2" />
-          <span className="f3" />
-          <span className="f4" />
-          <span className="f5" />
-          <span className="f6" />
-        </div>
         {/* Hero background image */}
         <div
           className="hero-image-overlay"

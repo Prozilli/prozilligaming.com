@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ContactForm from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -82,15 +83,6 @@ export default function ContactPage() {
         <div className="film-grain" />
         {/* Vignette */}
         <div className="vignette" />
-        {/* Fireflies */}
-        <div className="fireflies">
-          <span className="f1" />
-          <span className="f2" />
-          <span className="f3" />
-          <span className="f4" />
-          <span className="f5" />
-          <span className="f6" />
-        </div>
         {/* Hero background image */}
         <div
           className="hero-image-overlay"
@@ -112,40 +104,46 @@ export default function ContactPage() {
 
       {/* Main Contact */}
       <section className="mx-auto max-w-5xl px-6 py-16">
-        <div className="grid gap-6 sm:grid-cols-2">
-          {/* Discord */}
-          <a
-            href="https://discord.gg/prozillihq"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="glass glow-border group rounded-lg p-8 transition-all"
-          >
-            <h2 className="text-xl font-bold tracking-wide text-white transition-colors group-hover:text-brand-red">
-              Discord Community
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted">
-              The home base. Join the community, get stream notifications, participate in events, and connect with other viewers.
-            </p>
-            <span className="mt-6 inline-block text-sm font-medium tracking-wide text-brand-gold transition-colors group-hover:text-white">
-              discord.gg/prozillihq &rarr;
-            </span>
-          </a>
+        <div className="grid gap-6 md:grid-cols-2">
+          {/* Left Column: Quick Links */}
+          <div className="flex flex-col gap-6">
+            {/* Discord */}
+            <a
+              href="https://discord.gg/prozillihq"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass glow-border group rounded-lg p-8 transition-all"
+            >
+              <h2 className="text-xl font-bold tracking-wide text-white transition-colors group-hover:text-brand-red">
+                Discord Community
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted">
+                The home base. Join the community, get stream notifications, participate in events, and connect with other viewers.
+              </p>
+              <span className="mt-6 inline-block text-sm font-medium tracking-wide text-brand-gold transition-colors group-hover:text-white">
+                discord.gg/prozillihq &rarr;
+              </span>
+            </a>
 
-          {/* Business */}
-          <a
-            href="mailto:business@prozilli.com"
-            className="glass glow-border group rounded-lg p-8 transition-all"
-          >
-            <h2 className="text-xl font-bold tracking-wide text-white transition-colors group-hover:text-brand-red">
-              Business Inquiries
-            </h2>
-            <p className="mt-3 text-sm leading-relaxed text-muted">
-              For sponsorships, collaborations, partnerships, and professional inquiries. Reach out via email.
-            </p>
-            <span className="mt-6 inline-block text-sm font-medium tracking-wide text-brand-gold transition-colors group-hover:text-white">
-              business@prozilli.com &rarr;
-            </span>
-          </a>
+            {/* Direct Email */}
+            <div className="glass glow-border rounded-lg p-8">
+              <h2 className="text-xl font-bold tracking-wide text-white">
+                Direct Email
+              </h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted">
+                For sponsorships, collaborations, partnerships, and professional inquiries.
+              </p>
+              <a
+                href="mailto:business@prozilli.com"
+                className="mt-6 inline-block text-sm font-medium tracking-wide text-brand-gold transition-colors hover:text-white"
+              >
+                business@prozilli.com &rarr;
+              </a>
+            </div>
+          </div>
+
+          {/* Right Column: Contact Form */}
+          <ContactForm />
         </div>
       </section>
 
@@ -166,6 +164,7 @@ export default function ContactPage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="glass glow-border group rounded-lg p-5 text-center transition-all"
+                aria-label={`Follow us on ${platform.name}`}
               >
                 <h3 className="font-semibold tracking-wide text-white transition-colors group-hover:text-brand-red">
                   {platform.name}

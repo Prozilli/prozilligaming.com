@@ -29,27 +29,48 @@ export const metadata: Metadata = {
   },
 };
 
-const PLACEHOLDER_ARTICLES = [
+const ARTICLES = [
   {
-    title: "Prozilli Gaming Launches New Website",
-    date: "2025-02-01",
+    title: "PRISMAI Engine Goes Live",
+    date: "2026-02-09",
     excerpt:
-      "The all-new prozilligaming.com is live. A complete redesign with a dark, cinema-grade aesthetic, multiplatform integration, and the foundation for PRISMAI-powered features.",
+      "The PRISMAI Core Engine is now fully operational — powering LISA across Twitch, Kick, Discord, YouTube, Trovo, and Facebook simultaneously. Real-time chat responses, cross-platform event handling, and AI-driven engagement are live in production.",
+    category: "PRISMAI",
+  },
+  {
+    title: "8-Platform Streaming Infrastructure Complete",
+    date: "2026-02-08",
+    excerpt:
+      "Prozilli Gaming now streams simultaneously to Twitch, Kick, YouTube, Trovo, Facebook, and X with full OAuth integration and webhook pipelines. Each platform has dedicated chat connectors with real-time message routing through the PRISMAI event bus.",
+    category: "Infrastructure",
+  },
+  {
+    title: "LISA AI Assistant Launches Across All Platforms",
+    date: "2026-02-07",
+    excerpt:
+      "LISA — the AI personality behind Prozilli Gaming — is now active in chat on every connected platform. Powered by Groq's llama-3.3-70b-versatile with OpenAI fallback, LISA handles viewer interactions, commands, and proactive engagement with full personality consistency.",
+    category: "LISA",
+  },
+  {
+    title: "Discord Server Redesigned with 42 Channels",
+    date: "2026-02-06",
+    excerpt:
+      "The Prozilli HQ Discord server received a complete overhaul — 12 categories, 42 channels, 4 viewer roles, reaction roles, and automated welcome system. Built for community engagement with PRISMAI-powered moderation and leveling.",
+    category: "Community",
+  },
+  {
+    title: "Prozilli Gaming Website Launches",
+    date: "2026-02-01",
+    excerpt:
+      "The all-new prozilligaming.com is live. A dark, cinema-grade design built on Next.js 15 and deployed on Cloudflare Pages. Features include a live stream embed, Fourthwall shop integration, multiplatform connect page, and a full admin dashboard.",
     category: "Announcement",
   },
   {
     title: "ZO Syndicate Season 2 Incoming",
-    date: "2025-01-28",
+    date: "2026-01-28",
     excerpt:
-      "The next chapter of cinematic roleplay is on the horizon. New factions, new storylines, and a refreshed server framework built for deeper immersion.",
+      "The next chapter of cinematic roleplay is on the horizon. New factions, new storylines, and a refreshed server framework built for deeper immersion. ZO Syndicate continues to push the boundaries of GTA RP storytelling.",
     category: "ZO Syndicate",
-  },
-  {
-    title: "Multiplatform Streaming Setup Revealed",
-    date: "2025-01-20",
-    excerpt:
-      "A deep dive into the production setup behind Prozilli Gaming's simultaneous streams across YouTube, Twitch, Kick, Trovo, and Facebook.",
-    category: "Behind the Scenes",
   },
 ];
 
@@ -72,15 +93,6 @@ export default function NewsPage() {
         <div className="film-grain" />
         {/* Vignette */}
         <div className="vignette" />
-        {/* Fireflies */}
-        <div className="fireflies">
-          <span className="f1" />
-          <span className="f2" />
-          <span className="f3" />
-          <span className="f4" />
-          <span className="f5" />
-          <span className="f6" />
-        </div>
         {/* Hero background image */}
         <div
           className="hero-image-overlay"
@@ -100,22 +112,10 @@ export default function NewsPage() {
         </div>
       </section>
 
-      {/* PRISMAI Notice */}
-      <section className="mx-auto max-w-5xl px-6 pt-12">
-        <div className="rounded-lg border border-brand-gold/20 bg-brand-gold/5 p-6 text-center">
-          <span className="text-xs font-medium uppercase tracking-wider text-brand-gold">
-            Coming Soon
-          </span>
-          <p className="mt-2 text-sm text-muted">
-            News feed coming soon — powered by PRISMAI. Automated updates, cross-platform aggregation, and real-time community news.
-          </p>
-        </div>
-      </section>
-
       {/* Articles */}
       <section className="mx-auto max-w-5xl px-6 py-12">
         <div className="grid gap-6">
-          {PLACEHOLDER_ARTICLES.map((article) => (
+          {ARTICLES.map((article) => (
             <article
               key={article.title}
               className="glass glow-border rounded-lg p-8 transition-all"

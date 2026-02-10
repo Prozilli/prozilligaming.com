@@ -9,7 +9,7 @@ const PLATFORMS: Record<string, { color: string; name: string }> = {
   youtube: { color: "#FF0000", name: "YouTube" },
   kick: { color: "#53FC18", name: "Kick" },
   trovo: { color: "#19D65C", name: "Trovo" },
-  discord: { color: "#5865F2", name: "Discord" },
+  facebook: { color: "#1877F2", name: "Facebook" },
 };
 
 function PlatformDot({ platform }: { platform: string }) {
@@ -211,12 +211,26 @@ export default function ChatPanel() {
             </span>
           )}
         </div>
-        <button
-          onClick={() => setShowTwitchEmbed(!showTwitchEmbed)}
-          className="text-[10px] text-muted hover:text-white transition-colors"
-        >
-          {showTwitchEmbed ? "Cross-platform" : "Twitch embed"}
-        </button>
+        <div className="flex items-center gap-2">
+          {!showTwitchEmbed && messages.length > 0 && (
+            <button
+              onClick={() => {
+                setMessages([]);
+                msgIdSet.current.clear();
+              }}
+              className="text-[10px] text-muted hover:text-white transition-colors"
+              title="Clear chat"
+            >
+              Clear
+            </button>
+          )}
+          <button
+            onClick={() => setShowTwitchEmbed(!showTwitchEmbed)}
+            className="text-[10px] text-muted hover:text-white transition-colors"
+          >
+            {showTwitchEmbed ? "Cross-platform" : "Twitch embed"}
+          </button>
+        </div>
       </div>
 
       {showTwitchEmbed ? (

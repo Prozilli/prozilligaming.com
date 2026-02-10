@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-// Fallback schedule when Twitch data isn't available
+// Fallback schedule when API data isn't available
 const FALLBACK_SCHEDULE = [
   {
     day: "Monday",
+    dayShort: "MON",
     dayIndex: 1,
     time: "7:00 PM",
     category: "Gaming",
@@ -15,6 +16,7 @@ const FALLBACK_SCHEDULE = [
   },
   {
     day: "Tuesday",
+    dayShort: "TUE",
     dayIndex: 2,
     time: "8:00 PM",
     category: "Creative / Just Chatting",
@@ -23,6 +25,7 @@ const FALLBACK_SCHEDULE = [
   },
   {
     day: "Wednesday",
+    dayShort: "WED",
     dayIndex: 3,
     time: "7:00 PM",
     category: "Gaming",
@@ -31,6 +34,7 @@ const FALLBACK_SCHEDULE = [
   },
   {
     day: "Thursday",
+    dayShort: "THU",
     dayIndex: 4,
     time: "8:00 PM",
     category: "Creative / Just Chatting",
@@ -39,6 +43,7 @@ const FALLBACK_SCHEDULE = [
   },
   {
     day: "Friday",
+    dayShort: "FRI",
     dayIndex: 5,
     time: "7:00 PM",
     category: "Gaming",
@@ -47,6 +52,7 @@ const FALLBACK_SCHEDULE = [
   },
   {
     day: "Saturday",
+    dayShort: "SAT",
     dayIndex: 6,
     time: "3:00 PM",
     category: "Special Events",
@@ -55,6 +61,7 @@ const FALLBACK_SCHEDULE = [
   },
   {
     day: "Sunday",
+    dayShort: "SUN",
     dayIndex: 0,
     time: "Off",
     category: "Rest Day",
@@ -78,32 +85,26 @@ interface TwitchSchedule {
 }
 
 function getCategoryIcon(category: string): string {
-  if (category.toLowerCase().includes("gaming") || category.toLowerCase().includes("game")) {
-    return "🎮";
-  }
-  if (category.toLowerCase().includes("creative") || category.toLowerCase().includes("chat")) {
-    return "💬";
-  }
-  if (category.toLowerCase().includes("special") || category.toLowerCase().includes("event")) {
-    return "🎉";
-  }
-  if (category.toLowerCase().includes("rest") || category.toLowerCase().includes("off")) {
-    return "😴";
-  }
-  return "📺";
+  const lower = category.toLowerCase();
+  if (lower.includes("gaming") || lower.includes("game")) return "\uD83C\uDFAE";
+  if (lower.includes("creative") || lower.includes("chat")) return "\uD83D\uDCAC";
+  if (lower.includes("special") || lower.includes("event")) return "\uD83C\uDF89";
+  if (lower.includes("rest") || lower.includes("off")) return "\uD83D\uDE34";
+  return "\uD83D\uDCFA";
 }
 
-function getCategoryColor(category: string): { bg: string; text: string } {
-  if (category.toLowerCase().includes("gaming") || category.toLowerCase().includes("game")) {
-    return { bg: "bg-brand-red/20", text: "text-brand-red" };
+function getCategoryColors(category: string): { accent: string; bg: string; border: string } {
+  const lower = category.toLowerCase();
+  if (lower.includes("gaming") || lower.includes("game")) {
+    return { accent: "text-brand-red", bg: "bg-brand-red/10", border: "border-brand-red/20" };
   }
-  if (category.toLowerCase().includes("creative") || category.toLowerCase().includes("chat")) {
-    return { bg: "bg-purple-500/20", text: "text-purple-400" };
+  if (lower.includes("creative") || lower.includes("chat")) {
+    return { accent: "text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/20" };
   }
-  if (category.toLowerCase().includes("special") || category.toLowerCase().includes("event")) {
-    return { bg: "bg-brand-gold/20", text: "text-brand-gold" };
+  if (lower.includes("special") || lower.includes("event")) {
+    return { accent: "text-brand-gold", bg: "bg-brand-gold/10", border: "border-brand-gold/20" };
   }
-  return { bg: "bg-white/10", text: "text-muted" };
+  return { accent: "text-muted", bg: "bg-white/5", border: "border-white/5" };
 }
 
 export default function ScheduleGrid() {
@@ -115,7 +116,6 @@ export default function ScheduleGrid() {
     setMounted(true);
     setCurrentDay(new Date().getDay());
 
-    // Fetch Twitch data
     async function fetchTwitchSchedule() {
       try {
         const response = await fetch("https://api.prozilli.com/twitch/schedule");
@@ -129,18 +129,18 @@ export default function ScheduleGrid() {
     }
 
     fetchTwitchSchedule();
-    const interval = setInterval(fetchTwitchSchedule, 60000); // Refresh every minute
+    const interval = setInterval(fetchTwitchSchedule, 60000);
     return () => clearInterval(interval);
   }, []);
 
   if (!mounted) {
     return (
       <section className="mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-12">
-        <div className="grid gap-3">
+        <div className="grid gap-4">
           {[1, 2, 3, 4, 5, 6, 7].map((i) => (
-            <div key={i} className="glass rounded-lg p-4 sm:p-6 animate-pulse">
+            <div key={i} className="glass rounded-xl p-5 animate-pulse">
               <div className="flex items-center gap-4">
-                <div className="h-10 w-10 rounded-full bg-white/10" />
+                <div className="h-14 w-14 rounded-xl bg-white/10" />
                 <div className="flex-1">
                   <div className="h-4 w-24 rounded bg-white/10 mb-2" />
                   <div className="h-3 w-48 rounded bg-white/5" />
@@ -153,7 +153,7 @@ export default function ScheduleGrid() {
     );
   }
 
-  // Sort schedule to start from today
+  // Sort schedule starting from today
   const sortedSchedule = [...FALLBACK_SCHEDULE].sort((a, b) => {
     const aDistance = (a.dayIndex - currentDay + 7) % 7;
     const bDistance = (b.dayIndex - currentDay + 7) % 7;
@@ -167,22 +167,25 @@ export default function ScheduleGrid() {
     <section className="mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-12">
       {/* Live Now Banner */}
       {twitchData?.isLive && twitchData.liveData && (
-        <div className="mb-6 rounded-xl border border-brand-red/30 bg-brand-red/10 p-4 sm:p-6">
+        <div className="mb-8 rounded-xl border border-brand-red/30 bg-gradient-to-r from-brand-red/15 to-brand-red/5 p-5 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-brand-red/20">
-                <span className="h-3 w-3 rounded-full bg-brand-red animate-live-pulse" />
-              </span>
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-red/20">
+                  <span className="h-3 w-3 rounded-full bg-brand-red animate-live-pulse" />
+                </span>
+                <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-brand-red animate-ping" />
+              </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-red">
+                  <span className="text-sm font-bold uppercase tracking-wider text-brand-red">
                     Live Now
                   </span>
                   <span className="text-xs text-muted">
-                    • {twitchData.liveData.viewerCount.toLocaleString()} viewers
+                    {twitchData.liveData.viewerCount.toLocaleString()} viewers
                   </span>
                 </div>
-                <p className="text-sm sm:text-base font-medium text-white mt-1 line-clamp-1">
+                <p className="text-base font-medium text-white mt-1 line-clamp-1">
                   {twitchData.liveData.title}
                 </p>
                 {twitchData.liveData.gameName && (
@@ -194,9 +197,9 @@ export default function ScheduleGrid() {
             </div>
             <Link
               href="/watch"
-              className="rounded-lg bg-brand-red px-4 sm:px-6 py-2.5 text-xs sm:text-sm font-medium text-white transition-colors hover:bg-brand-red-glow whitespace-nowrap"
+              className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-red-glow whitespace-nowrap"
             >
-              Watch Now →
+              Watch Now
             </Link>
           </div>
         </div>
@@ -204,17 +207,17 @@ export default function ScheduleGrid() {
 
       {/* Next Stream Banner (when not live) */}
       {!twitchData?.isLive && twitchData?.nextStream && (
-        <div className="mb-6 rounded-xl border border-brand-gold/30 bg-brand-gold/10 p-4 sm:p-6">
+        <div className="mb-8 rounded-xl border border-brand-gold/30 bg-gradient-to-r from-brand-gold/10 to-brand-gold/5 p-5 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <span className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-full bg-brand-gold/20 text-xl">
-                ⏰
+            <div className="flex items-center gap-4">
+              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-gold/20 text-xl">
+                \u23F0
               </span>
               <div>
-                <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-gold">
+                <span className="text-sm font-bold uppercase tracking-wider text-brand-gold">
                   Next Stream
                 </span>
-                <p className="text-sm sm:text-base font-medium text-white mt-1 line-clamp-1">
+                <p className="text-base font-medium text-white mt-1 line-clamp-1">
                   {twitchData.nextStream.title}
                 </p>
                 <p className="text-xs text-muted mt-0.5">
@@ -236,7 +239,7 @@ export default function ScheduleGrid() {
               href="https://twitch.tv/ProzilliGaming"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-lg bg-[#9146FF] px-4 sm:px-6 py-2.5 text-xs sm:text-sm font-medium text-white transition-opacity hover:opacity-90 whitespace-nowrap"
+              className="rounded-lg bg-[#9146FF] px-6 py-2.5 text-sm font-medium text-white transition-opacity hover:opacity-90 whitespace-nowrap"
             >
               Set Reminder
             </a>
@@ -244,81 +247,130 @@ export default function ScheduleGrid() {
         </div>
       )}
 
-      {/* Schedule Grid */}
+      {/* Where to Watch */}
+      <div className="mb-8 grid grid-cols-2 sm:grid-cols-5 gap-3">
+        {[
+          { name: "Twitch", color: "#9146FF", href: "https://twitch.tv/ProzilliGaming" },
+          { name: "YouTube", color: "#FF0000", href: "https://youtube.com/@prozilligaming" },
+          { name: "Kick", color: "#53FC18", href: "https://kick.com/ProzilliGaming" },
+          { name: "Trovo", color: "#19D65C", href: "https://trovo.live/ProzilliGaming" },
+          { name: "Facebook", color: "#1877F2", href: "https://facebook.com/ProzilliGaming" },
+        ].map((p) => (
+          <a
+            key={p.name}
+            href={p.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex items-center justify-center gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2.5 transition-all hover:bg-white/[0.06] hover:border-white/10"
+          >
+            <span
+              className="h-2 w-2 rounded-full shrink-0"
+              style={{ backgroundColor: p.color }}
+            />
+            <span className="text-xs font-medium text-muted group-hover:text-white transition-colors">
+              {p.name}
+            </span>
+          </a>
+        ))}
+      </div>
+
+      {/* Schedule Grid — Card Layout */}
       <div className="grid gap-3">
         {sortedSchedule.map((slot) => {
           const today = isToday(slot.dayIndex);
           const tomorrow = isTomorrow(slot.dayIndex);
-          const colors = getCategoryColor(slot.category);
+          const colors = getCategoryColors(slot.category);
           const icon = getCategoryIcon(slot.category);
 
           return (
             <div
               key={slot.day}
-              className={`group rounded-xl p-4 sm:p-5 transition-all ${
+              className={`group relative rounded-xl border transition-all overflow-hidden ${
                 today
-                  ? "glass-strong glow-border ring-2 ring-brand-red/50"
+                  ? `${colors.border} ${colors.bg} ring-1 ring-brand-red/40`
                   : slot.active
-                  ? "glass hover:bg-white/8"
-                  : "bg-white/[0.02] opacity-50"
+                  ? "border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10"
+                  : "border-white/[0.02] bg-white/[0.01] opacity-40"
               }`}
             >
-              <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-                {/* Day indicator */}
-                <div className="flex items-center gap-3 sm:w-40">
-                  <span
-                    className={`flex h-10 w-10 sm:h-12 sm:w-12 shrink-0 items-center justify-center rounded-full text-lg sm:text-xl ${colors.bg}`}
-                  >
-                    {icon}
-                  </span>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-sm sm:text-base font-bold tracking-wide text-white">
-                        {slot.day}
-                      </h3>
-                      {today && (
-                        <span className="rounded-full bg-brand-red px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
-                          Today
-                        </span>
-                      )}
-                      {tomorrow && !today && (
-                        <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wider text-muted">
-                          Tomorrow
-                        </span>
-                      )}
+              <div className="flex items-stretch">
+                {/* Left accent bar */}
+                <div
+                  className="w-1 shrink-0"
+                  style={{
+                    backgroundColor: today
+                      ? "#910000"
+                      : slot.category.toLowerCase().includes("gaming") || slot.category.toLowerCase().includes("game")
+                      ? "rgba(145, 0, 0, 0.5)"
+                      : slot.category.toLowerCase().includes("creative") || slot.category.toLowerCase().includes("chat")
+                      ? "rgba(168, 85, 247, 0.5)"
+                      : slot.category.toLowerCase().includes("special") || slot.category.toLowerCase().includes("event")
+                      ? "rgba(196, 162, 101, 0.5)"
+                      : "rgba(255, 255, 255, 0.05)",
+                  }}
+                />
+
+                <div className="flex-1 p-4 sm:p-5">
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                    {/* Day + Time Column */}
+                    <div className="flex items-center gap-3 sm:w-52 shrink-0">
+                      {/* Icon */}
+                      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-lg ${colors.bg}`}>
+                        {icon}
+                      </span>
+
+                      {/* Day info */}
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <h3 className="text-sm font-bold tracking-wide text-white">
+                            {slot.day}
+                          </h3>
+                          {today && (
+                            <span className="rounded bg-brand-red px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white leading-none">
+                              Today
+                            </span>
+                          )}
+                          {tomorrow && !today && (
+                            <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-muted leading-none">
+                              Tomorrow
+                            </span>
+                          )}
+                        </div>
+                        <p className={`text-xs font-semibold mt-0.5 ${colors.accent}`}>
+                          {slot.time}{slot.active ? " ET" : ""}
+                        </p>
+                      </div>
                     </div>
-                    <p className={`text-xs sm:text-sm font-semibold ${colors.text}`}>
-                      {slot.time} {slot.active && "ET"}
-                    </p>
+
+                    {/* Separator (desktop only) */}
+                    <div className="hidden sm:block w-px h-8 bg-white/10 shrink-0" />
+
+                    {/* Category + Description */}
+                    <div className="flex-1 min-w-0">
+                      <span
+                        className={`inline-block rounded px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider ${colors.bg} ${colors.accent}`}
+                      >
+                        {slot.category}
+                      </span>
+                      <p className="mt-1 text-xs text-muted leading-relaxed line-clamp-1">
+                        {slot.description}
+                      </p>
+                    </div>
+
+                    {/* Action */}
+                    {today && slot.active && !twitchData?.isLive && (
+                      <div className="shrink-0">
+                        <Link
+                          href="/watch"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-brand-red/20 px-3 py-2 text-xs font-medium text-brand-red transition-colors hover:bg-brand-red/30"
+                        >
+                          <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
+                          Watch
+                        </Link>
+                      </div>
+                    )}
                   </div>
                 </div>
-
-                {/* Category & Description */}
-                <div className="flex-1 pl-13 sm:pl-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span
-                      className={`rounded-full px-2.5 py-1 text-[10px] sm:text-xs font-medium uppercase tracking-wider ${colors.bg} ${colors.text}`}
-                    >
-                      {slot.category}
-                    </span>
-                  </div>
-                  <p className="mt-1.5 text-xs sm:text-sm text-muted leading-relaxed">
-                    {slot.description}
-                  </p>
-                </div>
-
-                {/* Action */}
-                {today && slot.active && !twitchData?.isLive && (
-                  <div className="pl-13 sm:pl-0 sm:shrink-0">
-                    <Link
-                      href="/watch"
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-brand-red/20 px-3 py-2 text-xs font-medium text-brand-red transition-colors hover:bg-brand-red/30"
-                    >
-                      <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
-                      Watch Page
-                    </Link>
-                  </div>
-                )}
               </div>
             </div>
           );
@@ -326,7 +378,7 @@ export default function ScheduleGrid() {
       </div>
 
       {/* Legend */}
-      <div className="mt-6 flex flex-wrap justify-center gap-4 text-xs text-muted">
+      <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-muted">
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-brand-red" />
           <span>Gaming</span>

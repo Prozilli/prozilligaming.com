@@ -208,6 +208,23 @@ const PLATFORM_SCOPES = {
       { id: "pages_read_engagement", desc: "Read engagement data on your Pages", category: "Pages" },
     ]
   },
+  tiktok: {
+    name: "TikTok",
+    icon: "🎵",
+    color: "#000000",
+    authUrl: "https://www.tiktok.com/v2/auth/authorize/",
+    clientId: "sbawuv28es89z6j29d",
+    note: "Sandbox mode — limited to test users. Public posting requires full app approval.",
+    requiresPKCE: false,
+    scopes: [
+      { id: "user.info.basic", desc: "View basic user info (open_id, avatar)", category: "User", recommended: "broadcaster" },
+      { id: "user.info.profile", desc: "View profile info (display name, bio, links)", category: "User", recommended: "broadcaster" },
+      { id: "user.info.stats", desc: "View account stats (follower/following count, likes)", category: "User" },
+      { id: "video.list", desc: "View list of published videos", category: "Video", recommended: "broadcaster" },
+      { id: "video.upload", desc: "Upload video files", category: "Video" },
+      { id: "video.publish", desc: "Publish videos (sandbox: drafts only)", category: "Video" },
+    ]
+  },
   x: {
     name: "X (Twitter)",
     icon: "✖",
@@ -359,6 +376,11 @@ export default function ConnectPage() {
         window.open(xUrl, `oauth_${platform}`, "width=600,height=800,left=200,top=50");
         return;
       }
+
+      case "tiktok":
+        // TikTok uses client_key (not client_id) and comma-separated scopes
+        authUrl = `${platformData.authUrl}?client_key=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(Array.from(scopes).join(","))}&state=${state}`;
+        break;
 
       case "facebook":
         authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}`;
