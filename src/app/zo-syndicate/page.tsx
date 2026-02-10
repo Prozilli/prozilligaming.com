@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "ZO Syndicate RP",
   description:
-    "ZO Syndicate RP - Cinematic FiveM roleplay on Qbox framework. 48 players, 6 gangs, full economy, and immersive storylines. Join the Los Santos underground.",
+    "ZO Syndicate RP - Cinematic FiveM roleplay on Qbox framework. 48 players, 10 gangs, full economy, and immersive storylines. Join the Los Santos underground.",
   keywords: [
     "ZO Syndicate",
     "FiveM roleplay",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ZO Syndicate RP | Cinematic FiveM Roleplay",
     description:
-      "Cinematic FiveM roleplay on Qbox. 48 players, 6 gangs, full economy. Where stories are born.",
+      "Cinematic FiveM roleplay on Qbox. 48 players, 10 gangs, full economy. Where stories are born.",
     type: "website",
     url: "https://prozilligaming.com/zo-syndicate",
     images: [
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "ZO Syndicate RP | Cinematic FiveM Roleplay",
-    description: "Join ZO Syndicate - cinematic FiveM roleplay with 6 gangs and full economy.",
+    description: "Join ZO Syndicate - cinematic FiveM roleplay with 10 gangs and full economy.",
     images: ["/images/heroes/hero-zo.png"],
   },
   alternates: {
@@ -48,15 +48,17 @@ const SERVER_INFO = {
 };
 
 const GANGS = [
-  { key: "lostmc", name: "The Lost MC", color: "#666666", icon: "🏍️" },
-  { key: "ballas", name: "Ballas", color: "#9B30FF", icon: "💜" },
-  { key: "vagos", name: "Vagos", color: "#FFD700", icon: "💛" },
-  { key: "cartel", name: "Cartel", color: "#8B4513", icon: "🔥" },
-  { key: "families", name: "Families", color: "#228B22", icon: "💚" },
-  { key: "triads", name: "Triads", color: "#FF4500", icon: "🐉" },
+  { key: "syndicate", name: "Syndicate", color: "#a30000", icon: "⚡", ranks: ["Associate", "Lieutenant", "Underboss", "Boss"] },
+  { key: "cartel", name: "Cartel", color: "#8B4513", icon: "🔥", ranks: ["Soldado", "Sicario", "Capo", "Jefe"] },
+  { key: "lostmc", name: "The Lost MC", color: "#666666", icon: "🏍️", ranks: ["Prospect", "Patched", "Sergeant-at-Arms", "President"] },
+  { key: "ballas", name: "Ballas", color: "#9B30FF", icon: "💜", ranks: ["Youngster", "Soldier", "Shot Caller", "OG"] },
+  { key: "vagos", name: "Vagos", color: "#FFD700", icon: "💛", ranks: ["Youngster", "Soldier", "Shot Caller", "OG"] },
+  { key: "aztecas", name: "Aztecas", color: "#00CED1", icon: "🦅", ranks: ["Youngster", "Soldier", "Shot Caller", "OG"] },
+  { key: "triads", name: "Triads", color: "#FF4500", icon: "🐉", ranks: ["49er", "Red Pole", "Vanguard", "Dragon Head"] },
+  { key: "cosanostra", name: "Cosa Nostra", color: "#2F4F4F", icon: "🎩", ranks: ["Associate", "Soldier", "Caporegime", "Don"] },
+  { key: "yakuza", name: "Yakuza", color: "#DC143C", icon: "⛩️", ranks: ["Kobun", "Shatei", "Wakagashira", "Oyabun"] },
+  { key: "bratva", name: "Bratva", color: "#4169E1", icon: "🐻", ranks: ["Shestyorka", "Bratok", "Avtoritet", "Pakhan"] },
 ];
-
-const GANG_RANKS = ["Recruit", "Enforcer", "Shot Caller", "Boss"];
 
 const JOBS = {
   tier1: {
@@ -115,7 +117,8 @@ const KEY_SYSTEMS = [
   { category: "Communication", items: ["NPWD Phone", "PMA Voice", "mm_radio"] },
   { category: "Law Enforcement", items: ["ps-mdt", "ps-dispatch (911)"] },
   { category: "Economy", items: ["Renewed-Banking", "ox_inventory (50 slots, 85kg)"] },
-  { category: "Criminal", items: ["md-drugs (5 types)", "DOJ-Casino (5 games)"] },
+  { category: "Criminal", items: ["md-drugs (5 types)", "zo_casino (7 games, VIP tiers)"] },
+  { category: "Custom", items: ["zo_minimap (948 postal codes)", "zo_blips (25 map markers)", "zo_casino (chip economy)"] },
   { category: "Other", items: ["xt-prison", "illenium-appearance"] },
 ];
 
@@ -270,24 +273,25 @@ export default function ZOSyndicatePage() {
             Choose Your Gang
           </h3>
           <p className="mx-auto mb-12 max-w-xl text-center text-sm text-muted">
-            Six criminal organizations run the streets. Each gang has 4 ranks:
-            <span className="block mt-2 text-brand-silver">
-              {GANG_RANKS.join(" → ")}
-            </span>
+            Ten criminal organizations run the streets. Each with a unique 4-rank hierarchy and dedicated radio channel.
           </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {GANGS.map((gang) => (
               <div
                 key={gang.key}
                 className="glass rounded-lg p-5 transition-all hover:scale-[1.02]"
                 style={{ borderLeft: `4px solid ${gang.color}` }}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 mb-3">
                   <span className="text-2xl">{gang.icon}</span>
-                  <div>
-                    <h4 className="font-semibold text-white">{gang.name}</h4>
-                    <p className="text-xs text-muted">4 Rank Hierarchy</p>
-                  </div>
+                  <h4 className="font-semibold text-white">{gang.name}</h4>
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {gang.ranks.map((rank, idx) => (
+                    <span key={rank} className="rounded-full bg-white/5 px-2 py-0.5 text-[10px] text-muted">
+                      {rank}
+                    </span>
+                  ))}
                 </div>
               </div>
             ))}
@@ -408,7 +412,7 @@ export default function ZOSyndicatePage() {
           <h3 className="mb-12 text-center text-2xl font-bold text-white md:text-3xl">
             Key Systems
           </h3>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {KEY_SYSTEMS.map((system) => (
               <div
                 key={system.category}
