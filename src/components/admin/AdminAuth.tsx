@@ -16,8 +16,11 @@ function hashPassword(pw: string): string {
   return h.toString(36);
 }
 
-// The password hash for "prozilli" — change via: hashPassword("your-password")
-const VALID_HASH = hashPassword("prozilli2026!");
+// TODO: Replace client-side auth with Cloudflare Access or server-side authentication
+// This is NOT secure - only a UI gate. Real security is in the API (INTERNAL_API_KEY)
+// For now, password must be set via env var during build: NEXT_PUBLIC_ADMIN_PASSWORD
+const ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || "";
+const VALID_HASH = ADMIN_PASSWORD ? hashPassword(ADMIN_PASSWORD) : "";
 
 export default function AdminAuth({ children }: { children: React.ReactNode }) {
   const [authed, setAuthed] = useState(false);
@@ -58,6 +61,22 @@ export default function AdminAuth({ children }: { children: React.ReactNode }) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-[#0d1117]">
         <div className="h-6 w-6 animate-spin rounded-full border-2 border-brand-gold/30 border-t-brand-gold" />
+      </div>
+    );
+  }
+
+  if (!ADMIN_PASSWORD) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-[#0d1117] px-6">
+        <div className="w-full max-w-lg text-center">
+          <h1 className="text-xl font-bold text-red-400">Admin Not Configured</h1>
+          <p className="mt-4 text-sm text-muted">
+            NEXT_PUBLIC_ADMIN_PASSWORD environment variable is not set.
+          </p>
+          <p className="mt-2 text-xs text-muted/60">
+            Configure this via Cloudflare Pages environment variables.
+          </p>
+        </div>
       </div>
     );
   }

@@ -1,12 +1,26 @@
-const PRISMAI_CORE = "http://bot-service-na-west-01.cybrancee.com:5084";
-const PRISMAI_ANALYTICS = "http://bot-service-na-west-01.cybrancee.com:5018";
+// PRISMAI backend URLs - configure via Cloudflare Pages environment variables
+const PRISMAI_CORE = process.env.PRISMAI_CORE_URL || "http://65.109.100.181:5084";
+const PRISMAI_ANALYTICS = process.env.PRISMAI_ANALYTICS_URL || "http://5.161.119.210:5018";
 
-const CORS_HEADERS: Record<string, string> = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-  "Access-Control-Allow-Headers": "Content-Type",
-  "Content-Type": "application/json",
-};
+const ALLOWED_ORIGINS = [
+  "https://prozilli.com",
+  "https://www.prozilli.com",
+  "https://prozilligaming.com",
+  "https://www.prozilligaming.com",
+];
+
+function getCorsHeaders(origin: string | null): Record<string, string> {
+  const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin)
+    ? origin
+    : ALLOWED_ORIGINS[2]; // Default to prozilligaming.com
+
+  return {
+    "Access-Control-Allow-Origin": allowedOrigin,
+    "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type, Authorization",
+    "Content-Type": "application/json",
+  };
+}
 
 async function safeFetch(url: string): Promise<{ ok: boolean; data: any }> {
   try {
@@ -23,7 +37,7 @@ async function safeFetch(url: string): Promise<{ ok: boolean; data: any }> {
 }
 
 export const onRequestOptions: PagesFunction = async () => {
-  return new Response(null, { headers: CORS_HEADERS });
+  return new Response(null, { headers: getCorsHeaders(context.request.headers.get("Origin")) });
 };
 
 export const onRequestGet: PagesFunction = async (context) => {
@@ -44,7 +58,7 @@ export const onRequestGet: PagesFunction = async (context) => {
 
     return new Response(
       JSON.stringify({ core: coreResult, analytics: analyticsResult }),
-      { headers: CORS_HEADERS }
+      { headers: getCorsHeaders(context.request.headers.get("Origin")) }
     );
   }
 
@@ -64,7 +78,7 @@ export const onRequestGet: PagesFunction = async (context) => {
     } catch {
       return new Response(
         JSON.stringify({ error: "SSE connection failed" }),
-        { status: 502, headers: CORS_HEADERS }
+        { status: 502, headers: getCorsHeaders(context.request.headers.get("Origin")) }
       );
     }
   }
@@ -77,12 +91,12 @@ export const onRequestGet: PagesFunction = async (context) => {
   const result = await safeFetch(`${baseUrl}/${path}${queryString}`);
 
   if (result.ok) {
-    return new Response(JSON.stringify(result.data), { headers: CORS_HEADERS });
+    return new Response(JSON.stringify(result.data), { headers: getCorsHeaders(context.request.headers.get("Origin")) });
   }
 
   return new Response(
     JSON.stringify(result.data),
-    { status: 502, headers: CORS_HEADERS }
+    { status: 502, headers: getCorsHeaders(context.request.headers.get("Origin")) }
   );
 };
 
@@ -101,11 +115,11 @@ async function proxyMutatingRequest(context: Parameters<PagesFunction>[0], metho
       body: body || undefined,
     });
     const text = await res.text();
-    return new Response(text, { status: res.status, headers: CORS_HEADERS });
+    return new Response(text, { status: res.status, headers: getCorsHeaders(context.request.headers.get("Origin")) });
   } catch (err: any) {
     return new Response(
       JSON.stringify({ error: "Connection failed", message: err?.message || "Unknown" }),
-      { status: 502, headers: CORS_HEADERS }
+      { status: 502, headers: getCorsHeaders(context.request.headers.get("Origin")) }
     );
   }
 }
