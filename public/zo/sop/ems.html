@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<parameter name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EMS Standard Operating Procedures v3.0 - ZO Syndicate RP</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER BANNER ===== */
+  .header-banner {
+    background: linear-gradient(135deg, #0f1f14 0%, #0d0d0d 40%, #0f1f14 100%);
+    border-bottom: 3px solid #2ecc71;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #c4a265, #2ecc71, #c4a265, transparent);
+  }
+  .header-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(46,204,113,0.02) 2px,
+      rgba(46,204,113,0.02) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .header-org span { color: #a30000; }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2ecc71;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 8px rgba(46,204,113,0.3);
+  }
+  .header-sub {
+    font-size: 14px;
+    color: #c4a265;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .header-server {
+    display: inline-block;
+    background: rgba(163,0,0,0.15);
+    border: 1px solid rgba(163,0,0,0.3);
+    color: #cc4444;
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 2px;
+  }
+  .header-meta {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #555;
+  }
+  .header-meta span {
+    margin: 0 10px;
+  }
+
+  /* ===== CLASSIFICATION STRIP ===== */
+  .classification-strip {
+    background: #a30000;
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 8px;
+    font-weight: 600;
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  /* ===== TOC ===== */
+  .toc-nav {
+    background: rgba(46,204,113,0.05);
+    border: 1px solid rgba(46,204,113,0.2);
+    border-radius: 4px;
+    padding: 30px;
+    margin-bottom: 40px;
+  }
+  .toc-nav h2 {
+    color: #2ecc71;
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .toc-nav ol {
+    list-style: none;
+    counter-reset: section-counter;
+  }
+  .toc-nav li {
+    counter-increment: section-counter;
+    margin-bottom: 12px;
+  }
+  .toc-nav li::before {
+    content: counter(section-counter, decimal-leading-zero) ".";
+    color: #2ecc71;
+    font-weight: 700;
+    margin-right: 10px;
+    font-family: 'Courier New', monospace;
+  }
+  .toc-nav a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .toc-nav a:hover {
+    color: #2ecc71;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    background: rgba(255,255,255,0.02);
+    border-left: 4px solid #2ecc71;
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 0 4px 4px 0;
+  }
+  .section h2 {
+    color: #2ecc71;
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .section-num {
+    display: inline-block;
+    background: rgba(46,204,113,0.15);
+    color: #2ecc71;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-right: 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .section h3 {
+    color: #3ddc84;
+    font-size: 19px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+  .section p {
+    margin-bottom: 15px;
+    color: #bbb;
+  }
+  .section ul, .section ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+  }
+  .section li {
+    margin-bottom: 10px;
+    color: #bbb;
+  }
+  .section li strong {
+    color: #d9d9d9;
+  }
+  .section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .section th {
+    background: rgba(46,204,113,0.1);
+    color: #2ecc71;
+    padding: 12px;
+    text-align: left;
+    border: 1px solid rgba(46,204,113,0.2);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .section td {
+    padding: 12px;
+    border: 1px solid #222;
+    color: #ccc;
+  }
+  .section code {
+    background: rgba(46,204,113,0.08);
+    color: #3ddc84;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+  }
+
+  /* ===== CALLOUTS ===== */
+  .callout {
+    padding: 20px;
+    border-radius: 4px;
+    margin: 20px 0;
+    border-left: 4px solid;
+  }
+  .callout-info {
+    background: rgba(46,204,113,0.08);
+    border-color: #2ecc71;
+    color: #d9d9d9;
+  }
+  .callout-warning {
+    background: rgba(196,162,101,0.08);
+    border-color: #c4a265;
+    color: #d9d9d9;
+  }
+  .callout-critical {
+    background: rgba(163,0,0,0.08);
+    border-color: #a30000;
+    color: #d9d9d9;
+  }
+  .callout p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-rank {
+    background: rgba(46,204,113,0.2);
+    color: #3ddc84;
+    border: 1px solid rgba(46,204,113,0.3);
+  }
+
+  /* ===== BACK TO TOP ===== */
+  .back-top {
+    display: inline-block;
+    margin-top: 30px;
+    color: #2ecc71;
+    text-decoration: none;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+  .back-top:hover {
+    color: #3ddc84;
+  }
+  .back-top::before {
+    content: '↑ ';
+    margin-right: 5px;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: rgba(255,255,255,0.02);
+    border-top: 2px solid rgba(46,204,113,0.2);
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  .footer-main {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .footer-main strong {
+    color: #2ecc71;
+  }
+  .footer-sub {
+    color: #555;
+    font-size: 11px;
+    margin-bottom: 15px;
+  }
+  .footer-links {
+    margin-top: 15px;
+  }
+  .footer-links a {
+    color: #666;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 12px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover {
+    color: #2ecc71;
+  }
+
+  /* ===== HERO SECTION ===== */
+  .hero-section {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(46,204,113,0.4) 0%, rgba(13,13,13,0.9) 50%, rgba(46,204,113,0.4) 100%);
+    opacity: 0.85;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #c4a265;
+    text-transform: uppercase;
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 700px) {
+    .hero-section { height: 200px; }
+    .hero-title { font-size: 32px; letter-spacing: 4px; }
+    .hero-subtitle { font-size: 14px; }
+    .header-dept { font-size: 24px; }
+    .section { padding: 25px 20px; }
+    .container { padding: 20px 10px; }
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- Classification Strip -->
+<div class="classification-strip">CONFIDENTIAL — Authorized EMS Personnel Only</div>
+
+<!-- Header Banner -->
+<header class="header-banner">
+  <div class="header-org"><span>Prozilli</span> Entertainment</div>
+  <div class="header-dept">Emergency Medical Services</div>
+  <div class="header-sub">Pillbox Medical Center — Standard Operating Procedures</div>
+  <div class="header-server">ZO Syndicate RP</div>
+  <div class="header-meta">
+    <span>Version 3.0</span> • <span>February 2026</span> • <span>Statewide Service</span>
+  </div>
+</header>
+
+<!-- Hero Image Section -->
+<div class="hero-section" style="background: radial-gradient(circle at center, rgba(46,204,113,0.3) 0%, transparent 70%), linear-gradient(135deg, #0f1f14 0%, #0d0d0d 100%);">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Emergency Medical Services</h1>
+    <p class="hero-subtitle">Excellence • Integrity • Service</p>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+
+<!-- Table of Contents -->
+<nav class="toc-nav">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#mission">Mission Statement</a></li>
+    <li><a href="#chain">Chain of Command</a></li>
+    <li><a href="#certifications">Certification Levels &amp; Scope of Practice</a></li>
+    <li><a href="#response">Emergency Response Procedures</a></li>
+    <li><a href="#assessment">Patient Assessment &amp; Triage</a></li>
+    <li><a href="#protocols">Treatment Protocols</a></li>
+    <li><a href="#transport">Transport Procedures</a></li>
+    <li><a href="#mci">Mass Casualty Incident Protocol</a></li>
+    <li><a href="#medications">Medication Administration</a></li>
+    <li><a href="#radio">Radio Communications</a></li>
+    <li><a href="#safety">Scene Safety &amp; LEO Coordination</a></li>
+    <li><a href="#mental">Mental Health &amp; Psychiatric Emergencies</a></li>
+    <li><a href="#conduct">Uniform &amp; Vehicle Standards</a></li>
+    <li><a href="#documentation">Documentation &amp; Patient Care Reports</a></li>
+    <li><a href="#training">Field Training Program</a></li>
+    <li><a href="#discipline">Internal Affairs &amp; Disciplinary Actions</a></li>
+    <li><a href="#amendments">Amendments &amp; Revision History</a></li>
+  </ol>
+</nav>
+
+<!-- ==================== SECTION 1: MISSION STATEMENT ==================== -->
+<div class="section" id="mission">
+  <h2><span class="section-num">Section 01</span>Mission Statement</h2>
+
+  <div class="callout callout-info">
+    <p><strong>"To preserve life, reduce suffering, and provide compassionate emergency medical care to all residents and visitors of San Andreas, without discrimination or prejudice."</strong></p>
+  </div>
+
+  <p>The Emergency Medical Services (EMS) division, operating under Pillbox Medical Center, is the primary emergency medical response agency for San Andreas. EMS personnel provide pre-hospital emergency care, interfacility transport, and emergency department services. Unlike law enforcement, EMS operates under a medical model focused on patient care, not criminal enforcement.</p>
+
+  <p>EMS responders are expected to remain calm under pressure, provide competent medical care, and treat every patient with dignity and respect. Whether responding to a gunshot wound in the hood, a heart attack in a mansion, or an overdose on the streets, every patient deserves our best care.</p>
+
+  <h3>1.1 Core Values</h3>
+  <ul>
+    <li><strong>Compassion</strong> &mdash; EMS personnel treat patients in their most vulnerable moments. Show empathy, kindness, and respect.</li>
+    <li><strong>Competence</strong> &mdash; Medical skills must be maintained through ongoing training. Lives depend on your knowledge.</li>
+    <li><strong>Courage</strong> &mdash; EMS enters dangerous scenes (shootings, fires, hazmat). Assess risks but do not abandon patients.</li>
+    <li><strong>Confidentiality</strong> &mdash; Patient medical information is protected by HIPAA. Do NOT share patient details outside of medical necessity.</li>
+    <li><strong>Teamwork</strong> &mdash; Coordinate with LEO, fire, hospital staff. Egos have no place in emergency medicine.</li>
+  </ul>
+
+  <h3>1.2 Oath of Service</h3>
+  <p>All EMS personnel shall, upon certification, take the following oath:</p>
+  <div class="callout callout-info">
+    <p><em>"I solemnly swear to use my medical knowledge and skills for the benefit of the sick and injured, to maintain the highest standards of care, to respect the dignity of every patient, and to uphold the honor of the medical profession. I will not discriminate based on race, religion, gender, criminal history, or ability to pay. I will protect patient confidentiality and act always in the patient's best interest. So help me God."</em></p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 2: CHAIN OF COMMAND ==================== -->
+<div class="section" id="chain">
+  <h2><span class="section-num">Section 02</span>Chain of Command</h2>
+
+  <p>EMS operates under a medical hierarchy where clinical decisions are made based on certification level, not rank. However, administrative and operational authority follows the chain of command.</p>
+
+  <h3>2.1 Rank Structure &amp; Authority</h3>
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Callsign</th>
+      <th>Authority</th>
+      <th>Pay Grade</th>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Medical Director</span></td>
+      <td><code>Medic-1</code></td>
+      <td>Chief of EMS. Must be licensed physician (MD). Medical protocol authority, hiring/termination, budget, inter-agency agreements.</td>
+      <td>Grade 7</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Assistant Director</span></td>
+      <td><code>Medic-2</code></td>
+      <td>Operations manager. Scheduling, vehicle maintenance, supplies, disciplinary authority. Assumes Medical Director authority in absence.</td>
+      <td>Grade 6</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Supervisor</span></td>
+      <td><code>Supervisor-[Unit#]</code></td>
+      <td>Shift commander. Scene medical authority on multi-unit calls. Performance reviews. FTO oversight. Must hold ALS or MD certification.</td>
+      <td>Grade 5</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Senior Paramedic</span></td>
+      <td><code>Medic-[Unit#]</code></td>
+      <td>FTO certified. Advanced procedures. Mentors junior personnel. May act as scene commander in Supervisor's absence. Must hold ALS cert.</td>
+      <td>Grade 4</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Paramedic</span></td>
+      <td><code>Medic-[Unit#]</code></td>
+      <td>Full ALS treatment authority. Advanced airway, IV medications, cardiac monitoring. Minimum 1 year service for promotion eligibility.</td>
+      <td>Grade 3</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">EMT</span></td>
+      <td><code>EMT-[Unit#]</code></td>
+      <td>BLS treatment authority. Basic airway, CPR, bleeding control, splinting. May drive ambulance. Minimum 6 months for promotion to Paramedic.</td>
+      <td>Grade 2</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Trainee</span></td>
+      <td><code>Trainee-[ID]</code></td>
+      <td>In academy or field training. Must be supervised by FTO. No independent patient care authority.</td>
+      <td>Grade 1</td>
+    </tr>
+  </table>
+
+  <h3>2.2 Medical Command Authority</h3>
+  <p>On scene with multiple EMS units, the highest medical certification (MD > ALS > BLS) has medical command authority. This may differ from administrative rank. Example: A Senior Paramedic (ALS) may assume medical command over a Supervisor (BLS) for clinical decisions.</p>
+
+  <h3>2.3 Reporting Structure</h3>
+  <ol>
+    <li>All personnel report to their shift Supervisor.</li>
+    <li>Supervisors report to Assistant Director.</li>
+    <li>Assistant Director reports to Medical Director.</li>
+    <li>Medical Director reports to Pillbox Hospital Administration and State Department of Health.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 3: CERTIFICATION LEVELS & SCOPE OF PRACTICE ==================== -->
+<div class="section" id="certifications">
+  <h2><span class="section-num">Section 03</span>Certification Levels &amp; Scope of Practice</h2>
+
+  <p>All EMS personnel must hold a valid state certification. Exceeding your scope of practice is grounds for termination and loss of certification.</p>
+
+  <h3>3.1 Basic Life Support (BLS) — EMT Certification</h3>
+  <p><strong>Training:</strong> 120-hour EMT course + state practical exam</p>
+  <p><strong>Authorized Procedures:</strong></p>
+  <ul>
+    <li>Airway: Oropharyngeal airway (OPA), nasopharyngeal airway (NPA), bag-valve-mask (BVM) ventilation</li>
+    <li>Breathing: Supplemental oxygen (nasal cannula, non-rebreather mask), pulse oximetry</li>
+    <li>Circulation: CPR, AED, bleeding control (direct pressure, tourniquets)</li>
+    <li>Medications: Aspirin (cardiac), nitroglycerin (patient's own), epinephrine auto-injector (patient's own), naloxone (Narcan) for overdose, glucose (oral)</li>
+    <li>Splinting: Fracture immobilization, spinal immobilization (backboard, C-collar)</li>
+    <li>Vitals: BP, pulse, respirations, SpO2, blood glucose (glucometer)</li>
+  </ul>
+  <p><strong>Prohibited:</strong> IV access, advanced airways, cardiac drugs, surgical procedures</p>
+
+  <h3>3.2 Advanced Life Support (ALS) — Paramedic Certification</h3>
+  <p><strong>Training:</strong> 2-year paramedic program + national registry exam</p>
+  <p><strong>Authorized Procedures (in addition to BLS):</strong></p>
+  <ul>
+    <li>Airway: Endotracheal intubation, supraglottic airways (King LT, i-gel), cricothyrotomy (emergency surgical airway)</li>
+    <li>Circulation: IV/IO access, saline/LR fluid resuscitation, blood pressure management</li>
+    <li>Cardiac: 12-lead ECG, cardiac monitoring, defibrillation (manual), cardioversion, external pacing, ACLS drugs (epinephrine, atropine, amiodarone, lidocaine)</li>
+    <li>Medications: Full formulary (cardiac drugs, pain management, sedation, paralytics, vasopressors)</li>
+    <li>Procedures: Needle decompression (tension pneumothorax), chest tube placement (MD supervision), central line placement (MD supervision)</li>
+  </ul>
+
+  <h3>3.3 Medical Doctor (MD) — Physician License</h3>
+  <p><strong>Training:</strong> Medical school + residency + state medical board license</p>
+  <p><strong>Authorized Procedures:</strong> All BLS/ALS procedures + surgical procedures, pronouncement of death, advanced trauma life support, code blue leadership</p>
+  <p><strong>Role:</strong> Medical Director oversees all EMS operations. MDs on shift provide direct patient care and supervise complex cases.</p>
+
+  <div class="callout callout-warning">
+    <p><strong>Scope Violation:</strong> Performing procedures beyond your certification level is a criminal act (practicing medicine without a license) and will result in immediate termination, loss of certification, and possible criminal prosecution.</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 4: EMERGENCY RESPONSE PROCEDURES ==================== -->
+<div class="section" id="response">
+  <h2><span class="section-num">Section 04</span>Emergency Response Procedures</h2>
+
+  <h3>4.1 Dispatch Priority Levels</h3>
+  <table>
+    <tr>
+      <th>Priority</th>
+      <th>Response Code</th>
+      <th>Description</th>
+      <th>Examples</th>
+    </tr>
+    <tr>
+      <td><strong>Priority 1</strong></td>
+      <td><code>Code 3</code></td>
+      <td>Life-threatening emergency. Lights & siren. Immediate response. Expect <5 min ETA urban, <10 min rural.</td>
+      <td>Cardiac arrest, active shooting victim, unresponsive, severe trauma, drowning, anaphylaxis</td>
+    </tr>
+    <tr>
+      <td><strong>Priority 2</strong></td>
+      <td><code>Code 2</code></td>
+      <td>Urgent but not immediately life-threatening. Expedited response, lights only (no siren). <10 min ETA urban, <15 min rural.</td>
+      <td>Fractures, lacerations, vehicle accident with injuries, chest pain (stable), difficulty breathing (stable)</td>
+    </tr>
+    <tr>
+      <td><strong>Priority 3</strong></td>
+      <td><code>Code 1</code></td>
+      <td>Non-emergency. Routine response, no lights/siren. <20 min ETA.</td>
+      <td>Minor injuries, welfare check, non-emergency transport, lift assist, patient refusal follow-up</td>
+    </tr>
+  </table>
+
+  <h3>4.2 Response Procedure</h3>
+  <ol>
+    <li><strong>Dispatch:</strong> Acknowledge call immediately: <code>"Medic-[unit] responding Code [1/2/3] to [location]"</code></li>
+    <li><strong>En Route:</strong> Don BSI (gloves minimum). Review dispatch notes. Request LEO if scene potentially unsafe.</li>
+    <li><strong>Arrival:</strong> Notify dispatch: <code>"Medic-[unit] on scene"</code>. Perform scene size-up (safety, mechanism, number of patients).</li>
+    <li><strong>Scene Safety:</strong> If scene unsafe (active shooter, fire, hazmat, unstable vehicle), stage 1 block away and wait for scene to be secured.</li>
+    <li><strong>Patient Contact:</strong> Introduce yourself: "Hi, I'm [Name] with EMS. What's going on today?" Begin assessment.</li>
+  </ol>
+
+  <h3>4.3 Emergency Driving</h3>
+  <div class="callout callout-critical">
+    <p><strong>Code 3 driving does NOT exempt you from traffic laws. You are responsible for every collision. Proceed with caution, especially through intersections.</strong></p>
+  </div>
+  <ul>
+    <li>Activate emergency lights and siren for Code 3 responses.</li>
+    <li>Slow down at all red lights and stop signs. Proceed only when safe.</li>
+    <li>Do NOT exceed 15 mph over posted speed limit (urban) or 20 mph (highway).</li>
+    <li>If traffic does not yield, STOP. Do not force your way through.</li>
+    <li>All collisions must be reported immediately to Supervisor. Automatic IA investigation.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 5: PATIENT ASSESSMENT & TRIAGE ==================== -->
+<div class="section" id="assessment">
+  <h2><span class="section-num">Section 05</span>Patient Assessment &amp; Triage</h2>
+
+  <h3>5.1 ABCDE Primary Assessment</h3>
+  <p>Perform on EVERY patient, in order. Life threats are addressed immediately before moving to next step.</p>
+  <ol>
+    <li><strong>A — Airway:</strong> Is the airway open and clear? If obstructed (tongue, blood, vomit), open airway (head-tilt-chin-lift or jaw thrust if spinal injury suspected).</li>
+    <li><strong>B — Breathing:</strong> Is the patient breathing? Rate, depth, effort? Auscultate lung sounds. Apply oxygen if SpO2 <94%. Assist ventilations if inadequate.</li>
+    <li><strong>C — Circulation:</strong> Pulse present? Rate, strength, regularity? Check for external bleeding (apply direct pressure/tourniquet). Skin color/temp (pale/cool = shock).</li>
+    <li><strong>D — Disability:</strong> Neurological status. AVPU scale (Alert, Verbal response, Pain response, Unresponsive). Pupils equal/reactive? GCS score if head trauma.</li>
+    <li><strong>E — Exposure:</strong> Remove clothing to examine entire body (maintain patient dignity with blankets). Look for hidden injuries (stab wounds, burns).</li>
+  </ol>
+
+  <h3>5.2 SAMPLE History</h3>
+  <p>Obtain from patient (or bystanders if patient unable):</p>
+  <ul>
+    <li><strong>S — Signs & Symptoms:</strong> What is bothering you? Pain (OPQRST: Onset, Provokes, Quality, Radiates, Severity 1-10, Time)?</li>
+    <li><strong>A — Allergies:</strong> Any medication or environmental allergies?</li>
+    <li><strong>M — Medications:</strong> What medications do you take? Include recreational drugs.</li>
+    <li><strong>P — Past Medical History:</strong> Any chronic conditions? Prior surgeries?</li>
+    <li><strong>L — Last Oral Intake:</strong> When did you last eat/drink? (Important for surgery/anesthesia)</li>
+    <li><strong>E — Events Leading Up:</strong> What were you doing when this started?</li>
+  </ul>
+
+  <h3>5.3 Vital Signs</h3>
+  <p>Obtain and document vitals on every patient:</p>
+  <table>
+    <tr>
+      <th>Vital</th>
+      <th>Normal Range (Adult)</th>
+      <th>Critical Values</th>
+    </tr>
+    <tr>
+      <td>Heart Rate</td>
+      <td>60-100 bpm</td>
+      <td><40 (bradycardia) or >120 (tachycardia)</td>
+    </tr>
+    <tr>
+      <td>Blood Pressure</td>
+      <td>90/60 to 120/80 mmHg</td>
+      <td><90 systolic (shock) or >180 systolic (hypertensive crisis)</td>
+    </tr>
+    <tr>
+      <td>Respirations</td>
+      <td>12-20 breaths/min</td>
+      <td><10 (respiratory failure) or >30 (respiratory distress)</td>
+    </tr>
+    <tr>
+      <td>SpO2</td>
+      <td>95-100%</td>
+      <td><90% (hypoxia — apply oxygen)</td>
+    </tr>
+    <tr>
+      <td>Blood Glucose</td>
+      <td>70-110 mg/dL</td>
+      <td><60 (hypoglycemia) or >300 (DKA)</td>
+    </tr>
+  </table>
+
+  <h3>5.4 Triage (Multiple Patients)</h3>
+  <p>When patients exceed available resources, use START Triage to prioritize:</p>
+  <table>
+    <tr>
+      <th>Category</th>
+      <th>Color</th>
+      <th>Criteria</th>
+      <th>Treatment Priority</th>
+    </tr>
+    <tr>
+      <td><strong>Immediate</strong></td>
+      <td style="color:#e74c3c"><strong>RED</strong></td>
+      <td>Life-threatening but survivable with immediate intervention (e.g., severe bleeding, airway obstruction, tension pneumothorax)</td>
+      <td>1st</td>
+    </tr>
+    <tr>
+      <td><strong>Delayed</strong></td>
+      <td style="color:#f1c40f"><strong>YELLOW</strong></td>
+      <td>Serious injuries but can tolerate 30-60 min delay (e.g., fractures, moderate burns, stable chest pain)</td>
+      <td>2nd</td>
+    </tr>
+    <tr>
+      <td><strong>Minor</strong></td>
+      <td style="color:#2ecc71"><strong>GREEN</strong></td>
+      <td>Walking wounded. Minor injuries (e.g., lacerations, sprains). Can self-evacuate.</td>
+      <td>3rd</td>
+    </tr>
+    <tr>
+      <td><strong>Deceased</strong></td>
+      <td style="color:#666"><strong>BLACK</strong></td>
+      <td>Dead or injuries incompatible with life (e.g., decapitation, massive head trauma, asystole for >20 min)</td>
+      <td>None (tag and move to morgue area)</td>
+    </tr>
+  </table>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 6: TREATMENT PROTOCOLS ==================== -->
+<div class="section" id="protocols">
+  <h2><span class="section-num">Section 06</span>Treatment Protocols</h2>
+
+  <h3>6.1 Cardiac Arrest Protocol</h3>
+  <div class="callout callout-critical">
+    <p><strong>Time-sensitive emergency. Begin CPR immediately. Every second counts.</strong></p>
+  </div>
+  <ol>
+    <li><strong>Confirm Arrest:</strong> Unresponsive + no pulse. Call for backup unit and supervisor.</li>
+    <li><strong>CPR:</strong> 30 chest compressions (2 inches deep, 100-120/min) : 2 ventilations. Continuous until ALS arrival or ROSC.</li>
+    <li><strong>AED:</strong> Apply as soon as available. Analyze rhythm. Shock if advised. Resume CPR immediately after shock.</li>
+    <li><strong>ALS Interventions:</strong> Advanced airway (ET tube), IV/IO access, epinephrine 1mg IV q3-5min, amiodarone 300mg IV if VF/pulseless VT.</li>
+    <li><strong>ROSC (Return of Spontaneous Circulation):</strong> Check pulse after 2 min CPR. If pulse present, transport immediately to Pillbox.</li>
+    <li><strong>Termination:</strong> If no ROSC after 20 min and no shockable rhythm, consider termination (Supervisor or MD approval required).</li>
+  </ol>
+
+  <h3>6.2 Gunshot Wound (GSW) / Penetrating Trauma</h3>
+  <div class="callout callout-critical">
+    <p><strong>Scene safety first. Ensure LEO has secured scene before approaching. Gunshot wounds are crime scenes — preserve evidence when possible.</strong></p>
+  </div>
+  <ol>
+    <li><strong>Hemorrhage Control:</strong> Direct pressure to wound. If extremity bleed and pressure fails, apply tourniquet 2-3 inches above wound. Note time applied.</li>
+    <li><strong>Chest Wounds:</strong> Occlusive dressing (3-sided tape or chest seal). Monitor for tension pneumothorax (decreased breath sounds, JVD, hypotension). If present, needle decompression (ALS only).</li>
+    <li><strong>Abdominal Wounds:</strong> Cover evisceration with moist sterile dressing. Do NOT push organs back in.</li>
+    <li><strong>Spinal Precautions:</strong> If mechanism suggests spinal injury, full immobilization (C-collar, backboard).</li>
+    <li><strong>IV Access (ALS):</strong> 2 large-bore IVs. Fluid resuscitation (maintain systolic BP >90 mmHg). Do NOT delay transport for IVs — start en route.</li>
+    <li><strong>Transport:</strong> Rapid transport to Pillbox trauma bay. Notify hospital of GSW patient with ETA. Minimize on-scene time (<10 min).</li>
+  </ol>
+
+  <h3>6.3 Motor Vehicle Accident (MVA)</h3>
+  <ol>
+    <li><strong>Scene Safety:</strong> Park upwind/uphill if hazmat suspected. Activate emergency lights. Wear reflective vest. Request fire department for extrication if patient trapped.</li>
+    <li><strong>Spinal Immobilization:</strong> All high-speed MVA patients get full spinal precautions unless all of the following are true: ambulatory at scene, no LOC, no spinal pain, no distracting injuries, no intoxication.</li>
+    <li><strong>Assessment:</strong> Check all occupants (even if they claim they're fine). Airbag deployment = significant force. Look for seatbelt sign (bruising across chest).</li>
+    <li><strong>Extrication:</strong> If patient trapped, fire department performs extrication. EMS provides in-vehicle medical care (C-collar, oxygen) while extrication ongoing.</li>
+    <li><strong>Transport Decision:</strong> Any of the following = immediate transport: chest pain, difficulty breathing, altered mental status, significant bleeding, ejection from vehicle.</li>
+  </ol>
+
+  <h3>6.4 Overdose / Poisoning</h3>
+  <ul>
+    <li><strong>Opioid Overdose (Heroin, Fentanyl):</strong> Pinpoint pupils, respiratory depression (<10/min), unresponsive. Administer naloxone (Narcan) 2mg intranasal or 0.4mg IV. May repeat q2-3min if no response. Support airway/ventilations. Transport.</li>
+    <li><strong>Stimulant Overdose (Cocaine, Meth):</strong> Agitation, hyperthermia, tachycardia, seizures. Cool patient if hyperthermic. Benzodiazepines (midazolam 5mg IM/IV) for seizures or severe agitation (ALS only). Transport.</li>
+    <li><strong>Alcohol Intoxication:</strong> Check blood glucose (hypoglycemia common). If unresponsive, assume other drugs involved. Airway management. Transport if unable to protect airway or signs of alcohol poisoning.</li>
+  </ul>
+
+  <h3>6.5 Diabetic Emergencies</h3>
+  <table>
+    <tr>
+      <th>Condition</th>
+      <th>Signs/Symptoms</th>
+      <th>Treatment</th>
+    </tr>
+    <tr>
+      <td><strong>Hypoglycemia (Low Blood Sugar)</strong></td>
+      <td>Blood glucose <60 mg/dL. Altered mental status, diaphoresis, shaking, seizures.</td>
+      <td>If conscious and can swallow: oral glucose (tube of gel). If unconscious or unable to swallow: dextrose 25g IV (ALS) or glucagon 1mg IM. Recheck glucose after 10 min.</td>
+    </tr>
+    <tr>
+      <td><strong>Hyperglycemia / DKA</strong></td>
+      <td>Blood glucose >300 mg/dL. Fruity breath odor, Kussmaul respirations, dehydration, altered mental status.</td>
+      <td>IV fluid resuscitation (saline 500mL bolus). Continuous IV fluids en route. Do NOT give insulin in field. Transport to Pillbox.</td>
+    </tr>
+  </table>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 7: TRANSPORT PROCEDURES ==================== -->
+<div class="section" id="transport">
+  <h2><span class="section-num">Section 07</span>Transport Procedures</h2>
+
+  <h3>7.1 Transport Decision</h3>
+  <p>All patients assessed by EMS should be transported to Pillbox Medical Center unless:</p>
+  <ul>
+    <li>Patient refuses transport (must be alert, oriented, and sign refusal form)</li>
+    <li>Patient pronounced dead on scene (Paramedic+ or MD after 20 min resuscitation or obvious death)</li>
+    <li>Patient treated and released by MD on scene (special events with medical tent)</li>
+  </ul>
+
+  <h3>7.2 Transport Notification</h3>
+  <p>Notify dispatch when transporting:</p>
+  <ul>
+    <li><code>"Medic-[unit] transporting Priority [1/2/3] to Pillbox Medical Center, ETA [X] minutes"</code></li>
+    <li>For Priority 1 (critical) patients, also notify Pillbox directly via radio or phone with brief report (SBAR format).</li>
+  </ul>
+
+  <h3>7.3 Patient Packaging</h3>
+  <ul>
+    <li><strong>All Patients:</strong> Loaded on ambulance stretcher. Secured with 3 straps minimum. Seatbelt over patient. Side rails up.</li>
+    <li><strong>Spinal Immobilization:</strong> C-collar + backboard + straps. Head blocks or towel rolls to prevent lateral movement. Secure to stretcher.</li>
+    <li><strong>Cardiac Monitor:</strong> All Priority 1 patients on cardiac monitor (ALS unit). Continuous SpO2 monitoring.</li>
+    <li><strong>IV Access:</strong> Secured with tape or IV shield. Run fluids through ambulance IV pole (not free-hanging bag).</li>
+  </ul>
+
+  <h3>7.4 En Route Care</h3>
+  <ul>
+    <li><strong>Driver:</strong> Focus on safe driving. Code 3 transport only if Priority 1 AND time-sensitive (e.g., STEMI, stroke, trauma).</li>
+    <li><strong>Attendant:</strong> Remain in patient compartment. Continuous monitoring. Reassess vitals q5min (critical) or q15min (stable). Document all interventions.</li>
+    <li><strong>Updates:</strong> If patient condition changes (improves or deteriorates), notify driver and hospital immediately.</li>
+  </ul>
+
+  <h3>7.5 Hospital Handoff (SBAR Report)</h3>
+  <p>Upon arrival at Pillbox, provide SBAR report to receiving nurse/physician:</p>
+  <ul>
+    <li><strong>S — Situation:</strong> "This is [patient name/age], chief complaint is [e.g., chest pain]."</li>
+    <li><strong>B — Background:</strong> "Patient has history of [medical conditions], takes [medications], allergies to [drugs]."</li>
+    <li><strong>A — Assessment:</strong> "Vitals are [BP/HR/RR/SpO2/BG]. Physical exam shows [findings]. We administered [treatments]."</li>
+    <li><strong>R — Recommendation:</strong> "Patient needs [e.g., trauma bay, cardiac cath lab, etc.]."</li>
+  </ul>
+  <p>Transfer patient to hospital bed. Provide patient care report (PCR) to hospital staff. Obtain receiving nurse/physician signature.</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 8: MASS CASUALTY INCIDENT PROTOCOL ==================== -->
+<div class="section" id="mci">
+  <h2><span class="section-num">Section 08</span>Mass Casualty Incident Protocol</h2>
+
+  <div class="callout callout-critical">
+    <p><strong>MCI Declared When:</strong> Patients exceed available EMS resources (typically 5+ patients, or 3+ Priority 1 patients).</p>
+  </div>
+
+  <h3>8.1 MCI Activation</h3>
+  <ol>
+    <li><strong>First Arriving Unit:</strong> Performs scene size-up. Estimates number of patients. Declares MCI over radio: <code>"Dispatch, Medic-[unit] declaring MCI at [location]. Approximately [X] patients. Requesting all available EMS units and supervisor."</code></li>
+    <li><strong>Dispatch:</strong> Activates MCI protocol. Dispatches all available units. Notifies Pillbox to prepare for mass casualty.</li>
+    <li><strong>Establish Command:</strong> First arriving Supervisor assumes Incident Commander role. Sets up command post. Dons high-visibility vest.</li>
+  </ol>
+
+  <h3>8.2 ICS Structure for MCI</h3>
+  <ul>
+    <li><strong>Incident Commander (IC):</strong> Supervisor or highest ranking EMS on scene. Overall authority. Coordinates with LEO/Fire.</li>
+    <li><strong>Triage Officer:</strong> Performs START triage on all patients. Tags patients with color-coded ribbons (red/yellow/green/black).</li>
+    <li><strong>Treatment Officer:</strong> Manages treatment area. Assigns patients to available EMS personnel.</li>
+    <li><strong>Transport Officer:</strong> Coordinates ambulance staging. Assigns patients to ambulances. Notifies hospitals of incoming patients.</li>
+    <li><strong>Staging Officer:</strong> Manages ambulance staging area (upwind/uphill from scene). Directs arriving units to triage, treatment, or transport.</li>
+  </ul>
+
+  <h3>8.3 START Triage (30-Second Assessment)</h3>
+  <ol>
+    <li><strong>Walking Wounded:</strong> Call out: "Anyone who can walk, move to [safe area]." Tag all as GREEN.</li>
+    <li><strong>For Non-Ambulatory:</strong>
+      <ul>
+        <li><strong>Respirations:</strong> Breathing? If NO, open airway. Still not breathing? Tag BLACK. If YES, count respirations. >30/min or <10/min? Tag RED. Otherwise continue.</li>
+        <li><strong>Perfusion:</strong> Check radial pulse or capillary refill. Absent radial pulse or cap refill >2 sec? Tag RED. Otherwise continue.</li>
+        <li><strong>Mental Status:</strong> Can patient follow simple commands ("Squeeze my hand")? If NO, tag RED. If YES, tag YELLOW.</li>
+      </ul>
+    </li>
+    <li><strong>Move to Next Patient.</strong> Do NOT begin treatment during triage phase.</li>
+  </ol>
+
+  <h3>8.4 Treatment Area</h3>
+  <p>Once triage complete, patients moved to treatment area by color:</p>
+  <ul>
+    <li><strong>RED Area:</strong> Immediate treatment (airway, hemorrhage control, IV access). Transport priority #1.</li>
+    <li><strong>YELLOW Area:</strong> Delayed treatment. Monitor for deterioration. Transport after all RED patients.</li>
+    <li><strong>GREEN Area:</strong> Minimal treatment. Self-care if possible. Transport last (may use buses for mass transport).</li>
+    <li><strong>BLACK Area:</strong> Covered and moved to separate area. LEO handles body recovery and identification.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 9: MEDICATION ADMINISTRATION ==================== -->
+<div class="section" id="medications">
+  <h2><span class="section-num">Section 09</span>Medication Administration</h2>
+
+  <div class="callout callout-warning">
+    <p><strong>Medication Errors Can Be Fatal.</strong> Verify drug name, dose, route, and patient allergies before administering ANY medication. When in doubt, contact Medical Director.</p>
+  </div>
+
+  <h3>9.1 Six Rights of Medication Administration</h3>
+  <ol>
+    <li><strong>Right Patient:</strong> Confirm patient identity (name, DOB if known).</li>
+    <li><strong>Right Drug:</strong> Read label 3 times (when selecting, when preparing, when administering).</li>
+    <li><strong>Right Dose:</strong> Calculate based on patient weight if required. Double-check math.</li>
+    <li><strong>Right Route:</strong> IV, IM, sublingual, inhalation, etc. Ensure correct route for drug.</li>
+    <li><strong>Right Time:</strong> Is this the appropriate time to give this drug?</li>
+    <li><strong>Right Documentation:</strong> Document drug name, dose, route, time, and patient response immediately.</li>
+  </ol>
+
+  <h3>9.2 BLS Medication Formulary</h3>
+  <table>
+    <tr>
+      <th>Drug</th>
+      <th>Indication</th>
+      <th>Dose</th>
+      <th>Route</th>
+    </tr>
+    <tr>
+      <td><strong>Aspirin</strong></td>
+      <td>Chest pain (suspected MI)</td>
+      <td>324 mg (4 baby aspirin, chewed)</td>
+      <td>PO</td>
+    </tr>
+    <tr>
+      <td><strong>Nitroglycerin</strong></td>
+      <td>Chest pain (if patient has own prescription)</td>
+      <td>0.4 mg (1 tablet sublingual or spray)</td>
+      <td>SL</td>
+    </tr>
+    <tr>
+      <td><strong>Naloxone (Narcan)</strong></td>
+      <td>Opioid overdose</td>
+      <td>2 mg (may repeat q3min)</td>
+      <td>Intranasal or IM</td>
+    </tr>
+    <tr>
+      <td><strong>Epinephrine Auto-Injector</strong></td>
+      <td>Anaphylaxis (if patient has own EpiPen)</td>
+      <td>0.3 mg (adult) or 0.15 mg (pediatric)</td>
+      <td>IM (lateral thigh)</td>
+    </tr>
+    <tr>
+      <td><strong>Oral Glucose</strong></td>
+      <td>Hypoglycemia (conscious patient)</td>
+      <td>15g (1 tube glucose gel)</td>
+      <td>PO (between cheek and gum)</td>
+    </tr>
+    <tr>
+      <td><strong>Oxygen</strong></td>
+      <td>Hypoxia (SpO2 <94%)</td>
+      <td>2-15 L/min (titrate to SpO2 94-99%)</td>
+      <td>Inhalation (nasal cannula or NRB mask)</td>
+    </tr>
+  </table>
+
+  <h3>9.3 ALS Medication Formulary (Paramedic Only)</h3>
+  <table>
+    <tr>
+      <th>Drug</th>
+      <th>Indication</th>
+      <th>Dose</th>
+      <th>Route</th>
+    </tr>
+    <tr>
+      <td><strong>Epinephrine</strong></td>
+      <td>Cardiac arrest, anaphylaxis</td>
+      <td>1 mg q3-5min (arrest), 0.3mg IM (anaphylaxis)</td>
+      <td>IV/IO or IM</td>
+    </tr>
+    <tr>
+      <td><strong>Atropine</strong></td>
+      <td>Bradycardia (HR <50 with symptoms)</td>
+      <td>0.5 mg IV, may repeat to 3 mg total</td>
+      <td>IV/IO</td>
+    </tr>
+    <tr>
+      <td><strong>Amiodarone</strong></td>
+      <td>VF/pulseless VT (cardiac arrest)</td>
+      <td>300 mg IV, may repeat 150 mg once</td>
+      <td>IV/IO</td>
+    </tr>
+    <tr>
+      <td><strong>Dextrose 25%</strong></td>
+      <td>Hypoglycemia (unconscious)</td>
+      <td>25 g (100mL) IV over 2 min</td>
+      <td>IV</td>
+    </tr>
+    <tr>
+      <td><strong>Midazolam (Versed)</strong></td>
+      <td>Seizures, severe agitation</td>
+      <td>5 mg IM/IV, may repeat once</td>
+      <td>IM or IV</td>
+    </tr>
+    <tr>
+      <td><strong>Morphine</strong></td>
+      <td>Severe pain (trauma, MI)</td>
+      <td>2-4 mg IV q5min (titrate to pain <5/10)</td>
+      <td>IV</td>
+    </tr>
+    <tr>
+      <td><strong>Fentanyl</strong></td>
+      <td>Severe pain (faster onset than morphine)</td>
+      <td>1 mcg/kg IV (max 100 mcg), may repeat</td>
+      <td>IV</td>
+    </tr>
+    <tr>
+      <td><strong>Dopamine</strong></td>
+      <td>Hypotension (shock)</td>
+      <td>5-20 mcg/kg/min IV drip (titrate to BP)</td>
+      <td>IV infusion</td>
+    </tr>
+  </table>
+
+  <h3>9.4 Medication Error Reporting</h3>
+  <p>If a medication error occurs (wrong drug, wrong dose, wrong patient), immediately:</p>
+  <ol>
+    <li>Notify partner and Supervisor.</li>
+    <li>Monitor patient closely for adverse reaction.</li>
+    <li>Notify receiving hospital of medication error.</li>
+    <li>File medication error report within 24 hours.</li>
+    <li>Automatic review by Medical Director. May result in remedial training or suspension depending on severity.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 10: RADIO COMMUNICATIONS ==================== -->
+<div class="section" id="radio">
+  <h2><span class="section-num">Section 10</span>Radio Communications</h2>
+
+  <h3>10.1 Radio Channels</h3>
+  <table>
+    <tr>
+      <th>Channel</th>
+      <th>Use</th>
+      <th>Access</th>
+    </tr>
+    <tr>
+      <td><strong>EMS-1 (Primary)</strong></td>
+      <td>All EMS dispatch, routine comms</td>
+      <td>All EMS units, dispatch</td>
+    </tr>
+    <tr>
+      <td><strong>EMS-2 (TAC)</strong></td>
+      <td>MCI operations, inter-unit coordination</td>
+      <td>Units involved in MCI only</td>
+    </tr>
+    <tr>
+      <td><strong>Interop-1</strong></td>
+      <td>Coordination with LEO/Fire on scene</td>
+      <td>All public safety agencies</td>
+    </tr>
+    <tr>
+      <td><strong>Hospital Direct</strong></td>
+      <td>Direct comms with Pillbox ER</td>
+      <td>Transporting units, ER staff</td>
+    </tr>
+  </table>
+
+  <h3>10.2 Standard Radio Traffic</h3>
+  <table>
+    <tr>
+      <th>Situation</th>
+      <th>Transmission</th>
+    </tr>
+    <tr>
+      <td><strong>Responding</strong></td>
+      <td><code>"Dispatch, Medic-[unit] responding Code [1/2/3] to [location]"</code></td>
+    </tr>
+    <tr>
+      <td><strong>On Scene</strong></td>
+      <td><code>"Medic-[unit] on scene"</code></td>
+    </tr>
+    <tr>
+      <td><strong>Request Backup</strong></td>
+      <td><code>"Dispatch, Medic-[unit] requesting additional unit for [reason]"</code></td>
+    </tr>
+    <tr>
+      <td><strong>Request LEO</strong></td>
+      <td><code>"Dispatch, Medic-[unit] requesting LEO to scene, [reason: unsafe scene/psych patient/etc]"</code></td>
+    </tr>
+    <tr>
+      <td><strong>Transporting</strong></td>
+      <td><code>"Medic-[unit] transporting Priority [1/2/3] to Pillbox, ETA [X] minutes"</code></td>
+    </tr>
+    <tr>
+      <td><strong>Arrived Hospital</strong></td>
+      <td><code>"Medic-[unit] arrived Pillbox"</code></td>
+    </tr>
+    <tr>
+      <td><strong>Available</strong></td>
+      <td><code>"Medic-[unit] available"</code></td>
+    </tr>
+    <tr>
+      <td><strong>Out of Service</strong></td>
+      <td><code>"Medic-[unit] out of service for [reason: fuel/restocking/mechanical]"</code></td>
+    </tr>
+  </table>
+
+  <h3>10.3 Ten-Codes (EMS)</h3>
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Meaning</th>
+    </tr>
+    <tr><td><code>10-4</code></td><td>Acknowledged</td></tr>
+    <tr><td><code>10-8</code></td><td>In service / Available</td></tr>
+    <tr><td><code>10-7</code></td><td>Out of service</td></tr>
+    <tr><td><code>10-23</code></td><td>Arrived on scene</td></tr>
+    <tr><td><code>10-24</code></td><td>Assignment complete (available)</td></tr>
+    <tr><td><code>10-33</code></td><td>Emergency traffic (clear channel)</td></tr>
+    <tr><td><code>Code 1</code></td><td>Routine response (no lights/siren)</td></tr>
+    <tr><td><code>Code 2</code></td><td>Urgent response (lights only)</td></tr>
+    <tr><td><code>Code 3</code></td><td>Emergency response (lights & siren)</td></tr>
+    <tr><td><code>Code 4</code></td><td>No further assistance needed</td></tr>
+  </table>
+
+  <h3>10.4 HIPAA & Radio Privacy</h3>
+  <div class="callout callout-warning">
+    <p><strong>NEVER transmit patient names, addresses, or specific medical details over radio.</strong> Radio traffic is monitored by the public (scanner apps). Use generic terms: "adult male", "chest pain patient", etc. Detailed patient info shared via phone or in-person only.</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 11: SCENE SAFETY & LEO COORDINATION ==================== -->
+<div class="section" id="safety">
+  <h2><span class="section-num">Section 11</span>Scene Safety &amp; LEO Coordination</h2>
+
+  <div class="callout callout-critical">
+    <p><strong>YOU CANNOT HELP ANYONE IF YOU ARE DEAD.</strong> Scene safety is always the first priority. Never enter an unsafe scene. Wait for LEO to secure.</p>
+  </div>
+
+  <h3>11.1 Hot/Warm/Cold Zones</h3>
+  <table>
+    <tr>
+      <th>Zone</th>
+      <th>Description</th>
+      <th>EMS Action</th>
+    </tr>
+    <tr>
+      <td style="color:#e74c3c"><strong>HOT Zone</strong></td>
+      <td>Active threat present (active shooter, fire, hazmat, unstable building). Immediate danger to life.</td>
+      <td><strong>DO NOT ENTER.</strong> Stage at safe distance (1+ blocks). Wait for LEO/Fire to declare scene safe.</td>
+    </tr>
+    <tr>
+      <td style="color:#f1c40f"><strong>WARM Zone</strong></td>
+      <td>Threat neutralized but not fully secured. LEO still clearing scene. Potential for secondary threats.</td>
+      <td>Enter ONLY with LEO escort. Wear ballistic vest if available. Be prepared to evacuate if scene becomes unsafe.</td>
+    </tr>
+    <tr>
+      <td style="color:#2ecc71"><strong>COLD Zone</strong></td>
+      <td>Scene fully secured by LEO. No active threats. Safe for EMS operations.</td>
+      <td>Proceed with normal patient care. Maintain situational awareness — scenes can escalate.</td>
+    </tr>
+  </table>
+
+  <h3>11.2 Tactical EMS (Active Shooter / Barricaded Suspect)</h3>
+  <ul>
+    <li>EMS stages in COLD zone (typically 1-2 blocks from scene).</li>
+    <li>LEO SWAT/patrol forms rescue task force (RTF): 2-4 LEO + 2 EMS (ballistic vests, minimal equipment).</li>
+    <li>RTF enters WARM zone to extract wounded victims to COLD zone where full treatment provided.</li>
+    <li>EMS does NOT enter HOT zone. LEO drags victims out of hot zone, then EMS takes over.</li>
+  </ul>
+
+  <h3>11.3 Crime Scene Preservation</h3>
+  <p>EMS has priority to save lives, but must preserve evidence when possible:</p>
+  <ul>
+    <li>Avoid disturbing weapons, shell casings, blood spatter.</li>
+    <li>If must move patient, note original position.</li>
+    <li>Do NOT cut through bullet holes or stab wounds when removing clothing (cut around).</li>
+    <li>Preserve all clothing (bag separately, do not shake out). Give to LEO.</li>
+    <li>If patient dies in ambulance, consider ambulance a crime scene. Notify LEO. Do not clean until LEO photographs interior.</li>
+  </ul>
+
+  <h3>11.4 Violent/Combative Patients</h3>
+  <div class="callout callout-warning">
+    <p><strong>Request LEO before approaching violent or potentially violent patients.</strong> LEO will restrain patient, then EMS provides medical care.</p>
+  </div>
+  <ul>
+    <li>Signs of violence: Clenched fists, pacing, yelling, throwing objects, paranoid statements.</li>
+    <li>De-escalation: Calm voice, non-threatening posture, offer choices, give patient space (6+ feet).</li>
+    <li>If patient attacks, RETREAT. Do not fight. Call for LEO immediately.</li>
+    <li>Once LEO restrains patient, assess for injuries from restraint (positional asphyxia if prone, taser barbs, etc.).</li>
+    <li>Chemical sedation (midazolam 5mg IM) authorized for violent psych patients AFTER LEO restraint and Supervisor approval.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 12: MENTAL HEALTH & PSYCHIATRIC EMERGENCIES ==================== -->
+<div class="section" id="mental">
+  <h2><span class="section-num">Section 12</span>Mental Health &amp; Psychiatric Emergencies</h2>
+
+  <h3>12.1 Psych Patient Assessment</h3>
+  <p>Approach: "I'm [Name] with EMS. I'm here to help. What's going on today?"</p>
+  <ul>
+    <li><strong>Risk Assessment:</strong> Is patient a danger to self or others? Suicidal ideation (plan/means)? Homicidal ideation?</li>
+    <li><strong>Medical Clearance:</strong> Many "psych" calls have medical causes (hypoglycemia, hypoxia, head injury, drugs). Check vitals, blood glucose, pupils.</li>
+    <li><strong>Organic vs Functional:</strong> Sudden onset behavioral change in elderly = stroke/infection/delirium (MEDICAL). Long psych history = functional psych (PSYCH).</li>
+  </ul>
+
+  <h3>12.2 Suicidal Patient</h3>
+  <div class="callout callout-critical">
+    <p><strong>Take ALL suicide threats seriously.</strong> "I'm going to kill myself" = immediate psych hold. Do NOT leave patient alone.</p>
+  </div>
+  <ol>
+    <li><strong>Remove Means:</strong> Ask patient to hand over pills, weapons, belts, shoelaces. Have LEO secure if patient refuses.</li>
+    <li><strong>Constant Supervision:</strong> EMS or LEO with patient at all times. Suicidal patients have been known to jump from moving ambulances.</li>
+    <li><strong>Calm Environment:</strong> Low stimulation. Soft voice. No sudden movements. Explain everything you're doing.</li>
+    <li><strong>5150 Hold:</strong> Paramedic+ or LEO can place patient on 72-hour involuntary psych hold if danger to self/others or gravely disabled. Transport to Pillbox psych ward.</li>
+    <li><strong>Medical Director Approval:</strong> All 5150 holds require Medical Director notification within 1 hour.</li>
+  </ol>
+
+  <h3>12.3 Agitated Psych Patient</h3>
+  <ul>
+    <li><strong>De-escalation:</strong> First line. Calm voice, validate feelings, offer choices. "I can see you're upset. How can I help?"</li>
+    <li><strong>Positioning:</strong> Maintain exit route for yourself. Do NOT corner patient. Keep 6+ feet distance.</li>
+    <li><strong>LEO Assistance:</strong> If de-escalation fails or patient becomes threatening, request LEO.</li>
+    <li><strong>Physical Restraint:</strong> ONLY if patient is immediate danger to self/others AND de-escalation failed. LEO performs restraint. EMS does NOT physically restrain (risk of injury).</li>
+    <li><strong>Chemical Sedation:</strong> Midazolam (Versed) 5mg IM for severely agitated patient who is restrained and poses ongoing danger. Requires Supervisor or MD approval. Monitor airway closely (respiratory depression).</li>
+  </ul>
+
+  <h3>12.4 Overdose with Psych Component</h3>
+  <p>Intentional overdose (suicide attempt) requires both medical and psych treatment:</p>
+  <ol>
+    <li>Treat medical emergency first (airway, naloxone, IV fluids, etc.).</li>
+    <li>Once medically stable, patient on 5150 psych hold (cannot refuse transport).</li>
+    <li>Transport to Pillbox. Medical treatment first (detox, stabilization), then psych evaluation.</li>
+    <li>Notify hospital that patient is on 5150 hold (security may be needed if patient tries to leave).</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 13: UNIFORM & VEHICLE STANDARDS ==================== -->
+<div class="section" id="conduct">
+  <h2><span class="section-num">Section 13</span>Uniform &amp; Vehicle Standards</h2>
+
+  <h3>13.1 Uniform Requirements</h3>
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Specification</th>
+    </tr>
+    <tr>
+      <td><strong>Shirt</strong></td>
+      <td>EMS polo or button-up shirt (navy blue or white). EMS patch on both shoulders. Name tag above right pocket. Rank insignia on collar.</td>
+    </tr>
+    <tr>
+      <td><strong>Pants</strong></td>
+      <td>Navy blue cargo pants or EMS uniform pants. No jeans, shorts, or sweatpants.</td>
+    </tr>
+    <tr>
+      <td><strong>Footwear</strong></td>
+      <td>Black boots or shoes. Closed-toe, slip-resistant, leather or synthetic. No sneakers, sandals, or open-toe shoes.</td>
+    </tr>
+    <tr>
+      <td><strong>Outerwear</strong></td>
+      <td>EMS-issued jacket or fleece (navy blue with EMS logo). High-visibility vest for highway calls.</td>
+    </tr>
+    <tr>
+      <td><strong>ID Badge</strong></td>
+      <td>Visible at all times. Includes name, photo, certification level (BLS/ALS/MD).</td>
+    </tr>
+    <tr>
+      <td><strong>Grooming</strong></td>
+      <td>Clean, professional appearance. Hair neat (long hair tied back for infection control). Nails short (no acrylics — interfere with glove fit). Minimal jewelry (rings/watches removed during patient care). No visible tattoos depicting violence, profanity, or hate symbols.</td>
+    </tr>
+  </table>
+
+  <h3>13.2 Personal Protective Equipment (PPE)</h3>
+  <p>Mandatory PPE based on call type:</p>
+  <ul>
+    <li><strong>All Calls:</strong> Nitrile gloves (size appropriate, two pairs if dealing with blood/fluids).</li>
+    <li><strong>Respiratory Calls:</strong> N95 mask (TB, COVID, influenza suspected).</li>
+    <li><strong>Blood/Fluid Exposure:</strong> Gloves + eye protection (safety glasses or face shield) + gown if splatter likely.</li>
+    <li><strong>Hazmat:</strong> Do NOT enter hazmat scene. Stage upwind. Decon performed by fire department.</li>
+    <li><strong>Highway Calls:</strong> High-visibility reflective vest (ANSI Class 2 or 3). Mandatory on all freeway/highway responses.</li>
+  </ul>
+
+  <h3>13.3 Vehicle Standards</h3>
+  <ul>
+    <li><strong>Ambulance Types:</strong>
+      <ul>
+        <li><strong>BLS Ambulance:</strong> Staffed with 2 EMTs. Basic equipment (AED, oxygen, splints, backboard).</li>
+        <li><strong>ALS Ambulance:</strong> Staffed with at least 1 Paramedic + 1 EMT. Advanced equipment (cardiac monitor, IV supplies, full drug box).</li>
+      </ul>
+    </li>
+    <li><strong>Daily Vehicle Check:</strong> Before shift, inspect ambulance: fuel, oil, lights/siren, oxygen tanks (full), suction (working), stretcher (functional), all equipment present and stocked.</li>
+    <li><strong>Cleanliness:</strong> Ambulance cleaned after every patient transport. Blood/fluid spills cleaned immediately with hospital-grade disinfectant. Full deep-clean weekly.</li>
+    <li><strong>Restocking:</strong> Restock all used supplies immediately after hospital drop-off (gauze, IV supplies, drugs). Never leave station with incomplete stock.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 14: DOCUMENTATION & PATIENT CARE REPORTS ==================== -->
+<div class="section" id="documentation">
+  <h2><span class="section-num">Section 14</span>Documentation &amp; Patient Care Reports</h2>
+
+  <div class="callout callout-warning">
+    <p><strong>"If it's not documented, it didn't happen."</strong> PCRs are legal documents. They can be subpoenaed in court. Write clearly, accurately, and objectively.</p>
+  </div>
+
+  <h3>14.1 PCR Requirements</h3>
+  <p>Patient Care Report (PCR) must be completed for EVERY patient contact, even if no transport:</p>
+  <ul>
+    <li><strong>Patient Demographics:</strong> Name, age/DOB, gender, address, phone number (if obtainable).</li>
+    <li><strong>Chief Complaint:</strong> Why did patient call 911? Use patient's own words in quotes ("My chest hurts").</li>
+    <li><strong>History:</strong> SAMPLE history (see Section 5.2). Past medical history, medications, allergies.</li>
+    <li><strong>Vital Signs:</strong> At least 2 sets of vitals (initial and after treatment). Include BP, HR, RR, SpO2, BG if checked.</li>
+    <li><strong>Assessment Findings:</strong> Physical exam findings. AVPU or GCS. Lung sounds, heart sounds, abdominal exam, skin findings.</li>
+    <li><strong>Treatment:</strong> EVERY intervention documented with time. Oxygen applied, IVs started, medications given (drug/dose/route/time), CPR (start/stop times), splinting, etc.</li>
+    <li><strong>Transport:</strong> Destination hospital, mode (Code 1/2/3), patient condition on arrival.</li>
+    <li><strong>Handoff:</strong> Name of receiving nurse/physician. Signature obtained.</li>
+  </ul>
+
+  <h3>14.2 Refusal of Care</h3>
+  <p>If patient refuses treatment or transport, documentation is CRITICAL (liability protection):</p>
+  <ol>
+    <li><strong>Medical Screening Exam (MSE):</strong> Even if patient refuses, obtain vitals and brief assessment. Inform patient of risks of not going to hospital.</li>
+    <li><strong>Decision-Making Capacity:</strong> Patient must be alert, oriented (person/place/time/event), and understand risks. If intoxicated, altered mental status, or under 18 years old, patient CANNOT refuse.</li>
+    <li><strong>Against Medical Advice (AMA) Form:</strong> Patient signs AMA form acknowledging risks. If patient refuses to sign, document "patient verbally refused transport and refused to sign AMA form" and have witness (LEO, family member) sign.</li>
+    <li><strong>PCR Documentation:</strong> Document MSE findings, explanation of risks given, patient's stated reason for refusal, patient's decision-making capacity assessment, and that patient was advised to call 911 again if condition worsens.</li>
+  </ol>
+
+  <h3>14.3 PCR Writing Standards</h3>
+  <ul>
+    <li><strong>Objective:</strong> Describe what you see, hear, smell. "Patient appears intoxicated" (subjective) vs "Patient has slurred speech, unsteady gait, odor of alcohol on breath" (objective).</li>
+    <li><strong>Medical Terminology:</strong> Use proper terms (dyspnea not "short of breath", diaphoretic not "sweating"). Spell correctly.</li>
+    <li><strong>Chronological:</strong> Events in order they occurred. Use timestamps (1430: arrived on scene, 1432: began assessment, 1435: started IV, etc.).</li>
+    <li><strong>Legibility:</strong> If handwritten, must be readable. Illegible PCRs may be returned for re-writing.</li>
+    <li><strong>No Abbreviations (except standard):</strong> Use standard medical abbreviations (BP, HR, IV, etc.). No text-speak or shorthand.</li>
+    <li><strong>Corrections:</strong> If error, draw single line through, write "error", initial, and write correct info. NEVER scribble out or use white-out (looks like you're hiding something).</li>
+  </ul>
+
+  <h3>14.4 PCR Deadline</h3>
+  <p>PCR must be completed and submitted before end of shift. Exception: Multi-patient MCI — PCRs due within 24 hours.</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 15: FIELD TRAINING PROGRAM ==================== -->
+<div class="section" id="training">
+  <h2><span class="section-num">Section 15</span>Field Training Program</h2>
+
+  <h3>15.1 FTO Program Structure</h3>
+  <p>All new EMS personnel complete 8-week FTO program after academy graduation:</p>
+  <table>
+    <tr>
+      <th>Phase</th>
+      <th>Duration</th>
+      <th>Focus</th>
+    </tr>
+    <tr>
+      <td><strong>Phase 1</strong></td>
+      <td>2 weeks</td>
+      <td><strong>Observation:</strong> FTO demonstrates all procedures. Trainee observes, asks questions, familiarizes with equipment/protocols.</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 2</strong></td>
+      <td>3 weeks</td>
+      <td><strong>Guided Practice:</strong> Trainee performs patient care with FTO coaching. FTO provides immediate feedback and correction.</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 3</strong></td>
+      <td>3 weeks</td>
+      <td><strong>Independent Performance:</strong> Trainee operates as primary provider. FTO observes silently, only intervenes if patient safety at risk. Trainee makes all decisions.</td>
+    </tr>
+  </table>
+
+  <h3>15.2 FTO Evaluation</h3>
+  <p>FTO completes Daily Observation Report (DOR) after each shift rating trainee on:</p>
+  <ul>
+    <li>Patient assessment skills</li>
+    <li>Treatment interventions (appropriate, performed correctly)</li>
+    <li>Decision-making (transport decisions, medication choices)</li>
+    <li>Communication (patient rapport, radio, hospital handoff)</li>
+    <li>Professionalism (attitude, uniform, punctuality)</li>
+    <li>Stress management (calm under pressure, multi-tasking)</li>
+  </ul>
+  <p>Rating scale: 1 (unacceptable) to 5 (exceeds standards). Trainee must average 4.0+ to pass.</p>
+
+  <h3>15.3 FTO Extension or Failure</h3>
+  <ul>
+    <li>If trainee struggling, FTO may request extension (additional 2-4 weeks).</li>
+    <li>If trainee fails to meet standards after extension, terminated from EMS. May re-apply after 6 months.</li>
+    <li>Automatic failure events: Patient harm due to trainee error, scope of practice violation, dishonesty, insubordination, repeated unsafe driving.</li>
+  </ul>
+
+  <h3>15.4 Ongoing Training</h3>
+  <p>All EMS personnel complete 40 hours annual continuing education:</p>
+  <ul>
+    <li>ACLS/PALS recertification (every 2 years)</li>
+    <li>Trauma refresher (PHTLS or equivalent)</li>
+    <li>Medical protocols update training (annual)</li>
+    <li>De-escalation / mental health crisis intervention</li>
+    <li>Infection control / HIPAA compliance</li>
+    <li>Quarterly skills check-offs (intubation, IV, cardiac arrest scenarios)</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 16: INTERNAL AFFAIRS & DISCIPLINARY ACTIONS ==================== -->
+<div class="section" id="discipline">
+  <h2><span class="section-num">Section 16</span>Internal Affairs &amp; Disciplinary Actions</h2>
+
+  <h3>16.1 Levels of Discipline</h3>
+  <table>
+    <tr>
+      <th>Level</th>
+      <th>Violation Examples</th>
+      <th>Penalty</th>
+    </tr>
+    <tr>
+      <td><strong>Level 1 (Verbal Counseling)</strong></td>
+      <td>Minor uniform violation, late to shift (first offense), incomplete PCR (minor details)</td>
+      <td>Verbal warning from Supervisor. Documented in personnel file.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 2 (Written Reprimand)</strong></td>
+      <td>Repeat Level 1 violations, unprofessional conduct with patient, vehicle not stocked</td>
+      <td>Written reprimand. Remedial training. Suspension of promotion eligibility for 6 months.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 3 (Suspension)</strong></td>
+      <td>Medication error (non-fatal), HIPAA violation, reckless driving, neglect of duty</td>
+      <td>Suspension without pay (3-14 days). Mandatory retraining. Probation 6-12 months.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 4 (Demotion)</strong></td>
+      <td>Serious scope of practice violation, patient neglect, repeated Level 3 offenses</td>
+      <td>Reduction in rank. Loss of ALS certification (if applicable). Extended probation.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 5 (Termination)</strong></td>
+      <td>Patient harm due to gross negligence, practicing outside scope, falsifying PCR, theft (drugs/equipment), patient abuse</td>
+      <td>Immediate termination. Loss of state EMS certification. Possible criminal prosecution.</td>
+    </tr>
+  </table>
+
+  <h3>16.2 Internal Affairs Investigations</h3>
+  <ol>
+    <li><strong>Complaint:</strong> Patient complaint, supervisor report, or peer report filed with Medical Director.</li>
+    <li><strong>Investigation:</strong> Medical Director or Assistant Director investigates. Reviews PCRs, radio traffic, interviews witnesses and accused personnel.</li>
+    <li><strong>Personnel Rights:</strong> Accused personnel notified of complaint within 48 hours. May have union rep present during interview.</li>
+    <li><strong>Findings:</strong> Sustained (violation occurred), Not Sustained (insufficient evidence), Unfounded (no violation), Exonerated (actions were appropriate).</li>
+    <li><strong>Discipline:</strong> If sustained, Medical Director determines discipline level. Personnel may appeal to EMS Board.</li>
+  </ol>
+
+  <h3>16.3 Mandatory Reporting</h3>
+  <p>The following must be reported to Medical Director immediately:</p>
+  <ul>
+    <li>Patient death on EMS watch (including refusals who later died)</li>
+    <li>Medication errors</li>
+    <li>Ambulance collisions</li>
+    <li>Equipment failures that delayed care</li>
+    <li>Scope of practice violations witnessed</li>
+    <li>HIPAA breaches</li>
+    <li>Patient complaints about EMS care</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 17: AMENDMENTS & REVISION HISTORY ==================== -->
+<div class="section" id="amendments">
+  <h2><span class="section-num">Section 17</span>Amendments &amp; Revision History</h2>
+
+  <h3>17.1 Revision History</h3>
+  <table>
+    <tr>
+      <th>Version</th>
+      <th>Date</th>
+      <th>Summary of Changes</th>
+    </tr>
+    <tr>
+      <td><strong>1.0</strong></td>
+      <td>March 2024</td>
+      <td>Initial SOP adoption. Basic patient care protocols and chain of command.</td>
+    </tr>
+    <tr>
+      <td><strong>2.0</strong></td>
+      <td>September 2025</td>
+      <td>Expanded treatment protocols. Added MCI procedures, medication formulary, FTO program.</td>
+    </tr>
+    <tr>
+      <td><strong>3.0</strong></td>
+      <td>February 2026</td>
+      <td>Comprehensive rewrite. Added 7-rank structure with certifications (BLS/ALS/MD). Expanded all sections with detailed clinical protocols. Integrated ZSR branding. Added scene safety, mental health, documentation sections.</td>
+    </tr>
+  </table>
+
+  <h3>17.2 Amendment Process</h3>
+  <ol>
+    <li><strong>Proposal:</strong> Any EMS personnel may propose SOP amendments via chain of command or directly to Medical Director.</li>
+    <li><strong>Medical Review:</strong> Medical Director reviews for medical/legal soundness. May consult with state EMS medical director or legal counsel.</li>
+    <li><strong>Approval:</strong> Medical Director approves final amendments.</li>
+    <li><strong>Notification:</strong> All EMS personnel notified of changes via email, briefing, and posted notice.</li>
+    <li><strong>Training:</strong> If amendment affects patient care, mandatory in-service training conducted before effective date.</li>
+  </ol>
+
+  <h3>17.3 Acknowledgment</h3>
+  <p>All EMS personnel must read and acknowledge understanding of these Standard Operating Procedures. Violation of SOP may result in disciplinary action as outlined in Section 16.</p>
+
+  <div class="callout callout-info">
+    <p><strong>I, [Name], acknowledge that I have read, understand, and will comply with the Emergency Medical Services Standard Operating Procedures Version 3.0.</strong></p>
+    <p><strong>Signature:</strong> ___________________________ <strong>Date:</strong> ___________</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+</div> <!-- End Container -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-main">
+    ZO Syndicate RP | <strong>Emergency Medical Services / Pillbox Medical Center</strong> — Standard Operating Procedures
+  </div>
+  <div class="footer-sub">
+    Version 3.0 | February 2026 | CONFIDENTIAL — EMS Personnel Only
+  </div>
+  <div class="footer-sub">
+    © 2026 Prozilli Entertainment — All Rights Reserved
+  </div>
+  <div class="footer-links">
+    <a href="https://prozilligaming.com/zo" target="_blank">prozilligaming.com/zo</a> •
+    <a href="https://discord.gg/HjpsGpC4R6" target="_blank">discord.gg/HjpsGpC4R6</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SASP Standard Operating Procedures v3.0 - ZO Syndicate RP</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER BANNER ===== */
+  .header-banner {
+    background: linear-gradient(135deg, #0f1829 0%, #0d0d0d 40%, #0f1829 100%);
+    border-bottom: 3px solid #4169E1;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #c4a265, #4169E1, #c4a265, transparent);
+  }
+  .header-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(65,105,225,0.02) 2px,
+      rgba(65,105,225,0.02) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .header-org span { color: #a30000; }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #4169E1;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 8px rgba(65,105,225,0.3);
+  }
+  .header-sub {
+    font-size: 14px;
+    color: #c4a265;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .header-server {
+    display: inline-block;
+    background: rgba(163,0,0,0.15);
+    border: 1px solid rgba(163,0,0,0.3);
+    color: #cc4444;
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 2px;
+  }
+  .header-meta {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #555;
+  }
+  .header-meta span {
+    margin: 0 10px;
+  }
+
+  /* ===== CLASSIFICATION STRIP ===== */
+  .classification-strip {
+    background: #a30000;
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 8px;
+    font-weight: 600;
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  /* ===== TOC ===== */
+  .toc-nav {
+    background: rgba(65,105,225,0.05);
+    border: 1px solid rgba(65,105,225,0.2);
+    border-radius: 4px;
+    padding: 30px;
+    margin-bottom: 40px;
+  }
+  .toc-nav h2 {
+    color: #4169E1;
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .toc-nav ol {
+    list-style: none;
+    counter-reset: section-counter;
+  }
+  .toc-nav li {
+    counter-increment: section-counter;
+    margin-bottom: 12px;
+  }
+  .toc-nav li::before {
+    content: counter(section-counter, decimal-leading-zero) ".";
+    color: #4169E1;
+    font-weight: 700;
+    margin-right: 10px;
+    font-family: 'Courier New', monospace;
+  }
+  .toc-nav a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .toc-nav a:hover {
+    color: #4169E1;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    background: rgba(255,255,255,0.02);
+    border-left: 4px solid #4169E1;
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 0 4px 4px 0;
+  }
+  .section h2 {
+    color: #4169E1;
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .section-num {
+    display: inline-block;
+    background: rgba(65,105,225,0.15);
+    color: #4169E1;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-right: 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .section h3 {
+    color: #5a82e6;
+    font-size: 19px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+  .section p {
+    margin-bottom: 15px;
+    color: #bbb;
+  }
+  .section ul, .section ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+  }
+  .section li {
+    margin-bottom: 10px;
+    color: #bbb;
+  }
+  .section li strong {
+    color: #d9d9d9;
+  }
+  .section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .section th {
+    background: rgba(65,105,225,0.1);
+    color: #4169E1;
+    padding: 12px;
+    text-align: left;
+    border: 1px solid rgba(65,105,225,0.2);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .section td {
+    padding: 12px;
+    border: 1px solid #222;
+    color: #ccc;
+  }
+  .section code {
+    background: rgba(65,105,225,0.08);
+    color: #5a82e6;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+  }
+
+  /* ===== CALLOUTS ===== */
+  .callout {
+    padding: 20px;
+    border-radius: 4px;
+    margin: 20px 0;
+    border-left: 4px solid;
+  }
+  .callout-info {
+    background: rgba(65,105,225,0.08);
+    border-color: #4169E1;
+    color: #d9d9d9;
+  }
+  .callout-warning {
+    background: rgba(196,162,101,0.08);
+    border-color: #c4a265;
+    color: #d9d9d9;
+  }
+  .callout-critical {
+    background: rgba(163,0,0,0.08);
+    border-color: #a30000;
+    color: #d9d9d9;
+  }
+  .callout p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-rank {
+    background: rgba(65,105,225,0.2);
+    color: #5a82e6;
+    border: 1px solid rgba(65,105,225,0.3);
+  }
+
+  /* ===== BACK TO TOP ===== */
+  .back-top {
+    display: inline-block;
+    margin-top: 30px;
+    color: #4169E1;
+    text-decoration: none;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+  .back-top:hover {
+    color: #5a82e6;
+  }
+  .back-top::before {
+    content: '↑ ';
+    margin-right: 5px;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: rgba(255,255,255,0.02);
+    border-top: 2px solid rgba(65,105,225,0.2);
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  .footer-main {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .footer-main strong {
+    color: #4169E1;
+  }
+  .footer-sub {
+    color: #555;
+    font-size: 11px;
+    margin-bottom: 15px;
+  }
+  .footer-links {
+    margin-top: 15px;
+  }
+  .footer-links a {
+    color: #666;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 12px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover {
+    color: #4169E1;
+  }
+
+  /* ===== HERO SECTION ===== */
+  .hero-section {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(65,105,225,0.4) 0%, rgba(13,13,13,0.9) 50%, rgba(65,105,225,0.4) 100%);
+    opacity: 0.85;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #c4a265;
+    text-transform: uppercase;
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 700px) {
+    .hero-section { height: 200px; }
+    .hero-title { font-size: 32px; letter-spacing: 4px; }
+    .hero-subtitle { font-size: 14px; }
+    .header-dept { font-size: 24px; }
+    .section { padding: 25px 20px; }
+    .container { padding: 20px 10px; }
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- Classification Strip -->
+<div class="classification-strip">CONFIDENTIAL — Authorized LEO Personnel Only</div>
+
+<!-- Header Banner -->
+<header class="header-banner">
+  <div class="header-org"><span>Prozilli</span> Entertainment</div>
+  <div class="header-dept">San Andreas State Police</div>
+  <div class="header-sub">Standard Operating Procedures</div>
+  <div class="header-server">ZO Syndicate RP</div>
+  <div class="header-meta">
+    <span>Version 3.0</span> • <span>February 2026</span> • <span>Statewide Jurisdiction</span>
+  </div>
+</header>
+
+<!-- Hero Image Section -->
+<div class="hero-section" style="background: radial-gradient(circle at center, rgba(65,105,225,0.3) 0%, transparent 70%), linear-gradient(135deg, #0f1829 0%, #0d0d0d 100%);">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">San Andreas State Police</h1>
+    <p class="hero-subtitle">Excellence • Integrity • Service</p>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+
+<!-- Table of Contents -->
+<nav class="toc-nav">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#mission">Mission Statement</a></li>
+    <li><a href="#chain">Chain of Command</a></li>
+    <li><a href="#jurisdiction">Jurisdiction &amp; Authority</a></li>
+    <li><a href="#divisions">Divisions &amp; Units</a></li>
+    <li><a href="#uof">Use of Force</a></li>
+    <li><a href="#highway">Highway Patrol Operations</a></li>
+    <li><a href="#traffic">Traffic Enforcement</a></li>
+    <li><a href="#pursuit">Vehicle Pursuit Policy</a></li>
+    <li><a href="#arrest">Arrest &amp; Booking Procedures</a></li>
+    <li><a href="#cid">Criminal Investigation Division</a></li>
+    <li><a href="#swat">SWAT &amp; Tactical Operations</a></li>
+    <li><a href="#k9">K-9 Operations</a></li>
+    <li><a href="#aviation">Aviation Unit</a></li>
+    <li><a href="#vip">VIP Protection Detail</a></li>
+    <li><a href="#radio">Radio Communications</a></li>
+    <li><a href="#reports">Report Writing</a></li>
+    <li><a href="#conduct">Officer Conduct &amp; Uniform Standards</a></li>
+    <li><a href="#discipline">Disciplinary Procedures</a></li>
+    <li><a href="#training">Training &amp; Certification</a></li>
+    <li><a href="#interagency">Inter-Agency Cooperation</a></li>
+    <li><a href="#emergency">Emergency &amp; Crisis Response</a></li>
+    <li><a href="#amendments">Amendments &amp; Revision History</a></li>
+  </ol>
+</nav>
+
+<!-- ==================== SECTION 1: MISSION STATEMENT ==================== -->
+<div class="section" id="mission">
+  <h2><span class="section-num">Section 01</span>Mission Statement</h2>
+
+  <div class="callout callout-info">
+    <p><strong>"To serve the people of San Andreas with honor, integrity, and professionalism, ensuring public safety across all state highways, communities, and jurisdictions."</strong></p>
+  </div>
+
+  <p>The San Andreas State Police (SASP) is the premier law enforcement agency operating with statewide jurisdiction across all counties, cities, and unincorporated areas. Unlike municipal police departments or county sheriff's offices that serve limited geographic areas, the SASP has authority anywhere in the state and serves as the backbone of highway safety, inter-jurisdictional crime enforcement, and major case investigations.</p>
+
+  <p>SASP troopers are held to the highest standard of professionalism and are expected to operate with precision, discipline, and unwavering dedication to the law. Whether conducting a routine traffic stop, investigating a multi-county organized crime ring, or providing VIP protection for the Governor, every action taken by a trooper reflects upon the entire agency.</p>
+
+  <h3>1.1 Core Values</h3>
+  <ul>
+    <li><strong>Excellence</strong> &mdash; SASP troopers are expected to perform at the highest level in all aspects of law enforcement, from traffic enforcement to complex investigations.</li>
+    <li><strong>Integrity</strong> &mdash; Every action must be lawful, ethical, and defensible in court. SASP does not tolerate corruption or abuse of power.</li>
+    <li><strong>Service</strong> &mdash; The citizens of San Andreas are our employers. We serve with humility, respect, and dedication.</li>
+    <li><strong>Courage</strong> &mdash; Troopers will face dangerous situations and must act decisively to protect lives.</li>
+    <li><strong>Professionalism</strong> &mdash; SASP represents the state itself. Conduct, appearance, and communication must be exemplary at all times.</li>
+  </ul>
+
+  <h3>1.2 Oath of Office</h3>
+  <p>All sworn members of the San Andreas State Police shall, upon commissioning, take the following oath:</p>
+  <div class="callout callout-info">
+    <p><em>"I do solemnly swear to support and defend the Constitution of San Andreas, to faithfully execute the duties of my office as a State Police Trooper, to enforce all laws without bias or prejudice, and to protect the lives, rights, and property of all citizens. I will uphold the honor and integrity of the San Andreas State Police and serve with courage and dedication. So help me God."</em></p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 2: CHAIN OF COMMAND ==================== -->
+<div class="section" id="chain">
+  <h2><span class="section-num">Section 02</span>Chain of Command</h2>
+
+  <p>The SASP operates under a paramilitary structure with a strict chain of command. All personnel must follow lawful orders from their superiors. Bypassing the chain of command is permitted only in cases of corruption, abuse of power, or imminent danger to life, in which case the matter should be escalated directly to the Colonel or Internal Affairs.</p>
+
+  <h3>2.1 Rank Structure &amp; Authority</h3>
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Callsign</th>
+      <th>Authority</th>
+      <th>Pay Grade</th>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Colonel</span></td>
+      <td><code>State-1</code></td>
+      <td>Chief of State Police. Full departmental authority. Policy decisions, hiring/termination, budget allocation, inter-agency agreements. Appointed by Governor.</td>
+      <td>Grade 9</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Lieutenant Colonel</span></td>
+      <td><code>State-2</code></td>
+      <td>Deputy Chief. Second-in-command. Assumes full authority in Colonel's absence. Operations oversight, disciplinary authority, division coordination.</td>
+      <td>Grade 8</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Major</span></td>
+      <td><code>State-3</code></td>
+      <td>Division Commander (CID, Highway, SWAT, Aviation). Strategic planning, resource allocation, no-knock warrant authorization, critical incident management.</td>
+      <td>Grade 7</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Captain</span></td>
+      <td><code>Trooper-1</code></td>
+      <td>Troop Commander (geographic regions). High-risk operation approval, pursuit termination authority, inter-agency task force lead.</td>
+      <td>Grade 6</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Lieutenant</span></td>
+      <td><code>Trooper-2</code></td>
+      <td>Platoon Leader. Shift supervisor, scene command authority, PIT maneuver authorization, tactical deployment approval.</td>
+      <td>Grade 5</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Sergeant</span></td>
+      <td><code>Sgt-[Unit#]</code></td>
+      <td>Squad Leader. Field training oversight, spike strip authorization, warrant execution lead, performance reviews.</td>
+      <td>Grade 4</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Senior Trooper</span></td>
+      <td><code>[Unit#]</code></td>
+      <td>FTO certified. Mentor junior troopers, lead patrol operations, act as temporary squad supervisor in Sergeant's absence.</td>
+      <td>Grade 3</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Trooper</span></td>
+      <td><code>[Unit#]</code></td>
+      <td>Standard patrol duties. All enforcement powers. Minimum 2 years before promotion eligibility.</td>
+      <td>Grade 2</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Cadet</span></td>
+      <td><code>Cadet-[ID]</code></td>
+      <td>In academy training or field training phase. Must be supervised by FTO. No independent enforcement authority.</td>
+      <td>Grade 1</td>
+    </tr>
+  </table>
+
+  <h3>2.2 Succession of Command</h3>
+  <p>In the event of temporary absence, incapacitation, or death of a commanding officer, authority immediately transfers to the next highest-ranking trooper present. If ranks are equal, the senior-most (by time in rank) assumes command. All personnel shall immediately recognize and obey the acting commander.</p>
+
+  <h3>2.3 Chain of Command Protocol</h3>
+  <ol>
+    <li>All requests for leave, equipment, or operational support must go through the immediate supervisor first.</li>
+    <li>Disciplinary issues must be reported to the direct supervisor within the shift, who will escalate as appropriate.</li>
+    <li>Complaints against a supervisor may be filed directly with Internal Affairs without fear of retaliation.</li>
+    <li>In emergency situations, troopers may act independently if communication with command is impossible, but must notify command as soon as practicable.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 3: JURISDICTION & AUTHORITY ==================== -->
+<div class="section" id="jurisdiction">
+  <h2><span class="section-num">Section 03</span>Jurisdiction &amp; Authority</h2>
+
+  <div class="callout callout-info">
+    <p><strong>Primary Jurisdiction:</strong> SASP has statewide jurisdiction over all highways, state routes, and unincorporated areas. SASP may assert jurisdiction over any case involving multiple jurisdictions, organized crime, or matters of statewide interest.</p>
+  </div>
+
+  <h3>3.1 Primary Responsibilities</h3>
+  <table>
+    <tr>
+      <th>Area</th>
+      <th>Responsibility</th>
+    </tr>
+    <tr>
+      <td><strong>All State Highways</strong></td>
+      <td>Primary enforcement authority. Speed enforcement, DUI checkpoints, commercial vehicle inspections, accident investigation.</td>
+    </tr>
+    <tr>
+      <td><strong>Interstate System</strong></td>
+      <td>Exclusive jurisdiction on I-5 and all interstate routes within San Andreas. Federal highway safety enforcement.</td>
+    </tr>
+    <tr>
+      <td><strong>Multi-Jurisdictional Cases</strong></td>
+      <td>SASP assumes lead investigative role when crimes cross county/city lines (e.g., serial crimes, organized drug trafficking).</td>
+    </tr>
+    <tr>
+      <td><strong>State Facilities</strong></td>
+      <td>State capitol, government buildings, state parks, correctional facilities (coordination with DOC).</td>
+    </tr>
+    <tr>
+      <td><strong>VIP Protection</strong></td>
+      <td>Governor, Lieutenant Governor, visiting heads of state, and other designated officials.</td>
+    </tr>
+    <tr>
+      <td><strong>Major Incidents</strong></td>
+      <td>Natural disasters, terrorism, mass casualty events — SASP coordinates statewide law enforcement response.</td>
+    </tr>
+  </table>
+
+  <h3>3.2 Concurrent Jurisdiction</h3>
+  <p>SASP shares jurisdiction with local agencies in the following situations:</p>
+  <ul>
+    <li><strong>City Limits:</strong> SASP may enforce all laws within city limits but should defer to LSPD unless the case involves state highways or multi-jurisdictional matters.</li>
+    <li><strong>County Areas:</strong> SASP may operate alongside BCSO in Blaine County. Mutual aid should be offered when available.</li>
+    <li><strong>Hot Pursuit:</strong> SASP may pursue suspects across any jurisdiction without requesting permission. Local agencies should provide support.</li>
+    <li><strong>Federal Cases:</strong> SASP coordinates with FBI, DEA, ATF, and other federal agencies. Federal agents have priority in federal investigations, but SASP provides support and local expertise.</li>
+  </ul>
+
+  <h3>3.3 Assertion of Jurisdiction</h3>
+  <p>SASP may assert jurisdiction over any case where:</p>
+  <ol>
+    <li>The crime occurred on a state highway or state property.</li>
+    <li>The crime involves multiple jurisdictions (2+ counties/cities).</li>
+    <li>Local law enforcement requests SASP assistance due to resource limitations or conflicts of interest.</li>
+    <li>The case involves organized crime, terrorism, or statewide public safety concerns.</li>
+    <li>A Captain or higher authorizes jurisdiction assertion for any lawful reason.</li>
+  </ol>
+
+  <div class="callout callout-warning">
+    <p><strong>Protocol:</strong> When asserting jurisdiction, the ranking SASP trooper on scene must notify local command immediately and provide a brief reason. Local agencies should cooperate fully and provide requested support.</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 4: DIVISIONS & UNITS ==================== -->
+<div class="section" id="divisions">
+  <h2><span class="section-num">Section 04</span>Divisions &amp; Units</h2>
+
+  <p>SASP operates specialized divisions to handle the diverse needs of statewide law enforcement. All troopers begin in Highway Patrol. After 1 year of service and satisfactory performance, troopers may apply for specialized divisions.</p>
+
+  <h3>4.1 Highway Patrol Division</h3>
+  <p><strong>Commanding Officer:</strong> Major (Highway)</p>
+  <p><strong>Mission:</strong> Primary traffic enforcement, highway safety, accident investigation, commercial vehicle enforcement.</p>
+  <ul>
+    <li><strong>Minimum Staffing:</strong> 60% of total SASP personnel must be assigned to Highway Patrol at all times.</li>
+    <li><strong>Zones:</strong> Statewide coverage divided into 4 highway zones (see Section 6).</li>
+    <li><strong>Equipment:</strong> Marked patrol vehicles (slicktop or light bar), radar/lidar units, spike strips, first aid kits.</li>
+  </ul>
+
+  <h3>4.2 Criminal Investigation Division (CID)</h3>
+  <p><strong>Commanding Officer:</strong> Major (CID)</p>
+  <p><strong>Mission:</strong> Major crimes, organized crime, drug trafficking, homicide, white-collar crime, undercover operations.</p>
+  <ul>
+    <li><strong>Minimum Rank:</strong> Sergeant. Minimum 3 years SASP service.</li>
+    <li><strong>Caseload:</strong> CID handles cases beyond the scope of local PD detectives (multi-jurisdictional, complex, high-profile).</li>
+    <li><strong>Undercover Authority:</strong> CID detectives may conduct undercover operations with Major approval and DOJ warrant (where applicable).</li>
+    <li><strong>Forensics Lab:</strong> SASP operates the state forensics lab at headquarters. All major cases sent to state lab for analysis.</li>
+  </ul>
+
+  <h3>4.3 SWAT / Tactical Unit</h3>
+  <p><strong>Commanding Officer:</strong> Major (SWAT)</p>
+  <p><strong>Mission:</strong> High-risk warrants, barricaded suspects, hostage rescue, active shooter response, executive protection.</p>
+  <ul>
+    <li><strong>Minimum Rank:</strong> Senior Trooper. Must pass SWAT selection and quarterly physical fitness tests.</li>
+    <li><strong>Deployment:</strong> Captain+ authorization required except in active shooter situations (immediate response).</li>
+    <li><strong>Equipment:</strong> Tactical rifles, breaching tools, ballistic shields, armored vehicles, flashbangs, CS gas.</li>
+    <li><strong>Call-Out Protocol:</strong> SWAT operates on call-out basis. Members maintain regular patrol assignments when not deployed.</li>
+  </ul>
+
+  <h3>4.4 K-9 Unit</h3>
+  <p><strong>Commanding Officer:</strong> Lieutenant (K-9 Coordinator)</p>
+  <p><strong>Mission:</strong> Narcotics detection, tracking suspects, article searches, crowd control.</p>
+  <ul>
+    <li><strong>Minimum Rank:</strong> Trooper. Minimum 1 year service. Must complete 8-week K-9 handler school.</li>
+    <li><strong>Certification:</strong> Handler and K-9 must recertify annually in narcotics detection and apprehension.</li>
+    <li><strong>Deployment:</strong> K-9 units are available for any patrol stop or investigation upon request.</li>
+    <li><strong>Use of Force:</strong> K-9 deployment constitutes intermediate force. Handler is responsible for K-9 actions.</li>
+  </ul>
+
+  <h3>4.5 Aviation Unit</h3>
+  <p><strong>Commanding Officer:</strong> Captain (Air Operations)</p>
+  <p><strong>Mission:</strong> Air support for pursuits, search and rescue, aerial surveillance, VIP transport.</p>
+  <ul>
+    <li><strong>Callsign:</strong> <code>Air-1</code></li>
+    <li><strong>Minimum Requirements:</strong> Lieutenant rank, commercial pilot license, minimum 100 hours flight time, tactical flight training.</li>
+    <li><strong>Aircraft:</strong> SASP operates 2 helicopters (1 pursuit-equipped, 1 search-equipped) based at SASP Headquarters.</li>
+    <li><strong>Deployment:</strong> Lieutenant+ authorization for pursuits. Automatic deployment for search and rescue, natural disasters, major incidents.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 5: USE OF FORCE ==================== -->
+<div class="section" id="uof">
+  <h2><span class="section-num">Section 05</span>Use of Force</h2>
+
+  <div class="callout callout-critical">
+    <p><strong>Deadly Force Standard:</strong> Troopers may use deadly force only when necessary to protect themselves or others from imminent death or serious bodily injury, or to prevent the escape of a suspect who poses an immediate threat to public safety. Every use of deadly force will be investigated by Internal Affairs and the District Attorney's Office.</p>
+  </div>
+
+  <h3>5.1 Force Continuum</h3>
+  <table>
+    <tr>
+      <th>Level</th>
+      <th>Force Type</th>
+      <th>When Authorized</th>
+    </tr>
+    <tr>
+      <td><strong>Level 1</strong></td>
+      <td>Officer Presence</td>
+      <td>Trooper presence alone may deter unlawful behavior. Uniform, bearing, and professionalism are the first level of force.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 2</strong></td>
+      <td>Verbal Commands</td>
+      <td>Clear, firm verbal commands (e.g., "Stop! State Police!", "Get on the ground!"). Commands must be lawful and reasonable.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 3</strong></td>
+      <td>Empty Hand Control</td>
+      <td>Hands-on techniques (escort holds, pressure points, takedowns). Authorized when suspect resists or attempts to flee.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 4</strong></td>
+      <td>Intermediate Weapons</td>
+      <td>Baton, taser, OC spray. Authorized when suspect actively resists or poses risk of injury. Taser preferred over strikes when feasible.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 5</strong></td>
+      <td>Less-Lethal Projectiles</td>
+      <td>Beanbag rounds, rubber bullets (SWAT only). Authorized for crowd control, barricaded suspects, or violent subjects at distance.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 6</strong></td>
+      <td>Deadly Force</td>
+      <td>Firearm, vehicle ramming (intentional), or other force likely to cause death/serious injury. ONLY when imminent threat to life exists.</td>
+    </tr>
+  </table>
+
+  <h3>5.2 Taser Deployment</h3>
+  <ul>
+    <li>Taser is preferred intermediate weapon for active resistance.</li>
+    <li>Warning must be given ("Taser! Taser! Taser!") unless doing so would create additional risk.</li>
+    <li>Do NOT deploy taser on suspects in elevated positions (roofs, ladders) due to fall risk.</li>
+    <li>Medical evaluation required after taser deployment (EMS to scene).</li>
+    <li>Each deployment must be documented in use-of-force report.</li>
+  </ul>
+
+  <h3>5.3 Firearm Use</h3>
+  <div class="callout callout-critical">
+    <p><strong>Every discharge of a firearm (except training/qualifying) must be reported immediately to a supervisor and will trigger an automatic Internal Affairs investigation.</strong></p>
+  </div>
+  <ul>
+    <li>Troopers may draw firearms when they reasonably believe a situation may escalate to deadly force (e.g., felony stop, high-risk warrant).</li>
+    <li>Firearms may be discharged ONLY when deadly force is justified (see 5.1 Level 6).</li>
+    <li>Warning shots are PROHIBITED. Every round fired must be aimed at the intended target.</li>
+    <li>Shooting at moving vehicles is PROHIBITED unless the vehicle is being used as a deadly weapon against the trooper or others.</li>
+    <li>After any shooting, the trooper must immediately request EMS, render aid if safe to do so, preserve the scene, and notify command.</li>
+  </ul>
+
+  <h3>5.4 Reporting Requirements</h3>
+  <ol>
+    <li><strong>Immediate Notification:</strong> Any use of force beyond verbal commands must be reported to a supervisor before end of shift.</li>
+    <li><strong>Use of Force Report:</strong> Written report required within 24 hours detailing the incident, force used, reason, and injuries.</li>
+    <li><strong>Deadly Force:</strong> Trooper is placed on administrative leave pending investigation. Weapon is secured as evidence. Mandatory counseling.</li>
+    <li><strong>Medical Documentation:</strong> Any injury to suspect or trooper must be documented with photos and medical records.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 6: HIGHWAY PATROL OPERATIONS ==================== -->
+<div class="section" id="highway">
+  <h2><span class="section-num">Section 06</span>Highway Patrol Operations</h2>
+
+  <p>Highway Patrol is the core mission of SASP. Troopers are responsible for enforcing traffic laws, reducing accidents, and ensuring the safe and efficient movement of vehicles on all state highways.</p>
+
+  <h3>6.1 Highway Zones</h3>
+  <table>
+    <tr>
+      <th>Zone</th>
+      <th>Coverage Area</th>
+      <th>Key Features</th>
+    </tr>
+    <tr>
+      <td><strong>Highway-1</strong></td>
+      <td>Route 1 (Pacific Coast Highway) — Del Perro to Paleto Bay</td>
+      <td>High-speed coastal route, tourist traffic, scenic overlooks, DUI enforcement priority on weekends.</td>
+    </tr>
+    <tr>
+      <td><strong>Highway-2</strong></td>
+      <td>Route 13 (Great Ocean Highway) — Coastal loop</td>
+      <td>Winding roads, motorcycle accidents common, rockslide hazards, emergency pullouts limited.</td>
+    </tr>
+    <tr>
+      <td><strong>Highway-3</strong></td>
+      <td>Route 68 (Senora Freeway) — Sandy Shores to Harmony</td>
+      <td>Desert corridor, commercial truck traffic, extreme heat hazards, long straightaways (high speeds).</td>
+    </tr>
+    <tr>
+      <td><strong>Highway-4</strong></td>
+      <td>Interstate System (I-5 and Los Santos Freeway)</td>
+      <td>Urban interstate, high volume, multi-vehicle accidents, federal jurisdiction, 24/7 coverage required.</td>
+    </tr>
+  </table>
+
+  <h3>6.2 Patrol Procedures</h3>
+  <ol>
+    <li><strong>Visibility Patrol:</strong> Marked units should maintain high visibility on highways during peak hours (0700-0900, 1600-1900) to deter speeding and reckless driving.</li>
+    <li><strong>Speed Enforcement:</strong> Radar/lidar authorized. Troopers should target areas with high accident rates or citizen complaints. Zero-tolerance enforcement on construction zones.</li>
+    <li><strong>Commercial Vehicles:</strong> Random inspections of commercial vehicles for CDL compliance, logbook violations, weight limits, hazmat placards. Weight station operations (Highway-3 and Highway-4).</li>
+    <li><strong>Accident Investigation:</strong> SASP leads all fatal accident investigations statewide. Major injury accidents require supervisor notification. Scene must be documented with photos, measurements, and witness statements.</li>
+    <li><strong>Stranded Motorists:</strong> Troopers should provide assistance to stranded motorists (flat tire, out of gas, mechanical failure). Call for tow truck if needed. Safety is priority — activate all emergency lights when stopped on shoulder.</li>
+  </ol>
+
+  <h3>6.3 DUI Checkpoints</h3>
+  <p>SASP conducts sobriety checkpoints to detect and deter impaired driving. Checkpoints must comply with constitutional standards:</p>
+  <ul>
+    <li><strong>Authorization:</strong> Captain+ must approve checkpoint location, date, and time.</li>
+    <li><strong>Public Notice:</strong> Checkpoints must be announced to media at least 24 hours in advance (location not required).</li>
+    <li><strong>Neutral Selection:</strong> Every vehicle must be stopped, or a neutral pattern (every 3rd vehicle, etc.). No racial profiling.</li>
+    <li><strong>Minimal Detention:</strong> Brief stop (15-30 seconds). If no suspicion of DUI, driver released immediately.</li>
+    <li><strong>Signage:</strong> "SASP Sobriety Checkpoint Ahead" signs posted 500ft before checkpoint. Drivers may legally turn away before checkpoint.</li>
+    <li><strong>Supervisor Present:</strong> Sergeant+ must be on scene for entire checkpoint operation.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 7: TRAFFIC ENFORCEMENT ==================== -->
+<div class="section" id="traffic">
+  <h2><span class="section-num">Section 07</span>Traffic Enforcement</h2>
+
+  <h3>7.1 Traffic Stop Procedure</h3>
+  <ol>
+    <li><strong>Activation:</strong> Activate emergency lights (and siren if needed). Position patrol vehicle behind suspect vehicle with offset to driver side for safety.</li>
+    <li><strong>Radio Notification:</strong> Notify dispatch before exiting vehicle: location, vehicle description, plate number, reason for stop.</li>
+    <li><strong>Approach:</strong> Approach from driver side (unless traffic hazard). Observe interior of vehicle for weapons, passengers, signs of impairment. Keep one hand free at all times.</li>
+    <li><strong>Contact:</strong> "Good morning/afternoon, I'm Trooper [Name] with the State Police. The reason I stopped you is [violation]. License, registration, and insurance, please."</li>
+    <li><strong>Document Check:</strong> Return to patrol vehicle. Run license/registration through dispatch. Check for warrants, status (suspended/revoked), vehicle registration.</li>
+    <li><strong>Resolution:</strong> Return to driver. Issue citation/warning, or make arrest if warranted. Explain citation clearly. Advise driver to drive safely.</li>
+    <li><strong>Clear:</strong> Notify dispatch when clear. Record stop details in daily log.</li>
+  </ol>
+
+  <h3>7.2 High-Risk/Felony Stop</h3>
+  <p>Used when stopping a suspect vehicle involved in a violent felony or when occupants are believed to be armed and dangerous.</p>
+  <ol>
+    <li><strong>Request Backup:</strong> Do NOT initiate stop alone. Wait for at least one additional unit.</li>
+    <li><strong>Positioning:</strong> Position patrol vehicles in cover formation. Use patrol vehicle as ballistic cover.</li>
+    <li><strong>Commands:</strong> Use PA system. "Driver, turn off the engine and throw the keys out the window. Place both hands out the window. Open the door from the outside. Exit the vehicle slowly with hands visible. Walk backward toward my voice."</li>
+    <li><strong>Proning Out:</strong> Command driver to lay face-down on ground. Secondary unit covers while primary unit approaches and handcuffs.</li>
+    <li><strong>Passenger Removal:</strong> Repeat for each passenger individually. Never allow multiple occupants to exit simultaneously.</li>
+    <li><strong>Vehicle Search:</strong> Clear vehicle visually from exterior. If entry needed, use extreme caution (weapons, additional suspects).</li>
+  </ol>
+
+  <h3>7.3 Common Violations &amp; Enforcement</h3>
+  <table>
+    <tr>
+      <th>Violation</th>
+      <th>Enforcement Priority</th>
+      <th>Notes</th>
+    </tr>
+    <tr>
+      <td>Speeding (15+ over)</td>
+      <td><strong>High</strong></td>
+      <td>Citation mandatory. Speeds 25+ over limit may result in arrest and vehicle impound (reckless driving).</td>
+    </tr>
+    <tr>
+      <td>DUI / DWI</td>
+      <td><strong>Critical</strong></td>
+      <td>Zero tolerance. Field sobriety tests required. Arrest if probable cause. Blood/breath test at station.</td>
+    </tr>
+    <tr>
+      <td>Reckless Driving</td>
+      <td><strong>High</strong></td>
+      <td>Weaving, excessive speed, street racing. Arrest authority. Vehicle impound.</td>
+    </tr>
+    <tr>
+      <td>Suspended/Revoked License</td>
+      <td><strong>High</strong></td>
+      <td>Arrest + vehicle impound. No exceptions.</td>
+    </tr>
+    <tr>
+      <td>No Insurance</td>
+      <td><strong>Moderate</strong></td>
+      <td>Citation. Vehicle may be impounded if no licensed driver available to take possession.</td>
+    </tr>
+    <tr>
+      <td>Equipment Violations</td>
+      <td><strong>Low</strong></td>
+      <td>Broken tail light, expired registration. Warning acceptable for first offense if corrected on scene.</td>
+    </tr>
+    <tr>
+      <td>Commercial Vehicle Violations</td>
+      <td><strong>High</strong></td>
+      <td>Logbook, CDL, hazmat, weight. Enforce strictly. Out-of-service orders for serious violations.</td>
+    </tr>
+  </table>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 8: VEHICLE PURSUIT POLICY ==================== -->
+<div class="section" id="pursuit">
+  <h2><span class="section-num">Section 08</span>Vehicle Pursuit Policy</h2>
+
+  <div class="callout callout-critical">
+    <p><strong>Pursuits are inherently dangerous and must be conducted with extreme caution. The safety of the public is paramount. Troopers may terminate pursuits at any time if the risk to public safety outweighs the need for immediate apprehension.</strong></p>
+  </div>
+
+  <h3>8.1 Initiation Criteria</h3>
+  <p>Troopers may initiate a pursuit when:</p>
+  <ul>
+    <li>A suspect vehicle fails to stop for a lawful traffic stop (lights/siren activated).</li>
+    <li>The trooper has probable cause to believe the driver/occupants have committed a felony or serious misdemeanor.</li>
+    <li>The trooper can safely pursue given current traffic, road, and weather conditions.</li>
+    <li>The trooper immediately notifies dispatch and receives a pursuit number.</li>
+  </ul>
+
+  <h3>8.2 Pursuit Roles</h3>
+  <table>
+    <tr>
+      <th>Role</th>
+      <th>Responsibilities</th>
+    </tr>
+    <tr>
+      <td><strong>Primary Unit</strong></td>
+      <td>Initiating trooper. Maintains visual contact. Provides continuous updates (location, speed, direction, suspect vehicle description, traffic conditions).</td>
+    </tr>
+    <tr>
+      <td><strong>Secondary Unit</strong></td>
+      <td>First backup unit. Follows at safe distance. Prepares spike strips or blocking positions. Assumes primary if primary unit falls back.</td>
+    </tr>
+    <tr>
+      <td><strong>Air Support</strong></td>
+      <td><code>Air-1</code> (if available). Provides aerial tracking. Ground units may reduce speed/fall back when air support has visual. Air unit directs ground units.</td>
+    </tr>
+    <tr>
+      <td><strong>Pursuit Supervisor</strong></td>
+      <td>Lieutenant+ monitors pursuit via radio. Authorizes tactics (spike strips, PIT). Orders termination if risk is too high.</td>
+    </tr>
+    <tr>
+      <td><strong>Dispatch</strong></td>
+      <td>Logs pursuit details. Notifies other agencies. Clears radio traffic. Alerts EMS to stage near pursuit route.</td>
+    </tr>
+  </table>
+
+  <h3>8.3 Authorized Tactics</h3>
+  <ul>
+    <li><strong>Spike Strips:</strong> Sergeant+ authorization. Deploy only when safe to do so (clear zone behind deployment point). Secondary unit deploys while primary maintains pursuit.</li>
+    <li><strong>PIT Maneuver:</strong> Lieutenant+ authorization required unless suspect vehicle is being used as a deadly weapon (actively ramming). PIT authorized only at speeds below 60 mph on dry pavement. Trooper must be PIT-certified.</li>
+    <li><strong>Blocking/Roadblock:</strong> Captain+ authorization. Used only for violent felons. High risk of collision — use with extreme caution.</li>
+    <li><strong>Ramming:</strong> PROHIBITED except as deadly force (suspect using vehicle as weapon, immediate threat to life).</li>
+  </ul>
+
+  <h3>8.4 Mandatory Termination</h3>
+  <p>Pursuits MUST be terminated immediately if:</p>
+  <ol>
+    <li>Supervisor orders termination.</li>
+    <li>Visual contact is lost for more than 30 seconds (unless air support has visual).</li>
+    <li>Suspect enters wrong-way on freeway/highway.</li>
+    <li>Pursuit speed exceeds 100 mph in urban areas or 120 mph on highways.</li>
+    <li>Road/weather conditions make pursuit too dangerous (heavy rain, fog, ice).</li>
+    <li>Suspect identity is known and apprehension can be made later without endangering public.</li>
+  </ol>
+
+  <h3>8.5 Pursuit Across Jurisdictions</h3>
+  <ul>
+    <li>SASP may pursue suspects into any jurisdiction without requesting permission. Notify local agency as soon as practicable.</li>
+    <li>Local agencies should provide support (blocking roads ahead, deploying spikes, taking over pursuit if SASP unit falls back).</li>
+    <li>SASP assumes pursuit command when 3+ jurisdictions are involved.</li>
+    <li>If local agency requests SASP to terminate, SASP supervisor makes final decision based on totality of circumstances.</li>
+  </ul>
+
+  <h3>8.6 Post-Pursuit Requirements</h3>
+  <ol>
+    <li><strong>Scene Safety:</strong> Secure suspect vehicle. Draw firearms if felony stop. Prone out all occupants before approach.</li>
+    <li><strong>Medical:</strong> Request EMS for any injuries (suspect or trooper).</li>
+    <li><strong>Report:</strong> Primary unit files pursuit report within 24 hours detailing reason for pursuit, speeds, tactics used, outcome.</li>
+    <li><strong>Review:</strong> All pursuits reviewed by Lieutenant+. Termination decisions and tactics analyzed for policy compliance.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 9: ARREST & BOOKING ==================== -->
+<div class="section" id="arrest">
+  <h2><span class="section-num">Section 09</span>Arrest &amp; Booking Procedures</h2>
+
+  <h3>9.1 Arrest Authority</h3>
+  <p>SASP troopers have full arrest authority for any violation of state law witnessed in their presence or for which probable cause exists. Arrests may be made anywhere in the state.</p>
+
+  <h3>9.2 Arrest Procedure</h3>
+  <ol>
+    <li><strong>Probable Cause:</strong> Ensure probable cause exists (witness statement, evidence, observation, warrant).</li>
+    <li><strong>Control:</strong> Gain physical control of suspect. Handcuff behind back (double-locked). Search for weapons (pat-down or full search if arrest for violent crime).</li>
+    <li><strong>Miranda Warning:</strong> If custodial interrogation is anticipated, administer Miranda warning:
+      <div class="callout callout-info">
+        <p><em>"You have the right to remain silent. Anything you say can and will be used against you in a court of law. You have the right to an attorney. If you cannot afford an attorney, one will be appointed for you. Do you understand these rights?"</em></p>
+      </div>
+    </li>
+    <li><strong>Notification:</strong> Notify dispatch of arrest, suspect name/DOB, charges, transport destination.</li>
+    <li><strong>Search Incident to Arrest:</strong> Search suspect's person and immediate area for weapons, evidence, contraband. Inventory personal property.</li>
+    <li><strong>Vehicle Inventory:</strong> If suspect's vehicle is impounded, conduct full inventory search. Document all contents.</li>
+  </ol>
+
+  <h3>9.3 Transport</h3>
+  <ul>
+    <li>Suspects must be transported in marked patrol vehicles unless undercover operation.</li>
+    <li>Suspects placed in rear seat. Seatbelt mandatory. Check rear seat before and after transport (contraband, weapons).</li>
+    <li>NEVER transport opposite-sex suspects alone. Request same-sex trooper or supervisor to accompany transport.</li>
+    <li>High-risk suspects (violent felons, escape risk) transported with two troopers.</li>
+  </ul>
+
+  <h3>9.4 Booking Locations</h3>
+  <table>
+    <tr>
+      <th>Location</th>
+      <th>Jurisdiction</th>
+      <th>Use</th>
+    </tr>
+    <tr>
+      <td>SASP Headquarters (Mission Row)</td>
+      <td>Statewide</td>
+      <td>Primary booking location for SASP arrests. Full processing, holding cells, interrogation rooms.</td>
+    </tr>
+    <tr>
+      <td>LSPD Mission Row Station</td>
+      <td>Los Santos</td>
+      <td>Secondary booking for Los Santos arrests. Transfer to SASP HQ if case involves state charges.</td>
+    </tr>
+    <tr>
+      <td>BCSO Paleto Bay Station</td>
+      <td>Blaine County</td>
+      <td>Booking for Blaine County arrests. Transfer to SASP HQ for major cases.</td>
+    </tr>
+    <tr>
+      <td>Bolingbroke Penitentiary</td>
+      <td>Statewide (Corrections)</td>
+      <td>Long-term detention. Suspects booked after arraignment and bail hearing.</td>
+    </tr>
+  </table>
+
+  <h3>9.5 Booking Process</h3>
+  <ol>
+    <li><strong>Intake:</strong> Provide booking officer with suspect info, charges, arresting trooper name, case number.</li>
+    <li><strong>Mugshot &amp; Prints:</strong> Booking officer photographs suspect and takes fingerprints (entered into state database).</li>
+    <li><strong>Medical Screening:</strong> Booking officer asks suspect about injuries, medications, medical conditions. EMS called if needed.</li>
+    <li><strong>Property Inventory:</strong> All personal property removed and logged. Suspect receives receipt.</li>
+    <li><strong>Holding:</strong> Suspect placed in holding cell until arraignment or bail hearing (typically within 24-48 hours).</li>
+    <li><strong>Interrogation:</strong> If trooper wishes to interrogate, suspect must be re-Mirandized in interrogation room. Suspect may request attorney at any time (all questioning stops).</li>
+  </ol>
+
+  <h3>9.6 Citation in Lieu of Arrest</h3>
+  <p>For minor offenses (misdemeanors, non-violent), troopers may issue a citation instead of arresting. Suspect signs promise to appear in court. If suspect refuses to sign, arrest is mandatory.</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 10: CRIMINAL INVESTIGATION DIVISION ==================== -->
+<div class="section" id="cid">
+  <h2><span class="section-num">Section 10</span>Criminal Investigation Division</h2>
+
+  <p>CID handles complex investigations beyond the scope of patrol operations. CID detectives work in plainclothes and drive unmarked vehicles.</p>
+
+  <h3>10.1 CID Case Assignment</h3>
+  <p>Cases assigned to CID when:</p>
+  <ul>
+    <li>Homicide, attempted murder, or suspicious death</li>
+    <li>Organized crime (drug trafficking, racketeering, gang activity)</li>
+    <li>White-collar crime (fraud, embezzlement, corruption)</li>
+    <li>Multi-jurisdictional cases (2+ counties/cities)</li>
+    <li>Cases requiring extended surveillance or undercover work</li>
+    <li>Local PD requests SASP assistance due to resource limitations or conflict of interest</li>
+  </ul>
+
+  <h3>10.2 Investigation Procedures</h3>
+  <ol>
+    <li><strong>Case Initiation:</strong> CID detective receives case from patrol, local PD, or direct assignment from Major (CID).</li>
+    <li><strong>Evidence Collection:</strong> Secure crime scene. Collect physical evidence (DNA, fingerprints, shell casings, video). Maintain chain of custody.</li>
+    <li><strong>Witness Interviews:</strong> Interview victims, witnesses, suspects. Record statements. Build timeline of events.</li>
+    <li><strong>Warrants:</strong> Apply for search warrants, arrest warrants, wiretap orders (DOJ approval). Execute with SWAT support if high-risk.</li>
+    <li><strong>Surveillance:</strong> Conduct stationary or mobile surveillance. Photo/video documentation. Coordinate with multiple units if suspect has countersurveillance training.</li>
+    <li><strong>Undercover:</strong> UC operations require Major (CID) approval. Undercover detectives must check in every 4 hours. Cover story must be documented and approved.</li>
+    <li><strong>Case Review:</strong> Weekly case review with Major (CID). Update case board. Identify leads, assign follow-up tasks.</li>
+    <li><strong>Prosecution:</strong> Work with District Attorney to build case. Provide evidence, witness list, testimony. Attend trial as needed.</li>
+  </ol>
+
+  <h3>10.3 Forensics Lab</h3>
+  <p>SASP operates the state forensics lab at headquarters. Services include:</p>
+  <ul>
+    <li><strong>DNA Analysis:</strong> Blood, saliva, hair samples. Results in 7-14 days (expedited for critical cases).</li>
+    <li><strong>Ballistics:</strong> Bullet/casing analysis, firearm matching, gunshot residue testing.</li>
+    <li><strong>Fingerprints:</strong> AFIS database search. Latent print analysis.</li>
+    <li><strong>Toxicology:</strong> Drug/alcohol testing, poison screening.</li>
+    <li><strong>Digital Forensics:</strong> Computer/phone data recovery, encrypted communications, metadata analysis.</li>
+  </ul>
+
+  <h3>10.4 Inter-Agency Task Forces</h3>
+  <p>CID leads or participates in joint task forces with FBI, DEA, ATF, local PD:</p>
+  <ul>
+    <li><strong>Drug Task Force:</strong> Target major trafficking organizations. Multi-month investigations. Undercover buys, wiretaps, coordinated raids.</li>
+    <li><strong>Violent Crime Task Force:</strong> Target serial offenders, gang violence, armed robbery crews.</li>
+    <li><strong>Human Trafficking Task Force:</strong> Coordinate with federal agencies. Victim-centered approach.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 11: SWAT & TACTICAL OPERATIONS ==================== -->
+<div class="section" id="swat">
+  <h2><span class="section-num">Section 11</span>SWAT &amp; Tactical Operations</h2>
+
+  <h3>11.1 SWAT Call-Out Criteria</h3>
+  <p>SWAT is deployed for:</p>
+  <ul>
+    <li>High-risk warrant service (armed suspects, fortified locations, history of violence)</li>
+    <li>Barricaded suspects / hostage situations</li>
+    <li>Active shooter incidents</li>
+    <li>Terrorist threats or attacks</li>
+    <li>Executive protection (Governor, VIPs during high-threat events)</li>
+    <li>Riot control / civil disturbance (mass looting, violent protests)</li>
+  </ul>
+
+  <h3>11.2 SWAT Organization</h3>
+  <ul>
+    <li><strong>Team Size:</strong> 12-16 operators (minimum 8 on-duty at any time)</li>
+    <li><strong>Roles:</strong> Team Leader, Breacher, Sniper (2), Entry Team (4-6), Medic, K-9 Handler</li>
+    <li><strong>Equipment:</strong> Tactical rifles (AR-15, MP5), ballistic shields, breaching tools, flashbangs, CS gas, armored vehicle (Bearcat)</li>
+  </ul>
+
+  <h3>11.3 High-Risk Warrant Execution</h3>
+  <ol>
+    <li><strong>Pre-Operational Planning:</strong> Intelligence gathering (suspect weapons, layout, escape routes). Briefing for all team members. Assign roles. Medical on standby.</li>
+    <li><strong>Approach:</strong> Stealth approach if possible (no-knock warrant). Armored vehicle provides cover.</li>
+    <li><strong>Breach:</strong> Breacher uses ram, explosive charge, or hydraulic spreader. Flashbang deployed on entry.</li>
+    <li><strong>Entry:</strong> Entry team clears rooms methodically ("Clear! Moving!"). Suspects proned out immediately.</li>
+    <li><strong>Secure:</strong> Entire structure cleared before evidence collection begins. Scene turned over to CID.</li>
+  </ol>
+
+  <h3>11.4 Active Shooter Response</h3>
+  <div class="callout callout-critical">
+    <p><strong>Active shooter situations require immediate response. First troopers on scene form ad-hoc entry team and engage shooter without waiting for SWAT. Lives are being lost every second — speed is critical.</strong></p>
+  </div>
+  <ol>
+    <li><strong>Immediate Action:</strong> First 3-4 troopers on scene form contact team. Advance toward gunfire. Engage shooter on contact.</li>
+    <li><strong>Neutralize Threat:</strong> Shooter must be stopped (arrest or lethal force). Do NOT wait for SWAT if lives are in danger.</li>
+    <li><strong>Rescue:</strong> Once shooter neutralized, begin evacuating victims. Triage wounded (EMS stages outside until scene secure).</li>
+    <li><strong>SWAT Arrival:</strong> SWAT takes over scene security, conducts methodical search for additional suspects/IEDs.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 12: K-9 OPERATIONS ==================== -->
+<div class="section" id="k9">
+  <h2><span class="section-num">Section 12</span>K-9 Operations</h2>
+
+  <h3>12.1 K-9 Deployment Types</h3>
+  <ul>
+    <li><strong>Narcotics Detection:</strong> Vehicle searches during traffic stops (handler must have probable cause or consent before deploying K-9). Building searches (warehouses, storage units). Currency detection.</li>
+    <li><strong>Tracking:</strong> Fled suspects, missing persons, evidence (discarded weapons, clothing).</li>
+    <li><strong>Apprehension:</strong> Violent suspects who refuse to surrender. K-9 bite constitutes intermediate force — must be justified.</li>
+    <li><strong>Crowd Control:</strong> K-9 presence often de-escalates crowds. Bite deployment only if crowd becomes violent.</li>
+  </ul>
+
+  <h3>12.2 K-9 Use of Force</h3>
+  <div class="callout callout-warning">
+    <p><strong>K-9 deployment is a use of force. Handler is responsible for all K-9 actions. Unjustified bites will result in disciplinary action against the handler.</strong></p>
+  </div>
+  <ul>
+    <li>K-9 may be deployed for apprehension only when suspect poses risk of violence or escape.</li>
+    <li>Warning must be given: "State Police K-9! Come out or I will send the dog!"</li>
+    <li>Once suspect is secured, handler must immediately recall K-9 and provide medical aid.</li>
+    <li>All K-9 bites documented in use-of-force report. Photos of injuries required.</li>
+  </ul>
+
+  <h3>12.3 K-9 Care &amp; Certification</h3>
+  <ul>
+    <li>K-9 lives with handler off-duty. Handler responsible for feeding, vet care, training.</li>
+    <li>Annual recertification in narcotics detection and apprehension (state-certified trainer).</li>
+    <li>K-9 retirement age: 8-10 years. Retired K-9s adopted by handler.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 13: AVIATION UNIT ==================== -->
+<div class="section" id="aviation">
+  <h2><span class="section-num">Section 13</span>Aviation Unit</h2>
+
+  <h3>13.1 Aircraft &amp; Equipment</h3>
+  <ul>
+    <li><strong>Air-1 (Pursuit Helicopter):</strong> Equipped with FLIR thermal camera, searchlight, radio repeater, downlink video to command.</li>
+    <li><strong>Air-2 (Search &amp; Rescue Helicopter):</strong> Equipped with hoist, rescue basket, medical supplies, long-range fuel tanks.</li>
+  </ul>
+
+  <h3>13.2 Mission Profiles</h3>
+  <table>
+    <tr>
+      <th>Mission</th>
+      <th>Authorization</th>
+      <th>Procedure</th>
+    </tr>
+    <tr>
+      <td><strong>Pursuit Support</strong></td>
+      <td>Lieutenant+</td>
+      <td>Air unit provides aerial tracking. Ground units reduce speed/fall back when air has visual. Air unit directs ground units to intercept points.</td>
+    </tr>
+    <tr>
+      <td><strong>Search &amp; Rescue</strong></td>
+      <td>Automatic (no auth required)</td>
+      <td>Missing persons, downed aircraft, hikers, boaters. Coordinate with BCSO SAR team. Use FLIR for night searches.</td>
+    </tr>
+    <tr>
+      <td><strong>Surveillance</strong></td>
+      <td>Major+</td>
+      <td>Long-term aerial surveillance of suspects, buildings, events. Maintain altitude to avoid detection.</td>
+    </tr>
+    <tr>
+      <td><strong>VIP Transport</strong></td>
+      <td>Colonel only</td>
+      <td>Governor, visiting dignitaries. Advance route survey. Coordinate with ground motorcade.</td>
+    </tr>
+    <tr>
+      <td><strong>Disaster Response</strong></td>
+      <td>Automatic</td>
+      <td>Wildfires, floods, earthquakes. Aerial damage assessment. Supply drops to cut-off areas. Evacuation if ground routes blocked.</td>
+    </tr>
+  </table>
+
+  <h3>13.3 Pilot Requirements</h3>
+  <ul>
+    <li>Minimum rank: Lieutenant</li>
+    <li>Commercial pilot license (rotorcraft)</li>
+    <li>Minimum 100 hours flight time (50 hours night flight)</li>
+    <li>Tactical flight training (pursuit, surveillance, rescue)</li>
+    <li>Medical: Class 2 flight physical (annual)</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 14: VIP PROTECTION DETAIL ==================== -->
+<div class="section" id="vip">
+  <h2><span class="section-num">Section 14</span>VIP Protection Detail</h2>
+
+  <h3>14.1 Protected Persons</h3>
+  <ul>
+    <li>Governor of San Andreas (24/7 detail)</li>
+    <li>Lieutenant Governor (upon request)</li>
+    <li>Mayor of Los Santos (major events)</li>
+    <li>Visiting heads of state, foreign dignitaries</li>
+    <li>Judges, prosecutors (if credible threat exists)</li>
+  </ul>
+
+  <h3>14.2 Advance Team</h3>
+  <p>24-48 hours before VIP arrival:</p>
+  <ol>
+    <li><strong>Route Survey:</strong> Drive entire route. Identify chokepoints, hospitals, escape routes, ambush sites.</li>
+    <li><strong>Venue Inspection:</strong> Inspect event location. Check sightlines, access points, emergency exits. Coordinate with venue security.</li>
+    <li><strong>Threat Assessment:</strong> Review intelligence reports. Known threats, protests planned, credible assassination plots.</li>
+    <li><strong>Coordination:</strong> Meet with local PD, FBI (if federal VIP), event organizers. Establish unified command.</li>
+    <li><strong>Post Assignments:</strong> Assign troopers to static posts (building entrances, rooftops, intersections).</li>
+  </ol>
+
+  <h3>14.3 Motorcade Procedures</h3>
+  <ul>
+    <li><strong>Lead Vehicle:</strong> SASP patrol car. Clears route, stops traffic at intersections.</li>
+    <li><strong>Limousine:</strong> Armored vehicle (VIP inside). Driven by SASP protective services driver.</li>
+    <li><strong>Follow Vehicle:</strong> SASP SUV (armed troopers). Blocks rear approach.</li>
+    <li><strong>Decoy Vehicle:</strong> Identical limo (if threat level high). Confuses potential attackers.</li>
+    <li><strong>Air Support:</strong> Air-1 provides aerial overwatch if threat level warrants.</li>
+  </ul>
+
+  <h3>14.4 Emergency Protocols</h3>
+  <div class="callout callout-critical">
+    <p><strong>In the event of an attack on the motorcade, the immediate priority is to evacuate the VIP to safety. Troopers will place themselves between the VIP and the threat, using deadly force if necessary.</strong></p>
+  </div>
+  <ol>
+    <li><strong>Attack Recognition:</strong> Gunfire, explosion, vehicle ramming — "Contact! Contact! Contact!" over radio.</li>
+    <li><strong>Immediate Action:</strong> Limo driver accelerates out of kill zone. Follow vehicle blocks/rams attacking vehicle. Lead vehicle clears path.</li>
+    <li><strong>Return Fire:</strong> Armed troopers engage attackers. Suppress threat until VIP is clear.</li>
+    <li><strong>Evacuation Route:</strong> Alternate route to nearest hospital or secure facility (pre-planned).</li>
+    <li><strong>Reinforcements:</strong> All SASP units converge on evacuation route to provide escort.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 15: RADIO COMMUNICATIONS ==================== -->
+<div class="section" id="radio">
+  <h2><span class="section-num">Section 15</span>Radio Communications</h2>
+
+  <h3>15.1 Radio Channels</h3>
+  <table>
+    <tr>
+      <th>Channel</th>
+      <th>Use</th>
+      <th>Access</th>
+    </tr>
+    <tr>
+      <td><strong>State-1 (Primary)</strong></td>
+      <td>Highway Patrol operations, general dispatch</td>
+      <td>All SASP units, LSPD/BCSO can monitor</td>
+    </tr>
+    <tr>
+      <td><strong>State-2 (TAC)</strong></td>
+      <td>Pursuits, major incidents, inter-agency operations</td>
+      <td>Units involved in operation only</td>
+    </tr>
+    <tr>
+      <td><strong>State-3 (CID)</strong></td>
+      <td>Investigations, surveillance, undercover comms</td>
+      <td>CID detectives only (encrypted)</td>
+    </tr>
+    <tr>
+      <td><strong>State-4 (SWAT)</strong></td>
+      <td>Tactical operations</td>
+      <td>SWAT team only (encrypted)</td>
+    </tr>
+    <tr>
+      <td><strong>Air-1</strong></td>
+      <td>Aviation unit</td>
+      <td>Air units, ground units they support</td>
+    </tr>
+    <tr>
+      <td><strong>Interop-1</strong></td>
+      <td>Inter-agency coordination (LSPD, BCSO, FBI)</td>
+      <td>All LEO agencies</td>
+    </tr>
+  </table>
+
+  <h3>15.2 Ten-Codes</h3>
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Meaning</th>
+    </tr>
+    <tr><td><code>10-4</code></td><td>Acknowledged / Affirmative</td></tr>
+    <tr><td><code>10-8</code></td><td>In service / Available</td></tr>
+    <tr><td><code>10-7</code></td><td>Out of service</td></tr>
+    <tr><td><code>10-23</code></td><td>Arrived on scene</td></tr>
+    <tr><td><code>10-15</code></td><td>Suspect in custody</td></tr>
+    <tr><td><code>10-32</code></td><td>Person with gun</td></tr>
+    <tr><td><code>10-33</code></td><td>Emergency traffic (clear channel)</td></tr>
+    <tr><td><code>10-50</code></td><td>Traffic accident</td></tr>
+    <tr><td><code>10-80</code></td><td>Pursuit in progress</td></tr>
+    <tr><td><code>10-99</code></td><td>Officer needs assistance (emergency)</td></tr>
+    <tr><td><code>Code 2</code></td><td>Urgent (lights, no siren)</td></tr>
+    <tr><td><code>Code 3</code></td><td>Emergency (lights &amp; siren)</td></tr>
+    <tr><td><code>Code 4</code></td><td>No further assistance needed</td></tr>
+  </table>
+
+  <h3>15.3 Radio Discipline</h3>
+  <ul>
+    <li>Keep transmissions brief. State your callsign, location, and message.</li>
+    <li>Wait for acknowledgment from dispatch before assuming message was received.</li>
+    <li>During emergencies (10-33, 10-99), all non-essential traffic stops immediately.</li>
+    <li>Avoid casual conversation on radio. Use cell phone or CAD messaging for non-operational communication.</li>
+    <li>Profanity, slurs, or unprofessional language on radio is subject to disciplinary action.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 16: REPORT WRITING ==================== -->
+<div class="section" id="reports">
+  <h2><span class="section-num">Section 16</span>Report Writing</h2>
+
+  <h3>16.1 Report Requirements</h3>
+  <table>
+    <tr>
+      <th>Report Type</th>
+      <th>When Required</th>
+      <th>Deadline</th>
+    </tr>
+    <tr>
+      <td><strong>Traffic Stop Log</strong></td>
+      <td>Every traffic stop</td>
+      <td>End of shift</td>
+    </tr>
+    <tr>
+      <td><strong>Incident Report</strong></td>
+      <td>Any call for service, accident, arrest, use of force</td>
+      <td>End of shift (24 hours for complex incidents)</td>
+    </tr>
+    <tr>
+      <td><strong>Arrest Report</strong></td>
+      <td>All arrests</td>
+      <td>Before suspect is booked (4 hours max)</td>
+    </tr>
+    <tr>
+      <td><strong>Pursuit Report</strong></td>
+      <td>All vehicle pursuits</td>
+      <td>24 hours</td>
+    </tr>
+    <tr>
+      <td><strong>Use of Force Report</strong></td>
+      <td>Any force beyond verbal commands</td>
+      <td>24 hours</td>
+    </tr>
+    <tr>
+      <td><strong>Vehicle Accident Report</strong></td>
+      <td>All accidents (patrol vehicle or civilian)</td>
+      <td>End of shift</td>
+    </tr>
+    <tr>
+      <td><strong>Property Damage Report</strong></td>
+      <td>Damage to state/private property</td>
+      <td>End of shift</td>
+    </tr>
+    <tr>
+      <td><strong>Internal Affairs Complaint</strong></td>
+      <td>Citizen complaint or policy violation witnessed</td>
+      <td>Immediate (same shift)</td>
+    </tr>
+  </table>
+
+  <h3>16.2 Report Writing Standards</h3>
+  <ul>
+    <li><strong>Clarity:</strong> Use plain language. Avoid jargon or acronyms unless universally understood.</li>
+    <li><strong>Accuracy:</strong> Report only facts. No assumptions, opinions, or speculation.</li>
+    <li><strong>Completeness:</strong> Who, what, when, where, why, how. Include all relevant details.</li>
+    <li><strong>Chronological:</strong> Events in order they occurred. Use timestamps.</li>
+    <li><strong>First Person:</strong> "I observed..." not "It was observed..."</li>
+    <li><strong>Objectivity:</strong> No bias, emotion, or editorializing. Let facts speak.</li>
+    <li><strong>Spelling &amp; Grammar:</strong> Proofread. Reports are legal documents and reflect on SASP professionalism.</li>
+  </ul>
+
+  <h3>16.3 Supervisor Review</h3>
+  <p>All reports reviewed by Sergeant+ before filing. Supervisors check for completeness, accuracy, and policy compliance. Reports returned to trooper for correction if deficient.</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 17: OFFICER CONDUCT & UNIFORM STANDARDS ==================== -->
+<div class="section" id="conduct">
+  <h2><span class="section-num">Section 17</span>Officer Conduct &amp; Uniform Standards</h2>
+
+  <h3>17.1 Code of Conduct</h3>
+  <ul>
+    <li><strong>Integrity:</strong> Troopers will be honest, ethical, and law-abiding at all times, on and off duty.</li>
+    <li><strong>Professionalism:</strong> Treat all citizens with respect and courtesy, regardless of race, religion, gender, or social status.</li>
+    <li><strong>Accountability:</strong> Take responsibility for your actions. Report misconduct by fellow troopers.</li>
+    <li><strong>Confidentiality:</strong> Do not disclose non-public information (ongoing investigations, victim identities, tactical plans).</li>
+    <li><strong>Conflict of Interest:</strong> Do not use your position for personal gain. No accepting bribes, gifts, or favors in exchange for official action.</li>
+    <li><strong>Social Media:</strong> Troopers may not post about ongoing investigations, arrested suspects (prior to conviction), or department operations. Political activity on social media must be clearly identified as personal views, not SASP positions.</li>
+  </ul>
+
+  <h3>17.2 Uniform Standards</h3>
+  <table>
+    <tr>
+      <th>Item</th>
+      <th>Specification</th>
+    </tr>
+    <tr>
+      <td><strong>Class A (Patrol)</strong></td>
+      <td>Navy blue shirt, gray trousers, SASP shoulder patch, badge, name tag, campaign hat (mandatory for highway patrol). Black leather duty belt with all issued equipment.</td>
+    </tr>
+    <tr>
+      <td><strong>Class B (Tactical)</strong></td>
+      <td>SASP polo or tactical shirt, cargo pants, external vest carrier, baseball cap or patrol cap. For SWAT, CID field ops.</td>
+    </tr>
+    <tr>
+      <td><strong>Footwear</strong></td>
+      <td>Black polished leather boots or shoes. Tactical boots authorized for Class B.</td>
+    </tr>
+    <tr>
+      <td><strong>Outerwear</strong></td>
+      <td>SASP-issued jacket or windbreaker. Navy blue with SASP patches.</td>
+    </tr>
+    <tr>
+      <td><strong>Body Armor</strong></td>
+      <td>Mandatory at all times on duty. Level IIIA minimum. External carrier or concealed under shirt.</td>
+    </tr>
+    <tr>
+      <td><strong>Duty Belt</strong></td>
+      <td>Firearm, 2 spare mags, taser, OC spray, handcuffs (2 pairs), baton, flashlight, radio.</td>
+    </tr>
+    <tr>
+      <td><strong>Grooming</strong></td>
+      <td>Hair neat, professional. Male troopers: hair above collar, sideburns no lower than mid-ear, mustache/beard neatly trimmed (no longer than 1/2 inch). Female troopers: hair in bun or braid if longer than collar.</td>
+    </tr>
+  </table>
+
+  <h3>17.3 Vehicle Standards</h3>
+  <ul>
+    <li><strong>Patrol Vehicles:</strong> Black and white livery with SASP markings. Light bar or slicktop (unmarked roof). Maintained in clean condition. No personal items visible in cabin.</li>
+    <li><strong>Unmarked Vehicles:</strong> CID detectives and command staff. Subdued markings (small SASP decal on rear window). Equipped with concealed emergency lights.</li>
+    <li><strong>Equipment Check:</strong> Daily vehicle inspection before shift (lights, siren, tires, radio, MDT, rifle, first aid kit).</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 18: DISCIPLINARY PROCEDURES ==================== -->
+<div class="section" id="discipline">
+  <h2><span class="section-num">Section 18</span>Disciplinary Procedures</h2>
+
+  <h3>18.1 Levels of Discipline</h3>
+  <table>
+    <tr>
+      <th>Level</th>
+      <th>Violation Examples</th>
+      <th>Penalty</th>
+    </tr>
+    <tr>
+      <td><strong>Level 1 (Verbal Counseling)</strong></td>
+      <td>Minor uniform violation, late to briefing, incomplete report (first offense)</td>
+      <td>Verbal warning from supervisor. Documented in personnel file.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 2 (Written Reprimand)</strong></td>
+      <td>Repeat Level 1 violations, unprofessional conduct, minor policy violation</td>
+      <td>Written reprimand. Remedial training. Suspension of promotion eligibility for 6 months.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 3 (Suspension)</strong></td>
+      <td>Use of force violation, neglect of duty, insubordination, unauthorized pursuit</td>
+      <td>Suspension without pay (3-30 days). Mandatory retraining. Probation for 6-12 months.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 4 (Demotion)</strong></td>
+      <td>Serious policy violations, repeated Level 3 offenses, abuse of authority</td>
+      <td>Reduction in rank. Loss of specialized assignment (SWAT, CID, K-9). Extended probation.</td>
+    </tr>
+    <tr>
+      <td><strong>Level 5 (Termination)</strong></td>
+      <td>Corruption, excessive force, criminal conduct, dishonesty, violation of oath</td>
+      <td>Immediate termination. Loss of POST certification. Possible criminal prosecution.</td>
+    </tr>
+  </table>
+
+  <h3>18.2 Internal Affairs Investigations</h3>
+  <ol>
+    <li><strong>Complaint Receipt:</strong> Citizen complaint or supervisor report filed with Internal Affairs. Complaint logged and assigned IA case number.</li>
+    <li><strong>Preliminary Review:</strong> IA determines if complaint is credible and warrants investigation.</li>
+    <li><strong>Investigation:</strong> IA investigator interviews complainant, witnesses, and accused trooper. Reviews video, radio, reports. Trooper has right to union representation.</li>
+    <li><strong>Findings:</strong> Sustained (violation occurred), Not Sustained (insufficient evidence), Unfounded (no violation), Exonerated (actions were lawful/proper).</li>
+    <li><strong>Discipline:</strong> If sustained, IA recommends discipline level. Final decision by Lieutenant Colonel or Colonel.</li>
+    <li><strong>Appeal:</strong> Trooper may appeal discipline decision through union grievance process or civil service commission.</li>
+  </ol>
+
+  <h3>18.3 Officer Bill of Rights</h3>
+  <ul>
+    <li>Right to union representation during IA interview.</li>
+    <li>Right to review complaint and evidence before interview.</li>
+    <li>Right to reasonable notice (48 hours minimum) before IA interview.</li>
+    <li>Right to appeal disciplinary action.</li>
+    <li>Protection from retaliation for reporting misconduct.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 19: TRAINING & CERTIFICATION ==================== -->
+<div class="section" id="training">
+  <h2><span class="section-num">Section 19</span>Training &amp; Certification</h2>
+
+  <h3>19.1 Academy Training</h3>
+  <p>All SASP cadets must complete the 24-week SASP Academy before commissioning as troopers.</p>
+  <ul>
+    <li><strong>Weeks 1-8:</strong> Physical fitness, defensive tactics, firearms qualification, law (criminal code, traffic code, constitutional law), report writing, radio communications, first aid/CPR.</li>
+    <li><strong>Weeks 9-16:</strong> Traffic enforcement, DUI detection, accident investigation, pursuit driving, high-risk stops, scenario training (active shooter, domestic violence, mental health crisis).</li>
+    <li><strong>Weeks 17-24:</strong> Highway patrol operations, VIP protection, inter-agency coordination, ethics, community policing, final exams (written, physical fitness, firearms, driving).</li>
+  </ul>
+  <p><strong>Passing Standards:</strong> 70% on written exams, 80% on firearms qualification, pass physical fitness test, no major discipline issues.</p>
+
+  <h3>19.2 Field Training Program (FTO)</h3>
+  <p>After academy graduation, cadets complete 12-week FTO program with certified Field Training Officer.</p>
+  <table>
+    <tr>
+      <th>Phase</th>
+      <th>Duration</th>
+      <th>Focus</th>
+    </tr>
+    <tr>
+      <td><strong>Phase 1</strong></td>
+      <td>4 weeks</td>
+      <td>Observation. FTO demonstrates proper procedures. Cadet observes and asks questions.</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 2</strong></td>
+      <td>4 weeks</td>
+      <td>Guided practice. Cadet performs duties with FTO guidance and correction.</td>
+    </tr>
+    <tr>
+      <td><strong>Phase 3</strong></td>
+      <td>4 weeks</td>
+      <td>Independent performance. Cadet operates as primary trooper. FTO observes and evaluates.</td>
+    </tr>
+  </table>
+  <p><strong>Evaluation:</strong> FTO completes daily observation report (DOR). Weekly review with Sergeant. If cadet fails to meet standards, FTO program may be extended or cadet may be terminated.</p>
+
+  <h3>19.3 In-Service Training</h3>
+  <p>All troopers complete 40 hours annual in-service training:</p>
+  <ul>
+    <li>Firearms re-qualification (quarterly)</li>
+    <li>Defensive tactics refresher</li>
+    <li>Legal updates (new laws, court decisions)</li>
+    <li>Pursuit driving refresher</li>
+    <li>De-escalation techniques</li>
+    <li>Mental health crisis intervention</li>
+    <li>First aid/CPR recertification</li>
+  </ul>
+
+  <h3>19.4 Specialized Training</h3>
+  <ul>
+    <li><strong>FTO Certification:</strong> 2-week course. Minimum rank Senior Trooper. Covers adult learning, evaluation, documentation.</li>
+    <li><strong>SWAT:</strong> 8-week tactical school. Breaching, close-quarters combat, hostage rescue, rappelling, advanced firearms.</li>
+    <li><strong>K-9 Handler:</strong> 8-week handler school with assigned K-9. Obedience, tracking, narcotics detection, apprehension.</li>
+    <li><strong>CID Investigator:</strong> 6-week detective school. Interview techniques, evidence collection, case management, surveillance.</li>
+    <li><strong>Aviation:</strong> Commercial pilot license + 4-week tactical flight school (pursuit tactics, hoist operations, night vision).</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 20: INTER-AGENCY COOPERATION ==================== -->
+<div class="section" id="interagency">
+  <h2><span class="section-num">Section 20</span>Inter-Agency Cooperation</h2>
+
+  <h3>20.1 Agency Relationships</h3>
+  <table>
+    <tr>
+      <th>Agency</th>
+      <th>Relationship</th>
+      <th>Coordination</th>
+    </tr>
+    <tr>
+      <td><strong>LSPD</strong></td>
+      <td>Concurrent jurisdiction in Los Santos city limits</td>
+      <td>SASP defers to LSPD on city matters unless multi-jurisdictional. Highway patrol and major cases remain SASP lead. Regular liaison meetings.</td>
+    </tr>
+    <tr>
+      <td><strong>BCSO</strong></td>
+      <td>Concurrent jurisdiction in Blaine County</td>
+      <td>SASP and BCSO work closely on rural crime. BCSO provides local knowledge. SASP provides resources (forensics, SWAT, air support). Joint task forces common.</td>
+    </tr>
+    <tr>
+      <td><strong>FBI</strong></td>
+      <td>Federal jurisdiction (terrorism, kidnapping, organized crime)</td>
+      <td>FBI leads federal cases. SASP provides support (local expertise, manpower, forensics). Joint task forces for major investigations.</td>
+    </tr>
+    <tr>
+      <td><strong>DEA</strong></td>
+      <td>Drug enforcement</td>
+      <td>SASP CID participates in DEA task forces. Share intelligence. Coordinate raids.</td>
+    </tr>
+    <tr>
+      <td><strong>DOJ / DA</strong></td>
+      <td>Prosecution</td>
+      <td>SASP works closely with DA to build cases. Provide evidence, testimony, investigative support.</td>
+    </tr>
+  </table>
+
+  <h3>20.2 Mutual Aid Protocol</h3>
+  <p>SASP will respond to requests for mutual aid from local agencies when:</p>
+  <ul>
+    <li>Mass casualty incident / natural disaster</li>
+    <li>Officer needs assistance (10-99)</li>
+    <li>Riot / civil disturbance beyond local capacity</li>
+    <li>High-risk warrant service (SWAT support)</li>
+    <li>Multi-jurisdictional pursuit</li>
+  </ul>
+  <p><strong>Approval:</strong> Mutual aid requests directed to SASP dispatch. Captain+ approves resource allocation. Responding troopers operate under unified command with requesting agency.</p>
+
+  <h3>20.3 Information Sharing</h3>
+  <ul>
+    <li>SASP maintains statewide criminal intelligence database (SASP-CIS). LSPD, BCSO have read access. Write access by request.</li>
+    <li>Gang intelligence shared via monthly intelligence bulletins.</li>
+    <li>Warrant information shared in real-time via state warrant database.</li>
+    <li>Ongoing investigation information shared on need-to-know basis (prevent leaks).</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 21: EMERGENCY & CRISIS RESPONSE ==================== -->
+<div class="section" id="emergency">
+  <h2><span class="section-num">Section 21</span>Emergency &amp; Crisis Response</h2>
+
+  <h3>21.1 Incident Command System (ICS)</h3>
+  <p>SASP uses ICS for all major incidents (natural disasters, terrorism, mass casualty events).</p>
+  <ul>
+    <li><strong>Incident Commander (IC):</strong> First Captain+ on scene. Overall authority. Establishes command post.</li>
+    <li><strong>Operations Section:</strong> Manages tactical operations (search/rescue, traffic control, evacuations).</li>
+    <li><strong>Planning Section:</strong> Develops incident action plan, tracks resources, anticipates needs.</li>
+    <li><strong>Logistics Section:</strong> Provides supplies, equipment, food, fuel, relief personnel.</li>
+    <li><strong>Finance Section:</strong> Tracks costs, processes invoices, manages mutual aid agreements.</li>
+  </ul>
+
+  <h3>21.2 Natural Disasters</h3>
+  <ul>
+    <li><strong>Earthquakes:</strong> Immediate patrol of highways/bridges for damage. Traffic control. Assist with evacuations. Prevent looting.</li>
+    <li><strong>Wildfires:</strong> Highway closures, evacuations, perimeter security. Coordinate with fire department. Air support for aerial surveillance.</li>
+    <li><strong>Floods:</strong> Water rescues (coordinate with BCSO SAR). Road closures. Evacuations. Prevent access to flooded areas.</li>
+  </ul>
+
+  <h3>21.3 Terrorism / Active Threats</h3>
+  <div class="callout callout-critical">
+    <p><strong>Terrorism or credible terrorist threat activates full SASP response. Colonel assumes Incident Commander role. All specialized units (SWAT, CID, Aviation) mobilized. Coordinate with FBI Joint Terrorism Task Force.</strong></p>
+  </div>
+  <ol>
+    <li><strong>Immediate Response:</strong> Secure perimeter. Evacuate civilians. SWAT entry if hostages/active threat.</li>
+    <li><strong>Intelligence:</strong> CID works with FBI to identify perpetrators, motives, additional threats.</li>
+    <li><strong>Public Information:</strong> Colonel or designated PIO provides media updates. Control narrative, prevent panic.</li>
+    <li><strong>Investigation:</strong> Preserve evidence. Interview witnesses. Track suspects across jurisdictions.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 22: AMENDMENTS & REVISION HISTORY ==================== -->
+<div class="section" id="amendments">
+  <h2><span class="section-num">Section 22</span>Amendments &amp; Revision History</h2>
+
+  <h3>22.1 Revision History</h3>
+  <table>
+    <tr>
+      <th>Version</th>
+      <th>Date</th>
+      <th>Summary of Changes</th>
+    </tr>
+    <tr>
+      <td><strong>1.0</strong></td>
+      <td>January 2024</td>
+      <td>Initial SOP adoption. Basic operational procedures.</td>
+    </tr>
+    <tr>
+      <td><strong>2.0</strong></td>
+      <td>July 2025</td>
+      <td>Expanded Highway Patrol operations, CID procedures, SWAT protocols. Added VIP protection detail.</td>
+    </tr>
+    <tr>
+      <td><strong>3.0</strong></td>
+      <td>February 2026</td>
+      <td>Comprehensive rewrite. Added 9-rank structure. Expanded all sections with detailed procedures. Integrated ZSR branding. Added Aviation Unit and K-9 Operations sections.</td>
+    </tr>
+  </table>
+
+  <h3>22.2 Amendment Process</h3>
+  <ol>
+    <li><strong>Proposal:</strong> Any trooper may propose SOP amendments via chain of command.</li>
+    <li><strong>Review:</strong> Lieutenant Colonel reviews proposal. Consults with division commanders.</li>
+    <li><strong>Approval:</strong> Colonel approves final amendments.</li>
+    <li><strong>Notification:</strong> All troopers notified of SOP changes via email and briefing.</li>
+    <li><strong>Training:</strong> If amendment affects tactics or procedures, in-service training conducted.</li>
+  </ol>
+
+  <h3>22.3 Acknowledgment</h3>
+  <p>All SASP personnel must read and acknowledge understanding of these Standard Operating Procedures. Violation of SOP may result in disciplinary action as outlined in Section 18.</p>
+
+  <div class="callout callout-info">
+    <p><strong>I, [Trooper Name], acknowledge that I have read, understand, and will comply with the San Andreas State Police Standard Operating Procedures Version 3.0.</strong></p>
+    <p><strong>Signature:</strong> ___________________________ <strong>Date:</strong> ___________</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+</div> <!-- End Container -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-main">
+    ZO Syndicate RP | <strong>San Andreas State Police</strong> — Standard Operating Procedures
+  </div>
+  <div class="footer-sub">
+    Version 3.0 | February 2026 | CONFIDENTIAL — Law Enforcement Only
+  </div>
+  <div class="footer-sub">
+    © 2026 Prozilli Entertainment — All Rights Reserved
+  </div>
+  <div class="footer-links">
+    <a href="https://prozilligaming.com/zo" target="_blank">prozilligaming.com/zo</a> •
+    <a href="https://discord.gg/HjpsGpC4R6" target="_blank">discord.gg/HjpsGpC4R6</a>
+  </div>
+</footer>
+
+</body>
+</html>

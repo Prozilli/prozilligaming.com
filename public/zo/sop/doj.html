@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOJ Standard Operating Procedures v3.0 - ZO Syndicate RP</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER BANNER ===== */
+  .header-banner {
+    background: linear-gradient(135deg, #251a11 0%, #0d0d0d 40%, #251a11 100%);
+    border-bottom: 3px solid #e67e22;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #c4a265, #e67e22, #c4a265, transparent);
+  }
+  .header-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(230,126,34,0.02) 2px,
+      rgba(230,126,34,0.02) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .header-org span { color: #a30000; }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #e67e22;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 8px rgba(230,126,34,0.3);
+  }
+  .header-sub {
+    font-size: 14px;
+    color: #c4a265;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .header-server {
+    display: inline-block;
+    background: rgba(163,0,0,0.15);
+    border: 1px solid rgba(163,0,0,0.3);
+    color: #cc4444;
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 2px;
+  }
+  .header-meta {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #555;
+  }
+  .header-meta span {
+    margin: 0 10px;
+  }
+
+  /* ===== CLASSIFICATION STRIP ===== */
+  .classification-strip {
+    background: #a30000;
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 8px;
+    font-weight: 600;
+  }
+
+  /* ===== CONTAINER ===== */
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  /* ===== TOC ===== */
+  .toc-nav {
+    background: rgba(230,126,34,0.05);
+    border: 1px solid rgba(230,126,34,0.2);
+    border-radius: 4px;
+    padding: 30px;
+    margin-bottom: 40px;
+  }
+  .toc-nav h2 {
+    color: #e67e22;
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .toc-nav ol {
+    list-style: none;
+    counter-reset: section-counter;
+  }
+  .toc-nav li {
+    counter-increment: section-counter;
+    margin-bottom: 12px;
+  }
+  .toc-nav li::before {
+    content: counter(section-counter, decimal-leading-zero) ".";
+    color: #e67e22;
+    font-weight: 700;
+    margin-right: 10px;
+    font-family: 'Courier New', monospace;
+  }
+  .toc-nav a {
+    color: #aaa;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .toc-nav a:hover {
+    color: #e67e22;
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    background: rgba(255,255,255,0.02);
+    border-left: 4px solid #e67e22;
+    padding: 40px;
+    margin-bottom: 30px;
+    border-radius: 0 4px 4px 0;
+  }
+  .section h2 {
+    color: #e67e22;
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .section-num {
+    display: inline-block;
+    background: rgba(230,126,34,0.15);
+    color: #e67e22;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-right: 12px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .section h3 {
+    color: #f0932b;
+    font-size: 19px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+  }
+  .section p {
+    margin-bottom: 15px;
+    color: #bbb;
+  }
+  .section ul, .section ol {
+    margin-left: 20px;
+    margin-bottom: 15px;
+  }
+  .section li {
+    margin-bottom: 10px;
+    color: #bbb;
+  }
+  .section li strong {
+    color: #d9d9d9;
+  }
+  .section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .section th {
+    background: rgba(230,126,34,0.1);
+    color: #e67e22;
+    padding: 12px;
+    text-align: left;
+    border: 1px solid rgba(230,126,34,0.2);
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .section td {
+    padding: 12px;
+    border: 1px solid #222;
+    color: #ccc;
+  }
+  .section code {
+    background: rgba(230,126,34,0.08);
+    color: #f0932b;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+  }
+
+  /* ===== CALLOUTS ===== */
+  .callout {
+    padding: 20px;
+    border-radius: 4px;
+    margin: 20px 0;
+    border-left: 4px solid;
+  }
+  .callout-info {
+    background: rgba(230,126,34,0.08);
+    border-color: #e67e22;
+    color: #d9d9d9;
+  }
+  .callout-warning {
+    background: rgba(196,162,101,0.08);
+    border-color: #c4a265;
+    color: #d9d9d9;
+  }
+  .callout-critical {
+    background: rgba(163,0,0,0.08);
+    border-color: #a30000;
+    color: #d9d9d9;
+  }
+  .callout p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* ===== BADGES ===== */
+  .badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-rank {
+    background: rgba(230,126,34,0.2);
+    color: #f0932b;
+    border: 1px solid rgba(230,126,34,0.3);
+  }
+
+  /* ===== BACK TO TOP ===== */
+  .back-top {
+    display: inline-block;
+    margin-top: 30px;
+    color: #e67e22;
+    text-decoration: none;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+  .back-top:hover {
+    color: #f0932b;
+  }
+  .back-top::before {
+    content: '↑ ';
+    margin-right: 5px;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    background: rgba(255,255,255,0.02);
+    border-top: 2px solid rgba(230,126,34,0.2);
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: 60px;
+  }
+  .footer-main {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+  .footer-main strong {
+    color: #e67e22;
+  }
+  .footer-sub {
+    color: #555;
+    font-size: 11px;
+    margin-bottom: 15px;
+  }
+  .footer-links {
+    margin-top: 15px;
+  }
+  .footer-links a {
+    color: #666;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 12px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover {
+    color: #e67e22;
+  }
+
+  /* ===== HERO SECTION ===== */
+  .hero-section {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(230,126,34,0.4) 0%, rgba(13,13,13,0.9) 50%, rgba(230,126,34,0.4) 100%);
+    opacity: 0.85;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #c4a265;
+    text-transform: uppercase;
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 700px) {
+    .hero-section { height: 200px; }
+    .hero-title { font-size: 32px; letter-spacing: 4px; }
+    .hero-subtitle { font-size: 14px; }
+    .header-dept { font-size: 24px; }
+    .section { padding: 25px 20px; }
+    .container { padding: 20px 10px; }
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- Classification Strip -->
+<div class="classification-strip">CONFIDENTIAL — Authorized DOJ Personnel Only</div>
+
+<!-- Header Banner -->
+<header class="header-banner">
+  <div class="header-org"><span>Prozilli</span> Entertainment</div>
+  <div class="header-dept">Department of Justice</div>
+  <div class="header-sub">San Andreas — Standard Operating Procedures</div>
+  <div class="header-server">ZO Syndicate RP</div>
+  <div class="header-meta">
+    <span>Version 3.0</span> • <span>February 2026</span> • <span>State Jurisdiction</span>
+  </div>
+</header>
+
+<!-- Hero Image Section -->
+<div class="hero-section" style="background: radial-gradient(circle at center, rgba(230,126,34,0.3) 0%, transparent 70%), linear-gradient(135deg, #251a11 0%, #0d0d0d 100%);">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Department of Justice</h1>
+    <p class="hero-subtitle">Excellence • Integrity • Service</p>
+  </div>
+</div>
+
+<!-- Main Container -->
+<div class="container">
+
+<!-- Table of Contents -->
+<nav class="toc-nav">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#mission">Mission Statement</a></li>
+    <li><a href="#structure">Judicial Structure &amp; Hierarchy</a></li>
+    <li><a href="#warrants">Warrant Procedures</a></li>
+    <li><a href="#arraignment">Arraignment &amp; Bail Hearings</a></li>
+    <li><a href="#prosecution">Prosecution Procedures</a></li>
+    <li><a href="#defense">Public Defender Procedures</a></li>
+    <li><a href="#trial">Trial Procedures</a></li>
+    <li><a href="#sentencing">Sentencing Guidelines</a></li>
+    <li><a href="#appeals">Appeals Process</a></li>
+    <li><a href="#plea">Plea Agreements</a></li>
+    <li><a href="#expungement">Expungement &amp; Record Sealing</a></li>
+    <li><a href="#ethics">Judicial Ethics &amp; Conduct</a></li>
+    <li><a href="#amendments">Amendments &amp; Revision History</a></li>
+  </ol>
+</nav>
+
+<!-- ==================== SECTION 1: MISSION STATEMENT ==================== -->
+<div class="section" id="mission">
+  <h2><span class="section-num">Section 01</span>Mission Statement</h2>
+
+  <div class="callout callout-info">
+    <p><strong>"To administer justice fairly, impartially, and in accordance with the Constitution and laws of San Andreas, ensuring equal protection under law for all citizens."</strong></p>
+  </div>
+
+  <p>The Department of Justice (DOJ) is the judicial branch of the San Andreas government, responsible for interpreting and applying the law, adjudicating criminal and civil cases, and ensuring that justice is administered without bias, favoritism, or corruption. The DOJ operates independently from law enforcement and the executive branch to maintain the separation of powers fundamental to a free democracy.</p>
+
+  <p>Judges, prosecutors, and public defenders within the DOJ are bound by the highest ethical standards. Decisions must be based solely on the law and the facts presented, never on political pressure, personal relationships, or financial incentives. The integrity of the judicial system depends on the trust of the people, and that trust must be earned every day through fair and transparent proceedings.</p>
+
+  <h3>1.1 Core Values</h3>
+  <ul>
+    <li><strong>Impartiality</strong> &mdash; Judges and prosecutors must be neutral arbiters. No favoritism toward law enforcement, defendants, or any party.</li>
+    <li><strong>Integrity</strong> &mdash; DOJ personnel must be above reproach. Corruption, bribery, or abuse of power will result in immediate termination and criminal prosecution.</li>
+    <li><strong>Fairness</strong> &mdash; Every defendant is entitled to a fair trial, competent legal representation, and the presumption of innocence until proven guilty beyond a reasonable doubt.</li>
+    <li><strong>Transparency</strong> &mdash; Court proceedings are open to the public unless sealed by judicial order. The people have a right to observe the administration of justice.</li>
+    <li><strong>Rule of Law</strong> &mdash; No person is above the law. Equal justice under law applies to police officers, politicians, and citizens alike.</li>
+  </ul>
+
+  <h3>1.2 Judicial Oath</h3>
+  <p>All DOJ personnel shall, upon appointment, take the following oath:</p>
+  <div class="callout callout-info">
+    <p><em>"I do solemnly swear to support and defend the Constitution of San Andreas, to administer justice without respect to persons, to faithfully discharge the duties of my office, and to uphold the rights of all persons to due process and equal protection under law. I will render judgment impartially and without bias, favor, or prejudice. So help me God."</em></p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 2: JUDICIAL STRUCTURE & HIERARCHY ==================== -->
+<div class="section" id="structure">
+  <h2><span class="section-num">Section 02</span>Judicial Structure &amp; Hierarchy</h2>
+
+  <h3>2.1 Court System</h3>
+  <p>San Andreas operates a three-tier court system:</p>
+  <ol>
+    <li><strong>District Court:</strong> Trial court. Handles misdemeanors, traffic violations, small civil claims, arraignments, bail hearings, and warrant applications.</li>
+    <li><strong>Circuit Court:</strong> Superior trial court. Handles felonies, major civil cases, and appeals from District Court.</li>
+    <li><strong>Supreme Court:</strong> Appellate court of last resort. Reviews constitutional issues, circuit court decisions, and establishes precedent. Chief Justice presides.</li>
+  </ol>
+
+  <h3>2.2 DOJ Personnel & Authority</h3>
+  <table>
+    <tr>
+      <th>Position</th>
+      <th>Authority</th>
+      <th>Pay Grade</th>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Chief Justice</span></td>
+      <td>Supreme Court. Final appellate authority. Constitutional review. Wiretap authorization. Appoints judges. Presides over impeachment trials. Establishes judicial policy.</td>
+      <td>Grade 7</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Senior Judge</span></td>
+      <td>Circuit Court. Felony trials. Death penalty cases. Major civil trials ($100k+). No-knock warrant authorization. Appeals from District Court.</td>
+      <td>Grade 6</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Judge</span></td>
+      <td>District Court. Misdemeanor trials. Arraignments. Bail hearings. Standard warrants. Small claims. Traffic court.</td>
+      <td>Grade 5</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">District Attorney</span></td>
+      <td>Chief prosecutor. Oversees all state prosecutions. Grand jury proceedings. Policy decisions on charging. Plea deal approval. Represents state in appeals.</td>
+      <td>Grade 4</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Assistant DA</span></td>
+      <td>Prosecutes cases on behalf of state. Presents evidence, questions witnesses, argues law. Negotiates plea deals (DA approval required for felonies).</td>
+      <td>Grade 3</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Public Defender</span></td>
+      <td>Court-appointed defense attorney for indigent defendants. Same authority as private defense counsel. Represents defendant's interests, files motions, cross-examines witnesses.</td>
+      <td>Grade 2</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Clerk of Court</span></td>
+      <td>Court administration. Case filing, scheduling, record keeping, jury summons, document management. No judicial authority.</td>
+      <td>Grade 1</td>
+    </tr>
+  </table>
+
+  <h3>2.3 Judicial Independence</h3>
+  <div class="callout callout-critical">
+    <p><strong>Judges are independent and may not be directed how to rule by the Governor, Legislature, or any other authority.</strong> Attempts to interfere with judicial decision-making constitute obstruction of justice.</p>
+  </div>
+  <ul>
+    <li>Judges are appointed by the Chief Justice (or Governor for Chief Justice appointment) and serve until retirement or impeachment.</li>
+    <li>Judges may be removed only through impeachment (malfeasance, corruption, gross neglect) or voluntary resignation.</li>
+    <li>Prosecutors and public defenders serve at the pleasure of the District Attorney or Chief Public Defender, respectively.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 3: WARRANT PROCEDURES ==================== -->
+<div class="section" id="warrants">
+  <h2><span class="section-num">Section 03</span>Warrant Procedures</h2>
+
+  <p>All warrants require judicial authorization based on probable cause. Warrantless searches/arrests are constitutional only in exigent circumstances (hot pursuit, immediate danger, consent).</p>
+
+  <h3>3.1 Search Warrants</h3>
+  <p><strong>Application Process:</strong></p>
+  <ol>
+    <li>LEO submits sworn affidavit to Judge detailing probable cause (specific facts, not conclusions).</li>
+    <li>Warrant must specify: (a) exact location to be searched, (b) specific items/evidence sought, (c) time limit for execution (typically 72 hours).</li>
+    <li>Judge reviews affidavit. If probable cause established, warrant signed. If deficient, denied (LEO may supplement and resubmit).</li>
+    <li>LEO executes warrant. Must knock and announce unless no-knock warrant issued.</li>
+    <li>LEO files return (inventory of seized items) within 24 hours of execution.</li>
+  </ol>
+
+  <h3>3.2 No-Knock Warrants</h3>
+  <div class="callout callout-critical">
+    <p><strong>No-knock warrants authorize forced entry without announcement.</strong> Authorized ONLY by Senior Judge+ and only when affidavit demonstrates: (1) evidence will be destroyed if knock-and-announce used, OR (2) officer safety requires element of surprise (armed suspects, fortified location).</p>
+  </div>
+  <ul>
+    <li>Standard for no-knock is higher than standard search warrant (must show specific risk).</li>
+    <li>No-knock warrants require SWAT execution. Patrol officers may NOT execute no-knock warrants.</li>
+    <li>Body cameras mandatory on all no-knock warrant executions.</li>
+  </ul>
+
+  <h3>3.3 Arrest Warrants</h3>
+  <ul>
+    <li>Issued when LEO has probable cause that suspect committed crime but suspect not in custody.</li>
+    <li>Warrant must identify suspect by name (or detailed description if name unknown) and specify charges.</li>
+    <li>Valid statewide until executed or quashed.</li>
+    <li>Suspects may turn themselves in. Bail set at arraignment.</li>
+  </ul>
+
+  <h3>3.4 Wiretap Orders</h3>
+  <p><strong>Authorization Level:</strong> Chief Justice ONLY.</p>
+  <p><strong>Requirements:</strong></p>
+  <ul>
+    <li>Application must demonstrate: (1) probable cause that target is committing specified crime, (2) normal investigative techniques have failed or are unlikely to succeed, (3) wiretap is necessary.</li>
+    <li>Order limited to 30 days. May be renewed with new showing of probable cause.</li>
+    <li>Only specified phone numbers/accounts may be monitored. Conversations must be minimized (no listening to unrelated calls).</li>
+    <li>Recordings are evidence. Must be preserved and disclosed to defense in discovery.</li>
+  </ul>
+
+  <h3>3.5 Emergency Warrants</h3>
+  <p>When exigent circumstances prevent obtaining written warrant (suspect destroying evidence, fleeing jurisdiction):</p>
+  <ol>
+    <li>LEO contacts on-call Judge via phone/radio.</li>
+    <li>Provides sworn statement of probable cause verbally.</li>
+    <li>Judge may authorize search/arrest verbally.</li>
+    <li>LEO must file written affidavit within 24 hours. Judge signs written warrant retroactively.</li>
+    <li>If LEO fails to file within 24 hours, any evidence seized is inadmissible (fruit of poisonous tree).</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 4: ARRAIGNMENT & BAIL HEARINGS ==================== -->
+<div class="section" id="arraignment">
+  <h2><span class="section-num">Section 04</span>Arraignment &amp; Bail Hearings</h2>
+
+  <div class="callout callout-critical">
+    <p><strong>All arrested persons must be arraigned within 24 hours of booking.</strong> Failure to arraign within 24 hours requires immediate release (speedy trial violation).</p>
+  </div>
+
+  <h3>4.1 Arraignment Procedure</h3>
+  <ol>
+    <li><strong>Defendant Brought to Court:</strong> In custody or released on own recognizance (OR).</li>
+    <li><strong>Charges Read:</strong> Judge reads formal charges. Defendant informed of maximum penalties.</li>
+    <li><strong>Rights Advisory:</strong> Judge informs defendant of rights: right to attorney, right to remain silent, right to trial, right to confront witnesses.</li>
+    <li><strong>Plea Entry:</strong> Defendant enters plea:
+      <ul>
+        <li><strong>Guilty:</strong> Case proceeds to sentencing. Judge may accept or reject plea (if coerced, not knowing/voluntary).</li>
+        <li><strong>Not Guilty:</strong> Case set for trial. Bail hearing proceeds.</li>
+        <li><strong>No Contest (Nolo Contendere):</strong> Same as guilty for sentencing purposes, but cannot be used as admission in civil case.</li>
+      </ul>
+    </li>
+    <li><strong>Bail Hearing:</strong> If not guilty plea entered, Judge determines bail (see 4.2).</li>
+    <li><strong>Pre-Trial Date Set:</strong> Discovery, motions, plea negotiations occur during pre-trial period.</li>
+  </ol>
+
+  <h3>4.2 Bail Determination</h3>
+  <p>Bail serves to ensure defendant's appearance at trial. Bail may NOT be used as punishment.</p>
+  <table>
+    <tr>
+      <th>Charge Level</th>
+      <th>Bail Range</th>
+      <th>Conditions</th>
+    </tr>
+    <tr>
+      <td><strong>Misdemeanor Class B</strong></td>
+      <td>$500 - $2,000</td>
+      <td>Own recognizance (OR) possible if no flight risk.</td>
+    </tr>
+    <tr>
+      <td><strong>Misdemeanor Class A</strong></td>
+      <td>$1,000 - $10,000</td>
+      <td>OR possible with conditions (check-ins, travel restrictions).</td>
+    </tr>
+    <tr>
+      <td><strong>Felony Class C (Non-Violent)</strong></td>
+      <td>$5,000 - $50,000</td>
+      <td>Surrender passport. Weekly check-ins with pre-trial services.</td>
+    </tr>
+    <tr>
+      <td><strong>Felony Class B (Non-Violent)</strong></td>
+      <td>$25,000 - $150,000</td>
+      <td>GPS ankle monitor. No contact with co-defendants or witnesses.</td>
+    </tr>
+    <tr>
+      <td><strong>Felony Class A (Violent)</strong></td>
+      <td>$100,000 - $1,000,000</td>
+      <td>GPS monitor, house arrest, 24/7 monitoring. Weapons prohibition.</td>
+    </tr>
+    <tr>
+      <td><strong>Capital Offense / Murder</strong></td>
+      <td>NO BAIL</td>
+      <td>Held without bail pending trial (flight risk + danger to community).</td>
+    </tr>
+  </table>
+
+  <h3>4.3 Bail Review & Modification</h3>
+  <ul>
+    <li>Defendant may petition for bail reduction if financial hardship prevents posting bail.</li>
+    <li>Prosecutor may petition for bail increase if defendant violates conditions (misses check-in, contacts witnesses, flees jurisdiction).</li>
+    <li>Bail revocation hearing held if defendant violates conditions. May result in remand to custody.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 5: PROSECUTION PROCEDURES ==================== -->
+<div class="section" id="prosecution">
+  <h2><span class="section-num">Section 05</span>Prosecution Procedures</h2>
+
+  <h3>5.1 Charging Decision</h3>
+  <p>District Attorney (or ADA) reviews LEO arrest reports and evidence to determine charges:</p>
+  <ul>
+    <li><strong>File Charges:</strong> If probable cause + sufficient evidence for conviction.</li>
+    <li><strong>Decline to Prosecute:</strong> If insufficient evidence, witness credibility issues, or justice does not require prosecution (e.g., trivial offense, restitution made).</li>
+    <li><strong>Diversion:</strong> Offer pre-trial diversion (drug treatment, community service) in lieu of prosecution for first-time non-violent offenders.</li>
+  </ul>
+
+  <h3>5.2 Burden of Proof</h3>
+  <div class="callout callout-critical">
+    <p><strong>Prosecution must prove guilt BEYOND A REASONABLE DOUBT.</strong> This is the highest burden of proof in law. If any reasonable doubt exists, jury must acquit.</p>
+  </div>
+  <ul>
+    <li>Defendant is presumed innocent. Prosecution has burden of proof. Defendant has NO obligation to prove innocence or testify.</li>
+    <li>Circumstantial evidence alone may support conviction IF it excludes every reasonable hypothesis of innocence.</li>
+    <li>Jury instructions will define reasonable doubt: "a doubt based on reason and common sense, not mere possibility or speculation."</li>
+  </ul>
+
+  <h3>5.3 Discovery Obligations</h3>
+  <p>Prosecution MUST disclose to defense:</p>
+  <ol>
+    <li><strong>All Evidence:</strong> Witness statements, police reports, forensic reports, video/audio recordings, physical evidence.</li>
+    <li><strong>Exculpatory Evidence (Brady Material):</strong> ANY evidence favorable to defendant (witness credibility issues, alternative suspects, inconsistent statements). Failure to disclose Brady material = prosecutorial misconduct = automatic reversal on appeal.</li>
+    <li><strong>Witness List:</strong> Names and addresses of all witnesses prosecution intends to call.</li>
+    <li><strong>Expert Reports:</strong> Any expert testimony (forensics, medical examiner, ballistics) must include written report disclosing qualifications, opinions, and basis.</li>
+  </ol>
+  <p><strong>Deadline:</strong> Discovery due 14 days before trial (sooner for felonies).</p>
+
+  <h3>5.4 Ethical Obligations</h3>
+  <div class="callout callout-warning">
+    <p><strong>Prosecutor's duty is to seek justice, not merely to convict.</strong> If evidence clearly establishes defendant's innocence, prosecutor must dismiss charges even if conviction is likely.</p>
+  </div>
+  <ul>
+    <li>No suppressing exculpatory evidence.</li>
+    <li>No knowing use of perjured testimony.</li>
+    <li>No inflammatory arguments to jury (appeals to prejudice, race, religion).</li>
+    <li>No commenting on defendant's silence (5th Amendment violation).</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 6: PUBLIC DEFENDER PROCEDURES ==================== -->
+<div class="section" id="defense">
+  <h2><span class="section-num">Section 06</span>Public Defender Procedures</h2>
+
+  <h3>6.1 Right to Counsel</h3>
+  <p>6th Amendment guarantees right to attorney in all criminal prosecutions. If defendant cannot afford attorney, court appoints Public Defender at no cost.</p>
+  <ul>
+    <li><strong>Indigency Determination:</strong> Defendant completes financial affidavit. If income below poverty line or incarcerated, automatically qualifies for PD.</li>
+    <li><strong>Conflict of Interest:</strong> If PD office has conflict (already representing co-defendant), court appoints private attorney (paid by state).</li>
+  </ul>
+
+  <h3>6.2 Defense Strategy</h3>
+  <p>Public Defender owes ZEALOUS representation to client, even if client is "obviously guilty":</p>
+  <ul>
+    <li><strong>Challenge Evidence:</strong> File motions to suppress illegally obtained evidence (warrantless search, coerced confession, illegal stop).</li>
+    <li><strong>Cross-Examine Witnesses:</strong> Impeach witness credibility, expose inconsistencies, challenge forensic evidence.</li>
+    <li><strong>Present Defense Case:</strong> Call defense witnesses, present alibi evidence, expert testimony challenging prosecution's experts.</li>
+    <li><strong>Negotiate Plea:</strong> If evidence strong, negotiate best possible plea deal (reduced charges, concurrent sentences, diversion).</li>
+  </ul>
+
+  <h3>6.3 Ethical Obligations</h3>
+  <ul>
+    <li><strong>Competent Representation:</strong> PD must be familiar with law, investigate case, interview witnesses, file appropriate motions.</li>
+    <li><strong>Client Confidentiality:</strong> Anything client tells PD is privileged and cannot be disclosed (even if client confesses guilt).</li>
+    <li><strong>No Perjury:</strong> If client insists on testifying falsely, PD must attempt to dissuade. If client persists, PD may withdraw (with court permission) or allow narrative testimony (client speaks without PD asking questions).</li>
+    <li><strong>No Conflict of Interest:</strong> PD cannot represent defendant if it would harm another client's interests.</li>
+  </ul>
+
+  <h3>6.4 Ineffective Assistance of Counsel</h3>
+  <p>Defendant entitled to EFFECTIVE counsel. If PD's performance falls below objective standard of reasonableness AND prejudices defendant, conviction may be overturned on appeal.</p>
+  <p>Examples of ineffective assistance:</p>
+  <ul>
+    <li>Failing to investigate obvious alibi witnesses</li>
+    <li>Failing to object to inadmissible evidence</li>
+    <li>Advising guilty plea without explaining consequences</li>
+    <li>Appearing in court intoxicated or unprepared</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 7: TRIAL PROCEDURES ==================== -->
+<div class="section" id="trial">
+  <h2><span class="section-num">Section 07</span>Trial Procedures</h2>
+
+  <h3>7.1 Jury vs Bench Trial</h3>
+  <ul>
+    <li><strong>Jury Trial:</strong> Default for all criminal cases. 6-person jury for misdemeanors, 12-person jury for felonies. Verdict must be unanimous.</li>
+    <li><strong>Bench Trial:</strong> Defendant may waive jury and have judge decide facts. Prosecutor must consent. Typically used for complex legal issues where jury may be confused.</li>
+  </ul>
+
+  <h3>7.2 Jury Selection (Voir Dire)</h3>
+  <ol>
+    <li><strong>Jury Pool:</strong> 20-30 prospective jurors summoned to courtroom.</li>
+    <li><strong>Questioning:</strong> Judge and attorneys question jurors about biases, pretrial knowledge, ability to be fair.</li>
+    <li><strong>Challenges for Cause:</strong> Unlimited. Attorney may remove juror if bias demonstrated (knows defendant, victim, has preconceived opinion of guilt).</li>
+    <li><strong>Peremptory Challenges:</strong> Limited (3 per side for misdemeanor, 6 for felony). May remove juror for any reason EXCEPT race/gender (Batson challenge).</li>
+    <li><strong>Seating:</strong> First 6 or 12 remaining jurors seated. Alternates selected (replace jurors who become ill/unable to serve).</li>
+  </ol>
+
+  <h3>7.3 Trial Sequence</h3>
+  <table>
+    <tr>
+      <th>Phase</th>
+      <th>Procedure</th>
+    </tr>
+    <tr>
+      <td><strong>1. Opening Statements</strong></td>
+      <td>Prosecution first (burden of proof). Defense second (may reserve until after prosecution case). NOT evidence — roadmap of what evidence will show.</td>
+    </tr>
+    <tr>
+      <td><strong>2. Prosecution Case-in-Chief</strong></td>
+      <td>Prosecution calls witnesses, introduces evidence (documents, photos, physical items). Defense cross-examines each witness.</td>
+    </tr>
+    <tr>
+      <td><strong>3. Motion for Directed Verdict</strong></td>
+      <td>After prosecution rests, defense may move for directed verdict (acquittal) if prosecution failed to meet burden. Rarely granted.</td>
+    </tr>
+    <tr>
+      <td><strong>4. Defense Case</strong></td>
+      <td>Defense calls witnesses (optional — defendant has no burden to present evidence). Prosecution cross-examines. Defendant may testify (or invoke 5th Amendment).</td>
+    </tr>
+    <tr>
+      <td><strong>5. Rebuttal</strong></td>
+      <td>Prosecution may present rebuttal evidence to refute defense case (limited to issues raised by defense).</td>
+    </tr>
+    <tr>
+      <td><strong>6. Closing Arguments</strong></td>
+      <td>Attorneys argue what evidence proves. Prosecution goes first and last (burden of proof). Defense argues reasonable doubt.</td>
+    </tr>
+    <tr>
+      <td><strong>7. Jury Instructions</strong></td>
+      <td>Judge instructs jury on law (elements of crime, burden of proof, reasonable doubt, deliberation process).</td>
+    </tr>
+    <tr>
+      <td><strong>8. Deliberation</strong></td>
+      <td>Jury deliberates in private. May request evidence re-read or clarification of law. Verdict must be unanimous. If deadlock (hung jury), mistrial declared.</td>
+    </tr>
+    <tr>
+      <td><strong>9. Verdict</strong></td>
+      <td>Jury returns to courtroom. Foreperson reads verdict: "Guilty" or "Not Guilty". Judge polls jury (each juror confirms agreement).</td>
+    </tr>
+  </table>
+
+  <h3>7.4 Rules of Evidence</h3>
+  <ul>
+    <li><strong>Relevance:</strong> Evidence must be relevant to issue in case. Irrelevant evidence excluded.</li>
+    <li><strong>Hearsay:</strong> Out-of-court statements offered to prove truth of matter asserted are generally inadmissible (exceptions: excited utterance, dying declaration, prior inconsistent statement, business records).</li>
+    <li><strong>Character Evidence:</strong> Prosecution may NOT introduce evidence of defendant's bad character or prior crimes (prejudicial). Exception: defendant opens door by claiming good character.</li>
+    <li><strong>Privilege:</strong> Attorney-client, doctor-patient, spousal privilege. Privileged communications cannot be compelled.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 8: SENTENCING GUIDELINES ==================== -->
+<div class="section" id="sentencing">
+  <h2><span class="section-num">Section 08</span>Sentencing Guidelines</h2>
+
+  <h3>8.1 Sentencing Hearing</h3>
+  <p>After guilty verdict or guilty plea, Judge holds sentencing hearing (may be same day or weeks later for PSI):</p>
+  <ol>
+    <li><strong>Pre-Sentence Investigation (PSI):</strong> Probation officer prepares report on defendant's criminal history, employment, family, substance abuse, remorse. Recommends sentence.</li>
+    <li><strong>Victim Impact Statements:</strong> Victims may address court, describing harm caused by crime.</li>
+    <li><strong>Defense Mitigation:</strong> Defense presents mitigating factors (first offense, cooperation, addiction, mental health, rehabilitation potential).</li>
+    <li><strong>Prosecution Argument:</strong> Prosecution argues for aggravating factors (prior record, violence, lack of remorse, vulnerable victim).</li>
+    <li><strong>Defendant Allocution:</strong> Defendant may address court (but cannot be cross-examined).</li>
+    <li><strong>Judge Imposes Sentence:</strong> Judge states reasoning and imposes sentence within statutory guidelines.</li>
+  </ol>
+
+  <h3>8.2 Sentencing Guidelines Table</h3>
+  <table>
+    <tr>
+      <th>Classification</th>
+      <th>Prison Time</th>
+      <th>Fine Range</th>
+      <th>Examples</th>
+    </tr>
+    <tr>
+      <td><strong>Misdemeanor Class B</strong></td>
+      <td>0 - 6 months</td>
+      <td>$100 - $1,000</td>
+      <td>Simple possession, disorderly conduct, trespassing</td>
+    </tr>
+    <tr>
+      <td><strong>Misdemeanor Class A</strong></td>
+      <td>0 - 12 months</td>
+      <td>$500 - $5,000</td>
+      <td>DUI (1st offense), assault (simple), theft <$500</td>
+    </tr>
+    <tr>
+      <td><strong>Felony Class C</strong></td>
+      <td>1 - 5 years</td>
+      <td>$2,500 - $25,000</td>
+      <td>Burglary, grand theft auto, drug distribution (small amount), forgery</td>
+    </tr>
+    <tr>
+      <td><strong>Felony Class B</strong></td>
+      <td>5 - 15 years</td>
+      <td>$10,000 - $100,000</td>
+      <td>Armed robbery, aggravated assault, drug trafficking, arson</td>
+    </tr>
+    <tr>
+      <td><strong>Felony Class A</strong></td>
+      <td>15 years - Life</td>
+      <td>$50,000 - $500,000</td>
+      <td>Murder 2nd degree, kidnapping, rape, major drug trafficking</td>
+    </tr>
+    <tr>
+      <td><strong>Capital Offense</strong></td>
+      <td>Life without parole</td>
+      <td>N/A</td>
+      <td>Murder 1st degree (premeditated), felony murder, terrorism</td>
+    </tr>
+  </table>
+
+  <h3>8.3 Sentencing Factors</h3>
+  <p><strong>Aggravating (increase sentence):</strong></p>
+  <ul>
+    <li>Extensive criminal history</li>
+    <li>Use of weapon or violence</li>
+    <li>Vulnerable victim (child, elderly, disabled)</li>
+    <li>Leadership role in criminal enterprise</li>
+    <li>Lack of remorse or acceptance of responsibility</li>
+  </ul>
+  <p><strong>Mitigating (decrease sentence):</strong></p>
+  <ul>
+    <li>First-time offender</li>
+    <li>Minor role in crime</li>
+    <li>Acceptance of responsibility (early guilty plea)</li>
+    <li>Cooperation with law enforcement</li>
+    <li>Mental health or substance abuse issues (with treatment plan)</li>
+    <li>Restitution made to victim</li>
+  </ul>
+
+  <h3>8.4 Alternative Sentencing</h3>
+  <ul>
+    <li><strong>Probation:</strong> Suspended prison sentence. Defendant supervised by probation officer. Conditions: no new crimes, drug tests, community service, restitution. Violation = prison.</li>
+    <li><strong>House Arrest:</strong> Electronic monitor. Defendant confined to residence except work/treatment. Often used for non-violent white-collar crimes.</li>
+    <li><strong>Drug Court:</strong> Treatment-based sentencing for addiction-driven crimes. Intensive supervision + rehab. Completion = charges dismissed.</li>
+    <li><strong>Community Service:</strong> Mandatory volunteer work (40-500 hours) in lieu of jail time.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 9: APPEALS PROCESS ==================== -->
+<div class="section" id="appeals">
+  <h2><span class="section-num">Section 09</span>Appeals Process</h2>
+
+  <h3>9.1 Right to Appeal</h3>
+  <p>Defendant has automatic right to appeal conviction to Circuit Court (from District Court) or Supreme Court (from Circuit Court). State may NOT appeal acquittal (double jeopardy).</p>
+
+  <h3>9.2 Grounds for Appeal</h3>
+  <p>Appeals based on legal errors, not factual disputes ("jury got it wrong" is NOT grounds for appeal):</p>
+  <ul>
+    <li>Insufficient evidence to support conviction</li>
+    <li>Jury instruction error (incorrect statement of law)</li>
+    <li>Evidentiary error (admission of inadmissible evidence, exclusion of admissible evidence)</li>
+    <li>Prosecutorial misconduct (Brady violation, improper argument)</li>
+    <li>Ineffective assistance of counsel</li>
+    <li>Sentencing error (sentence exceeds statutory maximum)</li>
+  </ul>
+
+  <h3>9.3 Appeal Procedure</h3>
+  <ol>
+    <li><strong>Notice of Appeal:</strong> Filed within 30 days of sentencing.</li>
+    <li><strong>Transcript Preparation:</strong> Court reporter prepares transcript of trial. Appellant (defendant) receives copy.</li>
+    <li><strong>Appellant's Brief:</strong> Written argument identifying errors and legal authority. Due 60 days after transcript.</li>
+    <li><strong>State's Response Brief:</strong> Prosecution argues errors were harmless or non-existent. Due 30 days after appellant's brief.</li>
+    <li><strong>Oral Argument:</strong> Each side gets 15-30 min to argue before appellate judges (no witnesses, no new evidence).</li>
+    <li><strong>Decision:</strong> Appellate court issues written opinion. May affirm (uphold), reverse (overturn), or remand (send back for new trial).</li>
+  </ol>
+
+  <h3>9.4 Standard of Review</h3>
+  <ul>
+    <li><strong>Factual Findings:</strong> "Clearly erroneous" standard (appellate court defers to jury/trial judge on facts).</li>
+    <li><strong>Legal Issues:</strong> "De novo" (appellate court reviews legal questions independently, no deference).</li>
+    <li><strong>Harmless Error:</strong> Even if error occurred, conviction affirmed if error was "harmless beyond reasonable doubt" (did not affect verdict).</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 10: PLEA AGREEMENTS ==================== -->
+<div class="section" id="plea">
+  <h2><span class="section-num">Section 10</span>Plea Agreements</h2>
+
+  <p>95% of criminal cases resolve via plea agreement. Defendant pleads guilty to reduced charge or receives sentencing concession in exchange for waiving trial.</p>
+
+  <h3>10.1 Types of Plea Deals</h3>
+  <ul>
+    <li><strong>Charge Bargain:</strong> Defendant pleads guilty to lesser charge (felony reduced to misdemeanor, Class A reduced to Class B).</li>
+    <li><strong>Sentence Bargain:</strong> Defendant pleads guilty; prosecution recommends specific sentence (lower end of guidelines, probation, concurrent not consecutive).</li>
+    <li><strong>Fact Bargain:</strong> Parties stipulate to certain facts (avoid aggravating factors like weapon use).</li>
+    <li><strong>Cooperation Agreement:</strong> Defendant provides "substantial assistance" (testifies against co-defendants, provides intelligence); receives significant sentence reduction.</li>
+  </ul>
+
+  <h3>10.2 Plea Colloquy (Court Acceptance)</h3>
+  <p>Judge must ensure plea is knowing, voluntary, and intelligent:</p>
+  <ol>
+    <li><strong>Rights Waiver:</strong> Defendant understands waiving right to trial, right to confront witnesses, privilege against self-incrimination.</li>
+    <li><strong>Nature of Charge:</strong> Defendant understands elements of crime and maximum penalty.</li>
+    <li><strong>Voluntariness:</strong> No threats, promises (other than plea agreement), or coercion.</li>
+    <li><strong>Factual Basis:</strong> Prosecution must proffer facts establishing guilt. Defendant must admit facts (or not contest them if Alford plea).</li>
+    <li><strong>Judge Acceptance:</strong> Judge may accept or reject plea. If rejected, defendant may withdraw plea and proceed to trial.</li>
+  </ol>
+
+  <h3>10.3 Approval Requirements</h3>
+  <table>
+    <tr>
+      <th>Plea Type</th>
+      <th>Approval Required</th>
+    </tr>
+    <tr>
+      <td>Misdemeanor plea</td>
+      <td>ADA may approve</td>
+    </tr>
+    <tr>
+      <td>Felony Class C plea</td>
+      <td>ADA may approve (DA notification)</td>
+    </tr>
+    <tr>
+      <td>Felony Class B plea</td>
+      <td>DA approval required</td>
+    </tr>
+    <tr>
+      <td>Felony Class A or violent felony plea</td>
+      <td>DA approval + Senior Judge approval</td>
+    </tr>
+    <tr>
+      <td>Cooperation agreement (substantial assistance)</td>
+      <td>DA approval + detailed written agreement</td>
+    </tr>
+  </table>
+
+  <h3>10.4 Plea Withdrawal</h3>
+  <p>Defendant may withdraw guilty plea before sentencing if:</p>
+  <ul>
+    <li>Plea was not knowing/voluntary (coerced, did not understand consequences)</li>
+    <li>Ineffective assistance of counsel (attorney misadvised defendant)</li>
+    <li>Prosecution breached plea agreement (recommended higher sentence than agreed)</li>
+  </ul>
+  <p>After sentencing, plea may be withdrawn only via appeal or post-conviction relief (very difficult).</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 11: EXPUNGEMENT & RECORD SEALING ==================== -->
+<div class="section" id="expungement">
+  <h2><span class="section-num">Section 11</span>Expungement &amp; Record Sealing</h2>
+
+  <p>Expungement erases criminal conviction from public record. Allows defendant to legally state "I have never been convicted of a crime."</p>
+
+  <h3>11.1 Eligibility</h3>
+  <table>
+    <tr>
+      <th>Conviction Type</th>
+      <th>Eligibility</th>
+      <th>Waiting Period</th>
+    </tr>
+    <tr>
+      <td><strong>Misdemeanor Class B</strong></td>
+      <td>Automatic eligibility</td>
+      <td>Sentence fully served + 6 months clean record</td>
+    </tr>
+    <tr>
+      <td><strong>Misdemeanor Class A</strong></td>
+      <td>Automatic eligibility</td>
+      <td>Sentence fully served + 1 year clean record</td>
+    </tr>
+    <tr>
+      <td><strong>Felony Class C (Non-Violent)</strong></td>
+      <td>Petition required (Judge discretion)</td>
+      <td>Sentence fully served + 3 years clean record</td>
+    </tr>
+    <tr>
+      <td><strong>Felony Class B (Non-Violent)</strong></td>
+      <td>Petition required (Judge discretion)</td>
+      <td>Sentence fully served + 5 years clean record</td>
+    </tr>
+    <tr>
+      <td><strong>Violent Felonies, Sex Crimes, Murder</strong></td>
+      <td>NOT eligible</td>
+      <td>N/A</td>
+    </tr>
+  </table>
+
+  <h3>11.2 Expungement Petition Process</h3>
+  <ol>
+    <li><strong>File Petition:</strong> Defendant files motion for expungement with court.</li>
+    <li><strong>Prosecution Response:</strong> DA may oppose if defendant has subsequent arrests, failed to pay restitution, or poses public safety risk.</li>
+    <li><strong>Hearing:</strong> Judge considers: nature of offense, rehabilitation, employment/education, community ties, restitution paid.</li>
+    <li><strong>Order:</strong> If granted, court orders all criminal justice agencies (police, courts, DOC) to seal records. Conviction removed from background checks.</li>
+  </ol>
+
+  <h3>11.3 Effect of Expungement</h3>
+  <ul>
+    <li><strong>Employment:</strong> Conviction does not appear on background checks. Defendant may legally answer "no" when asked if ever convicted.</li>
+    <li><strong>Exceptions:</strong> Expunged convictions still considered for: law enforcement jobs, firearms licensing, professional licensing (doctors, lawyers), and sentencing if re-convicted (prior record still counts).</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 12: JUDICIAL ETHICS & CONDUCT ==================== -->
+<div class="section" id="ethics">
+  <h2><span class="section-num">Section 12</span>Judicial Ethics &amp; Conduct</h2>
+
+  <h3>12.1 Code of Judicial Conduct</h3>
+  <p>All judges must adhere to the Code of Judicial Conduct:</p>
+  <ul>
+    <li><strong>Impartiality:</strong> Judges must be neutral. No favoritism toward prosecution or defense, rich or poor, police or defendant.</li>
+    <li><strong>Avoid Ex Parte Communication:</strong> Judges may NOT communicate with one party without other party present (no secret meetings with prosecution).</li>
+    <li><strong>Recusal:</strong> Judge must recuse (withdraw) from case if: personal bias, financial interest, family relationship with party, or prior involvement as attorney in the case.</li>
+    <li><strong>No Political Activity:</strong> Judges may not campaign for political candidates or participate in partisan politics (undermines impartiality).</li>
+    <li><strong>Financial Disclosure:</strong> Judges must publicly disclose financial interests annually (prevents conflicts of interest).</li>
+  </ul>
+
+  <h3>12.2 Prosecutorial Ethics</h3>
+  <ul>
+    <li><strong>Seek Justice, Not Convictions:</strong> Prosecutor's duty is justice. If evidence exonerates defendant, charges must be dismissed.</li>
+    <li><strong>Disclose Exculpatory Evidence:</strong> Brady material MUST be disclosed. Suppression = misconduct.</li>
+    <li><strong>No Frivolous Charges:</strong> Do NOT file charges without probable cause or to coerce plea.</li>
+    <li><strong>Respect Defense Rights:</strong> Do NOT interfere with defendant's right to counsel, right to remain silent.</li>
+  </ul>
+
+  <h3>12.3 Defense Attorney Ethics</h3>
+  <ul>
+    <li><strong>Zealous Advocacy:</strong> Defend client vigorously, even if guilty. Put state to its burden of proof.</li>
+    <li><strong>Confidentiality:</strong> Client communications privileged. Cannot disclose even after case ends.</li>
+    <li><strong>No Perjury:</strong> Cannot present testimony attorney knows is false.</li>
+    <li><strong>No Conflict of Interest:</strong> Cannot represent co-defendants if interests conflict.</li>
+  </ul>
+
+  <h3>12.4 Disciplinary Process</h3>
+  <p>Violations of ethical rules may result in:</p>
+  <ul>
+    <li><strong>Judges:</strong> Reprimand, suspension, or impeachment (removal from bench). Handled by Judicial Conduct Commission.</li>
+    <li><strong>Prosecutors/Defenders:</strong> Reprimand, suspension of law license, or disbarment. Handled by State Bar Association.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 13: AMENDMENTS & REVISION HISTORY ==================== -->
+<div class="section" id="amendments">
+  <h2><span class="section-num">Section 13</span>Amendments &amp; Revision History</h2>
+
+  <h3>13.1 Revision History</h3>
+  <table>
+    <tr>
+      <th>Version</th>
+      <th>Date</th>
+      <th>Summary of Changes</th>
+    </tr>
+    <tr>
+      <td><strong>1.0</strong></td>
+      <td>April 2024</td>
+      <td>Initial SOP adoption. Basic court procedures, warrant applications, sentencing guidelines.</td>
+    </tr>
+    <tr>
+      <td><strong>2.0</strong></td>
+      <td>November 2025</td>
+      <td>Expanded trial procedures, plea agreement protocols, expungement rules. Added judicial ethics section.</td>
+    </tr>
+    <tr>
+      <td><strong>3.0</strong></td>
+      <td>February 2026</td>
+      <td>Comprehensive rewrite. Added 7-rank structure. Expanded all sections with detailed legal procedures. Integrated ZSR branding. Added prosecution/defense procedures, appeals process, ethics standards.</td>
+    </tr>
+  </table>
+
+  <h3>13.2 Amendment Process</h3>
+  <ol>
+    <li><strong>Proposal:</strong> Any DOJ personnel may propose amendments via Chief Justice.</li>
+    <li><strong>Legal Review:</strong> Chief Justice reviews for constitutional compliance and legal soundness.</li>
+    <li><strong>Judicial Conference:</strong> Proposed changes discussed at quarterly judicial conference (all judges present).</li>
+    <li><strong>Approval:</strong> Chief Justice approves final amendments.</li>
+    <li><strong>Notification:</strong> All DOJ personnel notified via email and posted notice. Effective 30 days after notice (allows time for training).</li>
+  </ol>
+
+  <h3>13.3 Acknowledgment</h3>
+  <p>All DOJ personnel must read and acknowledge understanding of these Standard Operating Procedures. Violation of SOP may result in disciplinary action, suspension, or removal from office.</p>
+
+  <div class="callout callout-info">
+    <p><strong>I, [Name], acknowledge that I have read, understand, and will comply with the Department of Justice Standard Operating Procedures Version 3.0.</strong></p>
+    <p><strong>Signature:</strong> ___________________________ <strong>Date:</strong> ___________</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+</div> <!-- End Container -->
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-main">
+    ZO Syndicate RP | <strong>Department of Justice</strong> — San Andreas — Standard Operating Procedures
+  </div>
+  <div class="footer-sub">
+    Version 3.0 | February 2026 | CONFIDENTIAL — DOJ Personnel Only
+  </div>
+  <div class="footer-sub">
+    © 2026 Prozilli Entertainment — All Rights Reserved
+  </div>
+  <div class="footer-links">
+    <a href="https://prozilligaming.com/zo" target="_blank">prozilligaming.com/zo</a> •
+    <a href="https://discord.gg/HjpsGpC4R6" target="_blank">discord.gg/HjpsGpC4R6</a>
+  </div>
+</footer>
+
+</body>
+</html>

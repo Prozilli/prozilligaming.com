@@ -1,0 +1,1760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCSO Standard Operating Procedures v3.0 - ZO Syndicate RP</title>
+<style>
+  /* ===== RESET & BASE ===== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    line-height: 1.75;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ===== HEADER BANNER ===== */
+  .header-banner {
+    background: linear-gradient(135deg, #1a1510 0%, #0d0d0d 40%, #1a1510 100%);
+    border-bottom: 3px solid #8B7355;
+    padding: 40px 20px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #c4a265, #8B7355, #c4a265, transparent);
+  }
+  .header-banner::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(139,115,85,0.02) 2px,
+      rgba(139,115,85,0.02) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 6px;
+  }
+  .header-org span { color: #a30000; }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #8B7355;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    text-shadow: 0 2px 8px rgba(139,115,85,0.2);
+  }
+  .header-sub {
+    font-size: 14px;
+    color: #c4a265;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .header-server {
+    display: inline-block;
+    background: rgba(163,0,0,0.15);
+    border: 1px solid rgba(163,0,0,0.3);
+    color: #cc4444;
+    font-size: 12px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    padding: 6px 20px;
+    border-radius: 2px;
+  }
+  .header-meta {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #555;
+  }
+  .header-meta span {
+    margin: 0 10px;
+  }
+
+  /* ===== CLASSIFICATION STRIP ===== */
+  .classification-strip {
+    background: #a30000;
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    padding: 6px 0;
+    font-weight: 600;
+  }
+
+  /* ===== MAIN CONTENT ===== */
+  .content-wrapper {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 30px 24px 60px;
+  }
+
+  /* ===== TABLE OF CONTENTS ===== */
+  .toc {
+    background: #111;
+    border: 1px solid #1f1f1f;
+    border-left: 4px solid #8B7355;
+    border-radius: 4px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+  }
+  .toc-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #c4a265;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #1f1f1f;
+  }
+  .toc ol {
+    list-style: none;
+    counter-reset: toc-counter;
+    padding: 0;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    counter-increment: toc-counter;
+    margin-bottom: 6px;
+    break-inside: avoid;
+  }
+  .toc li::before {
+    content: counter(toc-counter, decimal-leading-zero) ".";
+    color: #8B7355;
+    font-weight: 600;
+    margin-right: 8px;
+    font-size: 13px;
+  }
+  .toc a {
+    color: #aaa;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #c4a265; }
+
+  /* ===== SECTION HEADINGS ===== */
+  .section {
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a1a;
+  }
+  .section:first-of-type {
+    margin-top: 0;
+    border-top: none;
+    padding-top: 0;
+  }
+  h2 {
+    color: #8B7355;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 1px;
+  }
+  h2 .section-num {
+    color: #c4a265;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    display: block;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+  }
+  h3 {
+    color: #c4a265;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 24px;
+    margin-bottom: 10px;
+  }
+  h4 {
+    color: #bbb;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 18px;
+    margin-bottom: 8px;
+  }
+
+  /* ===== TEXT ELEMENTS ===== */
+  p {
+    margin-bottom: 12px;
+    color: #bbb;
+  }
+  strong { color: #d9d9d9; }
+  ul, ol {
+    padding-left: 22px;
+    margin-bottom: 14px;
+  }
+  li {
+    margin-bottom: 5px;
+    color: #bbb;
+  }
+  li strong { color: #c4a265; }
+
+  /* ===== TABLES ===== */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 20px;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #1f1f1f;
+    padding: 10px 14px;
+    text-align: left;
+  }
+  th {
+    background: #151210;
+    color: #c4a265;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  td { background: #111; color: #bbb; }
+  tr:hover td { background: #161412; }
+
+  /* ===== CALLOUT BOXES ===== */
+  .callout {
+    border-radius: 4px;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .callout p { margin-bottom: 6px; }
+  .callout p:last-child { margin-bottom: 0; }
+
+  .callout-info {
+    background: rgba(139,115,85,0.08);
+    border-left: 4px solid #8B7355;
+    color: #bbb;
+  }
+  .callout-warning {
+    background: rgba(196,162,101,0.08);
+    border-left: 4px solid #c4a265;
+    color: #cbb;
+  }
+  .callout-critical {
+    background: rgba(163,0,0,0.08);
+    border-left: 4px solid #a30000;
+    color: #daa;
+  }
+  .callout-critical strong { color: #e55; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #8B7355; }
+
+  /* ===== CODE / RADIO ===== */
+  code {
+    background: #1a1714;
+    border: 1px solid #2a2420;
+    color: #c4a265;
+    padding: 2px 7px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+  }
+
+  /* ===== BADGE / TAG ===== */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+  .badge-rank { background: #8B7355; color: #fff; }
+  .badge-division { background: #2a2218; color: #c4a265; border: 1px solid #3a3228; }
+  .badge-required { background: #a30000; color: #fff; }
+
+  /* ===== ORDERED PROCEDURE LISTS ===== */
+  ol.procedure {
+    counter-reset: proc;
+    list-style: none;
+    padding-left: 0;
+  }
+  ol.procedure > li {
+    counter-increment: proc;
+    padding: 10px 14px 10px 50px;
+    position: relative;
+    background: #111;
+    border-left: 3px solid #1f1f1f;
+    margin-bottom: 4px;
+    transition: border-color 0.2s;
+  }
+  ol.procedure > li:hover { border-left-color: #8B7355; }
+  ol.procedure > li::before {
+    content: counter(proc);
+    position: absolute;
+    left: 14px;
+    top: 10px;
+    color: #8B7355;
+    font-weight: 700;
+    font-size: 14px;
+    width: 24px;
+    text-align: center;
+  }
+
+  /* ===== BACK TO TOP ===== */
+  .back-top {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #555;
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .back-top:hover { color: #8B7355; }
+
+  /* ===== FOOTER ===== */
+  .footer {
+    margin-top: 60px;
+    padding: 30px 0;
+    border-top: 2px solid #8B7355;
+    text-align: center;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer strong { color: #8B7355; }
+  .footer a { color: #c4a265; text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .footer .footer-confidential {
+    display: inline-block;
+    background: rgba(163,0,0,0.1);
+    border: 1px solid rgba(163,0,0,0.2);
+    color: #a30000;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 16px;
+    margin-top: 12px;
+    border-radius: 2px;
+  }
+
+  /* ===== HERO SECTION ===== */
+  .hero-section {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(139,115,85,0.4) 0%, rgba(13,13,13,0.9) 50%, rgba(139,115,85,0.4) 100%);
+    opacity: 0.85;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #c4a265;
+    text-transform: uppercase;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 700px) {
+    .hero-section { height: 200px; }
+    .hero-title { font-size: 32px; letter-spacing: 4px; }
+    .hero-subtitle { font-size: 14px; }
+    .header-dept { font-size: 22px; letter-spacing: 1px; }
+    .toc ol { columns: 1; }
+    .content-wrapper { padding: 20px 16px 40px; }
+    table { font-size: 13px; }
+    th, td { padding: 7px 10px; }
+  }
+</style>
+</head>
+<body id="top">
+
+<!-- ===== CLASSIFICATION STRIP ===== -->
+<div class="classification-strip">Confidential &mdash; Authorized LEO Personnel Only</div>
+
+<!-- ===== HEADER BANNER ===== -->
+<div class="header-banner">
+  <div class="header-org">A Division of <span>Prozilli Entertainment</span></div>
+  <div class="header-dept">Blaine County Sheriff's Office</div>
+  <div class="header-sub">Standard Operating Procedures</div>
+  <div class="header-server">ZO Syndicate RP</div>
+  <div class="header-meta">
+    <span>Version 3.0</span> |
+    <span>Effective: February 2026</span> |
+    <span>Classification: LEO Restricted</span>
+  </div>
+</div>
+
+<!-- Hero Image Section -->
+<div class="hero-section" style="background: radial-gradient(circle at center, rgba(139,115,85,0.3) 0%, transparent 70%), linear-gradient(135deg, #1a1510 0%, #0d0d0d 100%);">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Blaine County Sheriff's Office</h1>
+    <p class="hero-subtitle">Excellence • Integrity • Service</p>
+  </div>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="content-wrapper">
+
+<!-- ===== TABLE OF CONTENTS ===== -->
+<nav class="toc">
+  <div class="toc-title">Table of Contents</div>
+  <ol>
+    <li><a href="#mission">Mission Statement</a></li>
+    <li><a href="#chain">Chain of Command</a></li>
+    <li><a href="#jurisdiction">Jurisdiction</a></li>
+    <li><a href="#divisions">Divisions &amp; Specialized Units</a></li>
+    <li><a href="#uof">Use of Force</a></li>
+    <li><a href="#rural">Rural Operations</a></li>
+    <li><a href="#traffic">Traffic &amp; Highway Patrol</a></li>
+    <li><a href="#pursuit">Vehicle Pursuit Policy</a></li>
+    <li><a href="#arrest">Arrest &amp; Booking Procedures</a></li>
+    <li><a href="#sar">Search &amp; Rescue</a></li>
+    <li><a href="#marine">Marine &amp; Lake Patrol</a></li>
+    <li><a href="#k9">K-9 Operations</a></li>
+    <li><a href="#warrants">Warrant Service</a></li>
+    <li><a href="#jail">Jail &amp; Detention Operations</a></li>
+    <li><a href="#zones">Patrol Zones</a></li>
+    <li><a href="#radio">Radio Communications</a></li>
+    <li><a href="#reports">Report Writing</a></li>
+    <li><a href="#conduct">Officer Conduct &amp; Uniform Standards</a></li>
+    <li><a href="#discipline">Disciplinary Procedures</a></li>
+    <li><a href="#training">Training &amp; Certification</a></li>
+    <li><a href="#community">Community Relations</a></li>
+    <li><a href="#emergency">Emergency &amp; Crisis Response</a></li>
+    <li><a href="#interagency">Inter-Agency Cooperation</a></li>
+    <li><a href="#amendments">Amendments &amp; Revision History</a></li>
+  </ol>
+</nav>
+
+<!-- ==================== SECTION 1: MISSION STATEMENT ==================== -->
+<div class="section" id="mission">
+  <h2><span class="section-num">Section 01</span>Mission Statement</h2>
+
+  <div class="callout callout-info">
+    <p><strong>"To serve and protect the residents of Blaine County with honor, integrity, and dedication to rural law enforcement excellence."</strong></p>
+  </div>
+
+  <p>The Blaine County Sheriff's Office (BCSO) is the primary law enforcement agency responsible for public safety across the entirety of Blaine County. Unlike urban departments that operate within city limits, the BCSO serves a vast and geographically diverse jurisdiction encompassing deserts, mountains, forests, waterways, agricultural lands, and small rural communities.</p>
+
+  <p>Our deputies are expected to be self-reliant, resourceful, and capable of operating independently in remote areas where backup may be minutes or even tens of minutes away. The BCSO is not merely a police force; it is the backbone of public safety for every resident, rancher, farmer, business owner, and visitor in Blaine County.</p>
+
+  <h3>1.1 Core Values</h3>
+  <ul>
+    <li><strong>Integrity</strong> &mdash; Every action taken by a BCSO deputy must be lawful, ethical, and defensible. We do not cut corners.</li>
+    <li><strong>Courage</strong> &mdash; Rural law enforcement demands bravery. Deputies will face situations alone that urban officers handle with immediate backup.</li>
+    <li><strong>Service</strong> &mdash; The people of Blaine County are our neighbors. We treat every citizen with dignity and respect.</li>
+    <li><strong>Accountability</strong> &mdash; Every deputy is answerable for their actions. The badge is a privilege, not a right.</li>
+    <li><strong>Adaptability</strong> &mdash; From wildfire evacuations to livestock disputes, BCSO deputies must be ready for anything.</li>
+  </ul>
+
+  <h3>1.2 Oath of Office</h3>
+  <p>All sworn members of the Blaine County Sheriff's Office shall, upon appointment, take the following oath:</p>
+  <div class="callout callout-info">
+    <p><em>"I do solemnly swear to faithfully execute the duties of my office, to uphold the Constitution of San Andreas, to protect the lives and property of the citizens of Blaine County, and to enforce the law without fear or favor. So help me God."</em></p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 2: CHAIN OF COMMAND ==================== -->
+<div class="section" id="chain">
+  <h2><span class="section-num">Section 02</span>Chain of Command</h2>
+
+  <p>The BCSO operates under a strict chain of command. All personnel shall follow the lawful orders of their superiors. Bypassing the chain of command is only permitted in cases involving corruption, abuse of power, or imminent safety concerns, in which case the matter should be reported directly to the Sheriff or Internal Affairs.</p>
+
+  <h3>2.1 Rank Structure &amp; Authority</h3>
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Callsign</th>
+      <th>Authority</th>
+      <th>Pay Grade</th>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Sheriff</span></td>
+      <td><code>Sheriff-1</code></td>
+      <td>Full departmental authority. Policy decisions, hiring/termination, inter-agency agreements, budget allocation. Elected official.</td>
+      <td>Grade 8</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Undersheriff</span></td>
+      <td><code>Sheriff-2</code></td>
+      <td>Deputy department head. Assumes full authority in Sheriff's absence. Operations oversight, disciplinary authority, division management.</td>
+      <td>Grade 7</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Captain</span></td>
+      <td><code>King-1</code></td>
+      <td>Division commander. Authorized to approve no-knock warrants, high-risk operations, inter-agency task forces. Strategic planning.</td>
+      <td>Grade 6</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Lieutenant</span></td>
+      <td><code>King-2</code></td>
+      <td>Platoon leader. Scene command authority, shift supervision, PIT maneuver authorization, pursuit termination authority.</td>
+      <td>Grade 5</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Sergeant</span></td>
+      <td><code>Sgt-[Unit#]</code></td>
+      <td>Squad leader. Field training oversight, spike strip authorization, high-risk warrant lead, performance evaluations.</td>
+      <td>Grade 4</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Senior Deputy</span></td>
+      <td><code>[Unit#]</code></td>
+      <td>FTO certified. May lead patrol operations, mentor junior deputies, act as temporary squad lead in Sergeant's absence.</td>
+      <td>Grade 3</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Deputy</span></td>
+      <td><code>[Unit#]</code></td>
+      <td>Standard patrol duties. Full arrest authority, traffic enforcement, report writing, community engagement.</td>
+      <td>Grade 2</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-rank">Trainee</span></td>
+      <td><code>T-[Unit#]</code></td>
+      <td>Supervised patrol only. Must be accompanied by an FTO at all times. No solo responses. Limited arrest authority.</td>
+      <td>Grade 1</td>
+    </tr>
+  </table>
+
+  <h3>2.2 Succession of Command</h3>
+  <p>In the event the Sheriff is incapacitated, unavailable, or off-duty, command authority passes in the following order:</p>
+  <ol class="procedure">
+    <li>Undersheriff (Sheriff-2)</li>
+    <li>Captain (King-1)</li>
+    <li>Senior-most Lieutenant on duty</li>
+    <li>Senior-most Sergeant on duty</li>
+  </ol>
+
+  <div class="callout callout-warning">
+    <p><strong>Note:</strong> A deputy of any rank may assume temporary scene command if they are the first responder and no superior is on scene. Command shall be transferred immediately upon arrival of a higher-ranking officer.</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 3: JURISDICTION ==================== -->
+<div class="section" id="jurisdiction">
+  <h2><span class="section-num">Section 03</span>Jurisdiction</h2>
+
+  <p>The Blaine County Sheriff's Office holds primary law enforcement jurisdiction over all areas within the legal boundaries of Blaine County, State of San Andreas. This encompasses one of the largest geographic jurisdictions in the state.</p>
+
+  <h3>3.1 Primary Jurisdiction Areas</h3>
+  <table>
+    <tr>
+      <th>Area</th>
+      <th>Classification</th>
+      <th>Primary Patrol Zone</th>
+    </tr>
+    <tr><td>Sandy Shores</td><td>Township (unincorporated)</td><td>King-1</td></tr>
+    <tr><td>Grapeseed</td><td>Agricultural community</td><td>King-2</td></tr>
+    <tr><td>Paleto Bay</td><td>Coastal township</td><td>King-3</td></tr>
+    <tr><td>Mount Chiliad &amp; surrounding wilderness</td><td>State wilderness / county land</td><td>King-4</td></tr>
+    <tr><td>Alamo Sea &amp; tributaries</td><td>County waterway</td><td>King-1 / Marine Unit</td></tr>
+    <tr><td>Raton Canyon</td><td>Unincorporated county land</td><td>King-4</td></tr>
+    <tr><td>Cassidy Creek corridor</td><td>Unincorporated county land</td><td>King-4</td></tr>
+    <tr><td>Route 68 corridor</td><td>County highway</td><td>King-2</td></tr>
+    <tr><td>All unincorporated Blaine County areas</td><td>County jurisdiction</td><td>Varies</td></tr>
+  </table>
+
+  <h3>3.2 Shared Jurisdiction</h3>
+  <ul>
+    <li><strong>State Highways (Routes 1, 13, 15, 68)</strong> &mdash; Shared with San Andreas State Police (SASP). BCSO has concurrent authority for traffic enforcement, accident response, and criminal interdiction on these highways within Blaine County borders.</li>
+    <li><strong>State Parks &amp; Wilderness</strong> &mdash; BCSO serves as primary response agency. State park rangers have limited authority; BCSO handles all criminal matters.</li>
+  </ul>
+
+  <h3>3.3 Inter-Agency Boundaries</h3>
+  <div class="callout callout-info">
+    <p><strong>LSPD:</strong> The Los Santos Police Department's jurisdiction ends at the city limits of Los Santos. BCSO may not conduct independent operations within city limits without LSPD coordination, except in active pursuit or emergency circumstances.</p>
+    <p><strong>SASP:</strong> The San Andreas State Police has statewide jurisdiction but typically defers to BCSO within Blaine County. Highway operations are coordinated through mutual dispatch.</p>
+  </div>
+
+  <h3>3.4 Hot Pursuit Exception</h3>
+  <p>BCSO deputies in active pursuit of a fleeing suspect may cross jurisdictional boundaries (including into Los Santos city limits) without prior authorization. Upon crossing into another agency's jurisdiction, the pursuing deputy must immediately notify dispatch, who will relay to the receiving agency. The receiving agency may assume pursuit or provide assistance at their discretion.</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 4: DIVISIONS ==================== -->
+<div class="section" id="divisions">
+  <h2><span class="section-num">Section 04</span>Divisions &amp; Specialized Units</h2>
+
+  <p>The BCSO operates several specialized divisions in addition to standard patrol operations. Assignment to a specialized division requires meeting specific prerequisites and approval from the division commanding officer.</p>
+
+  <h3>4.1 Patrol Division</h3>
+  <p><span class="badge badge-division">All Personnel</span></p>
+  <p>The backbone of the BCSO. Patrol deputies are responsible for routine patrols, traffic enforcement, responding to calls for service, proactive policing, and community engagement. All deputies, regardless of specialty assignment, are expected to maintain patrol readiness and may be recalled to patrol duties during staffing shortages.</p>
+  <ul>
+    <li><strong>Commanding Officer:</strong> Lieutenant or above</li>
+    <li><strong>Requirements:</strong> Completion of BCSO Academy and FTO program</li>
+    <li><strong>Shift Structure:</strong> Three shifts (Day: 0600-1400, Swing: 1400-2200, Night: 2200-0600)</li>
+  </ul>
+
+  <h3>4.2 K-9 Unit</h3>
+  <p><span class="badge badge-division">Specialized</span></p>
+  <p>BCSO K-9 handlers and their partners provide tracking, narcotics detection, article searches, and suspect apprehension support to patrol and investigative operations across Blaine County.</p>
+  <ul>
+    <li><strong>Commanding Officer:</strong> Sergeant or above (K-9 certified)</li>
+    <li><strong>Requirements:</strong> Deputy rank or above, 3+ months patrol experience, clean disciplinary record, completion of K-9 handler academy (4-week course), physical fitness test</li>
+    <li><strong>Deployment:</strong> K-9 teams deploy on patrol and respond to K-9-specific callouts countywide</li>
+  </ul>
+
+  <h3>4.3 Search &amp; Rescue (SAR)</h3>
+  <p><span class="badge badge-division">Specialized</span></p>
+  <p>The BCSO SAR team is the primary search and rescue authority for Blaine County. Given the county's vast wilderness, mountain terrain, and waterways, SAR operations are a critical BCSO function.</p>
+  <ul>
+    <li><strong>Commanding Officer:</strong> Sergeant or above (SAR certified)</li>
+    <li><strong>Requirements:</strong> Deputy rank or above, 2+ months patrol, wilderness first aid certification, off-road driving certification, physical fitness test, land navigation proficiency</li>
+    <li><strong>Activation:</strong> Any deputy may initiate a SAR callout; formal activation requires Sergeant+ authorization</li>
+  </ul>
+
+  <h3>4.4 Marine &amp; Lake Patrol</h3>
+  <p><span class="badge badge-division">Specialized</span></p>
+  <p>Responsible for law enforcement and safety operations on the Alamo Sea, rivers, and all waterways within Blaine County.</p>
+  <ul>
+    <li><strong>Commanding Officer:</strong> Sergeant or above (Marine certified)</li>
+    <li><strong>Requirements:</strong> Deputy rank or above, watercraft operation certification, swim proficiency test, basic water rescue certification</li>
+    <li><strong>Assets:</strong> Patrol boats, personal watercraft (PWC), shore-based observation equipment</li>
+  </ul>
+
+  <h3>4.5 Detention Division</h3>
+  <p><span class="badge badge-division">Specialized</span></p>
+  <p>Operates and staffs the Blaine County Detention Center in Sandy Shores. Responsible for all jail operations including intake, housing, transport, and inmate welfare.</p>
+  <ul>
+    <li><strong>Commanding Officer:</strong> Lieutenant or above</li>
+    <li><strong>Requirements:</strong> Deputy rank or above, detention officer certification, conflict de-escalation training</li>
+    <li><strong>Staffing:</strong> Minimum two detention deputies on duty at all times when inmates are housed</li>
+  </ul>
+
+  <h3>4.6 Investigations Division</h3>
+  <p><span class="badge badge-division">Specialized</span></p>
+  <p>Handles complex criminal investigations, cold cases, narcotics operations, and inter-agency task force participation. Detectives operate in plain clothes with unmarked vehicles.</p>
+  <ul>
+    <li><strong>Commanding Officer:</strong> Lieutenant or above</li>
+    <li><strong>Requirements:</strong> Senior Deputy rank or above, 6+ months patrol, investigator certification, interview/interrogation training, evidence handling certification</li>
+    <li><strong>Caseload:</strong> All felony-level cases, complex misdemeanor cases, internal referrals from patrol, multi-agency task forces</li>
+  </ul>
+
+  <div class="callout callout-warning">
+    <p><strong>Dual Assignment:</strong> Deputies assigned to a specialized division remain under patrol command and may be recalled to patrol duties during critical incidents, staffing shortages, or county-wide emergencies at the discretion of the on-duty Sergeant or above.</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 5: USE OF FORCE ==================== -->
+<div class="section" id="uof">
+  <h2><span class="section-num">Section 05</span>Use of Force</h2>
+
+  <div class="callout callout-critical">
+    <p><strong>CRITICAL POLICY:</strong> Deputies must use the <em>minimum force necessary</em> to resolve a situation. Excessive force will not be tolerated and will result in disciplinary action up to and including termination and criminal referral.</p>
+  </div>
+
+  <h3>5.1 Force Continuum</h3>
+  <p>The BCSO follows the standardized San Andreas Use of Force Continuum, consistent with the LSPD and SASP policies. Deputies must escalate and de-escalate proportionally to the threat presented.</p>
+
+  <table>
+    <tr>
+      <th>Level</th>
+      <th>Force Type</th>
+      <th>Appropriate Situation</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><strong>Officer Presence</strong></td>
+      <td>Uniformed deputy, marked vehicle, visible badge. Mere presence deters criminal activity.</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>Verbal Commands</strong></td>
+      <td>Clear, lawful verbal orders. De-escalation dialogue. Warnings of escalation.</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><strong>Soft Hands / Control Techniques</strong></td>
+      <td>Escort holds, handcuffing compliant subjects, controlled takedowns of passively resistant subjects.</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><strong>Hard Hands / Physical Force</strong></td>
+      <td>Takedowns, strikes, tackling actively resistant or fleeing subjects.</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>Less-Lethal Weapons</strong></td>
+      <td>Taser, pepper spray, beanbag rounds. Subject actively resisting or posing threat of bodily harm.</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><strong>Lethal Force</strong></td>
+      <td>Firearm discharge. <strong>Only</strong> when a subject poses an immediate threat of death or serious bodily harm.</td>
+    </tr>
+  </table>
+
+  <h3>5.2 Lethal Force Authorization</h3>
+  <p>Lethal force is authorized only when:</p>
+  <ul>
+    <li>A subject poses an <strong>immediate, credible threat</strong> of death or serious bodily injury to an officer or any other person</li>
+    <li>A subject is <strong>armed and actively threatening</strong> to use a weapon</li>
+    <li>A <strong>fleeing felon</strong> has committed a violent crime and poses a continued, articulable danger to the public if not immediately apprehended</li>
+  </ul>
+
+  <h3>5.3 BCSO Rural Considerations</h3>
+  <p>The rural nature of Blaine County creates unique use-of-force scenarios not commonly encountered in urban departments:</p>
+  <ul>
+    <li><strong>Remote Locations:</strong> Deputies may be forced to resolve situations without backup for extended periods. This does not authorize excessive force &mdash; it demands heightened situational awareness, tactical patience, and a willingness to disengage and wait for backup when tactically appropriate.</li>
+    <li><strong>Armed Landowners:</strong> Many Blaine County residents lawfully carry firearms on their property. The mere presence of a firearm on a ranch or farm call does not constitute a threat. Deputies must assess the totality of circumstances. A rancher with a rifle on their own land is not the same as an armed suspect in a traffic stop.</li>
+    <li><strong>Wildlife Encounters:</strong> Deputies may discharge a firearm to protect life from aggressive wildlife (e.g., mountain lions, bears) when no other option exists. Such discharges must be immediately reported to dispatch and documented in a Use of Force report.</li>
+    <li><strong>Isolated Traffic Stops:</strong> On remote county roads, deputies should wait for backup before approaching high-risk stops when feasible. Use of the patrol vehicle as cover is emphasized.</li>
+  </ul>
+
+  <h3>5.4 Reporting Requirements</h3>
+  <ul>
+    <li><strong>Levels 1-3:</strong> Standard documentation in incident report</li>
+    <li><strong>Levels 4-5:</strong> Dedicated Use of Force Report filed within 2 hours. Supervisor notification on scene.</li>
+    <li><strong>Level 6 (Lethal):</strong> Immediate radio notification. Scene preserved. Supervisor responds to scene. Use of Force Report, IA review, mandatory administrative leave pending review. Captain+ briefed within 1 hour.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 6: RURAL OPERATIONS ==================== -->
+<div class="section" id="rural">
+  <h2><span class="section-num">Section 06</span>Rural Operations</h2>
+
+  <p>Rural law enforcement is the defining characteristic of the BCSO. Deputies must be proficient in operating across vast, varied terrain with limited infrastructure and extended response times. This section outlines policies and procedures specific to rural operations in Blaine County.</p>
+
+  <h3>6.1 Extended Response Times</h3>
+  <ul>
+    <li>Average response time in Sandy Shores: 3-5 minutes. Remote mountain/desert areas: 10-20+ minutes.</li>
+    <li>Deputies must radio their position when leaving paved roads or entering areas with poor radio coverage.</li>
+    <li>When responding Code 3 (lights and sirens) on unpaved roads, deputies must reduce speed to account for terrain hazards and limited visibility.</li>
+    <li>Dispatch shall maintain a real-time unit tracker. Deputies on foot in remote areas must check in every 15 minutes.</li>
+  </ul>
+
+  <h3>6.2 Off-Road Patrolling</h3>
+  <ul>
+    <li>Deputies assigned to King-4 (mountain/canyon zones) are authorized to use off-road vehicles (SUVs, ATVs) for patrol operations.</li>
+    <li>Off-road vehicle authorization requires completion of the BCSO Off-Road Driving Certification course.</li>
+    <li>Speed limits on off-road patrol: 40 mph maximum on dirt roads, 25 mph on trails, 15 mph on unimproved terrain.</li>
+    <li>All off-road patrols must carry: first aid kit, fire extinguisher, tow strap, emergency beacon, water (2 gallons minimum).</li>
+  </ul>
+
+  <h3>6.3 Farm &amp; Ranch Calls</h3>
+  <div class="callout callout-warning">
+    <p><strong>Approach Protocol:</strong> When responding to a call on private agricultural property, deputies must approach via the main driveway or access road. Do not enter through fields, pastures, or locked gates without permission or exigent circumstances. Many ranches have working dogs that may approach vehicles aggressively &mdash; remain in the vehicle until the property owner is contacted.</p>
+  </div>
+  <ul>
+    <li>Trespassing complaints on ranch land are among the most common calls. Document property boundaries, witness statements, and any posted signage.</li>
+    <li>Livestock disputes (straying animals, property damage by animals) are civil matters unless intentional destruction of property is suspected. Deputies should mediate and refer to county animal control.</li>
+    <li>Poaching and illegal hunting reports should be documented and referred to Fish &amp; Wildlife, with BCSO providing scene security if the suspect is still in the area.</li>
+  </ul>
+
+  <h3>6.4 Terrain Awareness</h3>
+  <p>Blaine County terrain includes:</p>
+  <ul>
+    <li><strong>Desert (Sandy Shores, Alamo Sea basin):</strong> Extreme heat, flash flood risk in washes, limited shade. Deputies must carry extra water.</li>
+    <li><strong>Mountain (Mt. Chiliad, Raton Canyon):</strong> Steep grades, narrow roads, rockfall hazards, fog. Approach cliff-side calls with extreme caution.</li>
+    <li><strong>Forest (Paleto Forest):</strong> Limited visibility, dense undergrowth, fire risk. Foot pursuits in forest terrain are high-risk &mdash; containment is preferred over pursuit.</li>
+    <li><strong>Agricultural (Grapeseed):</strong> Irrigation ditches, heavy equipment on roads, seasonal crop dust that limits visibility.</li>
+  </ul>
+
+  <h3>6.5 Wildlife Encounters</h3>
+  <ul>
+    <li>Do not engage wildlife unless it poses an immediate threat to human life.</li>
+    <li>For injured animals on roadways, contact county animal control. If the animal is a danger to traffic and animal control is unavailable, a Sergeant may authorize humane dispatch.</li>
+    <li>Mountain lion, bear, or other predator sightings near residential areas must be reported to dispatch for a county-wide advisory.</li>
+  </ul>
+
+  <h3>6.6 Wildfire Assistance</h3>
+  <ul>
+    <li>BCSO's primary role during wildfire events is evacuation, traffic control, and perimeter security.</li>
+    <li>Deputies are <strong>not</strong> firefighters. Do not engage in fire suppression unless lives are in immediate danger and fire services have not arrived.</li>
+    <li>Mandatory evacuation orders require Sheriff+ authorization. Deputies may issue voluntary evacuation advisories independently.</li>
+    <li>All wildfire operations fall under Incident Command System (ICS) protocol &mdash; see Section 22.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 7: TRAFFIC & HIGHWAY ==================== -->
+<div class="section" id="traffic">
+  <h2><span class="section-num">Section 07</span>Traffic &amp; Highway Patrol</h2>
+
+  <h3>7.1 Highway Authority</h3>
+  <p>BCSO shares highway enforcement authority with SASP on the following routes within Blaine County:</p>
+  <table>
+    <tr>
+      <th>Route</th>
+      <th>Coverage Area</th>
+      <th>Primary Agency</th>
+    </tr>
+    <tr><td>Route 1 (Great Ocean Highway)</td><td>Paleto Bay coastline to county border</td><td>SASP / BCSO concurrent</td></tr>
+    <tr><td>Route 13</td><td>Paleto Bay to Grapeseed junction</td><td>SASP / BCSO concurrent</td></tr>
+    <tr><td>Route 15 (Senora Freeway)</td><td>Sandy Shores to county border south</td><td>SASP / BCSO concurrent</td></tr>
+    <tr><td>Route 68</td><td>Harmony to Sandy Shores corridor</td><td>BCSO primary / SASP assist</td></tr>
+  </table>
+  <p>On all county roads not listed above, BCSO has sole traffic enforcement authority.</p>
+
+  <h3>7.2 Traffic Stop Procedures</h3>
+  <ol class="procedure">
+    <li>Activate emergency lights. If the vehicle does not yield within 15 seconds, activate siren.</li>
+    <li>Radio dispatch with: location, direction of travel, vehicle description (make, model, color), plate number, number of visible occupants.</li>
+    <li>Select a safe location for the stop. On rural roads, direct the vehicle to a wide shoulder or turnout. Avoid stops on blind curves, hilltops, or narrow bridges.</li>
+    <li>Approach from the driver's side (standard stop) or passenger side (high-risk/felony stop). Use the vehicle as cover on highway stops.</li>
+    <li>Request license, registration, and insurance. Run plates and identification through MDT.</li>
+    <li>For felony stops: draw weapon from cover, order occupants out one at a time, prone position, handcuff before approach.</li>
+  </ol>
+
+  <h3>7.3 DUI Checkpoints</h3>
+  <ul>
+    <li><strong>Authorization:</strong> Sheriff or above must approve all DUI checkpoint operations</li>
+    <li><strong>Staffing:</strong> Minimum 3 deputies, 1 supervisor on scene</li>
+    <li><strong>Location:</strong> Must be pre-approved, well-lit, with adequate signage visible at least 200 feet in advance</li>
+    <li><strong>Pattern:</strong> Every vehicle or a pre-determined systematic pattern (e.g., every 3rd vehicle). Random selection is not permitted.</li>
+    <li><strong>Duration:</strong> Maximum 4 hours per checkpoint operation</li>
+  </ul>
+
+  <h3>7.4 Farm Vehicle Exemptions</h3>
+  <div class="callout callout-info">
+    <p><strong>Policy:</strong> Agricultural vehicles (tractors, combines, hay haulers) have right-of-way on county roads and are exempt from standard speed minimums. Deputies shall not cite farm equipment for slow travel on county roads. Operators of farm equipment are not required to produce a standard driver's license but must provide identification upon request.</p>
+  </div>
+
+  <h3>7.5 Accident Response</h3>
+  <ol class="procedure">
+    <li>Respond to scene. Secure the area with flares/cones. Request EMS if injuries are reported or suspected.</li>
+    <li>Assess for injuries. Render first aid if EMS has not arrived and injuries are life-threatening.</li>
+    <li>Separate involved parties. Collect statements independently.</li>
+    <li>Document scene: photograph vehicle positions, damage, road conditions, weather, skid marks, debris field.</li>
+    <li>Complete Accident Report in MDT. Issue citations if traffic violations contributed to the accident.</li>
+    <li>Arrange tow service for disabled vehicles. Do not release vehicles involved in felony-level accidents (DUI with injury, vehicular manslaughter) &mdash; these must be impounded as evidence.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 8: VEHICLE PURSUIT ==================== -->
+<div class="section" id="pursuit">
+  <h2><span class="section-num">Section 08</span>Vehicle Pursuit Policy</h2>
+
+  <div class="callout callout-critical">
+    <p><strong>Pursuits may only be initiated for violent felonies or when the fleeing subject poses an immediate danger to the public.</strong> Traffic violations, misdemeanors, and non-violent offenses do not justify vehicle pursuit. A pursuit is inherently dangerous to deputies, the suspect, and the public.</p>
+  </div>
+
+  <h3>8.1 Initiation Criteria</h3>
+  <ul>
+    <li>The subject has committed or is reasonably suspected of committing a <strong>violent felony</strong></li>
+    <li>The subject poses an <strong>immediate threat</strong> to public safety if not apprehended</li>
+    <li>The deputy has reasonable belief that pursuit can be conducted without excessive risk to bystanders</li>
+    <li>Supervisor must be notified immediately upon initiation</li>
+  </ul>
+
+  <h3>8.2 Pursuit Roles</h3>
+  <table>
+    <tr>
+      <th>Role</th>
+      <th>Max Units</th>
+      <th>Responsibility</th>
+    </tr>
+    <tr><td>Primary Unit</td><td>1</td><td>Initiating deputy. Calls out direction, speed, road conditions, suspect behavior.</td></tr>
+    <tr><td>Secondary Unit</td><td>1</td><td>Follows primary at safe distance. Assumes primary if lead unit must disengage.</td></tr>
+    <tr><td>Tertiary Units</td><td>1-2</td><td>Parallel routes for containment. Spike strip deployment positions.</td></tr>
+    <tr><td>Supervisor</td><td>1</td><td>Monitors radio, authorizes tactics (PIT, spikes), may order termination at any time.</td></tr>
+    <tr><td>Air Support</td><td>1</td><td>SASP helicopter if available. Provides aerial tracking, allowing ground units to fall back.</td></tr>
+  </table>
+
+  <h3>8.3 Rural Pursuit Considerations</h3>
+  <ul>
+    <li><strong>Off-Road Terrain:</strong> If a suspect leaves paved roads, the primary unit must assess whether the terrain is safe for continued pursuit. Unpaved roads, trails, and open desert may conceal hazards (ditches, rocks, drop-offs). The pursuing deputy has authority to terminate if terrain becomes unsafe.</li>
+    <li><strong>Livestock &amp; Pedestrians:</strong> Immediately terminate pursuit if livestock or pedestrians are on or near the roadway ahead.</li>
+    <li><strong>Single-Lane Roads:</strong> On narrow county roads where oncoming traffic cannot see the pursuit, the supervisor should consider termination.</li>
+    <li><strong>Mountain Roads:</strong> Pursuits on Mt. Chiliad switchbacks, Raton Canyon roads, or other steep terrain are extremely high-risk. Containment strategies are strongly preferred over direct pursuit.</li>
+  </ul>
+
+  <h3>8.4 Authorized Tactics</h3>
+  <ul>
+    <li><strong>Spike Strips:</strong> Sergeant+ authorization. Deploy on straight sections with clear sight lines. Deploying deputy must have an escape route. Remove immediately after deployment.</li>
+    <li><strong>PIT Maneuver:</strong> Lieutenant+ authorization. Only at speeds below 50 mph. Not authorized on wet/icy roads, bridges, or near pedestrians. Never on motorcycles.</li>
+    <li><strong>Boxing / Rolling Roadblock:</strong> Sergeant+ authorization. Minimum 3 units. Only on multi-lane roads at low speed.</li>
+  </ul>
+
+  <h3>8.5 Mandatory Termination</h3>
+  <p>A pursuit <strong>must</strong> be terminated when:</p>
+  <ul>
+    <li>The supervisor orders termination</li>
+    <li>The risk to the public clearly outweighs the need for apprehension</li>
+    <li>The pursuing deputy loses visual contact and cannot reacquire within 30 seconds</li>
+    <li>The pursuit enters a school zone, hospital zone, or densely populated pedestrian area</li>
+    <li>Vehicle mechanical failure or damage compromises the patrol vehicle's safety</li>
+    <li>Weather or road conditions make pursuit unreasonably dangerous</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 9: ARREST & BOOKING ==================== -->
+<div class="section" id="arrest">
+  <h2><span class="section-num">Section 09</span>Arrest &amp; Booking Procedures</h2>
+
+  <h3>9.1 Arrest Authority</h3>
+  <p>All sworn BCSO deputies (Deputy rank and above) have full arrest authority within Blaine County for any criminal offense. Trainees may effect arrests only under direct supervision of their FTO.</p>
+
+  <h3>9.2 Arrest Procedure</h3>
+  <ol class="procedure">
+    <li>Inform the subject they are under arrest and state the charge(s): <code>"You are under arrest for [specific charge(s)]."</code></li>
+    <li>Secure the subject in handcuffs. Search incident to arrest for weapons, contraband, and evidence.</li>
+    <li>Read Miranda Rights before any custodial interrogation: <code>"You have the right to remain silent. Anything you say can and will be used against you in a court of law. You have the right to an attorney. If you cannot afford an attorney, one will be provided for you. Do you understand these rights?"</code></li>
+    <li>Document the suspect's response to Miranda in your report (acknowledged, invoked right to silence, requested attorney).</li>
+    <li>Transport the arrested subject to the appropriate facility (see 9.3).</li>
+    <li>Complete all MDT documentation: charges, probable cause narrative, evidence inventory, arresting officer, date/time, Miranda acknowledgment.</li>
+  </ol>
+
+  <h3>9.3 Transport &amp; Processing Locations</h3>
+  <table>
+    <tr>
+      <th>Offense Level</th>
+      <th>Processing Location</th>
+      <th>Notes</th>
+    </tr>
+    <tr><td>Misdemeanor</td><td>Sandy Shores Sheriff's Station</td><td>Cite and release authorized for non-violent misdemeanors at deputy's discretion</td></tr>
+    <tr><td>Felony</td><td>Blaine County Detention Center (Sandy Shores)</td><td>Full booking, detention, arraignment scheduling</td></tr>
+    <tr><td>High-profile / Multi-agency</td><td>Blaine County Detention Center or SASP facility per agreement</td><td>Coordinate with lead investigating agency</td></tr>
+  </table>
+
+  <h3>9.4 Transport Protocols</h3>
+  <ul>
+    <li>Arrested subjects ride in the rear of the patrol vehicle, seat-belted at all times.</li>
+    <li>Deputy must search the rear seat area before and after every transport.</li>
+    <li>Female subjects transported by a male deputy: deputy must radio dispatch with starting mileage, destination, and ending mileage. Body camera must remain active for the entire transport.</li>
+    <li>Subjects exhibiting medical distress during transport: divert to nearest EMS or request EMS to your location immediately.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 10: SEARCH & RESCUE ==================== -->
+<div class="section" id="sar">
+  <h2><span class="section-num">Section 10</span>Search &amp; Rescue Operations</h2>
+
+  <div class="callout callout-info">
+    <p><strong>The BCSO is the lead Search &amp; Rescue agency for all of Blaine County.</strong> Given the county's vast wilderness, mountainous terrain, waterways, and desert, SAR operations are a core BCSO competency. All SAR-certified deputies must maintain readiness for callout at all times.</p>
+  </div>
+
+  <h3>10.1 SAR Activation</h3>
+  <ol class="procedure">
+    <li>Report of missing, lost, or endangered person received by dispatch or patrol.</li>
+    <li>Initial responding deputy gathers: subject description, last known location, time last seen, medical conditions, equipment carried, experience level (hiker/hunter/child/elderly).</li>
+    <li>On-duty Sergeant (or above) is notified immediately. Sergeant evaluates and formally activates SAR if warranted.</li>
+    <li>SAR-certified deputies are recalled/paged. Off-duty SAR personnel may be called in for large-scale operations.</li>
+    <li>Incident Commander (Sergeant+ or SAR team lead) establishes Command Post at the nearest accessible road point to the search area.</li>
+  </ol>
+
+  <h3>10.2 Search Patterns</h3>
+  <table>
+    <tr>
+      <th>Pattern</th>
+      <th>Terrain</th>
+      <th>Description</th>
+    </tr>
+    <tr><td>Grid Search</td><td>Flat, open (desert, fields)</td><td>Systematic lane-by-lane coverage. Teams walk parallel lines at 10-20 foot intervals.</td></tr>
+    <tr><td>Contour Search</td><td>Mountainous, hilly</td><td>Follow elevation contour lines. Effective on slopes where subjects tend to follow gravity.</td></tr>
+    <tr><td>Trail/Route Search</td><td>Forested, trails</td><td>Follow known trails and likely travel routes from last known position.</td></tr>
+    <tr><td>Hasty Search</td><td>Any (time-critical)</td><td>Rapid check of high-probability areas: roads, trails, water sources, shelters. Used first.</td></tr>
+    <tr><td>Waterway Search</td><td>Rivers, lake shore</td><td>Check downstream from last known position. Coordinate with Marine unit.</td></tr>
+  </table>
+
+  <h3>10.3 Command Post Operations</h3>
+  <ul>
+    <li>Establish at a road-accessible location with radio coverage to the search area</li>
+    <li>Maintain a sign-in/sign-out log for all search personnel</li>
+    <li>Map the search area with grid assignments for each team</li>
+    <li>EMS staging: request at least one ambulance on standby at the Command Post</li>
+    <li>Family liaison: assign one deputy to maintain contact with the missing person's family (if present)</li>
+    <li>Media: all media inquiries are directed to the Incident Commander or PIO. No search personnel shall speak to media independently.</li>
+  </ul>
+
+  <h3>10.4 Air Support</h3>
+  <p>BCSO does not operate its own air assets. Air support for SAR operations must be requested through SASP aviation or, in extreme cases, the San Andreas National Guard. Air support requests are authorized by Lieutenant or above.</p>
+
+  <h3>10.5 SAR Callout Duration</h3>
+  <ul>
+    <li>Active search continues for a minimum of 72 hours before transitioning to a recovery operation, unless evidence suggests the subject cannot have survived.</li>
+    <li>Search teams rotate every 8 hours. No team shall search continuously for more than 10 hours.</li>
+    <li>The Incident Commander may extend or reduce the search based on circumstances, weather, and new information.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 11: MARINE PATROL ==================== -->
+<div class="section" id="marine">
+  <h2><span class="section-num">Section 11</span>Marine &amp; Lake Patrol</h2>
+
+  <h3>11.1 Area of Responsibility</h3>
+  <p>BCSO Marine Patrol has jurisdiction over all waterways within Blaine County, including:</p>
+  <ul>
+    <li><strong>Alamo Sea</strong> &mdash; The primary patrol area. Recreational boating, fishing, and swimming enforcement.</li>
+    <li><strong>Cassidy Creek &amp; tributaries</strong> &mdash; Seasonal patrol for illegal dumping, trespassing, and water safety.</li>
+    <li><strong>Raton Canyon river</strong> &mdash; Recreational use, particularly during summer months.</li>
+    <li><strong>Paleto Bay coastal waters</strong> &mdash; Within 1 nautical mile of shore (concurrent with Coast Guard beyond 1 NM).</li>
+  </ul>
+
+  <h3>11.2 Boating Stops &amp; Vessel Inspections</h3>
+  <ol class="procedure">
+    <li>Approach the vessel from the port (left) side at idle speed. Activate blue light on patrol boat.</li>
+    <li>Hail the vessel operator: <code>"Blaine County Sheriff's Office. Please cut your engine and prepare for a safety inspection."</code></li>
+    <li>Inspect: valid registration, safety equipment (life jackets for all occupants, fire extinguisher, horn/whistle, navigation lights if after dusk), sobriety of the operator.</li>
+    <li>BUI (Boating Under the Influence): same legal standard as DUI. Field sobriety tests administered on the patrol boat or at shore. BAC limit: 0.08%.</li>
+    <li>Issue citations or warnings as appropriate. Impound vessels operated by unlicensed or intoxicated operators.</li>
+  </ol>
+
+  <h3>11.3 Drowning Response</h3>
+  <div class="callout callout-critical">
+    <p><strong>Drowning calls are Code 3 priority.</strong> Response within minutes is critical. All available marine units and shore-based deputies shall respond.</p>
+  </div>
+  <ul>
+    <li>First responding deputy (shore-based): attempt to locate the victim visually. Deploy throw-rope or flotation device if within range. Do <strong>not</strong> enter the water unless trained and equipped for water rescue.</li>
+    <li>Marine unit: proceed to last known position at maximum safe speed. Deploy rescue swimmer if conditions allow.</li>
+    <li>Request EMS staging at the nearest boat ramp or shore access point.</li>
+    <li>If the victim is recovered: begin CPR immediately. Maintain until EMS takes over.</li>
+  </ul>
+
+  <h3>11.4 Vessel Impoundment</h3>
+  <p>Vessels may be impounded for: BUI, no registration, involvement in a crime, abandoned vessels creating a navigation hazard. Tow to Sandy Shores Marina impound dock. Complete Vehicle/Vessel Impound Report in MDT.</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 12: K-9 OPERATIONS ==================== -->
+<div class="section" id="k9">
+  <h2><span class="section-num">Section 12</span>K-9 Operations</h2>
+
+  <h3>12.1 K-9 Team Deployment</h3>
+  <p>BCSO K-9 teams may be deployed for the following purposes:</p>
+  <ul>
+    <li><strong>Tracking:</strong> Locating fleeing suspects, missing persons, or evidence in wilderness terrain</li>
+    <li><strong>Narcotics Detection:</strong> Vehicle searches (with probable cause), building searches pursuant to a warrant, open-area detection</li>
+    <li><strong>Article Search:</strong> Locating discarded evidence (weapons, clothing, contraband) in a defined search area</li>
+    <li><strong>Suspect Apprehension:</strong> Controlled bite deployment as a use-of-force option (Level 5 equivalent)</li>
+    <li><strong>Building Clearance:</strong> Searching structures for hidden suspects during warrant service or active calls</li>
+  </ul>
+
+  <h3>12.2 Handler Requirements</h3>
+  <ul>
+    <li>Minimum rank: Deputy (fully cleared from FTO program)</li>
+    <li>Minimum 3 months solo patrol experience</li>
+    <li>Clean disciplinary record (no suspensions in prior 6 months)</li>
+    <li>Completion of BCSO/state-accredited K-9 Handler Academy (4 weeks minimum)</li>
+    <li>Monthly recertification training (8 hours minimum)</li>
+    <li>The K-9 partner lives with the handler. The handler is responsible for all care, feeding, veterinary needs, and daily training.</li>
+  </ul>
+
+  <h3>12.3 K-9 Use of Force</h3>
+  <div class="callout callout-warning">
+    <p><strong>K-9 bite deployment is classified as Level 5 (Less-Lethal) force.</strong> The same justifications, reporting requirements, and review procedures apply as any other Level 5 force application. A verbal warning must be given before deploying the K-9 for apprehension: <code>"Blaine County K-9! Stop or I will release my dog!"</code></p>
+  </div>
+  <ul>
+    <li>K-9 shall not be deployed against passively resistant subjects, juveniles (under 16), or visibly pregnant persons unless a lethal threat is present.</li>
+    <li>Once the subject is subdued and compliant, the handler shall immediately recall the K-9.</li>
+    <li>All subjects bitten by a K-9 must receive medical evaluation by EMS before booking.</li>
+    <li>Every K-9 bite incident requires a Use of Force Report, photographs of injuries, and Sergeant review.</li>
+  </ul>
+
+  <h3>12.4 K-9 in Rural Terrain</h3>
+  <p>Blaine County's terrain is particularly well-suited for K-9 operations. The K-9's tracking ability is a critical asset in wilderness areas where suspects or missing persons can easily disappear. Handlers should be aware of:</p>
+  <ul>
+    <li>Extreme heat (Sandy Shores desert): limit K-9 deployment to 30 minutes maximum in temperatures above 95 degrees F. Carry water for the K-9 at all times.</li>
+    <li>Wildlife: K-9 may alert to wildlife scent. Handlers must be able to distinguish tracking behavior from prey drive.</li>
+    <li>Rattlesnakes: common in desert and rocky terrain. Handlers should walk ahead of the K-9 when feasible in known snake habitats.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 13: WARRANT SERVICE ==================== -->
+<div class="section" id="warrants">
+  <h2><span class="section-num">Section 13</span>Warrant Service</h2>
+
+  <h3>13.1 Warrant Types &amp; Authorization</h3>
+  <p>All warrants must be issued by a Department of Justice (DOJ) judge before execution. No BCSO deputy may execute a warrant without a valid, signed judicial order.</p>
+
+  <table>
+    <tr>
+      <th>Warrant Type</th>
+      <th>Minimum Personnel</th>
+      <th>Authorization Level</th>
+      <th>Briefing Required</th>
+    </tr>
+    <tr>
+      <td>Standard Arrest Warrant</td>
+      <td>3 deputies</td>
+      <td>Sergeant+</td>
+      <td>Pre-service briefing (location, subject description, known risks)</td>
+    </tr>
+    <tr>
+      <td>Search Warrant (residence)</td>
+      <td>3 deputies</td>
+      <td>Sergeant+</td>
+      <td>Pre-service briefing with floor plan if available</td>
+    </tr>
+    <tr>
+      <td>High-Risk Warrant</td>
+      <td>5+ deputies</td>
+      <td>Sergeant+ (lead), Lieutenant+ (approval)</td>
+      <td>Full tactical briefing: floor plan, subject history, weapons intel, escape routes, medical standby</td>
+    </tr>
+    <tr>
+      <td>No-Knock Warrant</td>
+      <td>5+ deputies</td>
+      <td>Captain+ authorization <span class="badge badge-required">REQUIRED</span></td>
+      <td>Full tactical briefing. Must demonstrate evidence of weapon disposal risk or extreme danger if announcement is made.</td>
+    </tr>
+  </table>
+
+  <h3>13.2 Standard Warrant Execution</h3>
+  <ol class="procedure">
+    <li>Conduct pre-service briefing. Review the warrant, subject information, location, and assigned roles (entry team, perimeter, arrest team).</li>
+    <li>Establish perimeter around the location. Cover all exits.</li>
+    <li>Announce: <code>"Blaine County Sheriff's Office! We have a warrant! Open the door!"</code> Wait 15-30 seconds for compliance.</li>
+    <li>If no compliance after a reasonable time, force entry (ram, breaching tools). Entry team clears room by room.</li>
+    <li>Secure all occupants. Execute the warrant (arrest the subject and/or conduct the authorized search).</li>
+    <li>Document everything: photographs, evidence inventory, room-by-room search log, time stamps.</li>
+    <li>Leave a copy of the warrant at the premises. Provide a receipt for any seized property.</li>
+  </ol>
+
+  <h3>13.3 Rural Warrant Considerations</h3>
+  <ul>
+    <li>Ranch properties may have multiple structures (main house, barn, outbuildings, trailers). The warrant must specify which structures may be searched.</li>
+    <li>Remote properties may lack cell service. Ensure radio coverage before execution. Consider staging a relay vehicle for communications.</li>
+    <li>Be aware of guard dogs, livestock, and farm equipment that may obstruct entry or escape routes.</li>
+    <li>Properties may have long driveways with limited concealment. Approach planning is critical to avoid early detection.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 14: JAIL OPERATIONS ==================== -->
+<div class="section" id="jail">
+  <h2><span class="section-num">Section 14</span>Jail &amp; Detention Operations</h2>
+
+  <h3>14.1 Facility Overview</h3>
+  <p>The Blaine County Detention Center (BCDC), located adjacent to the Sandy Shores Sheriff's Station, is operated by the BCSO Detention Division. It serves as the primary holding facility for all persons arrested in Blaine County.</p>
+
+  <h3>14.2 Intake Procedures</h3>
+  <ol class="procedure">
+    <li><strong>Arrival:</strong> Arresting deputy delivers the subject to the intake area. Detention deputy verifies the arrest paperwork and charges in MDT.</li>
+    <li><strong>Search:</strong> Full search of the arrestee. All personal items removed, inventoried, and secured in a property bag. Detention deputy and subject both sign the property inventory.</li>
+    <li><strong>Medical Screening:</strong> Within <strong>1 hour</strong> of intake, the subject must receive a basic medical screening. Document any injuries, medications, mental health concerns, substance use, or suicidal ideation. If the subject requires medical attention, EMS must be contacted before the subject is placed in a cell.</li>
+    <li><strong>Photograph &amp; Fingerprint:</strong> Standard booking photo and fingerprinting. Enter into the county booking system.</li>
+    <li><strong>Classification:</strong> Assign housing based on: gender, severity of charges, known gang affiliation, medical/mental health needs, separation orders.</li>
+    <li><strong>Phone Call:</strong> Subject is entitled to one phone call within 1 hour of booking completion.</li>
+  </ol>
+
+  <h3>14.3 Inmate Rights</h3>
+  <ul>
+    <li><strong>Legal Counsel:</strong> Inmates may request an attorney at any time. A private space must be provided for attorney-client consultations. Deputies shall not monitor or record these conversations.</li>
+    <li><strong>Maximum Hold:</strong> No inmate may be held for more than <strong>24 hours</strong> without arraignment before a judge. If arraignment cannot be scheduled within 24 hours, the subject must be released or transferred to a facility where arraignment is possible.</li>
+    <li><strong>Visitation:</strong> Approved visitors during designated hours (0900-1100, 1400-1600 daily). Visitors must present valid ID and submit to a search. Non-contact visits only for high-security inmates.</li>
+    <li><strong>Medical Care:</strong> Inmates with ongoing medical needs must receive timely medication and treatment. Denial of necessary medical care is a serious violation.</li>
+    <li><strong>Food &amp; Water:</strong> Three meals per day. Clean drinking water available at all times. Special dietary needs accommodated when feasible.</li>
+  </ul>
+
+  <h3>14.4 Cell Checks &amp; Security</h3>
+  <ul>
+    <li>Visual cell checks every <strong>30 minutes</strong> minimum. Log each check with time and deputy initials.</li>
+    <li>Suicidal or high-risk inmates: <strong>15-minute</strong> checks, direct visual observation required.</li>
+    <li>Cell searches may be conducted at any time without notice for security purposes.</li>
+    <li>Any contraband found during cell searches must be documented, photographed, and reported to the shift supervisor.</li>
+  </ul>
+
+  <h3>14.5 Release Procedures</h3>
+  <ul>
+    <li>Release authorized by: posted bail, court order, cite-and-release (misdemeanor), charges dropped by DOJ.</li>
+    <li>Return all personal property. Subject signs property receipt acknowledging return.</li>
+    <li>Provide subject with court date paperwork if applicable.</li>
+    <li>If the subject was arrested intoxicated, they may not be released until they are sober enough to care for themselves, or released to a responsible adult.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 15: PATROL ZONES ==================== -->
+<div class="section" id="zones">
+  <h2><span class="section-num">Section 15</span>Patrol Zones</h2>
+
+  <p>Blaine County is divided into four patrol zones to ensure comprehensive coverage. Zone assignments rotate unless a deputy is assigned to a specific zone by a supervisor. At minimum, one deputy must be assigned to each active zone during any shift.</p>
+
+  <table>
+    <tr>
+      <th>Zone</th>
+      <th>Designation</th>
+      <th>Coverage Area</th>
+      <th>Key Features</th>
+    </tr>
+    <tr>
+      <td><strong>King-1</strong></td>
+      <td>Sandy Shores / Alamo Sea</td>
+      <td>Sandy Shores township, Trevor's Trailer Park, Alamo Sea shoreline, Sandy Shores Airfield, Route 68 (east segment)</td>
+      <td>Highest call volume. Meth activity, domestic disturbances, transient population. BCSO station located here.</td>
+    </tr>
+    <tr>
+      <td><strong>King-2</strong></td>
+      <td>Grapeseed / Farmlands</td>
+      <td>Grapeseed township, agricultural fields, Route 68 (west segment), Ron Alternates Wind Farm, Harmony</td>
+      <td>Agricultural theft, trespassing, livestock issues, farm equipment on roads. Lower call volume, large area.</td>
+    </tr>
+    <tr>
+      <td><strong>King-3</strong></td>
+      <td>Paleto Bay / North Coast</td>
+      <td>Paleto Bay, Paleto Forest, Procopio Beach, Paleto Cove, Route 1 (north), Cluckin' Bell Farms</td>
+      <td>Tourist activity, boating incidents (coastal), forest-related calls, isolated properties. Farthest from station.</td>
+    </tr>
+    <tr>
+      <td><strong>King-4</strong></td>
+      <td>Chiliad / Canyon</td>
+      <td>Mount Chiliad, Raton Canyon, Cassidy Creek, Chiliad Mountain State Wilderness, cable car area</td>
+      <td>SAR calls, hiker emergencies, illegal camping, off-road vehicle incidents. Most remote, worst radio coverage.</td>
+    </tr>
+  </table>
+
+  <h3>15.1 Zone Responsibilities</h3>
+  <ul>
+    <li>Each zone deputy is responsible for proactive patrol, responding to calls within their zone, and maintaining familiarity with the residents and businesses in their area.</li>
+    <li>Deputies may cross zone boundaries to assist other units, respond to priority calls, or pursue fleeing subjects.</li>
+    <li>Zone deputies should conduct at least two business checks and two residential welfare checks per shift.</li>
+  </ul>
+
+  <h3>15.2 Minimum Staffing</h3>
+  <div class="callout callout-warning">
+    <p><strong>Minimum shift staffing:</strong> 2 deputies on patrol + 1 supervisor (Sergeant or above). If staffing falls below minimum, the on-duty supervisor shall notify the Lieutenant, who may authorize overtime callbacks. King-4 may be unmanned during low-staffing periods; calls in King-4 will be handled by King-1 or King-3 deputies.</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 16: RADIO COMMUNICATIONS ==================== -->
+<div class="section" id="radio">
+  <h2><span class="section-num">Section 16</span>Radio Communications</h2>
+
+  <h3>16.1 Channel Assignments</h3>
+  <table>
+    <tr>
+      <th>Channel</th>
+      <th>Designation</th>
+      <th>Usage</th>
+    </tr>
+    <tr><td>CH 4</td><td>BCSO Primary</td><td>All standard BCSO dispatch, patrol communications, and routine traffic</td></tr>
+    <tr><td>CH 5</td><td>BCSO Tactical</td><td>Active scenes, pursuits, warrant service, operations requiring dedicated traffic</td></tr>
+    <tr><td>CH 1</td><td>Inter-Agency</td><td>Communications with LSPD, SASP, EMS. Used during multi-agency operations.</td></tr>
+    <tr><td>CH 2</td><td>LSPD Primary</td><td>Monitor only. Do not transmit unless coordinating a joint operation.</td></tr>
+    <tr><td>CH 3</td><td>SASP Primary</td><td>Monitor only. Do not transmit unless coordinating a joint operation.</td></tr>
+    <tr><td>CH 9</td><td>Emergency / All-Call</td><td>Emergency broadcasts only. All units monitor at all times.</td></tr>
+  </table>
+
+  <h3>16.2 Radio Codes</h3>
+  <table>
+    <tr><th>Code</th><th>Meaning</th><th>Code</th><th>Meaning</th></tr>
+    <tr><td><code>10-4</code></td><td>Acknowledged / Copy</td><td><code>10-20</code></td><td>Location / What is your position?</td></tr>
+    <tr><td><code>10-6</code></td><td>Busy / Stand by</td><td><code>10-23</code></td><td>Arrived on scene</td></tr>
+    <tr><td><code>10-7</code></td><td>Out of service</td><td><code>10-27</code></td><td>Driver's license check</td></tr>
+    <tr><td><code>10-8</code></td><td>In service</td><td><code>10-28</code></td><td>Vehicle registration check</td></tr>
+    <tr><td><code>10-9</code></td><td>Repeat last transmission</td><td><code>10-29</code></td><td>Warrant check</td></tr>
+    <tr><td><code>10-11</code></td><td>Traffic stop</td><td><code>10-32</code></td><td>Person with weapon</td></tr>
+    <tr><td><code>10-12</code></td><td>Visitors / Standby</td><td><code>10-50</code></td><td>Traffic accident</td></tr>
+    <tr><td><code>10-15</code></td><td>Subject in custody</td><td><code>10-78</code></td><td>Requesting backup</td></tr>
+    <tr><td><code>10-17</code></td><td>En route</td><td><code>10-99</code></td><td>Officer emergency / Officer down</td></tr>
+  </table>
+
+  <h3>16.3 Status Codes</h3>
+  <table>
+    <tr><th>Code</th><th>Meaning</th></tr>
+    <tr><td><code>Code 1</code></td><td>Respond at normal speed, no lights/sirens</td></tr>
+    <tr><td><code>Code 2</code></td><td>Respond urgently, lights only, obey traffic laws</td></tr>
+    <tr><td><code>Code 3</code></td><td>Emergency response, lights and sirens, authorized to break traffic laws safely</td></tr>
+    <tr><td><code>Code 4</code></td><td>Scene is secure, no further assistance needed</td></tr>
+    <tr><td><code>Code 5</code></td><td>Stakeout / surveillance in progress, stay clear of area</td></tr>
+  </table>
+
+  <h3>16.4 Dispatch Protocol</h3>
+  <ul>
+    <li>All radio transmissions begin with the receiving unit's callsign, then the transmitting unit's callsign: <code>"Dispatch, King-1-7"</code> (King zone 1, unit 7 calling dispatch).</li>
+    <li>Keep transmissions brief and clear. No personal conversations on duty channels.</li>
+    <li>Emergency traffic (<code>10-99</code>) takes absolute priority. All non-emergency traffic ceases immediately until the emergency is resolved or the channel is cleared.</li>
+    <li>When switching to tactical channel (CH 5), announce on primary: <code>"All units involved in [incident], switch to Channel 5."</code></li>
+  </ul>
+
+  <h3>16.5 Dead Zone Protocol</h3>
+  <p>Blaine County has known radio dead zones, particularly in Raton Canyon, portions of Mt. Chiliad, and deep Paleto Forest. Deputies entering known dead zones must:</p>
+  <ul>
+    <li>Announce their intended route and expected duration before entering the dead zone</li>
+    <li>If no radio contact is received from a deputy in a dead zone for 30+ minutes beyond their expected check-in, dispatch initiates a welfare check</li>
+    <li>Consider carrying a personal locator beacon (PLB) for remote operations</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 17: REPORT WRITING ==================== -->
+<div class="section" id="reports">
+  <h2><span class="section-num">Section 17</span>Report Writing</h2>
+
+  <p>Thorough, accurate, and timely report writing is a fundamental duty of every BCSO deputy. Reports are legal documents that may be used in court proceedings, internal reviews, and inter-agency communications. Sloppy or incomplete reports can result in dismissed charges and departmental liability.</p>
+
+  <h3>17.1 Report Types &amp; Deadlines</h3>
+  <table>
+    <tr>
+      <th>Report Type</th>
+      <th>When Required</th>
+      <th>Submission Deadline</th>
+      <th>Review Authority</th>
+    </tr>
+    <tr><td>Incident Report</td><td>Every call for service, crime report, or significant event</td><td>End of shift</td><td>Sergeant</td></tr>
+    <tr><td>Arrest Report</td><td>Every arrest</td><td>2 hours after booking completion</td><td>Sergeant</td></tr>
+    <tr><td>Use of Force Report</td><td>Level 4+ force used</td><td>2 hours after incident (Level 4-5), immediately (Level 6)</td><td>Lieutenant (4-5), Captain (6)</td></tr>
+    <tr><td>Accident Report</td><td>All traffic accidents</td><td>End of shift</td><td>Sergeant</td></tr>
+    <tr><td>Property Damage Report</td><td>County/BCSO property damaged</td><td>End of shift</td><td>Sergeant</td></tr>
+    <tr><td>Pursuit Report</td><td>Every vehicle pursuit</td><td>4 hours after pursuit ends</td><td>Lieutenant</td></tr>
+    <tr><td>K-9 Deployment Report</td><td>Every K-9 deployment</td><td>End of shift</td><td>K-9 Sergeant</td></tr>
+    <tr><td>SAR After-Action Report</td><td>Every SAR operation</td><td>24 hours after operation concludes</td><td>SAR CO / Captain</td></tr>
+  </table>
+
+  <h3>17.2 Report Standards</h3>
+  <ul>
+    <li><strong>Factual:</strong> Report only what you observed, heard, or were told. Clearly attribute statements to their source.</li>
+    <li><strong>Objective:</strong> No opinions, assumptions, or conclusions beyond reasonable inferences based on training and experience.</li>
+    <li><strong>Chronological:</strong> Events described in the order they occurred.</li>
+    <li><strong>Complete:</strong> Who, what, when, where, why, how. Every report must contain these elements.</li>
+    <li><strong>Legible:</strong> Written in clear, professional language. No slang, no abbreviations that are not standard department codes.</li>
+    <li><strong>MDT Logged:</strong> All reports must be entered into the Mobile Data Terminal system. Paper supplementals may be attached but are not a substitute for MDT entry.</li>
+  </ul>
+
+  <h3>17.3 Supervisor Review</h3>
+  <p>All reports must be reviewed and approved by the appropriate supervisor before being considered complete. Supervisors may return reports for correction, additional detail, or clarification. A returned report must be corrected and resubmitted within 24 hours.</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 18: OFFICER CONDUCT & UNIFORM ==================== -->
+<div class="section" id="conduct">
+  <h2><span class="section-num">Section 18</span>Officer Conduct &amp; Uniform Standards</h2>
+
+  <h3>18.1 Professional Conduct</h3>
+  <p>All BCSO personnel, sworn and civilian, represent the Blaine County Sheriff's Office at all times. Conduct that brings discredit upon the department, whether on or off duty, is subject to disciplinary action.</p>
+  <ul>
+    <li>Treat all persons with dignity and respect, regardless of the circumstances of the encounter.</li>
+    <li>Do not use profanity, racial slurs, or derogatory language toward any person.</li>
+    <li>Do not engage in romantic or sexual relationships with persons in custody, on probation, or who are subjects of active investigations.</li>
+    <li>Social media: Do not post department-sensitive information, case details, or photographs of crime scenes or evidence. Personal social media use must not identify you as a BCSO deputy in a manner that could embarrass the department.</li>
+    <li>Corruption, bribery, theft, and dishonesty are grounds for immediate termination and criminal prosecution.</li>
+  </ul>
+
+  <h3>18.2 Uniform Standards</h3>
+  <table>
+    <tr>
+      <th>Component</th>
+      <th>Standard</th>
+    </tr>
+    <tr><td>Shirt</td><td>Tan (khaki) department-issued uniform shirt, long or short sleeve per season. Name plate on right chest, badge on left chest.</td></tr>
+    <tr><td>Pants</td><td>Brown department-issued duty pants. Cargo pockets authorized for patrol. Must be clean and pressed.</td></tr>
+    <tr><td>Boots</td><td>Black or brown duty boots, polished. Steel-toe authorized. Must be in serviceable condition.</td></tr>
+    <tr><td>Hat / Cover</td><td>Brown campaign hat (Stetson) for formal occasions and public events. Brown baseball cap with BCSO insignia for daily patrol.</td></tr>
+    <tr><td>Duty Belt</td><td>Black or brown leather/nylon. Must include: firearm, Taser, handcuffs (2 pair), radio, flashlight, OC spray. Arrangement per department standard.</td></tr>
+    <tr><td>Body Armor</td><td>Mandatory at all times while on patrol. Internal or external carrier authorized.</td></tr>
+    <tr><td>Outerwear</td><td>Brown or tan department-issued jacket for cold weather. Reflective vest for traffic duty and accident scenes.</td></tr>
+  </table>
+
+  <h3>18.3 Grooming Standards</h3>
+  <ul>
+    <li><strong>Hair:</strong> Clean and neatly groomed. Must not extend below the collar or interfere with duty equipment (hats, helmets, gas masks). Natural colors only.</li>
+    <li><strong>Facial Hair:</strong> Neatly trimmed mustaches and beards are permitted. Beard length must not interfere with gas mask seal.</li>
+    <li><strong>Tattoos:</strong> Visible tattoos must not be offensive, gang-related, or extremist in nature. Face and neck tattoos are not permitted.</li>
+  </ul>
+
+  <h3>18.4 Vehicle Standards</h3>
+  <ul>
+    <li>Patrol vehicles must be clean and maintained. Deputies are responsible for pre-shift vehicle inspection (lights, sirens, tires, fuel, equipment).</li>
+    <li>Report any mechanical issues to the shift supervisor immediately. Do not operate an unsafe vehicle.</li>
+    <li><strong>Off-Road Vehicles:</strong> SUVs, trucks, and ATVs designated for off-road patrol require Off-Road Driving Certification. These vehicles are assigned to King-4 and SAR operations by default but may be deployed elsewhere with supervisor approval.</li>
+    <li>Marked BCSO vehicles bear the tan-and-brown color scheme with department insignia and "SHERIFF" markings. Unmarked vehicles are assigned to Investigations only.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 19: DISCIPLINARY PROCEDURES ==================== -->
+<div class="section" id="discipline">
+  <h2><span class="section-num">Section 19</span>Disciplinary Procedures</h2>
+
+  <p>The BCSO maintains a progressive discipline system designed to correct behavior, maintain standards, and protect the integrity of the department. All disciplinary actions are documented in the deputy's personnel file.</p>
+
+  <h3>19.1 Levels of Discipline</h3>
+  <table>
+    <tr>
+      <th>Level</th>
+      <th>Action</th>
+      <th>Imposed By</th>
+      <th>Examples</th>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td><strong>Verbal Counseling</strong></td>
+      <td>Any supervisor</td>
+      <td>Minor uniform infractions, tardiness (first offense), minor procedural errors</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><strong>Written Warning</strong></td>
+      <td>Sergeant+</td>
+      <td>Repeated minor infractions, unprofessional conduct, late reports (pattern)</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><strong>Suspension (1-14 days)</strong></td>
+      <td>Lieutenant+ (1-7 days), Captain+ (8-14 days)</td>
+      <td>Insubordination, negligent discharge, improper use of force, policy violations with consequences</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><strong>Demotion</strong></td>
+      <td>Captain+ (with Sheriff approval)</td>
+      <td>Repeated suspensions, failure of leadership duties, pattern of poor judgment in supervisory role</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><strong>Termination</strong></td>
+      <td>Sheriff only</td>
+      <td>Corruption, felony conduct, excessive force (egregious), dishonesty under oath, conduct unbecoming</td>
+    </tr>
+  </table>
+
+  <h3>19.2 Internal Affairs (IA) Investigations</h3>
+  <ul>
+    <li>Complaints against BCSO personnel may be filed by citizens, fellow deputies, or supervisors.</li>
+    <li>All complaints are reviewed by the Lieutenant or above. Serious complaints trigger a formal IA investigation.</li>
+    <li>The subject of an IA investigation will be notified and provided with the specific allegations.</li>
+    <li>IA investigations must be completed within 30 days. Extensions require Captain authorization.</li>
+    <li>Findings: <strong>Sustained</strong> (evidence supports the allegation), <strong>Not Sustained</strong> (insufficient evidence), <strong>Exonerated</strong> (action occurred but was justified), <strong>Unfounded</strong> (allegation is false).</li>
+  </ul>
+
+  <h3>19.3 Appeals Process</h3>
+  <p>Any deputy may appeal a disciplinary action to the next level in the chain of command. The appeal must be submitted in writing within 7 days of receiving the disciplinary notice. The final appeal authority is the Sheriff. The Sheriff's decision is final and binding.</p>
+
+  <div class="callout callout-info">
+    <p><strong>Due Process:</strong> No deputy shall be terminated without first being given the opportunity to respond to the allegations against them. Emergency suspensions (pending investigation) may be imposed immediately by a Lieutenant or above when the deputy's continued duty poses a risk to the department or public.</p>
+  </div>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 20: TRAINING ==================== -->
+<div class="section" id="training">
+  <h2><span class="section-num">Section 20</span>Training &amp; Certification</h2>
+
+  <h3>20.1 BCSO Academy</h3>
+  <p>All new BCSO hires must complete the BCSO Academy before being assigned to patrol. The academy covers:</p>
+  <ul>
+    <li>San Andreas criminal law and penal code</li>
+    <li>Constitutional rights and civil liberties</li>
+    <li>Use of force policy and defensive tactics</li>
+    <li>Firearms qualification (handgun and patrol rifle)</li>
+    <li>Emergency vehicle operations (EVOC)</li>
+    <li>Report writing and MDT operations</li>
+    <li>Radio communications and dispatch protocol</li>
+    <li>First aid and CPR certification</li>
+    <li>De-escalation and crisis intervention</li>
+    <li>BCSO-specific: rural operations, terrain awareness, wildlife encounters, agricultural law</li>
+  </ul>
+
+  <h3>20.2 Field Training Officer (FTO) Program</h3>
+  <table>
+    <tr>
+      <th>Phase</th>
+      <th>Duration</th>
+      <th>Focus</th>
+      <th>Evaluation</th>
+    </tr>
+    <tr><td>Phase 1</td><td>2 weeks</td><td>Observation and basic patrol. FTO demonstrates, trainee observes and assists.</td><td>Daily evaluations by FTO</td></tr>
+    <tr><td>Phase 2</td><td>2 weeks</td><td>Guided patrol. Trainee handles calls with FTO guidance and coaching.</td><td>Daily evaluations + weekly supervisor review</td></tr>
+    <tr><td>Phase 3</td><td>2 weeks</td><td>Independent patrol. Trainee leads, FTO observes and intervenes only if necessary.</td><td>Daily evaluations + scenario testing</td></tr>
+    <tr><td>Phase 4 (Shadow)</td><td>1 week</td><td>FTO rides along in plain clothes. Trainee operates as if solo. Final assessment.</td><td>Pass/fail final evaluation by FTO + Sergeant</td></tr>
+  </table>
+
+  <div class="callout callout-warning">
+    <p><strong>FTO Qualification:</strong> To serve as an FTO, a deputy must hold the rank of Senior Deputy or above, have a minimum of 4 months solo patrol experience, a clean disciplinary record, and complete the FTO Instructor Course. FTOs receive an additional stipend for each trainee cycle completed.</p>
+  </div>
+
+  <h3>20.3 Ongoing Training &amp; Certifications</h3>
+  <ul>
+    <li><strong>Firearms Qualification:</strong> Quarterly. Handgun and patrol rifle. Deputies who fail must remediate within 2 weeks or be placed on administrative duty.</li>
+    <li><strong>Off-Road Driving Certification:</strong> Annual. Required for King-4 assignment, SAR, and off-road vehicle use. Covers vehicle recovery, terrain assessment, and emergency procedures.</li>
+    <li><strong>SAR Certification:</strong> Bi-annual. Land navigation, grid search techniques, wilderness first aid, rope rescue basics.</li>
+    <li><strong>Use of Force / Defensive Tactics:</strong> Bi-annual refresher. Includes scenario-based training and de-escalation drills.</li>
+    <li><strong>CPR / First Aid:</strong> Annual recertification.</li>
+    <li><strong>Legal Updates:</strong> Quarterly briefings on new legislation, court rulings, and policy changes.</li>
+  </ul>
+
+  <h3>20.4 Specialized Training</h3>
+  <p>Deputies seeking assignment to specialized divisions must complete the following additional training:</p>
+  <ul>
+    <li><strong>K-9 Handler:</strong> 4-week K-9 academy + monthly recertification (8 hours)</li>
+    <li><strong>Marine Patrol:</strong> Watercraft operations course + swim test + water rescue basics</li>
+    <li><strong>Investigations:</strong> Investigator course + interview/interrogation training + evidence handling certification</li>
+    <li><strong>Detention:</strong> Detention officer course + conflict de-escalation + inmate rights and procedures</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 21: COMMUNITY RELATIONS ==================== -->
+<div class="section" id="community">
+  <h2><span class="section-num">Section 21</span>Community Relations</h2>
+
+  <p>The BCSO is a community-oriented department. Blaine County is a place where everyone knows their neighbors, and the Sheriff's Office must be seen as a trusted partner, not an occupying force. Community engagement is not optional &mdash; it is a core duty of every BCSO deputy.</p>
+
+  <h3>21.1 Community Programs</h3>
+  <ul>
+    <li><strong>County Fair &amp; Events:</strong> BCSO maintains a visible, friendly presence at all county fairs, rodeos, and public events in Sandy Shores, Grapeseed, and Paleto Bay. Deputies should engage with attendees, answer questions, and represent the department positively.</li>
+    <li><strong>Town Hall Meetings:</strong> The Sheriff or designee hosts quarterly town hall meetings in rotating locations (Sandy Shores, Grapeseed, Paleto Bay). These meetings are open to all residents and provide an opportunity to address public safety concerns.</li>
+    <li><strong>Ranch &amp; Farm Visits:</strong> Zone deputies should make regular, non-enforcement visits to ranches and farms in their zone. Building relationships with rural landowners improves cooperation and intelligence gathering.</li>
+    <li><strong>Youth Outreach:</strong> BCSO participates in school safety presentations, mentorship programs, and youth activity events when available.</li>
+    <li><strong>Neighborhood Watch:</strong> Assist communities in establishing and maintaining neighborhood watch programs. Provide crime prevention tips and direct communication channels to the department.</li>
+  </ul>
+
+  <h3>21.2 Public Information</h3>
+  <ul>
+    <li>The Sheriff or a designated Public Information Officer (PIO) handles all media inquiries and press releases.</li>
+    <li>Deputies shall not speak to media representatives without authorization from a Lieutenant or above.</li>
+    <li>Press releases for significant incidents (homicides, major accidents, SAR operations) must be approved by the Captain or Sheriff before distribution.</li>
+  </ul>
+
+  <h3>21.3 Complaint Handling</h3>
+  <p>Citizens who wish to file a complaint about BCSO conduct may do so in person at the Sandy Shores station, by mail, by phone, or through the department's online portal. All complaints are logged, assigned a tracking number, and acknowledged within 48 hours. See Section 19 (Disciplinary Procedures) for the investigation process.</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 22: EMERGENCY RESPONSE ==================== -->
+<div class="section" id="emergency">
+  <h2><span class="section-num">Section 22</span>Emergency &amp; Crisis Response</h2>
+
+  <h3>22.1 Incident Command System (ICS)</h3>
+  <p>All multi-agency and large-scale incidents in Blaine County operate under the Incident Command System. The first arriving BCSO supervisor establishes Incident Command unless superseded by a higher authority or a specialized agency (e.g., fire department for wildfire).</p>
+  <ul>
+    <li><strong>Incident Commander (IC):</strong> Highest-ranking officer on scene, or as assigned. Makes strategic decisions, coordinates resources, communicates with dispatch and agency heads.</li>
+    <li><strong>Operations Section:</strong> Manages tactical operations (perimeters, evacuations, rescues).</li>
+    <li><strong>Planning Section:</strong> Intelligence gathering, mapping, resource tracking.</li>
+    <li><strong>Logistics Section:</strong> Equipment, supplies, food, fuel, relief personnel.</li>
+  </ul>
+
+  <h3>22.2 Wildfire Evacuation</h3>
+  <div class="callout callout-critical">
+    <p><strong>Wildfire is the most significant natural disaster threat in Blaine County.</strong> Dry conditions in Sandy Shores, dense forest in Paleto, and limited evacuation routes make wildfire response a critical BCSO competency.</p>
+  </div>
+  <ol class="procedure">
+    <li><strong>Advisory:</strong> Voluntary evacuation. Deputies go door-to-door in the affected area, advising residents to prepare for possible evacuation. No authority to force evacuation.</li>
+    <li><strong>Warning:</strong> Strong recommendation to evacuate. Deputies increase notification efforts. Assist residents with transportation if needed.</li>
+    <li><strong>Mandatory Evacuation:</strong> Sheriff+ authorization required. Deputies may lawfully order residents to leave. Non-compliant residents are documented but not physically removed except in imminent life-threatening situations.</li>
+    <li><strong>Traffic Control:</strong> Establish one-way traffic flow on evacuation routes. Block inbound traffic except emergency vehicles. Staff key intersections.</li>
+    <li><strong>Perimeter Security:</strong> Establish a security perimeter around the evacuated area. Prevent looting and unauthorized re-entry.</li>
+    <li><strong>Re-Entry:</strong> Only authorized by the Incident Commander when the fire agency declares the area safe. Controlled re-entry with identification verification.</li>
+  </ol>
+
+  <h3>22.3 Active Shooter (Rural)</h3>
+  <p>Active shooter incidents in rural Blaine County present unique challenges compared to urban environments:</p>
+  <ul>
+    <li><strong>Extended Response:</strong> The first deputy on scene may be alone for several minutes. The single-officer entry doctrine applies: if shots are actively being fired, a lone deputy is authorized and expected to engage the threat to save lives.</li>
+    <li><strong>Open Terrain:</strong> Engagements may occur at distances beyond typical urban encounters. Patrol rifle deployment is authorized.</li>
+    <li><strong>Isolated Structures:</strong> Ranches, farms, and remote buildings may have limited entry points and extensive lines of sight. Approach using terrain and structures as cover.</li>
+    <li><strong>Coordinate with SASP/LSPD:</strong> Request all available mutual aid immediately. Establish a unified command upon arrival of additional agencies.</li>
+  </ul>
+
+  <h3>22.4 Natural Disaster Response</h3>
+  <ul>
+    <li><strong>Flooding:</strong> Monitor low-lying areas (Alamo Sea basin, Cassidy Creek, washes near Sandy Shores). Establish road closures at flooded crossings. Never drive through standing water of unknown depth.</li>
+    <li><strong>Severe Weather:</strong> Tornado warnings or severe thunderstorms trigger a county-wide advisory. Deputies seek shelter and resume patrol when conditions permit. Welfare checks on vulnerable residents (elderly, disabled, isolated) after severe weather passes.</li>
+    <li><strong>Earthquake:</strong> Check infrastructure (bridges, overpasses, dams). Report damage to dispatch. Assist with evacuations if structural collapse is suspected.</li>
+  </ul>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 23: INTER-AGENCY ==================== -->
+<div class="section" id="interagency">
+  <h2><span class="section-num">Section 23</span>Inter-Agency Cooperation</h2>
+
+  <p>Effective law enforcement in San Andreas requires cooperation between agencies. The BCSO maintains working relationships with all state and local law enforcement agencies and coordinates regularly on shared priorities.</p>
+
+  <h3>23.1 Agency Relationships</h3>
+  <table>
+    <tr>
+      <th>Agency</th>
+      <th>Relationship</th>
+      <th>Coordination Areas</th>
+    </tr>
+    <tr>
+      <td><strong>LSPD</strong> (Los Santos Police Department)</td>
+      <td>Mutual aid, information sharing</td>
+      <td>Cross-jurisdictional pursuits, fugitive apprehension, intelligence on suspects operating in both jurisdictions</td>
+    </tr>
+    <tr>
+      <td><strong>SASP</strong> (San Andreas State Police)</td>
+      <td>Shared highway jurisdiction, mutual aid, air support</td>
+      <td>Highway enforcement, helicopter support for SAR/pursuits, statewide BOLO distribution, task forces</td>
+    </tr>
+    <tr>
+      <td><strong>EMS / Fire</strong></td>
+      <td>Scene support, medical standby</td>
+      <td>Accident scenes, SAR operations, wildfire response, medical emergencies, mental health crisis co-response</td>
+    </tr>
+    <tr>
+      <td><strong>DOJ</strong> (Department of Justice)</td>
+      <td>Judicial authority, warrant issuance</td>
+      <td>Warrant applications, arraignments, prosecution coordination, grand jury proceedings</td>
+    </tr>
+    <tr>
+      <td><strong>Federal Agencies</strong> (FIB, DEA, ATF equivalents)</td>
+      <td>Task force participation, intelligence sharing</td>
+      <td>Major narcotics operations, firearms trafficking, organized crime investigations, federal warrants</td>
+    </tr>
+  </table>
+
+  <h3>23.2 Mutual Aid Protocol</h3>
+  <ul>
+    <li>BCSO may request mutual aid from any agency through dispatch or direct supervisor-to-supervisor communication.</li>
+    <li>BCSO will respond to mutual aid requests from other agencies when staffing permits, with priority given to life-threatening situations.</li>
+    <li>When operating in another agency's jurisdiction on mutual aid, BCSO deputies operate under the command of the host agency's incident commander.</li>
+    <li>All mutual aid operations must be documented in an incident report.</li>
+  </ul>
+
+  <h3>23.3 Joint Operations</h3>
+  <p>Multi-agency operations (task forces, DUI checkpoints on state highways, major event security) require advance planning and a written operations plan that includes:</p>
+  <ul>
+    <li>Unified command structure identifying the lead agency and IC</li>
+    <li>Radio interoperability plan (shared channel or cross-patching)</li>
+    <li>Roles and responsibilities for each participating agency</li>
+    <li>Rules of engagement and use-of-force authority</li>
+    <li>Logistics (staging areas, medical support, evidence handling)</li>
+  </ul>
+
+  <h3>23.4 Information Sharing</h3>
+  <p>BCSO shares intelligence with partner agencies through the statewide MDT system, BOLOs, and direct communication. Sensitive investigative information is shared only with agencies that have a legitimate need to know, through secure channels, and with supervisor authorization.</p>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ==================== SECTION 24: AMENDMENTS ==================== -->
+<div class="section" id="amendments">
+  <h2><span class="section-num">Section 24</span>Amendments &amp; Revision History</h2>
+
+  <p>This document is a living standard. Amendments may be proposed by any sworn member of the BCSO and must be approved by the Sheriff. Major revisions require review by the command staff (Captain and above). All personnel will be notified of changes and are responsible for reviewing updates within 7 days of publication.</p>
+
+  <h3>24.1 Revision History</h3>
+  <table>
+    <tr>
+      <th>Version</th>
+      <th>Date</th>
+      <th>Author</th>
+      <th>Changes</th>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>January 2025</td>
+      <td>Office of the Sheriff</td>
+      <td>Initial SOP document. Basic chain of command, jurisdiction, patrol procedures.</td>
+    </tr>
+    <tr>
+      <td>2.0</td>
+      <td>February 2026</td>
+      <td>Office of the Sheriff</td>
+      <td>Added rural operations, S&amp;R, patrol zones, jail operations, warrant service. Expanded chain of command.</td>
+    </tr>
+    <tr>
+      <td>3.0</td>
+      <td>February 2026</td>
+      <td>Office of the Sheriff / Command Staff</td>
+      <td>Comprehensive rewrite. 24 sections. Added: Divisions, K-9, Marine Patrol, Radio Codes, Report Writing, Uniform Standards, Disciplinary Procedures, Training &amp; FTO, Community Relations, Emergency/Crisis Response, Inter-Agency Cooperation, Amendments. Expanded all existing sections with detailed procedures, callout boxes, and rural-specific policies. Updated to v3.0 format standard.</td>
+    </tr>
+  </table>
+
+  <h3>24.2 Acknowledgment</h3>
+  <div class="callout callout-info">
+    <p>All BCSO sworn personnel must read, understand, and acknowledge this SOP within 7 days of its publication or revision. Acknowledgment is documented via signature on the SOP Acknowledgment Form, maintained by the Administrative Lieutenant. Failure to acknowledge within the required timeframe will result in administrative action.</p>
+  </div>
+
+  <h3>24.3 Proposed Amendment Process</h3>
+  <ol class="procedure">
+    <li>Submit a written proposal to your immediate supervisor identifying the section, the proposed change, and the justification.</li>
+    <li>Supervisor reviews and forwards to the chain of command with a recommendation (approve, modify, deny).</li>
+    <li>Command staff review. Major changes are discussed at the monthly command staff meeting.</li>
+    <li>Sheriff makes the final decision. Approved amendments are published with an updated version number and effective date.</li>
+    <li>All personnel are notified via department bulletin and MDT announcement.</li>
+  </ol>
+
+  <a href="#top" class="back-top">Back to Top</a>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <strong>ZO SYNDICATE RP</strong> | Blaine County Sheriff's Office<br>
+  Standard Operating Procedures v3.0<br>
+  <span class="footer-confidential">Confidential &mdash; Authorized LEO Personnel Only</span><br>
+  <br>
+  &copy; 2026 Prozilli Entertainment &mdash; All Rights Reserved<br>
+  <a href="https://prozilligaming.com/zo">prozilligaming.com/zo</a> &nbsp;|&nbsp; <a href="https://discord.gg/HjpsGpC4R6">discord.gg/HjpsGpC4R6</a>
+</div>
+
+</div><!-- .content-wrapper -->
+</body>
+</html>

@@ -1,0 +1,1810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LSPD Standard Operating Procedures v3.0 - ZO Syndicate RP</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* --- HEADER BANNER --- */
+  .header-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+    border-bottom: 3px solid #a30000;
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(163,0,0,0.03) 2px,
+      rgba(163,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #c4a265;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .header-server {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 16px;
+    color: #a30000;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #777;
+  }
+  .header-meta span { white-space: nowrap; }
+  .header-meta strong { color: #999; }
+  .badge-classified {
+    display: inline-block;
+    background: #a30000;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #c44;
+  }
+
+  /* --- MAIN CONTENT --- */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+  }
+
+  /* --- TABLE OF CONTENTS --- */
+  .toc {
+    background: #111;
+    border: 1px solid #222;
+    border-left: 4px solid #a30000;
+    padding: 24px 28px;
+    margin: 0 0 40px;
+  }
+  .toc h2 {
+    color: #a30000;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    margin-bottom: 5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #a30000; }
+
+  /* --- HEADINGS --- */
+  h1 {
+    color: #a30000;
+    border-bottom: 2px solid #a30000;
+    padding-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-top: 50px;
+  }
+  h2 {
+    color: #c44;
+    margin-top: 35px;
+    font-size: 18px;
+    border-bottom: 1px solid #1f1f1f;
+    padding-bottom: 6px;
+  }
+  h3 {
+    color: #ddd;
+    font-size: 15px;
+    margin-top: 22px;
+  }
+  h4 {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 16px;
+    font-weight: 600;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #222;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  th {
+    background: #141414;
+    color: #a30000;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  td { background: #0f0f0f; }
+  tr:hover td { background: #151010; }
+
+  /* --- CALLOUT BOXES --- */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .callout-critical {
+    background: #1f0a0a;
+    border-left: 4px solid #a30000;
+    border: 1px solid #331111;
+    border-left: 4px solid #a30000;
+  }
+  .callout-warning {
+    background: #1f1a0a;
+    border: 1px solid #33290e;
+    border-left: 4px solid #c4a265;
+  }
+  .callout-info {
+    background: #0a0f1f;
+    border: 1px solid #0e1a33;
+    border-left: 4px solid #3366aa;
+  }
+  .callout-critical strong { color: #e44; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #6699cc; }
+
+  /* --- MISC --- */
+  code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    border: 1px solid #222;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  blockquote {
+    border-left: 3px solid #a30000;
+    margin: 16px 0;
+    padding: 10px 18px;
+    background: #111;
+    color: #aaa;
+    font-style: italic;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 40px 0;
+  }
+  strong { color: #eee; }
+  a { color: #a30000; text-decoration: none; }
+  a:hover { color: #c44; text-decoration: underline; }
+
+  /* --- FOOTER --- */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 2px solid #a30000;
+    margin-top: 60px;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer .org { color: #c4a265; font-weight: 600; letter-spacing: 2px; }
+  .footer a { color: #666; }
+  .footer a:hover { color: #a30000; }
+
+  /* --- RESPONSIVE --- */
+  /* ===== HERO SECTION ===== */
+  .hero-section {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(163,0,0,0.4) 0%, rgba(13,13,13,0.9) 50%, rgba(163,0,0,0.4) 100%);
+    opacity: 0.85;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #c4a265;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 700px) {
+    .hero-section { height: 200px; }
+    .hero-title { font-size: 32px; letter-spacing: 4px; }
+    .hero-subtitle { font-size: 14px; }
+    .content { padding: 20px 16px 40px; }
+    .header-banner { padding: 28px 16px 22px; }
+    .header-dept { font-size: 22px; }
+    .toc ol { columns: 1; }
+    .header-meta { flex-direction: column; gap: 4px; align-items: center; }
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HEADER BANNER                                                 -->
+<!-- ============================================================ -->
+<div class="header-banner">
+  <div class="header-org">Prozilli Entertainment</div>
+  <div class="header-server">ZO Syndicate RP</div>
+  <div class="header-dept">Los Santos Police Department</div>
+  <div class="header-subtitle">Standard Operating Procedures</div>
+  <div class="badge-classified">Classified &mdash; Authorized LEO Personnel Only</div>
+  <div class="header-meta">
+    <span><strong>Document:</strong> LSPD-SOP-2026-003</span>
+    <span><strong>Version:</strong> 3.0</span>
+    <span><strong>Effective:</strong> February 10, 2026</span>
+    <span><strong>Classification:</strong> LEO Restricted</span>
+    <span><strong>Jurisdiction:</strong> City of Los Santos</span>
+  </div>
+</div>
+
+<!-- Hero Image Section -->
+<div class="hero-section" style="background: radial-gradient(circle at center, rgba(163,0,0,0.3) 0%, transparent 70%), url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Cg fill=%22%23a30000%22 opacity=%220.15%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%228%22/%3E%3Ccircle cx=%2280%22 cy=%2280%22 r=%228%22/%3E%3Crect x=%2240%22 y=%2235%22 width=%2220%22 height=%2230%22 transform=%22rotate(45 50 50)%22/%3E%3C/g%3E%3C/svg%3E') #0d0d0d;">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Los Santos Police Department</h1>
+    <p class="hero-subtitle">Excellence • Integrity • Service</p>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ============================================================ -->
+<!-- TABLE OF CONTENTS                                             -->
+<!-- ============================================================ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#mission">Mission Statement</a></li>
+    <li><a href="#coc">Chain of Command</a></li>
+    <li><a href="#divisions">Divisions &amp; Bureaus</a></li>
+    <li><a href="#uof">Use of Force Continuum</a></li>
+    <li><a href="#lethal">Lethal Force Policy</a></li>
+    <li><a href="#traffic">Traffic Stop Procedures</a></li>
+    <li><a href="#pursuit">Vehicle Pursuit Policy</a></li>
+    <li><a href="#arrest">Arrest &amp; Booking</a></li>
+    <li><a href="#evidence">Evidence Handling &amp; Chain of Custody</a></li>
+    <li><a href="#search">Search &amp; Seizure</a></li>
+    <li><a href="#interrogation">Interrogation Procedures</a></li>
+    <li><a href="#radio">Radio Communications</a></li>
+    <li><a href="#zones">Patrol Zones &amp; Beats</a></li>
+    <li><a href="#reports">Report Writing</a></li>
+    <li><a href="#conduct">Officer Conduct &amp; Appearance</a></li>
+    <li><a href="#discipline">Disciplinary Procedures</a></li>
+    <li><a href="#training">Training Requirements</a></li>
+    <li><a href="#specops">Special Operations</a></li>
+    <li><a href="#interagency">Inter-Agency Cooperation</a></li>
+    <li><a href="#crisis">Crisis Situations</a></li>
+    <li><a href="#community">Community Policing</a></li>
+    <li><a href="#equipment">Vehicle &amp; Equipment</a></li>
+    <li><a href="#offduty">Off-Duty Conduct</a></li>
+    <li><a href="#amendments">Amendments &amp; Revision History</a></li>
+  </ol>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. MISSION STATEMENT                                          -->
+<!-- ============================================================ -->
+<h1 id="mission">1. Mission Statement</h1>
+
+<blockquote>
+  "To protect and serve the citizens of Los Santos with integrity, professionalism, and unwavering commitment to justice, while fostering community trust through transparent and accountable policing."
+</blockquote>
+
+<p>The Los Santos Police Department (LSPD) is the primary municipal law enforcement agency for the City of Los Santos within the ZO Syndicate RP community. The department is sworn to uphold the laws of the State of San Andreas and the municipal codes of Los Santos, ensuring the safety and security of all civilians, visitors, and residents within city limits.</p>
+
+<h3>1.1 Core Values</h3>
+<ul>
+  <li><strong>Integrity</strong> &mdash; Officers shall conduct themselves honestly and ethically in all interactions, both on and off duty. Corruption, bribery, and dishonesty are grounds for immediate termination.</li>
+  <li><strong>Service</strong> &mdash; The department exists to serve the public. Every interaction with a civilian is an opportunity to build trust and demonstrate professionalism.</li>
+  <li><strong>Accountability</strong> &mdash; Every officer is personally responsible for their actions. The use of body cameras, incident reports, and Internal Affairs oversight ensures transparent operations.</li>
+  <li><strong>Courage</strong> &mdash; Officers are expected to act decisively in dangerous situations, placing the safety of civilians and fellow officers above personal comfort.</li>
+  <li><strong>Respect</strong> &mdash; All persons, regardless of background, circumstance, or status, shall be treated with dignity and respect. Discriminatory conduct will not be tolerated.</li>
+</ul>
+
+<h3>1.2 Jurisdictional Authority</h3>
+<p>The LSPD holds primary jurisdiction over the incorporated City of Los Santos, including all neighborhoods, commercial districts, and infrastructure within city limits. This encompasses Downtown, South Los Santos, Vespucci, Del Perro, East Los Santos, and all territories south of the Vinewood Hills ridgeline and west of the Tataviam Mountains. The department may exercise secondary jurisdiction in unincorporated areas when rendering mutual aid to BCSO or SASP, upon request or standing agreement.</p>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 2. CHAIN OF COMMAND                                           -->
+<!-- ============================================================ -->
+<h1 id="coc">2. Chain of Command</h1>
+
+<p>The LSPD operates under a strict hierarchical command structure. All officers must respect the chain of command when reporting issues, requesting authorization, or escalating situations. Bypassing the chain of command without cause is a disciplinary offense.</p>
+
+<table>
+  <tr>
+    <th>Rank</th>
+    <th>Callsign</th>
+    <th>Pay Grade</th>
+    <th>Authority &amp; Responsibilities</th>
+  </tr>
+  <tr>
+    <td><strong>Chief of Police</strong></td>
+    <td>Lincoln-1</td>
+    <td>PG-10</td>
+    <td>Supreme departmental authority. Sets policy, approves SOP changes, oversees all divisions. Reports to the Mayor and City Council. Authorizes departmental restructuring, inter-agency MOUs, and high-profile operation approval.</td>
+  </tr>
+  <tr>
+    <td><strong>Assistant Chief</strong></td>
+    <td>Lincoln-2</td>
+    <td>PG-9</td>
+    <td>Second in command. Oversees daily operations, acts as Chief in absence. Disciplinary authority up to and including termination recommendations. Manages division commanders, budget oversight, and public affairs.</td>
+  </tr>
+  <tr>
+    <td><strong>Captain</strong></td>
+    <td>Lincoln-3</td>
+    <td>PG-8</td>
+    <td>Division commander. Manages an entire division (Patrol, Detectives, etc.). Authorizes no-knock warrants, undercover operations, and special deployments. May convene disciplinary boards.</td>
+  </tr>
+  <tr>
+    <td><strong>Lieutenant</strong></td>
+    <td>Adam/Baker/Charlie/David-1</td>
+    <td>PG-7</td>
+    <td>Platoon leader. Commands shift operations within a zone. Authorizes PIT maneuvers, high-risk warrant execution, and SWAT callouts. Incident Commander for major scenes until relieved by Captain+.</td>
+  </tr>
+  <tr>
+    <td><strong>Sergeant</strong></td>
+    <td>Zone prefix + Sgt</td>
+    <td>PG-6</td>
+    <td>Squad leader. Supervises 4-8 officers per shift. Authorizes spike strips, taser deployment, and field booking. Conducts roll call briefings. Responsible for FTO program oversight within their squad.</td>
+  </tr>
+  <tr>
+    <td><strong>Corporal</strong></td>
+    <td>Unit number</td>
+    <td>PG-5</td>
+    <td>Senior patrol lead. May act as field supervisor in absence of Sergeant. Mentor to Officers and Cadets. First in line for Sergeant promotion. Assists with scheduling and vehicle assignment.</td>
+  </tr>
+  <tr>
+    <td><strong>Senior Officer</strong></td>
+    <td>Unit number</td>
+    <td>PG-4</td>
+    <td>Experienced patrol officer. FTO (Field Training Officer) certified. May train Cadets on solo patrol evaluation rides. Eligible for specialty division assignment (Detective, Traffic, SWAT tryout).</td>
+  </tr>
+  <tr>
+    <td><strong>Officer</strong></td>
+    <td>Unit number</td>
+    <td>PG-3</td>
+    <td>Standard patrol duties. Cleared for solo patrol. Authorized to conduct traffic stops, respond to calls, make arrests, file reports. May apply for specialty assignments after 2 weeks active duty.</td>
+  </tr>
+  <tr>
+    <td><strong>Probationary Officer</strong></td>
+    <td>Unit number + P</td>
+    <td>PG-2</td>
+    <td>Post-academy officer completing field probation. Paired with an FTO for minimum 1 week. May not pursue solo. Must log 20 documented contacts before clearance for solo patrol.</td>
+  </tr>
+  <tr>
+    <td><strong>Cadet</strong></td>
+    <td>Cadet prefix</td>
+    <td>PG-1</td>
+    <td>Academy trainee. Supervised patrol only &mdash; may not operate independently. No arrest authority without FTO present. Must complete full academy program before advancement.</td>
+  </tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>Acting Rank:</strong> When no supervisor of appropriate rank is available, the senior-most officer on duty assumes acting authority for that rank level. Acting rank must be announced on radio and logged in the shift report.
+</div>
+
+<h3>2.1 Callsign Format</h3>
+<p>All LSPD units use the following callsign convention:</p>
+<ul>
+  <li><strong>Command Staff:</strong> Lincoln-1 (Chief), Lincoln-2 (Asst. Chief), Lincoln-3 (Captain)</li>
+  <li><strong>Zone Patrol:</strong> [Zone Letter]-[Unit Number] (e.g., Adam-12, Baker-7, Charlie-3)</li>
+  <li><strong>Detectives:</strong> Delta-[Unit Number] (e.g., Delta-4)</li>
+  <li><strong>Traffic:</strong> Tango-[Unit Number] (e.g., Tango-2)</li>
+  <li><strong>SWAT:</strong> Sierra-[Unit Number] (e.g., Sierra-1)</li>
+  <li><strong>Air Support:</strong> Air-1, Air-2</li>
+  <li><strong>K-9:</strong> K-[Unit Number] (e.g., K-9)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 3. DIVISIONS & BUREAUS                                        -->
+<!-- ============================================================ -->
+<h1 id="divisions">3. Divisions &amp; Bureaus</h1>
+
+<h2>3.1 Patrol Division</h2>
+<p>The backbone of the LSPD. Patrol officers are the first responders to all calls for service, conduct proactive patrols, enforce traffic law, and maintain visible police presence throughout the city.</p>
+<ul>
+  <li><strong>Commanding Officer:</strong> Captain (Lincoln-3) or designated Lieutenant</li>
+  <li><strong>Requirements:</strong> Completion of LSPD Academy, cleared for solo patrol</li>
+  <li><strong>Shift Structure:</strong> Three 8-hour shifts (Day: 0600-1400, Swing: 1400-2200, Graveyard: 2200-0600)</li>
+  <li><strong>Primary Duties:</strong> Respond to 911 calls, conduct traffic enforcement, execute arrests, file incident reports, provide community assistance, serve as first on-scene for all incidents</li>
+</ul>
+
+<h2>3.2 Detective Bureau</h2>
+<p>The investigative arm of the LSPD. Detectives handle complex cases requiring extended investigation including homicides, organized crime, narcotics, robbery, and fraud.</p>
+<ul>
+  <li><strong>Commanding Officer:</strong> Lieutenant (Detective Bureau CO)</li>
+  <li><strong>Requirements:</strong> Minimum rank of Senior Officer, 3+ weeks active patrol, detective examination passed, recommendation from a Sergeant+</li>
+  <li><strong>Sub-Units:</strong> Homicide, Robbery-Homicide, Narcotics, Organized Crime, Financial Crimes, Cold Cases</li>
+  <li><strong>Authority:</strong> May conduct surveillance, apply for search warrants through DOJ, interview witnesses, run informant networks (with Captain+ approval), and operate in plainclothes</li>
+</ul>
+
+<h2>3.3 Traffic Division</h2>
+<p>Specialized unit focused on traffic enforcement, DUI interdiction, accident investigation, and roadway safety operations.</p>
+<ul>
+  <li><strong>Commanding Officer:</strong> Sergeant (Traffic Division Lead)</li>
+  <li><strong>Requirements:</strong> Minimum rank of Officer, completion of Traffic Enforcement Certification course, clean driving record (no at-fault accidents in prior 2 weeks)</li>
+  <li><strong>Vehicles:</strong> Unmarked interceptors, motorcycle units, radar-equipped cruisers</li>
+  <li><strong>Primary Duties:</strong> Speed enforcement, DUI checkpoints (Lt+ authorization), accident reconstruction, VIN inspections, commercial vehicle inspections, escort details</li>
+</ul>
+
+<h2>3.4 SWAT (Special Weapons and Tactics)</h2>
+<p>The LSPD's tactical response unit deployed for high-risk situations exceeding the capabilities of standard patrol.</p>
+<ul>
+  <li><strong>Commanding Officer:</strong> Lieutenant (SWAT Team Leader)</li>
+  <li><strong>Requirements:</strong> Minimum rank of Senior Officer, physical fitness assessment passed, tactical qualification course (firearms, CQB, rappelling), psychological evaluation, recommendation from SWAT CO</li>
+  <li><strong>Activation Criteria:</strong> Hostage situations, barricaded suspects, high-risk warrant service, active shooter response, VIP protection, counter-terrorism operations</li>
+  <li><strong>Activation Authority:</strong> Lieutenant+ may request SWAT activation; Captain+ must authorize full deployment</li>
+  <li><strong>Team Structure:</strong> Entry team (4-6 operators), sniper/observer team (2), negotiator, tactical medic, team leader</li>
+</ul>
+
+<h2>3.5 Internal Affairs (IA)</h2>
+<p>Internal Affairs is responsible for investigating complaints against LSPD personnel, ensuring adherence to departmental policy, and maintaining public trust.</p>
+<ul>
+  <li><strong>Commanding Officer:</strong> Captain or Assistant Chief (direct report to Chief of Police)</li>
+  <li><strong>Requirements:</strong> Minimum rank of Sergeant, IA certification, appointment by Chief of Police</li>
+  <li><strong>Jurisdiction:</strong> All sworn LSPD personnel, both on and off duty. IA investigators have authority to compel statements (Garrity warnings apply), review body camera footage, access MDT records, and recommend disciplinary action up to termination.</li>
+  <li><strong>Investigations:</strong> Excessive force complaints, corruption, policy violations, officer-involved shootings (mandatory), civilian complaints, conduct unbecoming</li>
+</ul>
+
+<h2>3.6 Training Division</h2>
+<p>Oversees the LSPD Academy, continuing education, field training program, and firearms qualification for all sworn personnel.</p>
+<ul>
+  <li><strong>Commanding Officer:</strong> Lieutenant (Training Division CO)</li>
+  <li><strong>Requirements:</strong> Minimum rank of Sergeant, FTO certification, instructor certification in at least two disciplines</li>
+  <li><strong>Programs:</strong> Basic Academy (new Cadets), FTO Program (Probationary Officers), In-Service Training (all personnel), Specialty Schools (detective, traffic, SWAT), Remedial Training (mandated by IA or supervisors)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 4. USE OF FORCE CONTINUUM                                     -->
+<!-- ============================================================ -->
+<h1 id="uof">4. Use of Force Continuum</h1>
+
+<div class="callout callout-critical">
+  <strong>CRITICAL POLICY:</strong> Officers shall use only the minimum force necessary to resolve a situation safely. Force must be proportional to the threat. Failure to de-escalate when reasonable and safe to do so will result in disciplinary action up to and including termination.
+</div>
+
+<p>The LSPD Use of Force Continuum defines six escalating levels of force. Officers must articulate in writing the justification for every level of force used beyond Level 1.</p>
+
+<table>
+  <tr>
+    <th>Level</th>
+    <th>Force Type</th>
+    <th>Description</th>
+    <th>Reporting</th>
+  </tr>
+  <tr>
+    <td><strong>1</strong></td>
+    <td>Officer Presence</td>
+    <td>The mere presence of a uniformed officer, marked patrol vehicle, or visible badge/identification. No physical contact or verbal commands beyond standard greeting. Professional demeanor and positioning to assert authority.</td>
+    <td>No report required</td>
+  </tr>
+  <tr>
+    <td><strong>2</strong></td>
+    <td>Verbal Commands</td>
+    <td>Clear, lawful verbal directions. Includes commands to stop, show hands, exit a vehicle, get on the ground, or cease specific behavior. Officers should identify themselves and state the reason for the contact when practical. Volume and tone escalation as needed.</td>
+    <td>Document in incident report if part of a contact</td>
+  </tr>
+  <tr>
+    <td><strong>3</strong></td>
+    <td>Soft Hands / Control Techniques</td>
+    <td>Physical contact to guide or control a compliant or passively resistant subject. Includes escort holds, wrist locks on compliant subjects, handcuffing without resistance, and gentle redirection. No strikes or pain compliance.</td>
+    <td>Note in arrest/incident report</td>
+  </tr>
+  <tr>
+    <td><strong>4</strong></td>
+    <td>Hard Hands / Physical Force</td>
+    <td>Techniques to overcome active resistance. Includes takedowns, joint locks with pain compliance, tackles, strikes to large muscle groups (thigh, shoulder), and forcible handcuffing. Used when the subject is actively resisting arrest or attempting to flee.</td>
+    <td>Mandatory Use of Force report within 1 hour. Supervisor notification on scene.</td>
+  </tr>
+  <tr>
+    <td><strong>5</strong></td>
+    <td>Less-Lethal Weapons</td>
+    <td>Deployment of less-lethal tools: Taser (conducted energy device), OC spray (pepper spray), beanbag rounds, rubber bullets, baton strikes. Used when the subject poses a physical threat but lethal force is not yet justified. Taser: one cycle maximum before reassessment. Never target head, neck, or groin with impact weapons.</td>
+    <td>Mandatory Use of Force report. Supervisor response to scene. Medical evaluation for subject mandatory. EMS must clear subject post-taser deployment.</td>
+  </tr>
+  <tr>
+    <td><strong>6</strong></td>
+    <td>Lethal Force</td>
+    <td>Discharge of a firearm or use of any force likely to cause death or serious bodily injury. Authorized only when an officer or civilian faces an imminent threat of death or great bodily harm. See Section 5 for detailed lethal force policy.</td>
+    <td>Mandatory immediate supervisor notification. Crime scene preserved. IA investigation mandatory. Officer placed on administrative leave pending review. Full written statement within 24 hours.</td>
+  </tr>
+</table>
+
+<h3>4.1 De-escalation Requirement</h3>
+<p>Before escalating force, officers must attempt de-escalation when it is safe and practical to do so. De-escalation techniques include:</p>
+<ul>
+  <li>Creating distance and using cover/concealment</li>
+  <li>Slowing down the encounter &mdash; time is often an officer's best tool</li>
+  <li>Communicating calmly and clearly, explaining what you need the person to do and why</li>
+  <li>Requesting additional units to establish a numerical advantage without physical contact</li>
+  <li>Offering alternatives ("You can come with us voluntarily, or we will have to place you in handcuffs")</li>
+  <li>Identifying potential mental health crisis indicators and adjusting approach accordingly</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 5. LETHAL FORCE POLICY                                        -->
+<!-- ============================================================ -->
+<h1 id="lethal">5. Lethal Force Policy</h1>
+
+<h3>5.1 Authorization</h3>
+<p>Lethal force is authorized <strong>only</strong> under the following circumstances:</p>
+<ol>
+  <li><strong>Imminent Threat of Death:</strong> The subject poses an immediate, articulable threat of death or serious bodily injury to the officer or another person.</li>
+  <li><strong>Armed and Aggressive:</strong> The subject is armed with a deadly weapon (firearm, edged weapon, vehicle used as weapon) and is actively threatening or attacking.</li>
+  <li><strong>Fleeing Felon (Narrow Exception):</strong> A subject who has committed a violent felony (murder, attempted murder, aggravated assault with deadly weapon) is fleeing and poses a continued, specific threat to others if not apprehended immediately. The officer must have probable cause to believe the suspect will cause death or serious injury if escape is successful.</li>
+</ol>
+
+<h3>5.2 Prohibited Uses of Lethal Force</h3>
+<ul>
+  <li>Firing warning shots is <strong>strictly prohibited</strong> under all circumstances</li>
+  <li>Shooting at or from a moving vehicle unless the vehicle itself is being used as a deadly weapon directed at the officer or a civilian, and no other option exists</li>
+  <li>Using lethal force against a subject who is fleeing a non-violent offense</li>
+  <li>Firing into a crowd where bystanders are likely to be struck</li>
+  <li>Retaliatory or punitive use of force after a threat has been neutralized</li>
+  <li>Using lethal force when less-lethal alternatives are clearly available and practical</li>
+</ul>
+
+<h3>5.3 Post-Shooting Procedures</h3>
+<ol>
+  <li>Secure the scene and ensure no ongoing threat exists</li>
+  <li>Request EMS immediately for any injured persons, including the suspect</li>
+  <li>Notify a supervisor (Sergeant+) via radio: <code>"Shots fired by police, [location], requesting supervisor and EMS"</code></li>
+  <li>Preserve the crime scene &mdash; do not move evidence, casings, or weapons unless necessary for life safety</li>
+  <li>Involved officer(s) will be separated from the scene and not permitted to discuss the incident with other involved officers until statements are taken</li>
+  <li>Internal Affairs will respond and assume investigative control</li>
+  <li>Involved officer is placed on <strong>mandatory administrative leave</strong> (minimum 48 hours) pending IA review</li>
+  <li>A detailed written statement must be submitted within 24 hours</li>
+  <li>Fitness-for-duty evaluation may be required before return to active patrol</li>
+</ol>
+
+<div class="callout callout-critical">
+  <strong>MANDATORY IA REVIEW:</strong> Every officer-involved shooting, regardless of outcome, triggers a mandatory Internal Affairs investigation. This is non-negotiable and applies even if the shooting is clearly justified. The purpose is documentation and accountability, not presumption of wrongdoing.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 6. TRAFFIC STOP PROCEDURES                                    -->
+<!-- ============================================================ -->
+<h1 id="traffic">6. Traffic Stop Procedures</h1>
+
+<h2>6.1 Standard Traffic Stop</h2>
+<ol>
+  <li><strong>Observation:</strong> Observe and confirm the traffic violation or reasonable suspicion. Note vehicle description, plate number, number of visible occupants, and direction of travel.</li>
+  <li><strong>Notification:</strong> Radio dispatch before initiating: <code>"[Callsign], 10-11, [location], [vehicle description], [plate], [number of occupants]"</code></li>
+  <li><strong>Activation:</strong> Activate emergency lights (overhead lightbar). If the vehicle does not yield within 15 seconds, add siren in short bursts. If still no compliance after 30 seconds, consider whether this is becoming an evasion (see Pursuit Policy).</li>
+  <li><strong>Positioning:</strong> Once the vehicle stops, position the patrol car offset to the left, approximately one car length behind. Leave the driver's door slightly open for emergency exit. Activate spotlight on the driver's mirror if nighttime.</li>
+  <li><strong>Approach:</strong> Exit the patrol vehicle on the driver's side. Approach the stopped vehicle along the driver's side, maintaining awareness of hands and movement inside the vehicle. Touch the rear trunk/tailgate to leave a fingerprint (evidence of contact).</li>
+  <li><strong>Contact:</strong> At the driver's window, stand slightly behind the B-pillar. Greet professionally: <code>"Good [morning/evening], I'm [Rank] [Name] with the Los Santos Police Department. I stopped you because [reason]. May I see your license and registration?"</code></li>
+  <li><strong>Documentation:</strong> Run the license and plate through MDT. Check for warrants, stolen vehicle flags, and prior contacts.</li>
+  <li><strong>Resolution:</strong> Issue a citation, verbal warning, or written warning as appropriate. Return documents and explain next steps clearly. Wish the driver a safe day.</li>
+  <li><strong>Departure:</strong> Wait for the subject vehicle to re-enter traffic before departing. Radio <code>"[Callsign], 10-8, clear from traffic stop"</code>.</li>
+</ol>
+
+<h2>6.2 Felony / High-Risk Traffic Stop</h2>
+<div class="callout callout-critical">
+  <strong>High-risk stops are conducted when the vehicle or occupants are suspected of involvement in a violent felony, the vehicle is confirmed stolen, or occupants are known to be armed.</strong>
+</div>
+<ol>
+  <li>Request backup before initiating &mdash; minimum 2 units on scene for a felony stop</li>
+  <li>Radio: <code>"[Callsign], felony traffic stop, [location], [vehicle], request backup Code 3"</code></li>
+  <li>Position patrol vehicles in a V-formation behind the suspect vehicle, using doors as cover</li>
+  <li>Primary officer issues PA commands: <code>"Driver, turn off the engine and drop the keys out the window. Place both hands outside the window where I can see them."</code></li>
+  <li>Order occupants out one at a time, starting with the driver. Each occupant: hands up, walk backward toward officers, kneel, cross ankles, interlock fingers behind head</li>
+  <li>Cover officer maintains lethal cover. Contact officer approaches to handcuff each occupant individually</li>
+  <li>Once all occupants are secured, clear the vehicle visually before approaching</li>
+  <li>Do not approach the vehicle until it is confirmed empty of additional occupants</li>
+</ol>
+
+<h2>6.3 Motorcycle Stops</h2>
+<ul>
+  <li>Maintain increased distance during approach &mdash; motorcyclists can accelerate rapidly</li>
+  <li>Approach from the left (non-throttle) side when possible</li>
+  <li>Request rider to turn off the engine, put the kickstand down, dismount, and step away from the motorcycle</li>
+  <li>Be aware that helmets may conceal identity and limit the rider's peripheral vision and hearing</li>
+  <li>Do not initiate pursuit of motorcycles in heavy traffic &mdash; risk to the rider and public is extreme</li>
+</ul>
+
+<h2>6.4 Commercial Vehicle Stops</h2>
+<ul>
+  <li>Direct the vehicle to a safe wide shoulder or parking area &mdash; commercial vehicles require more stopping distance</li>
+  <li>Approach with heightened awareness of blind spots (commercial vehicles have extensive blind zones)</li>
+  <li>Check DOT number, registration, driver CDL, logbook if applicable</li>
+  <li>Cargo inspection requires probable cause or consent unless at a designated checkpoint</li>
+  <li>Coordinate with Traffic Division for weight and safety compliance inspections</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 7. VEHICLE PURSUIT POLICY                                     -->
+<!-- ============================================================ -->
+<h1 id="pursuit">7. Vehicle Pursuit Policy</h1>
+
+<div class="callout callout-warning">
+  <strong>PURSUIT THRESHOLD:</strong> Vehicle pursuits are inherently dangerous and may only be initiated when the suspect is believed to have committed a violent felony or poses an immediate ongoing threat to public safety. Traffic violations alone do NOT justify pursuit.
+</div>
+
+<h3>7.1 Initiation Criteria</h3>
+<p>A pursuit may be initiated when ALL of the following conditions are met:</p>
+<ol>
+  <li>The suspect has committed or is reasonably suspected of committing a <strong>violent felony</strong> (murder, armed robbery, aggravated assault, kidnapping, carjacking)</li>
+  <li>The suspect has actively failed to yield after emergency lights and siren activation</li>
+  <li>The officer reasonably believes the suspect can be apprehended without undue risk to the public</li>
+  <li>Environmental conditions (weather, traffic density, road surface, time of day) are assessed as manageable</li>
+</ol>
+
+<h3>7.2 Radio Protocol During Pursuit</h3>
+<p>The initiating officer must continuously broadcast the following:</p>
+<ul>
+  <li>Direction of travel and current street/highway</li>
+  <li>Suspect vehicle speed (approximate)</li>
+  <li>Suspect vehicle description and plate (if known)</li>
+  <li>Driving behavior of the suspect (running red lights, wrong-way driving, sidewalk driving)</li>
+  <li>Road conditions and traffic density</li>
+  <li>Number of LSPD units in pursuit</li>
+</ul>
+<p>All non-essential radio traffic must cease during an active pursuit. Dispatch will coordinate channel priority.</p>
+
+<h3>7.3 Maximum Authorized Units</h3>
+<table>
+  <tr>
+    <th>Role</th>
+    <th>Max Units</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Primary Unit</td>
+    <td>1</td>
+    <td>Initiating officer, maintains visual on suspect</td>
+  </tr>
+  <tr>
+    <td>Secondary Unit</td>
+    <td>1</td>
+    <td>Follows primary, ready to assume lead if primary disengages</td>
+  </tr>
+  <tr>
+    <td>Tertiary/Parallel Units</td>
+    <td>1-2</td>
+    <td>Parallel streets for containment, spike strip positioning</td>
+  </tr>
+  <tr>
+    <td>Supervisor</td>
+    <td>1</td>
+    <td>Sergeant+ monitors and has authority to terminate</td>
+  </tr>
+  <tr>
+    <td>Air Support</td>
+    <td>1</td>
+    <td>If available &mdash; when air support is overhead, ground units may be ordered to disengage and let the helicopter track</td>
+  </tr>
+</table>
+
+<h3>7.4 Tactical Interventions</h3>
+<ul>
+  <li><strong>Spike Strips:</strong> <strong>Sergeant+ authorization required.</strong> Must be deployed ahead of the pursuit path. Deploying officer must confirm the area is clear of civilian vehicles and pedestrians. Retrieve strips immediately after use.</li>
+  <li><strong>PIT Maneuver (Precision Immobilization Technique):</strong> <strong>Lieutenant+ authorization required.</strong> Only at speeds under 50 mph. Only on clear roadways with no pedestrian traffic. Prohibited near bridges, cliffs, or steep embankments. The executing officer must be trained in PIT technique.</li>
+  <li><strong>Boxing In:</strong> Sergeant+ authorization. Multiple units coordinate to slow and stop the suspect vehicle. Only at low speeds (&lt;25 mph).</li>
+  <li><strong>Roadblocks:</strong> <strong>Prohibited.</strong> Static roadblocks present unacceptable risk to both officers and the suspect.</li>
+</ul>
+
+<h3>7.5 Pursuit Termination</h3>
+<p>A pursuit <strong>must</strong> be terminated when:</p>
+<ul>
+  <li>A supervisor orders termination</li>
+  <li>The risk to public safety exceeds the severity of the offense</li>
+  <li>The suspect's identity is confirmed and they can be apprehended later</li>
+  <li>Environmental conditions become too hazardous (school zone, heavy pedestrian area, severe weather)</li>
+  <li>The pursuing officer loses visual contact for more than 30 seconds</li>
+  <li>The officer's vehicle becomes mechanically compromised</li>
+</ul>
+<p>Upon termination, all units must deactivate emergency equipment and reduce speed immediately. The primary unit files a Pursuit Report within 2 hours.</p>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 8. ARREST & BOOKING                                           -->
+<!-- ============================================================ -->
+<h1 id="arrest">8. Arrest &amp; Booking</h1>
+
+<h3>8.1 Miranda Rights</h3>
+<div class="callout callout-info">
+  <strong>Miranda Warning &mdash; Required before any custodial interrogation:</strong>
+</div>
+<blockquote>
+  "You have the right to remain silent. Anything you say can and will be used against you in a court of law. You have the right to an attorney. If you cannot afford an attorney, one will be appointed to you by the court. Do you understand these rights as I have read them to you? With these rights in mind, do you wish to speak with me?"
+</blockquote>
+<p>Miranda must be read <strong>before</strong> any questioning of a suspect who is in custody (not free to leave). Failure to Mirandize does not invalidate the arrest but will render any post-arrest statements inadmissible. Spontaneous statements made without questioning are still admissible.</p>
+
+<h3>8.2 Arrest Procedure</h3>
+<ol>
+  <li>Clearly inform the suspect: <code>"You are under arrest for [specific charge(s)]."</code></li>
+  <li>Instruct the suspect to place their hands behind their back. Apply handcuffs &mdash; double-lock immediately to prevent tightening.</li>
+  <li>Conduct a search incident to arrest: pat down for weapons and contraband. Same-gender search preferred; if not available, a witness officer must be present.</li>
+  <li>Inventory all personal property. Document items in the arrest report. Secure valuables in a property bag.</li>
+  <li>Advise Miranda rights if any questioning is intended.</li>
+  <li>Transport the suspect to Mission Row Police Department for processing. The suspect must be secured in the rear of a patrol vehicle with seatbelt fastened.</li>
+</ol>
+
+<h3>8.3 Transport Procedures</h3>
+<ul>
+  <li>Prior to transport, search the rear compartment of the patrol vehicle for contraband or weapons</li>
+  <li>Notify dispatch of transport start: <code>"[Callsign], 10-15, transporting one to Mission Row from [location]"</code></li>
+  <li>Note the starting mileage/odometer reading at transport start and end</li>
+  <li>If transporting a subject of the opposite gender, request a second unit to follow or ride along</li>
+  <li>If the suspect complains of medical issues, divert to Pillbox Medical immediately</li>
+  <li>Notify dispatch upon arrival at Mission Row</li>
+</ul>
+
+<h3>8.4 Booking at Mission Row PD</h3>
+<ol>
+  <li>Escort the suspect to the booking area. Remove handcuffs only in a secure processing room.</li>
+  <li>Photograph the suspect (mugshot) and obtain identifying information</li>
+  <li>Log the following in MDT:
+    <ul>
+      <li>Full name, date of birth, physical description</li>
+      <li>Charges (penal code sections)</li>
+      <li>Arresting officer name, badge number, callsign</li>
+      <li>Date, time, and location of arrest</li>
+      <li>Evidence collected and evidence tag numbers</li>
+      <li>Miranda status (read / waived / invoked)</li>
+      <li>Property inventory list</li>
+    </ul>
+  </li>
+  <li>If applicable, notify the Detective Bureau of the arrest for ongoing case assignment</li>
+  <li>Process the suspect for holding, release, or transfer to Bolingbroke Penitentiary based on charges</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 9. EVIDENCE HANDLING                                          -->
+<!-- ============================================================ -->
+<h1 id="evidence">9. Evidence Handling &amp; Chain of Custody</h1>
+
+<h3>9.1 Collection Procedures</h3>
+<ol>
+  <li><strong>Secure the Scene:</strong> Establish a perimeter. No unauthorized personnel may enter the evidence area.</li>
+  <li><strong>Photograph:</strong> Photograph all evidence in place <em>before</em> moving or touching anything. Capture wide shots for context and close-ups for detail. Include a scale reference where appropriate.</li>
+  <li><strong>Glove Up:</strong> Wear latex/nitrile gloves for all evidence handling. Change gloves between items to prevent cross-contamination.</li>
+  <li><strong>Collection:</strong> Place each item in an appropriate container (paper bag for biologicals, plastic bag for dry items, rigid container for fragile items). Never place wet items in sealed plastic.</li>
+  <li><strong>Tagging:</strong> Attach an evidence tag to each item with: case number, item number, date/time collected, location found, collecting officer name and badge, brief description of item.</li>
+</ol>
+
+<h3>9.2 Specific Evidence Types</h3>
+<table>
+  <tr>
+    <th>Evidence Type</th>
+    <th>Procedure</th>
+  </tr>
+  <tr>
+    <td>Firearms</td>
+    <td>Unload, make safe, photograph with serial number visible, tag, secure in evidence locker weapons cabinet. Note caliber, make, model, serial number, loaded status, round count.</td>
+  </tr>
+  <tr>
+    <td>Narcotics</td>
+    <td>Weigh on calibrated scale, photograph with scale visible, field test if available, bag and seal with tamper-evident tape. Record exact weight and substance description.</td>
+  </tr>
+  <tr>
+    <td>Currency</td>
+    <td>Count in presence of a witness officer, photograph spread, record denomination breakdown, seal in evidence bag with both officers signing the seal.</td>
+  </tr>
+  <tr>
+    <td>Vehicles</td>
+    <td>Impound to LSPD lot. Complete a detailed vehicle condition report. Photograph exterior (all 4 sides), interior, trunk, and any damage. Do not search without warrant or applicable exception.</td>
+  </tr>
+  <tr>
+    <td>Digital/Electronics</td>
+    <td>Do not power on or attempt to access. Bag in a Faraday bag if available to prevent remote wipe. Record make, model, and condition. Warrant required for access to contents.</td>
+  </tr>
+</table>
+
+<h3>9.3 Chain of Custody</h3>
+<p>Every transfer of evidence from one person to another must be logged in the Chain of Custody form. Entries include:</p>
+<ul>
+  <li>Date and time of transfer</li>
+  <li>Name, badge, and rank of person releasing the evidence</li>
+  <li>Name, badge, and rank of person receiving the evidence</li>
+  <li>Reason for transfer (e.g., "Submitted to evidence locker," "Released to Detective Bureau," "Presented in court")</li>
+  <li>Condition of the evidence at time of transfer</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>CHAIN OF CUSTODY VIOLATION:</strong> Any break in the chain of custody may render evidence inadmissible in court. If a break is discovered, notify a supervisor and IA immediately. The evidence custodian must document the gap and assess whether the integrity of the evidence has been compromised.
+</div>
+
+<h3>9.4 Evidence Locker</h3>
+<ul>
+  <li>Located at Mission Row PD, basement level. Access is restricted to authorized evidence custodians and supervisors (Sergeant+).</li>
+  <li>Weapons cabinet requires a separate key held by the Sergeant of the Watch.</li>
+  <li>All entries and exits to the evidence locker are logged electronically.</li>
+  <li>Annual audit of all stored evidence conducted by Internal Affairs.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 10. SEARCH & SEIZURE                                          -->
+<!-- ============================================================ -->
+<h1 id="search">10. Search &amp; Seizure</h1>
+
+<div class="callout callout-info">
+  <strong>Fourth Amendment Principle:</strong> Citizens are protected from unreasonable searches and seizures. All searches must fall under a recognized legal exception or be supported by a valid warrant issued by a DOJ judge.
+</div>
+
+<h3>10.1 Warrant-Based Searches</h3>
+<p>The preferred method for all searches. A search warrant must:</p>
+<ul>
+  <li>Be issued by a DOJ judge based on sworn probable cause affidavit</li>
+  <li>Specifically describe the place to be searched and the items to be seized</li>
+  <li>Be executed within the timeframe specified (typically 72 hours)</li>
+  <li>Be served with a knock-and-announce unless a no-knock provision is authorized (Captain+ approval required for request)</li>
+</ul>
+
+<h3>10.2 Warrantless Search Exceptions</h3>
+
+<h4>10.2.1 Consent Search</h4>
+<p>A person may voluntarily consent to a search of their person, vehicle, or property. Consent must be given freely and without coercion. The subject may revoke consent at any time, at which point the search must stop unless another exception applies. Consent should be obtained verbally on record or in writing when practical.</p>
+
+<h4>10.2.2 Search Incident to Arrest</h4>
+<p>Upon a lawful arrest, the arresting officer may search the suspect's person and the area within their immediate reach (wingspan rule) for weapons and evidence. Vehicle passenger compartment may be searched incident to arrest if the suspect is unsecured or if there is reason to believe evidence of the crime of arrest is in the vehicle.</p>
+
+<h4>10.2.3 Vehicle Exception (Carroll Doctrine)</h4>
+<p>If an officer has probable cause to believe a vehicle contains evidence of a crime or contraband, the vehicle may be searched without a warrant due to its mobile nature. This includes the entire vehicle and all containers within that could hold the suspected item. Probable cause must be articulable &mdash; a "hunch" is insufficient.</p>
+
+<h4>10.2.4 Plain View Doctrine</h4>
+<p>An officer may seize evidence or contraband that is in plain view if: (a) the officer is lawfully present where the item is visible, (b) the incriminating nature of the item is immediately apparent, and (c) the officer has lawful access to the item. You may not move objects to create plain view.</p>
+
+<h4>10.2.5 Exigent Circumstances / Emergency Exception</h4>
+<p>A warrantless search is permitted when there are exigent circumstances including: imminent destruction of evidence, hot pursuit of a fleeing felon, risk of harm to persons inside a structure, or an active emergency requiring immediate entry. The burden is on the officer to justify the emergency. Document thoroughly.</p>
+
+<h4>10.2.6 Terry Stop (Stop and Frisk)</h4>
+<p>Based on reasonable articulable suspicion that a person is armed and dangerous, an officer may conduct a limited pat-down of the outer clothing for weapons. This is NOT a full search &mdash; only a pat-down for the officer's safety. Items discovered during a Terry frisk are admissible only if their nature as contraband was immediately apparent through touch (plain feel doctrine).</p>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 11. INTERROGATION PROCEDURES                                  -->
+<!-- ============================================================ -->
+<h1 id="interrogation">11. Interrogation Procedures</h1>
+
+<h3>11.1 Pre-Interrogation Requirements</h3>
+<ol>
+  <li>Confirm the suspect is in custody (not free to leave)</li>
+  <li>Read Miranda rights in full (see Section 8.1). Obtain acknowledgment.</li>
+  <li>If the suspect invokes their right to silence, <strong>all questioning must cease immediately</strong></li>
+  <li>If the suspect requests an attorney, <strong>all questioning must cease immediately</strong> until an attorney is present</li>
+  <li>Ensure the interrogation room recording system is active before beginning</li>
+</ol>
+
+<h3>11.2 Interrogation Conduct</h3>
+<ul>
+  <li>All interrogations must be recorded (audio and video) from start to finish. The recording must capture the full Miranda advisement and the suspect's response.</li>
+  <li>Maximum of two officers in the interrogation room at any time</li>
+  <li>Officers may not use physical force, threats of violence, threats against family members, or promises of leniency to elicit statements</li>
+  <li>Deception regarding evidence (e.g., claiming to have DNA or witnesses) is permitted within reason but must not rise to the level of coercion</li>
+  <li>Provide water and restroom breaks at reasonable intervals. Interrogations exceeding 4 hours require supervisor approval to continue.</li>
+  <li>The suspect may invoke their rights at any point during the interrogation, at which point questioning must stop immediately</li>
+</ul>
+
+<h3>11.3 Juvenile Procedures</h3>
+<div class="callout callout-warning">
+  <strong>JUVENILE SUSPECTS (Under 18):</strong> Enhanced protections apply to all juvenile suspects.
+</div>
+<ul>
+  <li>A parent, guardian, or juvenile advocate <strong>must</strong> be present during any questioning</li>
+  <li>Miranda must be read in language the juvenile can understand; confirm comprehension</li>
+  <li>Interrogation duration limited to 2 hours maximum</li>
+  <li>No deception tactics may be used on juvenile suspects</li>
+  <li>Juvenile suspects must be held separately from adult suspects at all times</li>
+  <li>Contact juvenile services and the on-duty DOJ representative for processing guidance</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 12. RADIO COMMUNICATIONS                                      -->
+<!-- ============================================================ -->
+<h1 id="radio">12. Radio Communications</h1>
+
+<h3>12.1 Channel Assignments</h3>
+<table>
+  <tr>
+    <th>Channel</th>
+    <th>Designation</th>
+    <th>Usage</th>
+  </tr>
+  <tr>
+    <td>CH 1</td>
+    <td>LSPD Primary</td>
+    <td>All standard LSPD patrol communications, dispatch, and call assignments</td>
+  </tr>
+  <tr>
+    <td>CH 2</td>
+    <td>LSPD TAC</td>
+    <td>Tactical operations, pursuits, SWAT, and special operations (keeps primary clear)</td>
+  </tr>
+  <tr>
+    <td>CH 3</td>
+    <td>LSPD Command</td>
+    <td>Command staff communications, supervisor-to-supervisor, sensitive information</td>
+  </tr>
+  <tr>
+    <td>CH 4</td>
+    <td>Inter-Agency</td>
+    <td>Joint operations with BCSO, SASP, EMS. Mutual aid coordination.</td>
+  </tr>
+  <tr>
+    <td>CH 5</td>
+    <td>EMS/Fire</td>
+    <td>Medical emergencies, fire department coordination</td>
+  </tr>
+</table>
+
+<h3>12.2 Ten-Codes</h3>
+<table>
+  <tr><th>Code</th><th>Meaning</th><th>Code</th><th>Meaning</th></tr>
+  <tr><td>10-1</td><td>Receiving poorly / Bad signal</td><td>10-35</td><td>Confidential information</td></tr>
+  <tr><td>10-4</td><td>Acknowledged / Copy that</td><td>10-41</td><td>Beginning shift / On duty</td></tr>
+  <tr><td>10-6</td><td>Busy / Stand by</td><td>10-42</td><td>Ending shift / Off duty</td></tr>
+  <tr><td>10-7</td><td>Out of service</td><td>10-50</td><td>Traffic accident</td></tr>
+  <tr><td>10-8</td><td>In service / Available</td><td>10-51</td><td>Tow truck requested</td></tr>
+  <tr><td>10-9</td><td>Repeat last transmission</td><td>10-55</td><td>DUI / Intoxicated driver</td></tr>
+  <tr><td>10-11</td><td>Traffic stop</td><td>10-66</td><td>Suspicious person</td></tr>
+  <tr><td>10-15</td><td>Suspect in custody</td><td>10-67</td><td>Person calling for help</td></tr>
+  <tr><td>10-17</td><td>En route to call</td><td>10-70</td><td>Prowler</td></tr>
+  <tr><td>10-20</td><td>Location / What's your 20?</td><td>10-71</td><td>Shots fired</td></tr>
+  <tr><td>10-22</td><td>Disregard last</td><td>10-78</td><td>Officer needs assistance</td></tr>
+  <tr><td>10-23</td><td>Arrived on scene</td><td>10-80</td><td>Pursuit in progress</td></tr>
+  <tr><td>10-25</td><td>Report to / Meet at</td><td>10-97</td><td>Arrived at scene</td></tr>
+  <tr><td>10-29</td><td>Warrant check</td><td>10-98</td><td>Assignment complete</td></tr>
+  <tr><td>10-32</td><td>Person with weapon</td><td>10-99</td><td>Officer needs emergency help (PANIC)</td></tr>
+</table>
+
+<h3>12.3 Status Codes</h3>
+<table>
+  <tr><th>Code</th><th>Meaning</th></tr>
+  <tr><td>Code 1</td><td>Respond at normal speed, no lights/sirens</td></tr>
+  <tr><td>Code 2</td><td>Respond urgently, lights only, no siren</td></tr>
+  <tr><td>Code 3</td><td>Emergency response, full lights and sirens</td></tr>
+  <tr><td>Code 4</td><td>Scene secure, no further assistance needed</td></tr>
+  <tr><td>Code 5</td><td>Stakeout in progress, avoid area</td></tr>
+  <tr><td>Code 6</td><td>Out on investigation</td></tr>
+</table>
+
+<h3>12.4 NATO Phonetic Alphabet</h3>
+<table>
+  <tr><th>Letter</th><th>Word</th><th>Letter</th><th>Word</th><th>Letter</th><th>Word</th></tr>
+  <tr><td>A</td><td>Alpha</td><td>J</td><td>Juliet</td><td>S</td><td>Sierra</td></tr>
+  <tr><td>B</td><td>Bravo</td><td>K</td><td>Kilo</td><td>T</td><td>Tango</td></tr>
+  <tr><td>C</td><td>Charlie</td><td>L</td><td>Lima</td><td>U</td><td>Uniform</td></tr>
+  <tr><td>D</td><td>Delta</td><td>M</td><td>Mike</td><td>V</td><td>Victor</td></tr>
+  <tr><td>E</td><td>Echo</td><td>N</td><td>November</td><td>W</td><td>Whiskey</td></tr>
+  <tr><td>F</td><td>Foxtrot</td><td>O</td><td>Oscar</td><td>X</td><td>X-ray</td></tr>
+  <tr><td>G</td><td>Golf</td><td>P</td><td>Papa</td><td>Y</td><td>Yankee</td></tr>
+  <tr><td>H</td><td>Hotel</td><td>Q</td><td>Quebec</td><td>Z</td><td>Zulu</td></tr>
+  <tr><td>I</td><td>India</td><td>R</td><td>Romeo</td><td></td><td></td></tr>
+</table>
+
+<h3>12.5 Radio Etiquette</h3>
+<ul>
+  <li>Always identify yourself by callsign before transmitting</li>
+  <li>Keep transmissions brief and professional &mdash; no casual conversation on radio</li>
+  <li>Wait for the channel to be clear before transmitting. Listen before you key up.</li>
+  <li>Use plain language when 10-codes may cause confusion, especially on inter-agency channels</li>
+  <li>Priority traffic: say <code>"Priority traffic"</code> before your transmission &mdash; all other units will hold</li>
+  <li>Emergency: <code>"10-99, 10-99, [callsign], [location], [nature of emergency]"</code> &mdash; all units immediately clear the channel</li>
+  <li>Acknowledge dispatch assignments with <code>"[Callsign], copy"</code> or <code>"[Callsign], 10-4"</code></li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 13. PATROL ZONES & BEATS                                      -->
+<!-- ============================================================ -->
+<h1 id="zones">13. Patrol Zones &amp; Beats</h1>
+
+<p>The City of Los Santos is divided into four primary patrol zones. Each zone has a designated Lieutenant and at least one Sergeant on each shift. Officers are assigned to zones at roll call and are expected to maintain coverage within their assigned area unless dispatched elsewhere.</p>
+
+<h3>13.1 Adam Zone (Downtown / Central)</h3>
+<ul>
+  <li><strong>Area:</strong> Downtown Los Santos, Pillbox Hill, Textile City, Alta, Burton, Rockford Hills (south), Legion Square, Maze Bank Tower area</li>
+  <li><strong>Character:</strong> High-density commercial district. Heavy pedestrian and vehicle traffic during day. Nightlife activity increases calls after 2200. Financial district attracts robbery and fraud.</li>
+  <li><strong>Key Locations:</strong> Mission Row PD (HQ), Pillbox Medical Center, Maze Bank Tower, Legion Square, courthouse, LifeInvader offices</li>
+  <li><strong>Common Calls:</strong> Robbery, assault, traffic congestion, disorderly conduct, mental health crises, shoplifting, vehicle theft</li>
+  <li><strong>Callsign Prefix:</strong> Adam (A)</li>
+</ul>
+
+<h3>13.2 Baker Zone (South Los Santos)</h3>
+<ul>
+  <li><strong>Area:</strong> South Los Santos, Rancho, Strawberry, Davis, Chamberlain Hills, Forum Drive, Carson Avenue, Banning</li>
+  <li><strong>Character:</strong> High-crime residential area. Gang activity (Ballas, Families, Vagos) concentrated here. Frequent shots-fired calls. Officers should patrol in pairs when possible.</li>
+  <li><strong>Key Locations:</strong> Davis Sheriff Station (BCSO sub-station), Grove Street, Forum Drive, Rancho projects, Los Santos International Airport (perimeter)</li>
+  <li><strong>Common Calls:</strong> Shots fired, gang activity, drug dealing, domestic violence, stolen vehicles, drive-by shootings, weapons offenses</li>
+  <li><strong>Callsign Prefix:</strong> Baker (B)</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>HIGH-RISK ZONE:</strong> Baker Zone has the highest call volume and officer safety incidents. Officers assigned to Baker should request backup before engaging in enforcement actions when practical. Solo stops in the Davis/Grove Street area are discouraged during swing and graveyard shifts.
+</div>
+
+<h3>13.3 Charlie Zone (Vespucci / West Side)</h3>
+<ul>
+  <li><strong>Area:</strong> Vespucci, Del Perro, Pacific Bluffs, Vespucci Beach, Del Perro Pier, Morningwood, Little Seoul, Vespucci Canals</li>
+  <li><strong>Character:</strong> Tourist and entertainment district. Beach-area calls increase seasonally. Del Perro Pier attracts crowds. Little Seoul has its own community dynamics. Vespucci Canals can be a haven for narcotics activity.</li>
+  <li><strong>Key Locations:</strong> Del Perro Pier, Vespucci Beach, Pacific Bluffs Country Club, Vespucci Canals, Little Seoul businesses</li>
+  <li><strong>Common Calls:</strong> Public intoxication, theft, assault, noise complaints, narcotics, tourist-related incidents, beach disturbances</li>
+  <li><strong>Callsign Prefix:</strong> Charlie (C)</li>
+</ul>
+
+<h3>13.4 David Zone (East Los Santos)</h3>
+<ul>
+  <li><strong>Area:</strong> La Mesa, Cypress Flats, El Burro Heights, Elysian Island, Murrieta Heights, East Vinewood, Mirror Park</li>
+  <li><strong>Character:</strong> Industrial and residential mix. Warehouses and docks in Elysian Island and Cypress Flats provide cover for illicit operations. Mirror Park is a quieter residential area. La Mesa has moderate crime activity.</li>
+  <li><strong>Key Locations:</strong> La Mesa auto shops, Cypress Flats industrial park, Elysian Island docks, Mirror Park community, LSIA cargo terminals</li>
+  <li><strong>Common Calls:</strong> Burglary, auto theft, illegal chop shops, drug manufacturing, warehouse break-ins, trespassing, dock-area smuggling</li>
+  <li><strong>Callsign Prefix:</strong> David (D)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 14. REPORT WRITING                                            -->
+<!-- ============================================================ -->
+<h1 id="reports">14. Report Writing</h1>
+
+<p>Accurate, complete, and timely report writing is fundamental to law enforcement. Reports are legal documents that may be used in court proceedings, Internal Affairs investigations, and departmental reviews. Every report reflects on the professionalism of the authoring officer and the department.</p>
+
+<h3>14.1 Report Types &amp; Deadlines</h3>
+<table>
+  <tr>
+    <th>Report Type</th>
+    <th>When Required</th>
+    <th>Filing Deadline</th>
+  </tr>
+  <tr>
+    <td>Incident Report</td>
+    <td>Every call for service, every citizen contact involving enforcement action</td>
+    <td>End of shift</td>
+  </tr>
+  <tr>
+    <td>Arrest Report</td>
+    <td>Every arrest, including cite-and-release</td>
+    <td>Before suspect is booked or within 2 hours of arrest</td>
+  </tr>
+  <tr>
+    <td>Use of Force Report</td>
+    <td>Any use of force at Level 4 (Hard Hands) or above</td>
+    <td>Within 1 hour of the incident. Supervisor must co-sign.</td>
+  </tr>
+  <tr>
+    <td>Pursuit Report</td>
+    <td>Every vehicle pursuit, including terminated pursuits</td>
+    <td>Within 2 hours of pursuit conclusion</td>
+  </tr>
+  <tr>
+    <td>Accident Report</td>
+    <td>All traffic collisions (civilian or involving LSPD vehicles)</td>
+    <td>End of shift</td>
+  </tr>
+  <tr>
+    <td>Officer-Involved Shooting Report</td>
+    <td>Every discharge of a firearm by an officer (except range qualification)</td>
+    <td>Within 24 hours. Initial verbal report to supervisor immediately.</td>
+  </tr>
+  <tr>
+    <td>Supplemental Report</td>
+    <td>Additional information on an existing case</td>
+    <td>Within 24 hours of obtaining new information</td>
+  </tr>
+</table>
+
+<h3>14.2 Required Fields (All Reports)</h3>
+<ul>
+  <li>Case/Incident number (assigned by MDT)</li>
+  <li>Date, time, and location of incident</li>
+  <li>Reporting officer name, badge number, callsign, and division</li>
+  <li>Involved parties (suspects, victims, witnesses) with physical descriptions and contact information</li>
+  <li>Narrative: a chronological, factual account of events in first person. Include who, what, when, where, why, and how.</li>
+  <li>Evidence collected (with tag numbers)</li>
+  <li>Charges filed (if applicable) with penal code sections</li>
+  <li>Disposition (arrest, citation, warning, referred to detectives, unfounded, etc.)</li>
+  <li>Supervisor review signature</li>
+</ul>
+
+<h3>14.3 Report Writing Standards</h3>
+<ul>
+  <li>Write in first person, past tense ("I observed..." not "The officer observed...")</li>
+  <li>Be factual and objective. Do not include opinions or conclusions unless explicitly documenting probable cause.</li>
+  <li>Use exact quotes when recording suspect or witness statements</li>
+  <li>Avoid jargon or slang &mdash; write for a civilian audience (judges, attorneys, jurors)</li>
+  <li>Spell out abbreviations on first use (e.g., "Mobile Data Terminal (MDT)")</li>
+  <li>Proofread before submission. Errors undermine credibility.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 15. OFFICER CONDUCT & APPEARANCE                              -->
+<!-- ============================================================ -->
+<h1 id="conduct">15. Officer Conduct &amp; Appearance</h1>
+
+<h3>15.1 Uniform Standards</h3>
+<ul>
+  <li><strong>Patrol Uniform:</strong> Department-issued navy/black uniform shirt and pants, black duty belt, body armor (mandatory), badge displayed on left chest, nameplate on right chest, department patch on both shoulders</li>
+  <li><strong>Footwear:</strong> Black duty boots, polished and in good condition. No open-toed or casual shoes.</li>
+  <li><strong>Headwear:</strong> Department-issued patrol cap or no headwear. No personal hats or beanies while on duty.</li>
+  <li><strong>Detective/Plainclothes:</strong> Professional business attire. Badge and firearm must be concealed. Department ID must be carried and presented upon request.</li>
+  <li><strong>SWAT:</strong> Tactical BDU, plate carrier, tactical helmet. Full gear required during deployments.</li>
+  <li><strong>Accessories:</strong> No visible jewelry beyond a wedding ring and a watch. No visible tattoos that depict offensive or gang-related imagery. Sunglasses permitted (no mirrored or colored lenses during citizen contacts).</li>
+</ul>
+
+<h3>15.2 Grooming Standards</h3>
+<ul>
+  <li>Hair must be neat, clean, and professional. It must not interfere with the proper wearing of headgear or duty equipment.</li>
+  <li>Facial hair is permitted if neatly trimmed and maintained. It must not interfere with gas mask or respirator seal.</li>
+  <li>Extreme hairstyles, unnatural hair colors, or styles that present an unprofessional image are prohibited while on duty.</li>
+</ul>
+
+<h3>15.3 On-Duty Conduct</h3>
+<ul>
+  <li>Officers shall conduct themselves in a professional and courteous manner during all interactions</li>
+  <li>Use of profanity directed at civilians is prohibited unless quoting a suspect in a report</li>
+  <li>Sleeping on duty is a terminable offense</li>
+  <li>Personal phone use is limited to emergencies and breaks. No personal calls during active enforcement.</li>
+  <li>Consumption of alcohol while on duty, or reporting to duty while impaired, is grounds for immediate suspension and IA investigation</li>
+</ul>
+
+<h3>15.4 Vehicle Maintenance</h3>
+<ul>
+  <li>Officers are responsible for the condition of their assigned patrol vehicle during their shift</li>
+  <li>Pre-shift vehicle inspection: check lights, siren, fuel, tires, emergency equipment, rear compartment for contraband, MDT functionality, body camera mount</li>
+  <li>Report any damage or mechanical issues to the shift supervisor immediately</li>
+  <li>Vehicles must be refueled at end of shift if below half tank</li>
+  <li>Personal items and trash must be removed at end of shift</li>
+</ul>
+
+<h3>15.5 Social Media Policy</h3>
+<ul>
+  <li>Officers may not post photos or videos taken during active duty showing suspects, victims, crime scenes, or confidential operations</li>
+  <li>Identification as an LSPD officer on social media subjects the officer to departmental conduct standards in their online interactions</li>
+  <li>Officers may not disclose operational information, case details, or internal department matters on social media</li>
+  <li>Violations are subject to disciplinary action</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 16. DISCIPLINARY PROCEDURES                                   -->
+<!-- ============================================================ -->
+<h1 id="discipline">16. Disciplinary Procedures</h1>
+
+<h3>16.1 Progressive Discipline Scale</h3>
+<table>
+  <tr>
+    <th>Level</th>
+    <th>Action</th>
+    <th>Authority</th>
+    <th>Examples</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Verbal Warning</td>
+    <td>Sergeant+</td>
+    <td>Minor uniform violation, late to roll call, minor radio protocol error</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Written Warning</td>
+    <td>Sergeant+</td>
+    <td>Repeated verbal warning offense, failure to file report on time, minor insubordination</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Suspension (1-7 days)</td>
+    <td>Lieutenant+</td>
+    <td>Unjustified use of force, negligent vehicle damage, conduct unbecoming, missed shift without notice</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Extended Suspension (8-30 days)</td>
+    <td>Captain+</td>
+    <td>Serious policy violation, IA sustained complaint, repeated Level 3 offenses, dishonesty in a report</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Demotion</td>
+    <td>Assistant Chief+</td>
+    <td>Dereliction of duty by a supervisor, failure to report subordinate misconduct, sustained IA complaint of a serious nature</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Termination</td>
+    <td>Chief of Police</td>
+    <td>Corruption, excessive force causing serious injury, criminal conduct, repeated sustained IA complaints, dishonesty under oath</td>
+  </tr>
+</table>
+
+<h3>16.2 Internal Affairs Investigation Process</h3>
+<ol>
+  <li><strong>Complaint Received:</strong> Complaint filed by civilian, officer, or initiated by IA. Assigned a case number.</li>
+  <li><strong>Preliminary Review:</strong> IA reviews the complaint within 48 hours to determine if a full investigation is warranted or if it can be resolved at the supervisory level.</li>
+  <li><strong>Investigation:</strong> IA interviews complainant, subject officer(s), witnesses, and reviews all available evidence (body camera, MDT logs, radio recordings). Subject officer is notified of the investigation and provided a Garrity warning (compelled to answer truthfully; statements cannot be used in criminal proceedings).</li>
+  <li><strong>Findings:</strong> IA issues one of four findings:
+    <ul>
+      <li><strong>Sustained:</strong> The allegation is supported by the evidence</li>
+      <li><strong>Not Sustained:</strong> Insufficient evidence to prove or disprove the allegation</li>
+      <li><strong>Exonerated:</strong> The incident occurred but the officer's actions were lawful and within policy</li>
+      <li><strong>Unfounded:</strong> The allegation is demonstrably false or did not occur</li>
+    </ul>
+  </li>
+  <li><strong>Disciplinary Recommendation:</strong> For sustained findings, IA recommends a disciplinary level. The recommendation is forwarded to the appropriate authority based on level.</li>
+  <li><strong>Notification:</strong> Subject officer is notified of findings and any discipline imposed.</li>
+</ol>
+
+<h3>16.3 Appeals Process</h3>
+<ul>
+  <li>Officers may appeal disciplinary action within 72 hours of notification</li>
+  <li>Appeals for Level 1-3 are heard by the next higher authority (e.g., Sergeant's verbal warning appealed to Lieutenant)</li>
+  <li>Appeals for Level 4-6 are heard by a three-member Disciplinary Review Board consisting of officers of Captain rank or above</li>
+  <li>The Chief of Police has final authority on all disciplinary matters. The Chief's decision is binding.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 17. TRAINING REQUIREMENTS                                     -->
+<!-- ============================================================ -->
+<h1 id="training">17. Training Requirements</h1>
+
+<h3>17.1 LSPD Academy</h3>
+<p>All new Cadets must complete the LSPD Basic Academy before being assigned to field duty. The academy covers:</p>
+<ul>
+  <li><strong>Legal Studies:</strong> San Andreas penal code, traffic code, search and seizure law, use of force law, Miranda, court procedures</li>
+  <li><strong>Patrol Operations:</strong> Traffic stops, felony stops, vehicle positioning, building searches, domestic violence response</li>
+  <li><strong>Firearms:</strong> Handgun qualification, shotgun familiarization, weapons safety, shoot/don't-shoot scenarios</li>
+  <li><strong>Defensive Tactics:</strong> Handcuffing, takedowns, control holds, weapon retention, ground defense</li>
+  <li><strong>Emergency Vehicle Operations (EVOC):</strong> High-speed driving, pursuit techniques, PIT (classroom only), code-3 response</li>
+  <li><strong>Report Writing:</strong> Incident reports, arrest reports, narratives, MDT usage</li>
+  <li><strong>Radio Communications:</strong> 10-codes, phonetic alphabet, radio etiquette, dispatch interaction</li>
+  <li><strong>Community Policing:</strong> De-escalation, crisis intervention, mental health awareness, cultural sensitivity</li>
+  <li><strong>First Aid/CPR:</strong> Basic life support, tourniquet application, trauma care until EMS arrival</li>
+</ul>
+
+<h3>17.2 Field Training Officer (FTO) Program</h3>
+<p>Upon graduation from the academy, Cadets become Probationary Officers and enter the FTO program:</p>
+<ul>
+  <li><strong>Duration:</strong> Minimum 1 week (7 active patrol shifts with an FTO)</li>
+  <li><strong>Evaluation:</strong> Daily Observation Reports (DORs) completed by the FTO covering all competency areas</li>
+  <li><strong>Phases:</strong>
+    <ol>
+      <li><strong>Phase 1 (Observation):</strong> Probationary Officer rides with FTO, observes, assists. FTO handles primary contacts.</li>
+      <li><strong>Phase 2 (Assisted):</strong> Probationary Officer handles primary contacts with FTO guidance and oversight.</li>
+      <li><strong>Phase 3 (Solo Eval):</strong> Probationary Officer operates as if solo while FTO observes from a separate vehicle. Final pass/fail evaluation.</li>
+    </ol>
+  </li>
+  <li><strong>Minimum Contacts:</strong> 20 documented citizen contacts before Phase 3 clearance</li>
+  <li><strong>FTO Qualifications:</strong> Minimum rank of Senior Officer, FTO certification course completed, clean disciplinary record for prior 30 days, recommendation from a Sergeant+</li>
+</ul>
+
+<h3>17.3 Ongoing Training</h3>
+<ul>
+  <li><strong>Firearms Qualification:</strong> All officers must qualify at the range once per month. Failure to qualify results in desk duty until remedial training and requalification.</li>
+  <li><strong>Defensive Tactics Refresher:</strong> Bi-monthly refresher on control techniques, ground defense, and weapon retention</li>
+  <li><strong>Legal Updates:</strong> Monthly briefing on new case law, penal code amendments, and policy changes</li>
+  <li><strong>Specialty Training:</strong> Officers in specialty divisions (SWAT, Detective, Traffic) must complete division-specific continuing education as directed by their division CO</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 18. SPECIAL OPERATIONS                                        -->
+<!-- ============================================================ -->
+<h1 id="specops">18. Special Operations</h1>
+
+<h3>18.1 Narcotics Operations</h3>
+<ul>
+  <li><strong>Authorization:</strong> All narcotics operations (buy-busts, raids, surveillance) require Captain+ authorization and coordination with the Detective Bureau Narcotics Unit</li>
+  <li><strong>Undercover Officers:</strong> Must be briefed on cover identity, operational parameters, and emergency extraction procedures. A handler (Sergeant+) must monitor the operation at all times.</li>
+  <li><strong>Buy-Bust:</strong> Pre-operational briefing required. Marked bills or tracked funds. Arrest team staged within 60 seconds of the buy location. Signal for takedown pre-arranged. EMS on standby.</li>
+  <li><strong>Evidence:</strong> All seized narcotics are weighed, photographed, and entered into evidence immediately. Two officers must witness the weighing process.</li>
+</ul>
+
+<h3>18.2 Gang Task Force</h3>
+<ul>
+  <li><strong>Mission:</strong> Intelligence gathering, suppression, and investigation of organized gang activity within Los Santos city limits</li>
+  <li><strong>Coordination:</strong> Works closely with BCSO and SASP gang units. Intelligence shared through inter-agency database.</li>
+  <li><strong>Areas of Focus:</strong> Grove Street Families, Ballas (Chamberlain Hills / Forum Drive), Vagos (Rancho), Lost MC (East LS), Marabunta Grande</li>
+  <li><strong>Operations:</strong> Surveillance, informant management (Captain+ approval for CI registration), warrant service on gang properties, community outreach in affected neighborhoods</li>
+</ul>
+
+<h3>18.3 Undercover Operations</h3>
+<div class="callout callout-warning">
+  <strong>AUTHORIZATION REQUIRED:</strong> All undercover operations require written authorization from a Captain or above. Duration, scope, and objectives must be clearly defined. Undercover officers must check in with their handler at pre-arranged intervals.
+</div>
+<ul>
+  <li>Undercover officers do not carry their badge or department ID while in cover</li>
+  <li>Undercover officers may carry a concealed firearm at their discretion</li>
+  <li>Undercover officers shall not commit felonies while in cover, even to maintain their identity. If placed in an untenable position, extract immediately.</li>
+  <li>All undercover activity must be documented in a classified operational log maintained by the handler</li>
+</ul>
+
+<h3>18.4 Surveillance &amp; Stake-Outs</h3>
+<ul>
+  <li><strong>Authorization:</strong> Sergeant+ for short-term (&lt;4 hours), Lieutenant+ for extended surveillance</li>
+  <li>Unmarked vehicles only. Officers in plainclothes.</li>
+  <li>Maintain a surveillance log: timestamps, subject movements, contacts, vehicles, photographs</li>
+  <li>Relief rotation every 6 hours to maintain alertness</li>
+  <li>Do not engage the subject unless the operation objective is being executed or officer safety is at immediate risk</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 19. INTER-AGENCY COOPERATION                                  -->
+<!-- ============================================================ -->
+<h1 id="interagency">19. Inter-Agency Cooperation</h1>
+
+<p>The LSPD maintains professional cooperative relationships with all San Andreas law enforcement, emergency services, and judicial agencies. Mutual respect for jurisdictional boundaries and shared commitment to public safety are the foundation of inter-agency cooperation.</p>
+
+<h3>19.1 Blaine County Sheriff's Office (BCSO)</h3>
+<ul>
+  <li><strong>Jurisdiction:</strong> Blaine County (Sandy Shores, Paleto Bay, Grapeseed, unincorporated areas)</li>
+  <li><strong>Cooperation:</strong> LSPD may request BCSO mutual aid for large-scale operations or when a suspect flees into Blaine County. BCSO may request LSPD assistance within city limits.</li>
+  <li><strong>Protocols:</strong> Mutual aid requests go through dispatch or direct supervisor-to-supervisor contact. The requesting agency retains operational command. Assisting officers follow the requesting agency's ROE for the duration of the operation.</li>
+</ul>
+
+<h3>19.2 San Andreas State Police (SASP)</h3>
+<ul>
+  <li><strong>Jurisdiction:</strong> Statewide, with primary focus on highways and state-owned property</li>
+  <li><strong>Cooperation:</strong> SASP may operate within Los Santos city limits on state highways and during statewide operations. Joint traffic enforcement operations on I-1 and Route 1 are routine.</li>
+  <li><strong>Highway Pursuits:</strong> When an LSPD pursuit enters a highway, SASP should be notified. SASP may assume primary pursuit role on the highway at their discretion.</li>
+</ul>
+
+<h3>19.3 Emergency Medical Services (EMS)</h3>
+<ul>
+  <li>EMS is requested to all scenes involving injury, medical complaint, or taser deployment</li>
+  <li>Officers shall secure the scene and ensure it is safe before EMS enters</li>
+  <li>Officers do not provide medical directives to EMS personnel &mdash; medical decisions are made by EMS</li>
+  <li>Officers trained in first aid should render basic life support until EMS arrival</li>
+</ul>
+
+<h3>19.4 Department of Justice (DOJ)</h3>
+<ul>
+  <li>Warrant applications are submitted to DOJ judges through the MDT system</li>
+  <li>District Attorneys coordinate with the Detective Bureau on case prosecution</li>
+  <li>Officers may be subpoenaed to testify in court &mdash; attendance is mandatory</li>
+  <li>DOJ directives regarding legal standards and procedures are binding on all LSPD personnel</li>
+</ul>
+
+<h3>19.5 Joint Operations Protocol</h3>
+<ol>
+  <li>A joint operation must have a designated Incident Commander from the lead agency</li>
+  <li>All participating agencies must attend a pre-operational briefing</li>
+  <li>Radio communications on the shared inter-agency channel (CH 4)</li>
+  <li>Rules of engagement and use of force standards follow the lead agency's SOP</li>
+  <li>Post-operation debrief is mandatory, with reports filed by each participating agency</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 20. CRISIS SITUATIONS                                         -->
+<!-- ============================================================ -->
+<h1 id="crisis">20. Crisis Situations</h1>
+
+<h3>20.1 Active Shooter Response</h3>
+<div class="callout callout-critical">
+  <strong>PRIORITY ONE:</strong> Stop the killing. The first officers on scene shall form a contact team and advance toward the threat. Do NOT wait for SWAT in an active shooter scenario.
+</div>
+<ol>
+  <li><strong>First Arriving Officers:</strong> Form a contact team of 2-4 officers. Advance toward the sound of gunfire. Bypass injured persons (rescue teams follow).</li>
+  <li><strong>Contact Team:</strong> Locate, isolate, and neutralize the active threat. Move quickly and decisively. Diamond or T-formation.</li>
+  <li><strong>Rescue Teams:</strong> Formed by subsequent arriving officers. Extract injured persons to a casualty collection point (CCP) outside the hot zone for EMS treatment.</li>
+  <li><strong>Perimeter:</strong> Outer perimeter established to prevent suspect escape and control civilian access.</li>
+  <li><strong>Incident Command:</strong> First Sergeant+ on scene establishes command. Transfer to SWAT team leader upon arrival if deployment is warranted.</li>
+  <li><strong>Reunification:</strong> Establish a civilian reunification point away from the scene. Coordinate with EMS and fire for triage.</li>
+</ol>
+
+<h3>20.2 Hostage / Barricade Situations</h3>
+<ol>
+  <li><strong>Contain:</strong> Establish an inner perimeter. Evacuate adjacent areas. Do NOT make entry unless there is an immediate threat to life.</li>
+  <li><strong>Communicate:</strong> Establish contact with the suspect. The primary negotiator (trained officer or SWAT negotiator) handles all communication. No other officer speaks to the suspect.</li>
+  <li><strong>Negotiate:</strong> Time is on our side in a barricade. Keep the suspect talking. Gather intelligence on number of hostages, weapons, demands, and the suspect's mental state.</li>
+  <li><strong>SWAT Callout:</strong> Lieutenant+ authorizes SWAT activation. SWAT stages in a concealed position. Entry only on order of the SWAT team leader with Captain+ authorization, or if an imminent threat to hostage life is detected.</li>
+  <li><strong>Surrender:</strong> If the suspect surrenders, have them exit with hands visible, prone out, and be secured by officers in the inner perimeter. Do NOT approach the structure until it is cleared by SWAT.</li>
+</ol>
+
+<h3>20.3 Bomb Threats</h3>
+<ul>
+  <li>Evacuate the building/area to a minimum of 300 feet (increase for suspected vehicle-borne devices)</li>
+  <li>Do NOT use police radios within 300 feet of a suspected device (radio frequency may trigger detonation)</li>
+  <li>Establish a perimeter and request SASP or specialized bomb disposal if available</li>
+  <li>Do NOT touch, move, or attempt to disarm any suspicious device</li>
+  <li>Interview the person who received the threat for details: exact wording, caller's voice, background noise, specifics about the device location</li>
+  <li>Search teams proceed in pairs, looking for items that are out of place. If a device is located, evacuate further and wait for disposal unit.</li>
+</ul>
+
+<h3>20.4 Natural Disasters &amp; Major Incidents</h3>
+<ul>
+  <li>The LSPD activates the Incident Command System (ICS) for all major incidents</li>
+  <li><strong>ICS Structure:</strong> Incident Commander (highest-ranking officer on scene) supported by Operations, Planning, Logistics, and Finance sections as needed</li>
+  <li>Priority: life safety, then incident stabilization, then property conservation</li>
+  <li>Coordinate with EMS, Fire, and city public works for road closures, evacuations, and shelter-in-place orders</li>
+  <li>Officers shall direct traffic, assist evacuations, prevent looting, and maintain public order</li>
+  <li>All duty assignments during a disaster are logged and documented for after-action review</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 21. COMMUNITY POLICING                                        -->
+<!-- ============================================================ -->
+<h1 id="community">21. Community Policing</h1>
+
+<p>The LSPD is committed to community policing as a philosophy, not merely a program. Building trust with the citizens of Los Santos is essential to effective law enforcement. Officers are ambassadors of the department in every interaction.</p>
+
+<h3>21.1 De-Escalation First Approach</h3>
+<ul>
+  <li>Officers shall treat every citizen contact as an opportunity to build community trust</li>
+  <li>De-escalation techniques are the preferred first response to non-violent situations</li>
+  <li>Officers should explain their actions and reasons during contacts when it is safe to do so ("Here's what I'm going to do and why...")</li>
+  <li>Empathy and active listening are tools, not weaknesses. A calm officer produces calmer outcomes.</li>
+</ul>
+
+<h3>21.2 Community Events</h3>
+<ul>
+  <li>The LSPD participates in and hosts community engagement events including:
+    <ul>
+      <li>Community ride-alongs (civilian observers in patrol vehicles, Lieutenant+ approval, waiver signed)</li>
+      <li>Neighborhood watch meetings (zone officers attend their zone's meetings)</li>
+      <li>Public safety demonstrations at community gatherings</li>
+      <li>Youth mentorship programs in partnership with local organizations</li>
+      <li>Coffee with a Cop and similar informal engagement opportunities</li>
+    </ul>
+  </li>
+</ul>
+
+<h3>21.3 Civilian Ride-Alongs</h3>
+<ul>
+  <li>Must be approved by a Lieutenant or above</li>
+  <li>Civilian must sign a liability waiver and be briefed on safety protocols</li>
+  <li>Ride-along civilian must remain in the vehicle at all times during enforcement actions</li>
+  <li>No ride-alongs during high-risk operations, pursuits, or when the officer is assigned to Baker Zone graveyard shift</li>
+  <li>Maximum one ride-along per shift, per officer</li>
+</ul>
+
+<h3>21.4 Neighborhood Patrols</h3>
+<ul>
+  <li>Officers are encouraged to conduct foot patrols in their zone during low-activity periods</li>
+  <li>Engage with business owners, residents, and community leaders</li>
+  <li>Identify and report environmental issues (broken streetlights, abandoned vehicles, graffiti) to city services</li>
+  <li>Foot patrol time should be logged in the shift report as community engagement</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 22. VEHICLE & EQUIPMENT                                       -->
+<!-- ============================================================ -->
+<h1 id="equipment">22. Vehicle &amp; Equipment</h1>
+
+<h3>22.1 Standard Patrol Loadout</h3>
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Equipment</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Sidearm</td>
+    <td>Department-issued pistol (9mm)</td>
+    <td>Carried on duty belt, loaded, holstered. 2 spare magazines minimum.</td>
+  </tr>
+  <tr>
+    <td>Less-Lethal</td>
+    <td>Taser (CED), OC spray</td>
+    <td>Taser carried on support (non-dominant) side. OC spray on belt.</td>
+  </tr>
+  <tr>
+    <td>Restraints</td>
+    <td>Handcuffs (2 pairs), zip ties</td>
+    <td>One on belt, one in vest carrier. Zip ties in patrol bag.</td>
+  </tr>
+  <tr>
+    <td>Communications</td>
+    <td>Portable radio, body camera</td>
+    <td>Radio on chest carrier or belt. Body camera activated on all contacts.</td>
+  </tr>
+  <tr>
+    <td>Lighting</td>
+    <td>Tactical flashlight</td>
+    <td>Minimum 500 lumens. Weapon-mounted light also recommended.</td>
+  </tr>
+  <tr>
+    <td>Body Armor</td>
+    <td>Level IIIA vest carrier</td>
+    <td>Mandatory for all patrol shifts. No exceptions.</td>
+  </tr>
+  <tr>
+    <td>First Aid</td>
+    <td>Individual first aid kit (IFAK)</td>
+    <td>Tourniquet, chest seal, gauze, gloves. On belt or vest.</td>
+  </tr>
+</table>
+
+<h3>22.2 Patrol Vehicle Equipment</h3>
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Location</th>
+    <th>Authorization</th>
+  </tr>
+  <tr>
+    <td>Emergency lightbar &amp; siren</td>
+    <td>Roof / integrated</td>
+    <td>Standard</td>
+  </tr>
+  <tr>
+    <td>MDT (Mobile Data Terminal)</td>
+    <td>Dashboard mount</td>
+    <td>Standard</td>
+  </tr>
+  <tr>
+    <td>Shotgun (12-gauge)</td>
+    <td>Rack mount, center console</td>
+    <td>Sergeant+ authorization to deploy</td>
+  </tr>
+  <tr>
+    <td>Patrol rifle (5.56mm)</td>
+    <td>Trunk gun safe</td>
+    <td>Sergeant+ authorization; officer must be rifle-qualified</td>
+  </tr>
+  <tr>
+    <td>Spike strip kit</td>
+    <td>Trunk</td>
+    <td>Sergeant+ authorization to deploy</td>
+  </tr>
+  <tr>
+    <td>Road flares / cones</td>
+    <td>Trunk</td>
+    <td>Standard</td>
+  </tr>
+  <tr>
+    <td>Fire extinguisher</td>
+    <td>Trunk</td>
+    <td>Standard</td>
+  </tr>
+  <tr>
+    <td>Crime scene tape</td>
+    <td>Trunk</td>
+    <td>Standard</td>
+  </tr>
+  <tr>
+    <td>Beanbag shotgun rounds</td>
+    <td>Trunk, with shotgun</td>
+    <td>Sergeant+ authorization</td>
+  </tr>
+</table>
+
+<h3>22.3 Pursuit-Rated Vehicle Specifications</h3>
+<ul>
+  <li>All primary patrol vehicles are pursuit-rated with reinforced front bumper, upgraded cooling, heavy-duty suspension, and performance brakes</li>
+  <li>Officers shall not use non-pursuit-rated vehicles (slicktops, admin sedans) as primary pursuit vehicles</li>
+  <li>Unmarked detective vehicles may not initiate pursuits. They may follow at a safe distance and request a marked unit to assume primary.</li>
+  <li>All vehicles must pass a weekly safety inspection by the officer and a monthly mechanical inspection by fleet services</li>
+</ul>
+
+<h3>22.4 Body Camera Policy</h3>
+<ul>
+  <li>Body cameras <strong>must be activated</strong> for: all traffic stops, citizen contacts involving enforcement action, searches, arrests, use of force incidents, pursuits (on foot or vehicle), and any encounter where the officer anticipates a complaint</li>
+  <li>Officers may deactivate cameras for sensitive conversations with confidential informants (with supervisor approval) or for personal breaks</li>
+  <li>Intentional failure to activate a body camera during a required encounter is a Level 3 disciplinary offense</li>
+  <li>Body camera footage is stored for a minimum of 90 days (1 year for use of force, OIS, or IA-related footage)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 23. OFF-DUTY CONDUCT                                          -->
+<!-- ============================================================ -->
+<h1 id="offduty">23. Off-Duty Conduct</h1>
+
+<h3>23.1 Off-Duty Authority</h3>
+<ul>
+  <li>Off-duty LSPD officers retain their arrest authority within the City of Los Santos</li>
+  <li>However, off-duty officers should <strong>only</strong> take enforcement action when:
+    <ul>
+      <li>There is an immediate threat to life that cannot wait for on-duty units</li>
+      <li>A violent felony is being committed in their presence</li>
+      <li>They are specifically requested to assist by an on-duty officer</li>
+    </ul>
+  </li>
+  <li>For all other situations, off-duty officers should be a good witness: observe, note descriptions, and call 911 to report</li>
+</ul>
+
+<h3>23.2 Off-Duty Carry</h3>
+<ul>
+  <li>Officers may carry their department-issued sidearm off-duty at their discretion</li>
+  <li>When carrying off-duty, the firearm must be concealed and the officer must carry their department ID and badge</li>
+  <li>If an off-duty officer takes any enforcement action, they must immediately identify themselves as LSPD and display their badge</li>
+  <li>Off-duty carry while consuming alcohol is <strong>strictly prohibited</strong>. If carrying, no alcohol whatsoever.</li>
+</ul>
+
+<h3>23.3 Off-Duty Incident Reporting</h3>
+<ul>
+  <li>If an off-duty officer is involved in or witnesses a significant crime or incident, they must notify dispatch and their supervisor as soon as practical</li>
+  <li>If an off-duty officer uses any level of force, a Use of Force report must be filed just as it would on-duty</li>
+  <li>Off-duty officers involved in motor vehicle accidents must notify dispatch, regardless of fault or severity</li>
+  <li>Off-duty arrests must be processed through the same booking procedure as on-duty arrests. The officer must report to Mission Row PD to complete paperwork.</li>
+</ul>
+
+<h3>23.4 Off-Duty Conduct Standards</h3>
+<ul>
+  <li>Officers are representatives of the LSPD 24/7. Conduct that brings discredit to the department, whether on or off duty, is subject to discipline.</li>
+  <li>Criminal conduct off-duty is grounds for suspension and potential termination, independent of any criminal prosecution</li>
+  <li>Officers shall not use their status or badge for personal benefit (discounts, intimidation, queue-jumping, etc.)</li>
+  <li>DUI while off-duty results in immediate suspension and IA investigation, regardless of the outcome of criminal proceedings</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 24. AMENDMENTS & REVISION HISTORY                             -->
+<!-- ============================================================ -->
+<h1 id="amendments">24. Amendments &amp; Revision History</h1>
+
+<p>This document is a living standard. Amendments are proposed by the Chief of Police or designated policy officers, reviewed by command staff, and published upon approval. All sworn personnel are responsible for reviewing and understanding amendments within 72 hours of publication.</p>
+
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Date</th>
+    <th>Author</th>
+    <th>Summary of Changes</th>
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td>January 2025</td>
+    <td>LSPD Command Staff</td>
+    <td>Initial SOP document. Basic chain of command, use of force, patrol procedures, radio codes, and booking procedures established.</td>
+  </tr>
+  <tr>
+    <td>2.0</td>
+    <td>February 2026</td>
+    <td>LSPD Command Staff</td>
+    <td>Major revision. Expanded all sections. Added evidence handling, search and seizure, interrogation, and pursuit policy. Updated radio codes table. Added patrol zone descriptions. Added IA section.</td>
+  </tr>
+  <tr>
+    <td>3.0</td>
+    <td>February 10, 2026</td>
+    <td>LSPD Command Staff / ZSR Admin</td>
+    <td>Comprehensive rewrite. 24 full sections. Added: Mission Statement, Divisions (6 divisions detailed), Lethal Force Policy (standalone), Traffic Stop subtypes (motorcycle, commercial, felony), Pursuit tactical interventions and unit caps, Miranda exact text and booking detail, Evidence chain of custody, Search and Seizure (6 warrantless exceptions), Interrogation with juvenile protections, Full 10-code and phonetic alphabet tables, Patrol zone threat assessments, Report types and deadlines, Uniform/grooming/social media standards, Progressive discipline scale (6 levels), Academy and FTO program, Special operations (narcotics, gangs, UC, surveillance), Inter-agency cooperation (BCSO, SASP, EMS, DOJ), Crisis situations (active shooter, hostage, bomb, ICS), Community policing, Equipment loadout tables, Off-duty conduct, Body camera policy, Pay grades. Document reformatted with professional classified-document styling.</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>POLICY AMENDMENTS:</strong> Proposed amendments should be submitted in writing to the Chief of Police through the chain of command. Emergency policy changes may be enacted immediately by the Chief and documented retroactively. All officers will be notified of changes via department bulletin and roll call briefing.
+</div>
+
+</div><!-- end .content -->
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                        -->
+<!-- ============================================================ -->
+<div class="footer">
+  <span class="org">ZO SYNDICATE RP</span> | Los Santos Police Department<br>
+  Standard Operating Procedures v3.0<br>
+  <strong>CONFIDENTIAL</strong> &mdash; Authorized LEO Personnel Only<br><br>
+  &copy; 2026 Prozilli Entertainment &mdash; All Rights Reserved<br>
+  <a href="https://prozilligaming.com/zo">prozilligaming.com/zo</a> &nbsp;|&nbsp; <a href="https://discord.gg/HjpsGpC4R6">discord.gg/HjpsGpC4R6</a>
+</div>
+
+</body>
+</html>
