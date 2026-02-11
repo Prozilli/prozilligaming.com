@@ -1,0 +1,318 @@
+═══════════════════════════════════════════════════════════════════════════════
+  PROZILLI ENTERTAINMENT - ZO SYNDICATE RP
+  SOP HERO IMAGE GENERATION PROMPTS
+  AI Tools: DALL-E 3, Midjourney, Leonardo AI, Stable Diffusion
+═══════════════════════════════════════════════════════════════════════════════
+
+INSTRUCTIONS:
+1. Copy the prompt for your target department
+2. Paste into your AI image generation tool
+3. Generate 1920x600px (16:5 aspect ratio)
+4. Save as WebP format, 85% quality
+5. Place in: public/zo/sop/images/hero-[dept].webp
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚔 LSPD - LOS SANTOS POLICE DEPARTMENT
+
+MIDJOURNEY PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+Cinematic photograph of Los Santos downtown skyline at night, modern city
+buildings with illuminated windows, police car with red and blue emergency
+lights in foreground, professional law enforcement aesthetic, dark moody
+atmosphere, shallow depth of field, high contrast lighting, police badge
+subtly visible, urban environment, photorealistic style --ar 16:5 --style raw
+--v 6
+
+DALL-E 3 PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+A cinematic wide-angle photograph of a downtown Los Santos cityscape at night.
+Modern skyscrapers with illuminated windows fill the background. In the
+foreground, a police patrol car with glowing red and blue emergency lights.
+Dark, moody atmosphere with high contrast lighting. Professional law
+enforcement aesthetic. Urban environment. Photorealistic style. Aspect ratio
+16:5, banner format.
+
+LEONARDO AI PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+Los Santos police department cityscape night scene, downtown skyscrapers,
+police car red blue emergency lights, cinematic photography, dark moody
+atmosphere, urban patrol, professional law enforcement, high contrast lighting,
+photorealistic, banner 1920x600
+
+STYLE KEYWORDS: Urban, cinematic, night photography, law enforcement, moody
+COLOR PALETTE: Dark red (#a30000), blue (#0a4a9e), city lights, dark sky
+MOOD: Professional, authoritative, urban patrol, nighttime vigilance
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🏜️ BCSO - BLAINE COUNTY SHERIFF'S OFFICE
+
+MIDJOURNEY PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+Wide-angle photograph of desert landscape at sunset, Blaine County rural
+setting, sheriff patrol vehicle on dusty road, desert mountains in background,
+saguaro cacti silhouettes, golden hour lighting, warm earthy tones, sheriff
+star badge subtly integrated, professional law enforcement aesthetic, expansive
+sky, dust particles in air, photorealistic western style --ar 16:5 --style raw
+--v 6
+
+DALL-E 3 PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+A cinematic wide-angle photograph of a desert landscape at golden hour. A
+sheriff patrol vehicle on a dusty desert road in the foreground. Desert
+mountains and saguaro cacti silhouettes in the background. Warm orange and
+brown earth tones. Dust particles visible in the air. Professional rural law
+enforcement aesthetic. Western style. Photorealistic quality. Aspect ratio
+16:5, banner format.
+
+LEONARDO AI PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+Blaine County sheriff desert landscape sunset, patrol vehicle dusty road,
+mountains background, saguaro cacti, golden hour, warm earth tones, western
+aesthetic, professional law enforcement, dust particles, photorealistic, banner
+1920x600
+
+STYLE KEYWORDS: Western, rural, golden hour, desert landscape, sheriff patrol
+COLOR PALETTE: Brown (#8B7355), sand (#d4a574), sunset orange, warm tones
+MOOD: Western frontier, rural patrol, golden hour warmth, open spaces
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🛣️ SASP - SAN ANDREAS STATE POLICE
+
+MIDJOURNEY PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+Dynamic photograph of California highway at dusk, state police patrol car on
+freeway, checkered pattern on vehicle visible, highway stretching into
+distance, motion blur effect, professional state trooper aesthetic, blue
+emergency lights reflecting on road, mountain landscape in background, clean
+modern composition, photorealistic style, high-speed pursuit aesthetic --ar
+16:5 --style raw --v 6
+
+DALL-E 3 PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+A dynamic cinematic photograph of a California highway at dusk. A state police
+patrol car with checkered pattern markings on the freeway. Blue emergency
+lights reflecting on the wet road. Highway stretching into the distance with
+mountain landscape in the background. Motion blur suggesting high speed.
+Professional state trooper aesthetic. Clean modern composition. Photorealistic
+quality. Aspect ratio 16:5, banner format.
+
+LEONARDO AI PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+San Andreas state police highway patrol, freeway dusk, checkered pattern
+vehicle, blue emergency lights, motion blur, mountain background, professional
+trooper aesthetic, high-speed scene, photorealistic, banner 1920x600
+
+STYLE KEYWORDS: Dynamic, highway patrol, motion, state trooper, speed
+COLOR PALETTE: Royal blue (#4169e1), white checkers, gray asphalt, dusk sky
+MOOD: High-speed patrol, professional trooper, highway authority, motion
+
+═══════════════════════════════════════════════════════════════════════════════
+
+🚑 EMS - EMERGENCY MEDICAL SERVICES
+
+MIDJOURNEY PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+Professional photograph of Pillbox Medical Center exterior at twilight, modern
+hospital building with illuminated windows, ambulance with green emergency
+lights in front, medical cross symbol visible, clean medical aesthetic,
+professional healthcare setting, Los Santos architecture, emergency department
+entrance, photorealistic style, soft medical lighting with green accents --ar
+16:5 --style raw --v 6
+
+DALL-E 3 PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+A professional cinematic photograph of a modern hospital exterior at twilight.
+Large medical center building with illuminated windows. An ambulance with green
+emergency lights parked in front of the emergency department entrance. Medical
+cross symbol subtly visible. Clean, professional healthcare aesthetic. Soft
+lighting with green medical accents. Los Santos urban architecture.
+Photorealistic quality. Aspect ratio 16:5, banner format.
+
+LEONARDO AI PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+Emergency medical services hospital exterior twilight, modern medical center,
+ambulance green emergency lights, medical cross symbol, professional healthcare
+setting, illuminated windows, clean aesthetic, photorealistic, banner 1920x600
+
+STYLE KEYWORDS: Medical, professional healthcare, emergency services, clean
+COLOR PALETTE: Medical green (#2ecc71), white hospital, soft lighting, twilight
+MOOD: Professional medical care, emergency response, healthcare authority
+
+═══════════════════════════════════════════════════════════════════════════════
+
+⚖️ DOJ - DEPARTMENT OF JUSTICE
+
+MIDJOURNEY PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+Majestic photograph of San Andreas courthouse building, neoclassical
+architecture with columns, justice scales symbol subtly integrated, formal
+government building aesthetic, golden hour lighting on facade, marble pillars,
+grand staircase, professional legal setting, photorealistic style, elegant
+composition with gold and bronze accents --ar 16:5 --style raw --v 6
+
+DALL-E 3 PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+A majestic cinematic photograph of a neoclassical courthouse building. Grand
+Greek-style marble columns and a monumental staircase. Justice scales symbol
+subtly visible. Golden hour lighting illuminating the beige facade. Formal
+government building architecture. Professional legal setting aesthetic. Bronze
+and gold accents. Elegant, authoritative composition. Photorealistic quality.
+Aspect ratio 16:5, banner format.
+
+LEONARDO AI PROMPT:
+───────────────────────────────────────────────────────────────────────────────
+Department of justice courthouse neoclassical architecture, marble columns,
+grand staircase, justice scales, golden hour lighting, formal legal setting,
+bronze gold accents, professional government building, photorealistic, banner
+1920x600
+
+STYLE KEYWORDS: Majestic, neoclassical, formal legal, architectural, elegant
+COLOR PALETTE: Bronze (#e67e22), gold (#c4a265), marble white, warm lighting
+MOOD: Formal justice, legal authority, governmental majesty, dignified
+
+═══════════════════════════════════════════════════════════════════════════════
+
+UNIVERSAL PARAMETERS FOR ALL PROMPTS:
+───────────────────────────────────────────────────────────────────────────────
+Aspect Ratio: 16:5 (1920x600px)
+Output Format: WebP at 85% quality
+Style: Cinematic, photorealistic
+Lighting: Professional, dramatic, atmospheric
+Brand: Prozilli Entertainment / ZO Syndicate RP
+Quality: High-resolution, banner-ready
+Mood: Professional, authoritative, cinematic
+
+═══════════════════════════════════════════════════════════════════════════════
+
+POST-GENERATION OPTIMIZATION STEPS:
+───────────────────────────────────────────────────────────────────────────────
+
+1. RESIZE (if needed)
+   - Target: 1920x600px exactly
+   - Maintain aspect ratio 16:5
+   - Use bicubic interpolation
+
+2. CONVERT TO WEBP
+   - Quality: 85%
+   - Compression: Lossless or near-lossless
+   - Tools: Squoosh.app, cwebp command line
+
+3. OPTIMIZE FILE SIZE
+   - Target: 100-200KB
+   - Max acceptable: 300KB
+   - Use TinyPNG.com or ImageOptim
+
+4. VERIFY COLORS
+   - LSPD: Dark red dominant
+   - BCSO: Brown/tan dominant
+   - SASP: Royal blue dominant
+   - EMS: Medical green dominant
+   - DOJ: Bronze/gold dominant
+
+5. TEST OVERLAY
+   - Apply department overlay gradient
+   - Verify text readability
+   - Check contrast ratio (WCAG 7:1 minimum)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+ALTERNATIVE AI TOOLS:
+───────────────────────────────────────────────────────────────────────────════
+
+✅ DALL-E 3 (OpenAI)
+   Cost: $0.04 per 1024x1024 image
+   Quality: High, photorealistic
+   Speed: ~30 seconds
+   Best for: Quick generation, consistent results
+
+✅ Midjourney v6
+   Cost: $10/month (Basic plan, ~200 images)
+   Quality: Exceptional, cinematic
+   Speed: ~60 seconds
+   Best for: Highest quality, artistic control
+
+✅ Leonardo AI (Motion 2.0)
+   Cost: Free tier (150 tokens/day) or $10/month
+   Quality: High, customizable
+   Speed: ~45 seconds
+   Best for: Budget-friendly, video backgrounds
+
+✅ Stable Diffusion (Local)
+   Cost: Free (requires GPU)
+   Quality: Variable, depends on model
+   Speed: 10-120 seconds (hardware dependent)
+   Best for: Full control, unlimited generations
+
+✅ Adobe Firefly
+   Cost: Included with Creative Cloud
+   Quality: Professional, brand-safe
+   Speed: ~20 seconds
+   Best for: Adobe workflow integration
+
+═══════════════════════════════════════════════════════════════════════════════
+
+BATCH GENERATION SCRIPT (for developers):
+───────────────────────────────────────────────────────────────────────────────
+
+#!/bin/bash
+# Generate all 5 hero images using OpenAI API
+
+DEPARTMENTS=("lspd" "bcso" "sasp" "ems" "doj")
+PROMPTS_FILE="AI_PROMPTS.txt"
+OUTPUT_DIR="images"
+
+mkdir -p $OUTPUT_DIR
+
+for dept in "${DEPARTMENTS[@]}"; do
+  echo "Generating $dept hero image..."
+  # Extract prompt for this department
+  # Call API (openai, replicate, etc.)
+  # Save to images/hero-$dept.webp
+  # Optimize with cwebp
+done
+
+echo "All hero images generated!"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+QUALITY CHECKLIST:
+───────────────────────────────────────────────────────────────────────────────
+
+□ Image dimensions: 1920x600px (16:5)
+□ File format: WebP
+□ File size: Under 300KB
+□ Quality: 85% compression
+□ Colors match department theme
+□ No watermarks or artifacts
+□ Professional composition
+□ Clear focal point
+□ Suitable for text overlay
+□ High contrast for readability
+□ Cinematic/photorealistic style
+□ Brand-appropriate aesthetic
+
+═══════════════════════════════════════════════════════════════════════════════
+
+NEED HELP?
+───────────────────────────────────────────────────────────────────────────────
+
+Documentation:
+- Full guide: HERO_IMAGES_README.md
+- Quick reference: QUICK_UPDATE_GUIDE.md
+- Implementation: IMPLEMENTATION_SUMMARY.md
+- Comparison: BEFORE_AFTER.md
+
+Tools:
+- AI Image Generator: https://openai.com/dall-e-3
+- SVG Encoder: https://yoksel.github.io/url-encoder/
+- WebP Converter: https://squoosh.app
+- Image Optimizer: https://tinypng.com
+
+═══════════════════════════════════════════════════════════════════════════════
+Generated: February 11, 2026
+Version: 1.0
+Project: ZO Syndicate RP - Prozilli Entertainment
+═══════════════════════════════════════════════════════════════════════════════

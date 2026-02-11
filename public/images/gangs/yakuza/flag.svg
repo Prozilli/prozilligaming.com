@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000">
+  <defs>
+    <linearGradient id="yakuzaFlagGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF0000;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#CC0000;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF0000;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background (white) -->
+  <rect width="1500" height="1000" fill="#ffffff"/>
+
+  <!-- Rising sun rays -->
+  <g transform="translate(750, 500)" stroke="#FF0000" stroke-width="50" opacity="0.2">
+    <line x1="0" y1="0" x2="0" y2="-500"/>
+    <line x1="0" y1="0" x2="353" y2="-353"/>
+    <line x1="0" y1="0" x2="500" y2="0"/>
+    <line x1="0" y1="0" x2="353" y2="353"/>
+    <line x1="0" y1="0" x2="0" y2="500"/>
+    <line x1="0" y1="0" x2="-353" y2="353"/>
+    <line x1="0" y1="0" x2="-500" y2="0"/>
+    <line x1="0" y1="0" x2="-353" y2="-353"/>
+  </g>
+
+  <!-- Large red circle (sun) -->
+  <circle cx="750" cy="300" r="200" fill="url(#yakuzaFlagGrad)"/>
+
+  <!-- Massive dragon -->
+  <g transform="translate(750, 650)">
+    <!-- Body -->
+    <path d="M-350 -150 Q-280 -130 -220 -80 Q-160 -30 -120 30 Q-80 90 -30 130 Q20 170 80 180 Q140 190 200 170 Q260 150 300 110 Q340 70 360 10 Q380 -50 370 -110 Q360 -170 320 -220"
+          fill="none" stroke="url(#yakuzaFlagGrad)" stroke-width="60" stroke-linecap="round"/>
+
+    <!-- Scales -->
+    <g fill="none" stroke="#CC0000" stroke-width="5">
+      <path d="M-220 -70 Q-215 -65 -210 -70"/>
+      <path d="M-180 -40 Q-175 -35 -170 -40"/>
+      <path d="M-140 0 Q-135 5 -130 0"/>
+      <path d="M-100 50 Q-95 55 -90 50"/>
+      <path d="M-50 100 Q-45 105 -40 100"/>
+      <path d="M0 130 Q5 135 10 130"/>
+      <path d="M60 145 Q65 150 70 145"/>
+      <path d="M120 150 Q125 155 130 150"/>
+      <path d="M180 135 Q185 140 190 135"/>
+      <path d="M240 105 Q245 110 250 105"/>
+      <path d="M280 60 Q285 65 290 60"/>
+      <path d="M310 10 Q315 15 320 10"/>
+    </g>
+
+    <!-- Head -->
+    <g transform="translate(-350, -150)">
+      <ellipse cx="0" cy="0" rx="70" ry="60" fill="url(#yakuzaFlagGrad)" stroke="#000000" stroke-width="5"/>
+
+      <!-- Horns -->
+      <path d="M-45 -45 Q-55 -70 -50 -90 L-42 -87 Q-47 -72 -40 -50"
+            fill="#FFD700" stroke="#000000" stroke-width="3"/>
+      <path d="M45 -45 Q55 -70 50 -90 L42 -87 Q47 -72 40 -50"
+            fill="#FFD700" stroke="#000000" stroke-width="3"/>
+
+      <!-- Eyes -->
+      <circle cx="-22" cy="-10" r="14" fill="#FFD700"/>
+      <circle cx="-18" cy="-6" r="10" fill="#000000"/>
+      <circle cx="22" cy="-10" r="14" fill="#FFD700"/>
+      <circle cx="18" cy="-6" r="10" fill="#000000"/>
+
+      <!-- Nostrils -->
+      <ellipse cx="-10" cy="15" rx="6" ry="8" fill="#000000"/>
+      <ellipse cx="10" cy="15" rx="6" ry="8" fill="#000000"/>
+
+      <!-- Whiskers -->
+      <line x1="-70" y1="-5" x2="-100" y2="-15" stroke="#000000" stroke-width="3"/>
+      <line x1="-70" y1="5" x2="-100" y2="5" stroke="#000000" stroke-width="3"/>
+      <line x1="-70" y1="15" x2="-100" y2="25" stroke="#000000" stroke-width="3"/>
+      <line x1="70" y1="-5" x2="100" y2="-15" stroke="#000000" stroke-width="3"/>
+      <line x1="70" y1="5" x2="100" y2="5" stroke="#000000" stroke-width="3"/>
+      <line x1="70" y1="15" x2="100" y2="25" stroke="#000000" stroke-width="3"/>
+
+      <!-- Mouth with fangs -->
+      <path d="M-25 30 Q0 45 25 30" fill="none" stroke="#000000" stroke-width="5"/>
+      <path d="M-15 33 L-15 50 M15 33 L15 50" stroke="#FFD700" stroke-width="6"/>
+    </g>
+
+    <!-- Claws -->
+    <g transform="translate(360, 10)">
+      <path d="M0 0 L-8 30 M0 0 L0 35 M0 0 L8 30 M0 0 L16 28"
+            stroke="url(#yakuzaFlagGrad)" stroke-width="10" stroke-linecap="round"/>
+    </g>
+  </g>
+
+  <!-- Cherry blossoms floating -->
+  <g fill="#FFB7C5" stroke="#FF69B4" stroke-width="3">
+    <g transform="translate(250, 200)">
+      <circle cx="0" cy="-20" r="15"/>
+      <circle cx="-15" cy="7" r="15"/>
+      <circle cx="15" cy="7" r="15"/>
+      <circle cx="-10" cy="-10" r="15"/>
+      <circle cx="10" cy="-10" r="15"/>
+      <circle cx="0" cy="0" r="8" fill="#FFD700"/>
+    </g>
+    <g transform="translate(1200, 250)">
+      <circle cx="0" cy="-20" r="15"/>
+      <circle cx="-15" cy="7" r="15"/>
+      <circle cx="15" cy="7" r="15"/>
+      <circle cx="-10" cy="-10" r="15"/>
+      <circle cx="10" cy="-10" r="15"/>
+      <circle cx="0" cy="0" r="8" fill="#FFD700"/>
+    </g>
+    <g transform="translate(400, 800)">
+      <circle cx="0" cy="-15" r="12"/>
+      <circle cx="-12" cy="5" r="12"/>
+      <circle cx="12" cy="5" r="12"/>
+      <circle cx="-8" cy="-8" r="12"/>
+      <circle cx="8" cy="-8" r="12"/>
+      <circle cx="0" cy="0" r="6" fill="#FFD700"/>
+    </g>
+    <g transform="translate(1100, 750)">
+      <circle cx="0" cy="-15" r="12"/>
+      <circle cx="-12" cy="5" r="12"/>
+      <circle cx="12" cy="5" r="12"/>
+      <circle cx="-8" cy="-8" r="12"/>
+      <circle cx="8" cy="-8" r="12"/>
+      <circle cx="0" cy="0" r="6" fill="#FFD700"/>
+    </g>
+  </g>
+
+  <!-- Text -->
+  <text x="750" y="130" font-family="serif" font-size="108" font-weight="bold"
+        text-anchor="middle" fill="#FF0000">YAKUZA</text>
+  <text x="750" y="970" font-family="sans-serif" font-size="40" font-weight="bold"
+        text-anchor="middle" fill="#000000">RADIO 424 • RANCHO</text>
+</svg>

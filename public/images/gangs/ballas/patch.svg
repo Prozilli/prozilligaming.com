@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="ballasPatchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9932CC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#663399;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Outer circle -->
+  <circle cx="256" cy="256" r="250" fill="#000000" stroke="#9932CC" stroke-width="8"/>
+
+  <!-- Inner circle -->
+  <circle cx="256" cy="256" r="230" fill="#1a1a1a" stroke="url(#ballasPatchGrad)" stroke-width="4"/>
+
+  <!-- Purple splatter pattern -->
+  <g fill="#9932CC" opacity="0.15">
+    <circle cx="150" cy="150" r="40"/>
+    <circle cx="362" cy="150" r="35"/>
+    <circle cx="150" cy="362" r="38"/>
+    <circle cx="362" cy="362" r="42"/>
+  </g>
+
+  <!-- Crown -->
+  <g transform="translate(256, 160)">
+    <path d="M-90 40 L-90 60 L90 60 L90 40 L75 10 L60 40 L30 -20 L0 30 L-30 -20 L-60 40 L-75 10 Z"
+          fill="url(#ballasPatchGrad)" stroke="#FFD700" stroke-width="3"/>
+
+    <!-- Jewels -->
+    <circle cx="-60" cy="30" r="8" fill="#FFD700"/>
+    <circle cx="-30" cy="30" r="8" fill="#FFD700"/>
+    <circle cx="0" cy="30" r="8" fill="#FFD700"/>
+    <circle cx="30" cy="30" r="8" fill="#FFD700"/>
+    <circle cx="60" cy="30" r="8" fill="#FFD700"/>
+
+    <!-- Points -->
+    <circle cx="-60" cy="10" r="6" fill="#9932CC"/>
+    <circle cx="-30" cy="-20" r="9" fill="#9932CC"/>
+    <circle cx="0" cy="30" r="9" fill="#9932CC"/>
+    <circle cx="30" cy="-20" r="9" fill="#9932CC"/>
+    <circle cx="60" cy="10" r="6" fill="#9932CC"/>
+
+    <rect x="-90" y="60" width="180" height="10" fill="#FFD700"/>
+  </g>
+
+  <!-- Large B -->
+  <g transform="translate(256, 300)">
+    <path d="M-60 -75 L-60 75 L30 75 Q60 75 70 60 Q80 45 80 30 Q80 18 72 8 Q64 -2 50 -5 Q62 -8 69 -18 Q76 -28 76 -40 Q76 -55 66 -65 Q56 -75 30 -75 Z M-30 -50 L20 -50 Q35 -50 41 -43 Q47 -35 47 -25 Q47 -15 41 -9 Q35 -3 20 -3 L-30 -3 Z M-30 22 L25 22 Q43 22 50 30 Q57 38 57 50 Q57 62 50 68 Q43 50 25 50 L-30 50 Z"
+          fill="url(#ballasPatchGrad)" stroke="#ffffff" stroke-width="4"/>
+  </g>
+
+  <!-- Grape cluster -->
+  <g transform="translate(140, 380)" fill="#9932CC" stroke="#663399" stroke-width="1.5">
+    <circle cx="0" cy="-5" r="10"/>
+    <circle cx="-8" cy="3" r="10"/>
+    <circle cx="8" cy="3" r="10"/>
+    <circle cx="-8" cy="13" r="10"/>
+    <circle cx="8" cy="13" r="10"/>
+    <circle cx="0" cy="20" r="10"/>
+    <path d="M0 -5 Q-5 -20 0 -30 L2 -30 Q5 -25 2 -20 Q0 -15 0 -5"
+          fill="#228B22" stroke="#228B22"/>
+  </g>
+
+  <g transform="translate(372, 380)" fill="#9932CC" stroke="#663399" stroke-width="1.5">
+    <circle cx="0" cy="-5" r="10"/>
+    <circle cx="-8" cy="3" r="10"/>
+    <circle cx="8" cy="3" r="10"/>
+    <circle cx="-8" cy="13" r="10"/>
+    <circle cx="8" cy="13" r="10"/>
+    <circle cx="0" cy="20" r="10"/>
+    <path d="M0 -5 Q5 -20 0 -30 L-2 -30 Q-5 -25 -2 -20 Q0 -15 0 -5"
+          fill="#228B22" stroke="#228B22"/>
+  </g>
+
+  <!-- Text -->
+  <path id="topCurveBallas" d="M 80 256 A 176 176 0 0 1 432 256" fill="none"/>
+  <text font-family="Impact" font-size="48" font-weight="bold" fill="#9932CC" letter-spacing="12">
+    <textPath href="#topCurveBallas" startOffset="50%" text-anchor="middle">
+      BALLAS
+    </textPath>
+  </text>
+
+  <path id="bottomCurveBallas" d="M 432 256 A 176 176 0 0 1 80 256" fill="none"/>
+  <text font-family="sans-serif" font-size="24" font-weight="bold" fill="#9932CC" letter-spacing="4">
+    <textPath href="#bottomCurveBallas" startOffset="50%" text-anchor="middle">
+      RADIO 426
+    </textPath>
+  </text>
+</svg>

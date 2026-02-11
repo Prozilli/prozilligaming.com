@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000">
+  <defs>
+    <linearGradient id="ballasFlagGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#9932CC;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#663399;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9932CC;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1500" height="1000" fill="#000000"/>
+
+  <!-- Diagonal purple stripes -->
+  <g fill="url(#ballasFlagGrad)" opacity="0.3">
+    <path d="M0 0 L500 0 L0 500 Z"/>
+    <path d="M1000 0 L1500 0 L1500 500 L500 500 Z"/>
+    <path d="M0 500 L1000 500 L0 1000 Z"/>
+    <path d="M500 1000 L1500 1000 L1500 500 Z"/>
+  </g>
+
+  <!-- Large crown -->
+  <g transform="translate(750, 250)">
+    <path d="M-250 100 L-250 150 L250 150 L250 100 L210 30 L170 100 L85 -60 L0 80 L-85 -60 L-170 100 L-210 30 Z"
+          fill="url(#ballasFlagGrad)" stroke="#FFD700" stroke-width="6"/>
+
+    <!-- Crown jewels -->
+    <circle cx="-170" cy="80" r="20" fill="#FFD700"/>
+    <circle cx="-85" cy="80" r="20" fill="#FFD700"/>
+    <circle cx="0" cy="80" r="20" fill="#FFD700"/>
+    <circle cx="85" cy="80" r="20" fill="#FFD700"/>
+    <circle cx="170" cy="80" r="20" fill="#FFD700"/>
+
+    <!-- Points jewels -->
+    <circle cx="-170" cy="30" r="18" fill="#9932CC"/>
+    <circle cx="-85" cy="-60" r="25" fill="#9932CC"/>
+    <circle cx="0" cy="80" r="25" fill="#9932CC"/>
+    <circle cx="85" cy="-60" r="25" fill="#9932CC"/>
+    <circle cx="170" cy="30" r="18" fill="#9932CC"/>
+
+    <!-- Gold base -->
+    <rect x="-250" y="150" width="500" height="30" fill="#FFD700"/>
+
+    <!-- Decorative diamonds -->
+    <g fill="#9932CC" stroke="#FFD700" stroke-width="2">
+      <path d="M-200 165 L-180 145 L-160 165 L-180 185 Z"/>
+      <path d="M-100 165 L-80 145 L-60 165 L-80 185 Z"/>
+      <path d="M0 165 L20 145 L40 165 L20 185 Z"/>
+      <path d="M100 165 L120 145 L140 165 L120 185 Z"/>
+      <path d="M200 165 L220 145 L240 165 L220 185 Z"/>
+    </g>
+  </g>
+
+  <!-- Giant graffiti B -->
+  <g transform="translate(750, 600)">
+    <!-- B with depth -->
+    <path d="M-150 -200 L-150 200 L80 200 Q160 200 185 160 Q210 120 210 80 Q210 45 190 20 Q170 -5 130 -15 Q165 -20 183 -48 Q201 -75 201 -110 Q201 -150 176 -175 Q151 -200 80 -200 Z M-80 -140 L50 -140 Q95 -140 112 -118 Q129 -95 129 -70 Q129 -45 112 -28 Q95 -11 50 -11 L-80 -11 Z M-80 60 L70 60 Q115 60 135 82 Q155 104 155 135 Q155 166 135 183 Q115 135 70 135 L-80 135 Z"
+          fill="url(#ballasFlagGrad)" stroke="#ffffff" stroke-width="8"/>
+
+    <!-- Graffiti drips -->
+    <g fill="#9932CC" opacity="0.7">
+      <ellipse cx="-50" cy="210" rx="15" ry="30"/>
+      <ellipse cx="20" cy="215" rx="12" ry="25"/>
+      <ellipse cx="70" cy="208" rx="18" ry="35"/>
+      <ellipse cx="120" cy="212" rx="14" ry="28"/>
+    </g>
+
+    <!-- Shadow/depth -->
+    <path d="M-120 -180 L-120 -30 M-120 40 L-120 180"
+          stroke="#663399" stroke-width="30" opacity="0.5"/>
+  </g>
+
+  <!-- Large grape clusters -->
+  <g fill="#9932CC" stroke="#663399" stroke-width="3">
+    <!-- Left cluster -->
+    <g transform="translate(200, 600)">
+      <circle cx="0" cy="-15" r="28"/>
+      <circle cx="-22" cy="8" r="28"/>
+      <circle cx="22" cy="8" r="28"/>
+      <circle cx="-22" cy="38" r="28"/>
+      <circle cx="22" cy="38" r="28"/>
+      <circle cx="0" cy="60" r="28"/>
+      <circle cx="-15" cy="85" r="25"/>
+      <circle cx="15" cy="85" r="25"/>
+      <path d="M0 -15 Q-15 -60 0 -90 L8 -90 Q15 -75 8 -60 Q0 -45 0 -15"
+            fill="#228B22" stroke="#228B22" stroke-width="4"/>
+    </g>
+
+    <!-- Right cluster -->
+    <g transform="translate(1300, 600)">
+      <circle cx="0" cy="-15" r="28"/>
+      <circle cx="-22" cy="8" r="28"/>
+      <circle cx="22" cy="8" r="28"/>
+      <circle cx="-22" cy="38" r="28"/>
+      <circle cx="22" cy="38" r="28"/>
+      <circle cx="0" cy="60" r="28"/>
+      <circle cx="-15" cy="85" r="25"/>
+      <circle cx="15" cy="85" r="25"/>
+      <path d="M0 -15 Q15 -60 0 -90 L-8 -90 Q-15 -75 -8 -60 Q0 -45 0 -15"
+            fill="#228B22" stroke="#228B22" stroke-width="4"/>
+    </g>
+  </g>
+
+  <!-- Purple bandana pattern -->
+  <g fill="none" stroke="#9932CC" stroke-width="4" opacity="0.5">
+    <circle cx="300" cy="200" r="40"/>
+    <circle cx="300" cy="200" r="25"/>
+    <path d="M275 175 L325 225 M275 225 L325 175"/>
+
+    <circle cx="1200" cy="200" r="40"/>
+    <circle cx="1200" cy="200" r="25"/>
+    <path d="M1175 175 L1225 225 M1175 225 L1225 175"/>
+  </g>
+
+  <!-- Text -->
+  <text x="750" y="120" font-family="Impact" font-size="108" font-weight="bold"
+        text-anchor="middle" fill="#9932CC" stroke="#000000" stroke-width="4">BALLAS</text>
+  <text x="750" y="970" font-family="sans-serif" font-size="40" font-weight="bold"
+        text-anchor="middle" fill="#9932CC">RADIO 426 • LA MESA</text>
+</svg>

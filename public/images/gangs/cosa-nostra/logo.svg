@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <radialGradient id="cosaNostraGrad">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#cccccc;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="#000000"/>
+
+  <!-- Ornate frame -->
+  <rect x="100" y="100" width="824" height="824" fill="none" stroke="#ffffff" stroke-width="6"/>
+  <rect x="120" y="120" width="784" height="784" fill="none" stroke="#888888" stroke-width="3"/>
+
+  <!-- Italian flag stripes (background) -->
+  <rect x="150" y="800" width="241" height="80" fill="#009246"/>
+  <rect x="391" y="800" width="242" height="80" fill="#ffffff"/>
+  <rect x="633" y="800" width="241" height="80" fill="#ce2b37"/>
+
+  <!-- Regal lion -->
+  <g transform="translate(512, 450)">
+    <!-- Body -->
+    <ellipse cx="0" cy="30" rx="80" ry="100" fill="url(#cosaNostraGrad)" stroke="#ffffff" stroke-width="3"/>
+
+    <!-- Legs -->
+    <rect x="-60" y="100" width="30" height="80" fill="url(#cosaNostraGrad)" stroke="#ffffff" stroke-width="2"/>
+    <rect x="-20" y="100" width="30" height="80" fill="url(#cosaNostraGrad)" stroke="#ffffff" stroke-width="2"/>
+    <rect x="30" y="100" width="30" height="80" fill="url(#cosaNostraGrad)" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Paws -->
+    <ellipse cx="-45" cy="180" rx="20" ry="12" fill="url(#cosaNostraGrad)" stroke="#ffffff" stroke-width="2"/>
+    <ellipse cx="-5" cy="180" rx="20" ry="12" fill="url(#cosaNostraGrad)" stroke="#ffffff" stroke-width="2"/>
+    <ellipse cx="45" cy="180" rx="20" ry="12" fill="url(#cosaNostraGrad)" stroke="#ffffff" stroke-width="2"/>
+
+    <!-- Head -->
+    <circle cx="0" cy="-40" r="60" fill="url(#cosaNostraGrad)" stroke="#ffffff" stroke-width="3"/>
+
+    <!-- Mane -->
+    <g fill="#888888" stroke="#ffffff" stroke-width="2">
+      <circle cx="-45" cy="-60" r="18"/>
+      <circle cx="-55" cy="-35" r="18"/>
+      <circle cx="-58" cy="-8" r="18"/>
+      <circle cx="-55" cy="18" r="18"/>
+      <circle cx="45" cy="-60" r="18"/>
+      <circle cx="55" cy="-35" r="18"/>
+      <circle cx="58" cy="-8" r="18"/>
+      <circle cx="55" cy="18" r="18"/>
+      <circle cx="-25" cy="-75" r="18"/>
+      <circle cx="0" cy="-80" r="18"/>
+      <circle cx="25" cy="-75" r="18"/>
+    </g>
+
+    <!-- Face -->
+    <circle cx="-20" cy="-50" r="8" fill="#000000"/>
+    <circle cx="20" cy="-50" r="8" fill="#000000"/>
+    <path d="M0 -35 L-10 -25 L10 -25 Z" fill="#000000"/>
+    <path d="M-10 -20 Q0 -10 10 -20" fill="none" stroke="#000000" stroke-width="3"/>
+
+    <!-- Tail -->
+    <path d="M80 50 Q120 30 140 50 Q160 70 150 90 L145 85 Q152 70 140 58 Q125 45 95 55"
+          fill="url(#cosaNostraGrad)" stroke="#ffffff" stroke-width="2"/>
+    <ellipse cx="148" cy="88" rx="15" ry="20" fill="#888888" stroke="#ffffff" stroke-width="2"/>
+  </g>
+
+  <!-- Crossed tommy guns -->
+  <g transform="translate(512, 250)">
+    <!-- Left gun -->
+    <g transform="rotate(-25)">
+      <rect x="-150" y="-10" width="240" height="20" rx="3" fill="#333333" stroke="#ffffff" stroke-width="2"/>
+      <circle cx="70" cy="0" r="25" fill="#333333" stroke="#ffffff" stroke-width="2"/>
+      <rect x="-160" y="-15" width="25" height="30" fill="#654321" stroke="#ffffff" stroke-width="1"/>
+      <rect x="-30" y="-30" width="50" height="60" rx="3" fill="#333333" stroke="#ffffff" stroke-width="2"/>
+      <rect x="-28" y="-35" width="20" height="25" fill="#333333"/>
+    </g>
+
+    <!-- Right gun -->
+    <g transform="rotate(25)">
+      <rect x="-150" y="-10" width="240" height="20" rx="3" fill="#333333" stroke="#ffffff" stroke-width="2"/>
+      <circle cx="70" cy="0" r="25" fill="#333333" stroke="#ffffff" stroke-width="2"/>
+      <rect x="-160" y="-15" width="25" height="30" fill="#654321" stroke="#ffffff" stroke-width="1"/>
+      <rect x="-30" y="-30" width="50" height="60" rx="3" fill="#333333" stroke="#ffffff" stroke-width="2"/>
+      <rect x="-28" y="-35" width="20" height="25" fill="#333333"/>
+    </g>
+
+    <!-- Center CN monogram -->
+    <circle cx="0" cy="0" r="40" fill="#000000" stroke="#ffffff" stroke-width="4"/>
+    <text x="0" y="15" font-family="serif" font-size="48" font-weight="bold"
+          text-anchor="middle" fill="#ffffff">CN</text>
+  </g>
+
+  <!-- Banner with text -->
+  <path d="M200 850 L824 850 L824 920 L800 900 L512 900 L224 900 L200 920 Z"
+        fill="#000000" stroke="#ffffff" stroke-width="4"/>
+  <text x="512" y="895" font-family="serif" font-size="42" font-weight="bold"
+        text-anchor="middle" fill="#ffffff" font-style="italic">Cosa Nostra</text>
+</svg>

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000">
+  <!-- Background -->
+  <rect width="1500" height="1000" fill="#000000"/>
+
+  <!-- Red stripes -->
+  <rect y="0" width="1500" height="150" fill="#990000"/>
+  <rect y="850" width="1500" height="150" fill="#990000"/>
+
+  <!-- Tire tread pattern (background) -->
+  <pattern id="treadPattern" x="0" y="0" width="100" height="50" patternUnits="userSpaceOnUse">
+    <rect width="100" height="50" fill="#000000"/>
+    <rect x="10" y="10" width="35" height="8" fill="#333333"/>
+    <rect x="55" y="10" width="35" height="8" fill="#333333"/>
+    <rect x="10" y="32" width="35" height="8" fill="#333333"/>
+    <rect x="55" y="32" width="35" height="8" fill="#333333"/>
+  </pattern>
+  <rect y="150" width="1500" height="700" fill="url(#treadPattern)" opacity="0.3"/>
+
+  <!-- Large winged skull -->
+  <g transform="translate(750, 400)">
+    <!-- Left wing -->
+    <g fill="#ffffff" stroke="#000000" stroke-width="4">
+      <path d="M-150 0 Q-220 -40 -300 -30 Q-330 -25 -350 -10 L-340 0 Q-325 -15 -300 -18 Q-240 -25 -170 10 L-180 30 Q-230 5 -285 0 L-275 15 Q-235 10 -190 30 L-160 40 Z"/>
+      <path d="M-160 40 Q-200 20 -240 10 Q-260 5 -270 18 L-260 23 Q-250 13 -240 15 Q-210 22 -170 50 Z"/>
+      <ellipse cx="-150" cy="50" rx="15" ry="30" transform="rotate(-30 -150 50)"/>
+      <ellipse cx="-170" cy="65" rx="15" ry="30" transform="rotate(-40 -170 65)"/>
+      <ellipse cx="-190" cy="78" rx="15" ry="30" transform="rotate(-50 -190 78)"/>
+      <ellipse cx="-210" cy="88" rx="15" ry="30" transform="rotate(-60 -210 88)"/>
+    </g>
+
+    <!-- Right wing -->
+    <g fill="#ffffff" stroke="#000000" stroke-width="4">
+      <path d="M150 0 Q220 -40 300 -30 Q330 -25 350 -10 L340 0 Q325 -15 300 -18 Q240 -25 170 10 L180 30 Q230 5 285 0 L275 15 Q235 10 190 30 L160 40 Z"/>
+      <path d="M160 40 Q200 20 240 10 Q260 5 270 18 L260 23 Q250 13 240 15 Q210 22 170 50 Z"/>
+      <ellipse cx="150" cy="50" rx="15" ry="30" transform="rotate(30 150 50)"/>
+      <ellipse cx="170" cy="65" rx="15" ry="30" transform="rotate(40 170 65)"/>
+      <ellipse cx="190" cy="78" rx="15" ry="30" transform="rotate(50 190 78)"/>
+      <ellipse cx="210" cy="88" rx="15" ry="30" transform="rotate(60 210 88)"/>
+    </g>
+
+    <!-- Skull -->
+    <g>
+      <ellipse cx="0" cy="0" rx="110" ry="135" fill="#e0e0e0" stroke="#000000" stroke-width="6"/>
+
+      <!-- Eye sockets -->
+      <ellipse cx="-38" cy="-32" rx="28" ry="48" fill="#000000"/>
+      <ellipse cx="38" cy="-32" rx="28" ry="48" fill="#000000"/>
+      <circle cx="-38" cy="-32" r="10" fill="#FF0000" opacity="0.5"/>
+      <circle cx="38" cy="-32" r="10" fill="#FF0000" opacity="0.5"/>
+
+      <!-- Nose -->
+      <path d="M-15 15 L-15 48 L-23 58 L-15 58 L-15 70 M15 15 L15 48 L23 58 L15 58 L15 70 M-8 15 L-8 72 M8 15 L8 72"
+            stroke="#000000" stroke-width="6" fill="none"/>
+
+      <!-- Teeth -->
+      <g fill="#000000">
+        <rect x="-55" y="85" width="15" height="32" rx="3"/>
+        <rect x="-35" y="85" width="15" height="35" rx="3"/>
+        <rect x="-15" y="85" width="15" height="38" rx="3"/>
+        <rect x="5" y="85" width="15" height="38" rx="3"/>
+        <rect x="25" y="85" width="15" height="35" rx="3"/>
+        <rect x="45" y="85" width="15" height="32" rx="3"/>
+      </g>
+
+      <!-- Cracks -->
+      <path d="M-60 -60 L-50 -35 L-62 -10" stroke="#000000" stroke-width="4" fill="none"/>
+      <path d="M45 -55 L55 -30 L42 -8" stroke="#000000" stroke-width="4" fill="none"/>
+      <path d="M-20 -80 L-15 -60 L-22 -45" stroke="#000000" stroke-width="3" fill="none"/>
+    </g>
+  </g>
+
+  <!-- Motorcycle silhouette (bottom) -->
+  <g transform="translate(750, 750)">
+    <!-- Wheels -->
+    <circle cx="-150" cy="0" r="60" fill="none" stroke="#666666" stroke-width="20"/>
+    <circle cx="-150" cy="0" r="40" fill="none" stroke="#888888" stroke-width="3"/>
+    <circle cx="-150" cy="0" r="20" fill="#888888"/>
+
+    <circle cx="150" cy="0" r="60" fill="none" stroke="#666666" stroke-width="20"/>
+    <circle cx="150" cy="0" r="40" fill="none" stroke="#888888" stroke-width="3"/>
+    <circle cx="150" cy="0" r="20" fill="#888888"/>
+
+    <!-- Frame -->
+    <path d="M-150 0 L-50 -80 L50 -80 L150 0" stroke="#888888" stroke-width="12" fill="none"/>
+    <path d="M-50 -80 L0 -40 L50 -80" stroke="#888888" stroke-width="10" fill="none"/>
+    <rect x="-30" y="-60" width="60" height="30" rx="5" fill="#666666" stroke="#888888" stroke-width="3"/>
+
+    <!-- Handlebars -->
+    <line x1="-80" y1="-95" x2="80" y2="-95" stroke="#888888" stroke-width="8"/>
+  </g>
+
+  <!-- Text banners -->
+  <g>
+    <rect x="350" y="50" width="800" height="80" rx="10" fill="#000000" stroke="#FF0000" stroke-width="4"/>
+    <text x="750" y="105" font-family="Impact" font-size="64" font-weight="bold"
+          text-anchor="middle" fill="#ffffff">THE LOST MC</text>
+
+    <rect x="500" y="910" width="500" height="60" rx="8" fill="#000000" stroke="#ffffff" stroke-width="3"/>
+    <text x="750" y="952" font-family="Impact" font-size="40" font-weight="bold"
+          text-anchor="middle" fill="#FF0000">RADIO 425 • EL BURRO HEIGHTS</text>
+  </g>
+
+  <!-- 1% diamonds corners -->
+  <g fill="#FF0000" stroke="#000000" stroke-width="3">
+    <path d="M100 100 L130 70 L160 100 L130 130 Z"/>
+    <text x="130" y="108" font-family="Arial" font-size="24" font-weight="bold"
+          text-anchor="middle" fill="#ffffff">1%</text>
+
+    <path d="M1340 100 L1370 70 L1400 100 L1370 130 Z"/>
+    <text x="1370" y="108" font-family="Arial" font-size="24" font-weight="bold"
+          text-anchor="middle" fill="#ffffff">1%</text>
+  </g>
+</svg>

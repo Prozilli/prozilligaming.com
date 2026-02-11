@@ -1,0 +1,1953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gang Operations SOP v1.0 - ZO Syndicate RP</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* --- HEADER BANNER --- */
+  .header-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+    border-bottom: 3px solid #a30000;
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(163,0,0,0.03) 2px,
+      rgba(163,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #c4a265;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .header-server {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 16px;
+    color: #a30000;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #777;
+  }
+  .header-meta span { white-space: nowrap; }
+  .header-meta strong { color: #999; }
+  .badge-classified {
+    display: inline-block;
+    background: #a30000;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #c44;
+  }
+
+  /* --- MAIN CONTENT --- */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+  }
+
+  /* --- TABLE OF CONTENTS --- */
+  .toc {
+    background: #111;
+    border: 1px solid #222;
+    border-left: 4px solid #a30000;
+    padding: 24px 28px;
+    margin: 0 0 40px;
+  }
+  .toc h2 {
+    color: #a30000;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    margin-bottom: 5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #a30000; }
+
+  /* --- HEADINGS --- */
+  h1 {
+    color: #a30000;
+    border-bottom: 2px solid #a30000;
+    padding-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-top: 50px;
+  }
+  h2 {
+    color: #c44;
+    margin-top: 35px;
+    font-size: 18px;
+    border-bottom: 1px solid #1f1f1f;
+    padding-bottom: 6px;
+  }
+  h3 {
+    color: #ddd;
+    font-size: 15px;
+    margin-top: 22px;
+  }
+  h4 {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 16px;
+    font-weight: 600;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #222;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  th {
+    background: #141414;
+    color: #a30000;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  td { background: #0f0f0f; }
+  tr:hover td { background: #151010; }
+
+  /* --- CALLOUT BOXES --- */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .callout-critical {
+    background: #1f0a0a;
+    border-left: 4px solid #a30000;
+    border: 1px solid #331111;
+    border-left: 4px solid #a30000;
+  }
+  .callout-warning {
+    background: #1f1a0a;
+    border: 1px solid #33290e;
+    border-left: 4px solid #c4a265;
+  }
+  .callout-info {
+    background: #0a0f1f;
+    border: 1px solid #0e1a33;
+    border-left: 4px solid #3366aa;
+  }
+  .callout-critical strong { color: #e44; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #6699cc; }
+
+  /* --- MISC --- */
+  code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    border: 1px solid #222;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  blockquote {
+    border-left: 3px solid #a30000;
+    margin: 16px 0;
+    padding: 10px 18px;
+    background: #111;
+    color: #aaa;
+    font-style: italic;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 40px 0;
+  }
+  strong { color: #eee; }
+  a { color: #a30000; text-decoration: none; }
+  a:hover { color: #c44; text-decoration: underline; }
+
+  /* --- FOOTER --- */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 2px solid #a30000;
+    margin-top: 60px;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer .org { color: #c4a265; font-weight: 600; letter-spacing: 2px; }
+  .footer a { color: #666; }
+  .footer a:hover { color: #a30000; }
+
+  /* --- RESPONSIVE --- */
+  /* ===== HERO SECTION ===== */
+  .hero-section {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(163,0,0,0.4) 0%, rgba(13,13,13,0.9) 50%, rgba(163,0,0,0.4) 100%);
+    opacity: 0.85;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #c4a265;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 700px) {
+    .hero-section { height: 200px; }
+    .hero-title { font-size: 32px; letter-spacing: 4px; }
+    .hero-subtitle { font-size: 14px; }
+    .content { padding: 20px 16px 40px; }
+    .header-banner { padding: 28px 16px 22px; }
+    .header-dept { font-size: 22px; }
+    .toc ol { columns: 1; }
+    .header-meta { flex-direction: column; gap: 4px; align-items: center; }
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HEADER BANNER                                                 -->
+<!-- ============================================================ -->
+<div class="header-banner">
+  <div class="header-org">Prozilli Entertainment</div>
+  <div class="header-server">ZO Syndicate RP</div>
+  <div class="header-dept">Gang Operations</div>
+  <div class="header-subtitle">Standard Operating Procedures</div>
+  <div class="badge-classified">Restricted &mdash; Gang Members Only</div>
+  <div class="header-meta">
+    <span><strong>Document:</strong> GANG-SOP-2026-001</span>
+    <span><strong>Version:</strong> 1.0</span>
+    <span><strong>Effective:</strong> February 11, 2026</span>
+    <span><strong>Classification:</strong> Gang Restricted</span>
+    <span><strong>Territory:</strong> State of San Andreas</span>
+  </div>
+</div>
+
+<!-- Hero Image Section -->
+<div class="hero-section" style="background: radial-gradient(circle at center, rgba(163,0,0,0.3) 0%, transparent 70%), url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1920 600%22%3E%3Cdefs%3E%3ClinearGradient id=%22gangGlow%22 x1=%220%25%22 y1=%220%25%22 x2=%220%25%22 y2=%22100%25%22%3E%3Cstop offset=%220%25%22 stop-color=%22%231a0a0a%22/%3E%3Cstop offset=%22100%25%22 stop-color=%22%230a0a0a%22/%3E%3C/linearGradient%3E%3ClinearGradient id=%22territoryglow%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%220%25%22%3E%3Cstop offset=%220%25%22 stop-color=%22%23a30000%22 stop-opacity=%220.4%22/%3E%3Cstop offset=%2225%25%22 stop-color=%22%23c4a265%22 stop-opacity=%220.3%22/%3E%3Cstop offset=%2250%25%22 stop-color=%22%23a30000%22 stop-opacity=%220.5%22/%3E%3Cstop offset=%2275%25%22 stop-color=%22%236a1b9a%22 stop-opacity=%220.3%22/%3E%3Cstop offset=%22100%25%22 stop-color=%22%23a30000%22 stop-opacity=%220.4%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill=%22url(%23gangGlow)%22 width=%221920%22 height=%22600%22/%3E%3C!-- City Skyline --%3E%3Cg opacity=%220.2%22 fill=%22%23222%22%3E%3Crect x=%2250%22 y=%22320%22 width=%22100%22 height=%22280%22/%3E%3Crect x=%22180%22 y=%22270%22 width=%22120%22 height=%22330%22/%3E%3Crect x=%22330%22 y=%22300%22 width=%2290%22 height=%22300%22/%3E%3Crect x=%22450%22 y=%22220%22 width=%22150%22 height=%22380%22/%3E%3Crect x=%22630%22 y=%22260%22 width=%22110%22 height=%22340%22/%3E%3Crect x=%22770%22 y=%22280%22 width=%22130%22 height=%22320%22/%3E%3Crect x=%22930%22 y=%22240%22 width=%22160%22 height=%22360%22/%3E%3Crect x=%221120%22 y=%22300%22 width=%22100%22 height=%22300%22/%3E%3Crect x=%221250%22 y=%22260%22 width=%22140%22 height=%22340%22/%3E%3Crect x=%221420%22 y=%22280%22 width=%22120%22 height=%22320%22/%3E%3Crect x=%221570%22 y=%22320%22 width=%22100%22 height=%22280%22/%3E%3Crect x=%221700%22 y=%22290%22 width=%22130%22 height=%22310%22/%3E%3C/g%3E%3C!-- Territory markers --%3E%3Cg opacity=%220.15%22%3E%3Ccircle cx=%22200%22 cy=%22350%22 r=%2260%22 fill=%22%23a30000%22/%3E%3Ccircle cx=%22500%22 cy=%22280%22 r=%2250%22 fill=%22%23c4a265%22/%3E%3Ccircle cx=%22900%22 cy=%22320%22 r=%2255%22 fill=%22%236a1b9a%22/%3E%3Ccircle cx=%221300%22 cy=%22300%22 r=%2265%22 fill=%22%23ffd700%22/%3E%3Ccircle cx=%221650%22 cy=%22340%22 r=%2245%22 fill=%22%2300bcd4%22/%3E%3C/g%3E%3C!-- Territory light bars --%3E%3Crect fill=%22url(%23territoryglow)%22 opacity=%220.25%22 y=%22260%22 width=%221920%22 height=%2212%22/%3E%3Crect fill=%22url(%23territoryglow)%22 opacity=%220.2%22 y=%22420%22 width=%221920%22 height=%2212%22/%3E%3C!-- Gang Crown Symbol --%3E%3Cg transform=%22translate(860, 150)%22 opacity=%220.2%22%3E%3Cpath d=%22M 60 120 L 80 80 L 100 120 L 120 60 L 140 120 L 160 80 L 180 120 L 170 140 L 70 140 Z%22 fill=%22%23c4a265%22 stroke=%22%23a30000%22 stroke-width=%223%22/%3E%3Ccircle cx=%2280%22 cy=%2275%22 r=%2210%22 fill=%22%23a30000%22/%3E%3Ccircle cx=%22120%22 cy=%2250%22 r=%2212%22 fill=%22%23a30000%22/%3E%3Ccircle cx=%22160%22 cy=%2275%22 r=%2210%22 fill=%22%23a30000%22/%3E%3Ctext x=%22120%22 y=%22135%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2218%22 font-weight=%22bold%22 fill=%22%230a0a0a%22%3EZO%3C/text%3E%3C/g%3E%3C/svg%3E') #0d0d0d;">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Gang Operations</h1>
+    <p class="hero-subtitle">Power • Territory • Loyalty</p>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ============================================================ -->
+<!-- TABLE OF CONTENTS                                             -->
+<!-- ============================================================ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#introduction">Introduction to Gang Life</a></li>
+    <li><a href="#the-ten">The 10 Gangs of San Andreas</a></li>
+    <li><a href="#territory">Territory Control System</a></li>
+    <li><a href="#ranks">Gang Ranks &amp; Hierarchy</a></li>
+    <li><a href="#businesses">Gang Businesses</a></li>
+    <li><a href="#garages">Gang Garages</a></li>
+    <li><a href="#stash">Gang Stash Houses</a></li>
+    <li><a href="#radio">Radio Communications</a></li>
+    <li><a href="#discord">Discord Integration</a></li>
+    <li><a href="#income">Income Sources</a></li>
+    <li><a href="#wars">Gang Wars</a></li>
+    <li><a href="#getting-started">Getting Started Guide</a></li>
+    <li><a href="#code">Gang Rules &amp; Code</a></li>
+    <li><a href="#commands">Commands</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ol>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. INTRODUCTION                                               -->
+<!-- ============================================================ -->
+<h1 id="introduction">1. Introduction to Gang Life</h1>
+
+<blockquote>
+  "In the streets of San Andreas, territory is power, loyalty is currency, and respect is earned through blood and steel. Welcome to the underworld."
+</blockquote>
+
+<p>Gang life in ZO Syndicate RP represents the criminal underworld of San Andreas. Unlike legal factions, gangs operate outside the law, building empires through territory control, drug trafficking, armed robberies, and strategic alliances. This document outlines the structure, mechanics, and culture of gang operations within the server.</p>
+
+<h3>1.1 What Are Gangs?</h3>
+<p>Gangs are organized criminal organizations that control specific territories throughout San Andreas. Each gang has its own unique culture, hierarchy, color scheme, and criminal specialization. The 10 major gangs compete for dominance through territory capture, business operations, and direct confrontation.</p>
+
+<h3>1.2 Gang Warfare and Territory Control</h3>
+<p>The core of gang power lies in territorial dominance. San Andreas is divided into <strong>10 capture zones</strong>, each providing passive income and strategic advantages to the controlling gang. Territory wars are common, with gangs fighting to expand their influence and protect their turf from rivals.</p>
+
+<h3>1.3 Legal vs Criminal Activities</h3>
+<p>While gangs primarily engage in illegal activities (drug dealing, robberies, contract hits), they also operate legitimate businesses as fronts for money laundering and income diversification. The balance between criminal enterprise and business ownership defines successful gang operations.</p>
+
+<div class="callout callout-critical">
+  <strong>Server Rule:</strong> Gang roleplay must be realistic and immersive. Random violence, fail RP, and metagaming will result in immediate removal from the gang and potential server ban. Respect the RP, respect the community.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 2. THE 10 GANGS                                               -->
+<!-- ============================================================ -->
+<h1 id="the-ten">2. The 10 Gangs of San Andreas</h1>
+
+<p>Each gang in ZO Syndicate RP has a distinct identity, territory, and cultural theme. Below is a comprehensive breakdown of all 10 gangs.</p>
+
+<h2 id="syndicate">2.1 The Syndicate</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>420</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>Grove Street</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Red / Black</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Organized crime syndicate - calculated, strategic, corporate-style criminal enterprise</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Associate</td>
+    <td>Entry-level member. Proves loyalty through grunt work, basic drug dealing (weed only).</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Lieutenant</td>
+    <td>Trusted soldier. Access to cocaine dealing, gang stash, can recruit Associates.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Underboss</td>
+    <td>Senior leadership. Access to meth operations, territory management, can promote to Lieutenant.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Boss</td>
+    <td>Gang leader. Full control: hire/fire, territory control, all business access, sets gang policy.</td>
+  </tr>
+</table>
+
+<h2 id="cartel">2.2 The Cartel</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>421</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>Forum Drive</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Gold / Black</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Mexican cartel - ruthless drug empire, military-style discipline, cross-border operations</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Soldado</td>
+    <td>Foot soldier. Proves worth through action, basic drug runs and muscle work.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Sicario</td>
+    <td>Enforcer. Handles hits, protection, cocaine trafficking. Trusted with weapons.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Capo</td>
+    <td>Regional captain. Manages territory operations, recruitment, meth distribution.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Jefe</td>
+    <td>Cartel boss. Supreme authority over all operations, alliances, and territory strategy.</td>
+  </tr>
+</table>
+
+<h2 id="aztecas">2.3 Aztecas</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>422</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>Vespucci</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Turquoise / Green</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Street gang - territorial pride, neighborhood loyalty, old-school gang culture</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Youngster</td>
+    <td>New recruit. Earns stripes through loyalty and street work.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Soldier</td>
+    <td>Proven gang member. Handles turf defense, drug spots, and recruitment.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Shot Caller</td>
+    <td>Veteran leader. Coordinates operations, manages territory, mentors younger members.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>OG</td>
+    <td>Original Gangster. Founder-level respect, final say on all gang decisions.</td>
+  </tr>
+</table>
+
+<h2 id="cosa-nostra">2.4 Cosa Nostra</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>423</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>Mirror Park</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Black / White</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Italian mafia - traditional organized crime, honor code (omertà), family structure</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Associate</td>
+    <td>Outsider proving worth. Not yet "made" - must earn trust through service.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Soldier</td>
+    <td>Made member. Sworn into the family, handles protection, extortion, and hits.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Caporegime</td>
+    <td>Captain. Leads a crew of soldiers, manages rackets and territory.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Don</td>
+    <td>Boss of bosses. Absolute authority over the family, respected across all factions.</td>
+  </tr>
+</table>
+
+<h2 id="yakuza">2.5 Yakuza</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>424</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>Rancho</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Red / White</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Japanese organized crime - honor-bound, ritualistic, blend of tradition and modern crime</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Kobun</td>
+    <td>Lower-ranking member. Serves senior members, handles low-level operations.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Shatei</td>
+    <td>Younger brother. Proven loyalty, manages street operations and collections.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Wakagashira</td>
+    <td>Second-in-command. Oversees daily operations, enforces clan rules.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Oyabun</td>
+    <td>Father figure / Boss. Supreme leader of the clan, commands absolute loyalty.</td>
+  </tr>
+</table>
+
+<h2 id="lost-mc">2.6 The Lost MC</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>425</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>El Burro Heights</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Black / Red</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Outlaw motorcycle club - brotherhood, freedom, biker culture, gun running</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Prospect</td>
+    <td>Probationary member. Earns colors through dedication and service to the club.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Patched</td>
+    <td>Full member. Wears club colors, participates in votes, runs drug and gun operations.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Sergeant-at-Arms</td>
+    <td>Enforcer. Maintains club security, discipline, and protection of members.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>President</td>
+    <td>Club leader. Final authority on all club matters, alliances, and territory.</td>
+  </tr>
+</table>
+
+<h2 id="ballas">2.7 Ballas</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>426</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>La Mesa</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Purple</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Street gang - aggressive expansion, crack trade dominance, fierce rivalry culture</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Youngster</td>
+    <td>New blood. Proves loyalty through street work and following orders.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Soldier</td>
+    <td>Established member. Handles drug spots, turf defense, and recruitment.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Shot Caller</td>
+    <td>Senior operator. Coordinates gang activities, manages territory and income.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>OG</td>
+    <td>Top leadership. Commands respect, makes final decisions on wars and alliances.</td>
+  </tr>
+</table>
+
+<h2 id="vagos">2.8 Vagos</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>427</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>Strawberry</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Yellow</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Street gang - Latino pride, meth operations, territorial aggression</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Youngster</td>
+    <td>Initiate. Earns respect through action and loyalty to the neighborhood.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Soldier</td>
+    <td>Trusted member. Runs drug operations, defends turf, recruits new members.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Shot Caller</td>
+    <td>Leadership. Coordinates operations, manages territory, mentors soldiers.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>OG</td>
+    <td>Gang elder. Final authority on all decisions, respected by all ranks.</td>
+  </tr>
+</table>
+
+<h2 id="bratva">2.9 Bratva</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>428</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>Davis</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Blue / White</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Russian mob - ruthless efficiency, black market arms dealing, vodka and violence</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Shestyorka</td>
+    <td>"Six" - lowest rank. Does dirty work, proves worth through loyalty and obedience.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Bratok</td>
+    <td>"Brother" - trusted member. Handles extortion, smuggling, and enforcement.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Avtoritet</td>
+    <td>"Authority" - respected leader. Manages operations, territory, and discipline.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Pakhan</td>
+    <td>"Boss" - supreme commander. Controls all Bratva operations and alliances.</td>
+  </tr>
+</table>
+
+<h2 id="triads">2.10 Triads</h2>
+<table>
+  <tr>
+    <th>Attribute</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Radio Channel</strong></td>
+    <td>429</td>
+  </tr>
+  <tr>
+    <td><strong>Territory</strong></td>
+    <td>Sandy Shores</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Colors</strong></td>
+    <td>Red / Gold</td>
+  </tr>
+  <tr>
+    <td><strong>Theme</strong></td>
+    <td>Chinese organized crime - ancient traditions, human trafficking, international smuggling</td>
+  </tr>
+</table>
+
+<h3>Rank Hierarchy</h3>
+<table>
+  <tr>
+    <th>Rank Level</th>
+    <th>Rank Name</th>
+    <th>Responsibilities</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>49er</td>
+    <td>Low-level operative. Handles street-level operations and collections.</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Red Pole</td>
+    <td>Enforcer. Leads combat operations, protects Triad assets and territory.</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Vanguard</td>
+    <td>Deputy leader. Oversees operations, recruitment, and business ventures.</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Dragon Head</td>
+    <td>Supreme leader. Commands absolute loyalty, controls all Triad operations.</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 3. TERRITORY CONTROL                                          -->
+<!-- ============================================================ -->
+<h1 id="territory">3. Territory Control System</h1>
+
+<p>Territory is the lifeblood of gang power in ZO Syndicate RP. Controlling zones provides passive income, drug-selling bonuses, and strategic positioning for your gang.</p>
+
+<h3>3.1 The 10 Capture Zones</h3>
+<p>San Andreas is divided into 10 distinct capture zones, each with unique strategic value:</p>
+
+<table>
+  <tr>
+    <th>Zone Name</th>
+    <th>Location</th>
+    <th>Strategic Value</th>
+  </tr>
+  <tr>
+    <td>Grove Street</td>
+    <td>South Los Santos</td>
+    <td>Central city position, high foot traffic for drug sales</td>
+  </tr>
+  <tr>
+    <td>Forum Drive</td>
+    <td>Strawberry</td>
+    <td>Commercial district, good for business fronts</td>
+  </tr>
+  <tr>
+    <td>Vespucci Beach</td>
+    <td>West Los Santos</td>
+    <td>Tourist area, high-value targets, nightlife</td>
+  </tr>
+  <tr>
+    <td>Mirror Park</td>
+    <td>East Los Santos</td>
+    <td>Residential, low LEO presence, safe operations</td>
+  </tr>
+  <tr>
+    <td>Rancho</td>
+    <td>South Central</td>
+    <td>Industrial zone, good for stash houses</td>
+  </tr>
+  <tr>
+    <td>El Burro Heights</td>
+    <td>Southeast</td>
+    <td>Biker territory, isolated, good for chop shops</td>
+  </tr>
+  <tr>
+    <td>La Mesa</td>
+    <td>Central East</td>
+    <td>Mixed commercial/residential, moderate traffic</td>
+  </tr>
+  <tr>
+    <td>Strawberry</td>
+    <td>Central</td>
+    <td>Hub location, connects multiple zones</td>
+  </tr>
+  <tr>
+    <td>Davis</td>
+    <td>South Central</td>
+    <td>High crime area, low LEO response time</td>
+  </tr>
+  <tr>
+    <td>Sandy Shores</td>
+    <td>North Desert</td>
+    <td>Remote, perfect for meth labs and isolated operations</td>
+  </tr>
+</table>
+
+<h3>3.2 Capture Mechanics</h3>
+<ul>
+  <li><strong>Minimum Gang Members:</strong> 2 gang members must be present in the zone to initiate capture</li>
+  <li><strong>Capture Time:</strong> 60 seconds continuous presence in the zone</li>
+  <li><strong>Interruption:</strong> If a rival gang enters the zone, capture is paused. Fight them off to resume.</li>
+  <li><strong>Cooldown:</strong> 30 minutes per zone after successful capture (prevents instant re-captures)</li>
+  <li><strong>Notification:</strong> All online gang members are notified when capture begins and when territory is lost</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>Capture Warning:</strong> Initiating a capture sends a notification to the controlling gang. Expect immediate resistance. Come prepared for a fight.
+</div>
+
+<h3>3.3 Passive Income</h3>
+<p>Each controlled territory generates <strong>$500 every 15 minutes</strong> directly to the gang bank account. This income is automatic and requires no active participation.</p>
+
+<table>
+  <tr>
+    <th>Territories Held</th>
+    <th>Income per Hour</th>
+    <th>Income per Day (24h)</th>
+  </tr>
+  <tr>
+    <td>1 Territory</td>
+    <td>$2,000</td>
+    <td>$48,000</td>
+  </tr>
+  <tr>
+    <td>3 Territories</td>
+    <td>$6,000</td>
+    <td>$144,000</td>
+  </tr>
+  <tr>
+    <td>5 Territories</td>
+    <td>$10,000</td>
+    <td>$240,000</td>
+  </tr>
+  <tr>
+    <td>10 Territories (Full Control)</td>
+    <td>$20,000</td>
+    <td>$480,000</td>
+  </tr>
+</table>
+
+<h3>3.4 Territory Bonuses</h3>
+<p>Controlling a territory provides additional benefits beyond passive income:</p>
+<ul>
+  <li><strong>Drug Selling Bonus:</strong> +25% profit on all drug sales within controlled territory</li>
+  <li><strong>Spawn Point:</strong> Gang members can set spawn to territory headquarters</li>
+  <li><strong>Stash Access:</strong> Secure gang stash house within territory (Rank 1+ required)</li>
+  <li><strong>Business Discounts:</strong> 10% discount on business purchases within controlled zones</li>
+</ul>
+
+<h3>3.5 Defense Mechanics</h3>
+<p>Defending your territory is critical to maintaining gang power:</p>
+<ul>
+  <li><strong>Defense Notification:</strong> When a rival gang initiates capture, all online members receive an alert</li>
+  <li><strong>Response Time:</strong> You have 60 seconds to reach the zone and interrupt the capture</li>
+  <li><strong>Combat Victory:</strong> Eliminate all rival gang members in the zone to regain control</li>
+  <li><strong>Backup Callout:</strong> Use gang radio (dedicated channels 420-429) to coordinate defense</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>Territory Loss:</strong> Losing a territory cuts off passive income immediately and removes territory bonuses. Recapture as soon as possible to restore earnings.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 4. GANG RANKS & HIERARCHY                                     -->
+<!-- ============================================================ -->
+<h1 id="ranks">4. Gang Ranks &amp; Hierarchy</h1>
+
+<p>Every gang operates on a 4-tier hierarchy system (Rank 0-3). Ranks determine access to gang features, income sources, and leadership authority.</p>
+
+<h3>4.1 Rank Progression Overview</h3>
+<table>
+  <tr>
+    <th>Rank</th>
+    <th>General Title</th>
+    <th>Key Unlocks</th>
+    <th>Promotion Requirements</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td>Initiate</td>
+    <td>Basic access, weed dealing only, gang chat</td>
+    <td>Join gang via Discord application</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Trusted Member</td>
+    <td>Cocaine access, gang stash, can recruit Rank 0</td>
+    <td>2 weeks active play, sponsor by Rank 2+</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Senior Leadership</td>
+    <td>Meth access, territory management, promote to Rank 1</td>
+    <td>1 month active play, proven leadership, Boss approval</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Boss / Leader</td>
+    <td>Full control, hire/fire, all business access, set gang policy</td>
+    <td>Founder or elected by members (server admin approval)</td>
+  </tr>
+</table>
+
+<h3>4.2 Rank 0: Entry Level</h3>
+<p><strong>Access:</strong></p>
+<ul>
+  <li>Gang radio channel</li>
+  <li>Gang Discord channels</li>
+  <li>Weed dealing (entry-level drug trade)</li>
+  <li>Participate in territory captures (as backup)</li>
+  <li>Attend gang meetings</li>
+</ul>
+<p><strong>Restrictions:</strong></p>
+<ul>
+  <li>No gang stash access</li>
+  <li>No cocaine or meth dealing</li>
+  <li>Cannot recruit new members</li>
+  <li>Cannot access gang vehicles without permission</li>
+</ul>
+
+<h3>4.3 Rank 1: Trusted Member</h3>
+<p><strong>Access:</strong></p>
+<ul>
+  <li>Cocaine dealing (mid-tier drug trade)</li>
+  <li>Gang stash house access</li>
+  <li>Can recruit Rank 0 members</li>
+  <li>Lead small-scale operations (store robberies, drug runs)</li>
+  <li>Gang vehicle access (check-out system)</li>
+</ul>
+<p><strong>Responsibilities:</strong></p>
+<ul>
+  <li>Mentor Rank 0 members</li>
+  <li>Defend territory when called</li>
+  <li>Contribute to gang bank (10% of earnings recommended)</li>
+</ul>
+
+<h3>4.4 Rank 2: Senior Leadership</h3>
+<p><strong>Access:</strong></p>
+<ul>
+  <li>Meth operations (high-tier drug trade)</li>
+  <li>Territory management (initiate captures, set defense strategy)</li>
+  <li>Promote members to Rank 1</li>
+  <li>Authorize gang business investments</li>
+  <li>Access to gang armory (advanced weapons)</li>
+</ul>
+<p><strong>Responsibilities:</strong></p>
+<ul>
+  <li>Coordinate territory defense and expansion</li>
+  <li>Manage gang finances and business operations</li>
+  <li>Resolve internal disputes</li>
+  <li>Report to Boss on gang status</li>
+</ul>
+
+<h3>4.5 Rank 3: Boss</h3>
+<p><strong>Full Authority:</strong></p>
+<ul>
+  <li>Hire and fire any member</li>
+  <li>Set gang policy and rules</li>
+  <li>Control all gang bank funds</li>
+  <li>Approve or deny all business purchases</li>
+  <li>Declare war or negotiate peace with rival gangs</li>
+  <li>Remove vehicles from gang garage (anti-theft)</li>
+  <li>Set rank permissions (customize access levels)</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>Boss Selection:</strong> Most gangs have 1-2 Bosses (Rank 3). Additional Boss promotions require server admin approval to prevent power abuse. Bosses can be impeached by server admins if reported for misconduct.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 5. GANG BUSINESSES                                            -->
+<!-- ============================================================ -->
+<h1 id="businesses">5. Gang Businesses</h1>
+
+<p>Legitimate businesses serve as money laundering fronts and provide steady passive income. Gang-owned businesses integrate with the <code>zo_businesses</code> and <code>zo_banking</code> systems.</p>
+
+<h3>5.1 Business Types</h3>
+<table>
+  <tr>
+    <th>Business Type</th>
+    <th>Purchase Cost</th>
+    <th>Daily Income</th>
+    <th>Special Benefits</th>
+  </tr>
+  <tr>
+    <td>Nightclub</td>
+    <td>$500,000</td>
+    <td>$1,500-$2,500</td>
+    <td>Money laundering hub, +25% income in controlled territory</td>
+  </tr>
+  <tr>
+    <td>Bar</td>
+    <td>$250,000</td>
+    <td>$800-$1,200</td>
+    <td>Gang meeting spot, alcohol sales</td>
+  </tr>
+  <tr>
+    <td>Auto Shop</td>
+    <td>$400,000</td>
+    <td>$1,000-$1,800</td>
+    <td>Chop shop operations, vehicle storage</td>
+  </tr>
+  <tr>
+    <td>Convenience Store</td>
+    <td>$150,000</td>
+    <td>$600-$900</td>
+    <td>Drug front, low LEO suspicion</td>
+  </tr>
+  <tr>
+    <td>Warehouse</td>
+    <td>$600,000</td>
+    <td>$1,200-$2,000</td>
+    <td>Large-scale storage, meth lab potential</td>
+  </tr>
+</table>
+
+<h3>5.2 Money Laundering</h3>
+<p>Dirty money from drug sales and robberies can be laundered through gang businesses via the <code>zo_banking</code> system:</p>
+<ul>
+  <li><strong>Laundering Fee:</strong> 10% of the dirty money amount</li>
+  <li><strong>Processing Time:</strong> Instant (automated)</li>
+  <li><strong>Clean Money:</strong> Deposited directly into gang bank account</li>
+  <li><strong>Daily Limit:</strong> $50,000 per business (prevents abuse)</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>LEO Raids:</strong> Businesses owned by gangs are subject to LEO investigation and raids. Keep a low profile and avoid suspicious activity near your fronts.
+</div>
+
+<h3>5.3 Employee Management</h3>
+<p>Gang members can be assigned as employees to businesses:</p>
+<ul>
+  <li><strong>Manager:</strong> Rank 2+ can be assigned as business manager (collects income, manages inventory)</li>
+  <li><strong>Employees:</strong> Rank 1+ can work shifts for hourly pay ($100-$200/hour)</li>
+  <li><strong>Security:</strong> Rank 0+ can guard the business (reduces robbery risk)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 6. GANG GARAGES                                               -->
+<!-- ============================================================ -->
+<h1 id="garages">6. Gang Garages</h1>
+
+<p>Gang garages provide shared vehicle storage and access for all members. Integration with <code>zo_garage</code> allows secure, communal vehicle management.</p>
+
+<h3>6.1 Access Levels</h3>
+<table>
+  <tr>
+    <th>Rank</th>
+    <th>Access</th>
+  </tr>
+  <tr>
+    <td>Rank 0</td>
+    <td>View vehicles, request check-out (requires Rank 1+ approval)</td>
+  </tr>
+  <tr>
+    <td>Rank 1</td>
+    <td>Check out vehicles, return vehicles, park personal vehicles</td>
+  </tr>
+  <tr>
+    <td>Rank 2</td>
+    <td>All Rank 1 access + add new vehicles to gang garage</td>
+  </tr>
+  <tr>
+    <td>Rank 3 (Boss)</td>
+    <td>Full control + remove vehicles (anti-theft protection)</td>
+  </tr>
+</table>
+
+<h3>6.2 Vehicle Check-Out System</h3>
+<ul>
+  <li>Members must <code>/gangvehicle</code> to access the garage menu</li>
+  <li>Check-out logs member name, vehicle, and timestamp</li>
+  <li>Vehicles must be returned within 2 hours (auto-return if abandoned)</li>
+  <li>Damage to gang vehicles results in repair fees deducted from member's account</li>
+</ul>
+
+<h3>6.3 Garage Locations</h3>
+<p>Each gang has a primary garage at their territory HQ. Additional garages can be purchased for $100,000 each (max 3 per gang).</p>
+
+<div class="callout callout-critical">
+  <strong>Vehicle Theft:</strong> Stealing a gang vehicle results in immediate removal from the gang and blacklist from all gangs. Do not abuse the garage system.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 7. GANG STASH HOUSES                                          -->
+<!-- ============================================================ -->
+<h1 id="stash">7. Gang Stash Houses</h1>
+
+<p>Stash houses are secure storage locations for drugs, weapons, and cash. Only Rank 1+ members have access.</p>
+
+<h3>7.1 Stash Access</h3>
+<ul>
+  <li><strong>Location:</strong> Each gang has 1-2 stash houses within controlled territory</li>
+  <li><strong>Access:</strong> Rank 1+ can <code>/gangstash</code> to open inventory</li>
+  <li><strong>Capacity:</strong> 500 item slots (shared across all members)</li>
+  <li><strong>Security:</strong> Stash houses cannot be raided by other gangs (only LEO with warrants)</li>
+</ul>
+
+<h3>7.2 Stash Rules</h3>
+<ul>
+  <li>Do not hoard supplies - share with gang members</li>
+  <li>Log large withdrawals in gang Discord (transparency)</li>
+  <li>Rank 2+ can audit stash logs (tracks who took what and when)</li>
+  <li>Stealing from the stash is grounds for immediate removal and blacklist</li>
+</ul>
+
+<h3>7.3 Item Categories</h3>
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Examples</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td>Drugs</td>
+    <td>Weed, cocaine, meth</td>
+    <td>Stock for dealers, avoid carrying large amounts on person</td>
+  </tr>
+  <tr>
+    <td>Weapons</td>
+    <td>Pistols, SMGs, ARs</td>
+    <td>Gang armory, distribute for territory defense</td>
+  </tr>
+  <tr>
+    <td>Cash</td>
+    <td>Dirty money</td>
+    <td>Temporary storage before laundering</td>
+  </tr>
+  <tr>
+    <td>Materials</td>
+    <td>Lockpicks, thermite</td>
+    <td>Heist supplies, shared resources</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 8. RADIO COMMUNICATIONS                                       -->
+<!-- ============================================================ -->
+<h1 id="radio">8. Radio Communications</h1>
+
+<p>Each gang has a dedicated radio channel for secure communications. Integration with <code>mm_radio</code> ensures encrypted gang comms.</p>
+
+<h3>8.1 Gang Radio Channels</h3>
+<table>
+  <tr>
+    <th>Gang</th>
+    <th>Radio Channel</th>
+  </tr>
+  <tr><td>The Syndicate</td><td>420</td></tr>
+  <tr><td>The Cartel</td><td>421</td></tr>
+  <tr><td>Aztecas</td><td>422</td></tr>
+  <tr><td>Cosa Nostra</td><td>423</td></tr>
+  <tr><td>Yakuza</td><td>424</td></tr>
+  <tr><td>The Lost MC</td><td>425</td></tr>
+  <tr><td>Ballas</td><td>426</td></tr>
+  <tr><td>Vagos</td><td>427</td></tr>
+  <tr><td>Bratva</td><td>428</td></tr>
+  <tr><td>Triads</td><td>429</td></tr>
+</table>
+
+<h3>8.2 Radio Etiquette</h3>
+<ul>
+  <li><strong>Keep it IC:</strong> No OOC talk on gang radio (use Discord for OOC)</li>
+  <li><strong>Clear Communications:</strong> State your location, situation, and what you need (backup, supplies, etc.)</li>
+  <li><strong>Code Words:</strong> Develop gang-specific codes for sensitive operations (avoid saying "drugs" or "robbery" directly)</li>
+  <li><strong>Emergency Priority:</strong> If a member is in danger or LEO is chasing, radio takes priority</li>
+</ul>
+
+<h3>8.3 Radio Commands</h3>
+<ul>
+  <li><code>/radio [channel]</code> - Join a radio channel</li>
+  <li><code>/radioleave</code> - Leave current channel</li>
+  <li><code>/radiovolume [0-100]</code> - Adjust radio volume</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>Encryption:</strong> Gang radio channels are encrypted and cannot be intercepted by LEO. However, LEO can seize your radio during arrest and monitor the channel temporarily.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 9. DISCORD INTEGRATION                                        -->
+<!-- ============================================================ -->
+<h1 id="discord">9. Discord Integration</h1>
+
+<p>ZO Syndicate RP Discord server features gang-specific roles and channels, powered by <code>zo_discord</code> for automatic role synchronization.</p>
+
+<h3>9.1 Gang Discord Roles</h3>
+<p>When you join a gang in-game, you automatically receive the corresponding Discord role:</p>
+<ul>
+  <li><strong>@The Syndicate</strong></li>
+  <li><strong>@The Cartel</strong></li>
+  <li><strong>@Aztecas</strong></li>
+  <li><strong>@Cosa Nostra</strong></li>
+  <li><strong>@Yakuza</strong></li>
+  <li><strong>@The Lost MC</strong></li>
+  <li><strong>@Ballas</strong></li>
+  <li><strong>@Vagos</strong></li>
+  <li><strong>@Bratva</strong></li>
+  <li><strong>@Triads</strong></li>
+</ul>
+
+<h3>9.2 Gang Channels</h3>
+<p>Each gang has access to private Discord channels:</p>
+<ul>
+  <li><strong>#gang-chat:</strong> General gang discussion (IC and OOC)</li>
+  <li><strong>#gang-ops:</strong> Plan operations, coordinate territory captures</li>
+  <li><strong>#gang-bank:</strong> Financial tracking, business income reports</li>
+  <li><strong>Voice channels:</strong> Gang-specific voice rooms for real-time coordination</li>
+</ul>
+
+<h3>9.3 Role Sync</h3>
+<p>The <code>zo_discord</code> resource automatically syncs your gang membership:</p>
+<ul>
+  <li><strong>Join Gang:</strong> Discord role added within 60 seconds</li>
+  <li><strong>Leave Gang:</strong> Discord role removed immediately</li>
+  <li><strong>Rank Promotion:</strong> Discord nickname updated with rank (optional)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 10. INCOME SOURCES                                            -->
+<!-- ============================================================ -->
+<h1 id="income">10. Income Sources</h1>
+
+<p>Gangs earn money through a combination of passive and active income streams. Successful gangs balance both for maximum profit.</p>
+
+<h3>10.1 Passive Income Summary</h3>
+<table>
+  <tr>
+    <th>Source</th>
+    <th>Minimum Income</th>
+    <th>Maximum Income</th>
+    <th>Frequency</th>
+  </tr>
+  <tr>
+    <td>Territory Control (1 zone)</td>
+    <td>$500</td>
+    <td>$500</td>
+    <td>Every 15 minutes</td>
+  </tr>
+  <tr>
+    <td>Territory Control (10 zones)</td>
+    <td>$5,000</td>
+    <td>$5,000</td>
+    <td>Every 15 minutes</td>
+  </tr>
+  <tr>
+    <td>Gang Business (1)</td>
+    <td>$600</td>
+    <td>$2,500</td>
+    <td>Daily</td>
+  </tr>
+  <tr>
+    <td>Gang Business (3)</td>
+    <td>$1,800</td>
+    <td>$7,500</td>
+    <td>Daily</td>
+  </tr>
+  <tr>
+    <td><strong>Total Passive (All territories + 3 businesses)</strong></td>
+    <td><strong>$481,800</strong></td>
+    <td><strong>$487,500</strong></td>
+    <td><strong>Per day</strong></td>
+  </tr>
+</table>
+
+<h3>10.2 Active Income Summary</h3>
+<table>
+  <tr>
+    <th>Activity</th>
+    <th>Income Range</th>
+    <th>Time Required</th>
+    <th>Risk Level</th>
+  </tr>
+  <tr>
+    <td>Weed Dealing (Rank 0)</td>
+    <td>$500-$2,000</td>
+    <td>30 min</td>
+    <td>Low</td>
+  </tr>
+  <tr>
+    <td>Cocaine Dealing (Rank 1)</td>
+    <td>$2,000-$6,000</td>
+    <td>45 min</td>
+    <td>Medium</td>
+  </tr>
+  <tr>
+    <td>Meth Dealing (Rank 2)</td>
+    <td>$5,000-$12,000</td>
+    <td>60 min</td>
+    <td>High</td>
+  </tr>
+  <tr>
+    <td>Store Robbery</td>
+    <td>$1,000-$3,000</td>
+    <td>10 min</td>
+    <td>Medium</td>
+  </tr>
+  <tr>
+    <td>House Robbery</td>
+    <td>$2,000-$5,000</td>
+    <td>20 min</td>
+    <td>High</td>
+  </tr>
+  <tr>
+    <td>Bank Heist</td>
+    <td>$10,000-$30,000</td>
+    <td>60 min</td>
+    <td>Very High</td>
+  </tr>
+  <tr>
+    <td>Contract Hit</td>
+    <td>$5,000-$20,000</td>
+    <td>30 min</td>
+    <td>High</td>
+  </tr>
+  <tr>
+    <td>Chop Shop (Stolen Cars)</td>
+    <td>$1,500-$8,000</td>
+    <td>15 min</td>
+    <td>Medium</td>
+  </tr>
+</table>
+
+<h3>10.3 Income Optimization</h3>
+<p>To maximize gang earnings:</p>
+<ul>
+  <li><strong>Control All Territories:</strong> $480,000/day passive income</li>
+  <li><strong>Own 3 Businesses:</strong> $7,500/day passive income</li>
+  <li><strong>Active Drug Dealing:</strong> $10,000-$30,000/day per active dealer</li>
+  <li><strong>Weekly Heists:</strong> $50,000-$100,000/week (split among crew)</li>
+  <li><strong>Total Potential:</strong> $700,000-$1,000,000+ per week (full gang)</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>Gang Bank Contribution:</strong> Members are encouraged to contribute 10-15% of active earnings to the gang bank to fund territory defense, business purchases, and member support.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 11. GANG WARS                                                 -->
+<!-- ============================================================ -->
+<h1 id="wars">11. Gang Wars</h1>
+
+<p>Gang warfare is a core mechanic of ZO Syndicate RP. Wars can be declared for territory disputes, revenge, or dominance.</p>
+
+<h3>11.1 War Declaration</h3>
+<p>To officially declare war on another gang:</p>
+<ol>
+  <li><strong>Boss Decision:</strong> Gang Boss (Rank 3) must initiate war declaration</li>
+  <li><strong>Discord Announcement:</strong> Post war declaration in <code>#gang-wars</code> channel</li>
+  <li><strong>RP Justification:</strong> Provide valid RP reason (territory dispute, disrespect, alliance breach, etc.)</li>
+  <li><strong>Admin Notification:</strong> Tag server admins for war approval</li>
+  <li><strong>Cooldown:</strong> 24-hour notice before active combat begins</li>
+</ol>
+
+<h3>11.2 War Rules</h3>
+<ul>
+  <li><strong>Combat Zones:</strong> Gang wars must occur in gang territories or neutral zones (no civilian areas like hospitals, government buildings)</li>
+  <li><strong>RDM Protection:</strong> War declaration authorizes KOS (Kill on Sight) between warring gangs only</li>
+  <li><strong>Civilian Safety:</strong> Do not involve civilians in gang wars (no hostages, no crossfire in populated areas)</li>
+  <li><strong>LEO Response:</strong> LEO can intervene in gang wars. Expect police response if fighting in city limits.</li>
+  <li><strong>Victory Conditions:</strong> War ends when one gang surrenders, loses all territories, or negotiates peace</li>
+</ul>
+
+<h3>11.3 War Mechanics</h3>
+<table>
+  <tr>
+    <th>War Event</th>
+    <th>Effect</th>
+  </tr>
+  <tr>
+    <td>Kill Enemy Gang Member</td>
+    <td>+1 War Point, respawn timer for victim (10 min)</td>
+  </tr>
+  <tr>
+    <td>Capture Enemy Territory</td>
+    <td>+5 War Points, territory income switches to your gang</td>
+  </tr>
+  <tr>
+    <td>Successful Stash Raid (LEO-assisted)</td>
+    <td>+10 War Points, gang loses stockpile</td>
+  </tr>
+  <tr>
+    <td>First to 50 War Points</td>
+    <td>Victory - enemy gang pays $100,000 reparations or surrenders territory</td>
+  </tr>
+</table>
+
+<h3>11.4 Alliances</h3>
+<p>Gangs can form alliances for mutual defense and joint operations:</p>
+<ul>
+  <li><strong>Alliance Formation:</strong> Both Bosses must agree and announce in <code>#gang-wars</code></li>
+  <li><strong>Alliance Benefits:</strong> Shared territory defense, joint heists, combined war points</li>
+  <li><strong>Betrayal:</strong> Breaking an alliance without RP justification results in server-wide reputation penalty</li>
+</ul>
+
+<h3>11.5 Rivalries</h3>
+<p>Some gangs have historical rivalries (e.g., Ballas vs. Vagos, The Syndicate vs. The Cartel). Rivalries add RP depth but are not mandatory.</p>
+
+<div class="callout callout-critical">
+  <strong>Fail RP:</strong> Gang wars must have RP buildup. Random wars with no backstory or justification will be shut down by admins. Roleplay first, combat second.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 12. GETTING STARTED GUIDE                                     -->
+<!-- ============================================================ -->
+<h1 id="getting-started">12. Getting Started Guide</h1>
+
+<p>New to gang life? Follow this step-by-step guide to become a successful gang member.</p>
+
+<h3>Step 1: Join a Gang</h3>
+<ul>
+  <li>Visit ZO Syndicate RP Discord server</li>
+  <li>Navigate to <code>#gang-applications</code> channel</li>
+  <li>Fill out application: Character name, backstory, why you want to join, preferred gang</li>
+  <li>Wait for Boss approval (24-48 hours)</li>
+  <li>Once approved, connect to server and contact gang Boss in-game</li>
+</ul>
+
+<h3>Step 2: Learn Gang Culture</h3>
+<ul>
+  <li>Read your gang's specific lore and hierarchy (see Section 2)</li>
+  <li>Attend gang meeting (usually weekly, check Discord for schedule)</li>
+  <li>Introduce yourself to other members</li>
+  <li>Learn gang colors, radio channel, and territory HQ location</li>
+</ul>
+
+<h3>Step 3: Get Your Gang Radio</h3>
+<ul>
+  <li>Purchase a radio from a general store or electronics shop</li>
+  <li>Use <code>/radio [your gang's channel]</code> (see Section 8.1 for channels)</li>
+  <li>Test radio with "Radio check" message</li>
+  <li>Keep radio on at all times when in-game</li>
+</ul>
+
+<h3>Step 4: Participate in Territory Captures</h3>
+<ul>
+  <li>As Rank 0, you can assist in captures but cannot initiate</li>
+  <li>When territory capture is called on radio, respond immediately</li>
+  <li>Follow orders from Rank 2+ leaders</li>
+  <li>Defend the zone for 60 seconds to secure capture</li>
+</ul>
+
+<h3>Step 5: Start Drug Dealing</h3>
+<ul>
+  <li><strong>Rank 0:</strong> Weed only (low profit, low risk)</li>
+  <li>Get weed from gang stash (ask Rank 1+ for access) or purchase from suppliers</li>
+  <li>Sell to NPCs in your controlled territory for +25% profit bonus</li>
+  <li>Avoid LEO, never carry more than 10 units on person</li>
+</ul>
+
+<h3>Step 6: Build Reputation</h3>
+<ul>
+  <li>Be active in gang operations (captures, defense, heists)</li>
+  <li>Contribute to gang bank (deposit earnings regularly)</li>
+  <li>Help newer members (Rank 0s)</li>
+  <li>Participate in RP scenarios (gang meetings, territory disputes)</li>
+  <li>Avoid drama and rule-breaking</li>
+</ul>
+
+<h3>Step 7: Get Promoted to Rank 1</h3>
+<ul>
+  <li>After 2 weeks active play and positive reputation</li>
+  <li>Request promotion from Rank 2+ sponsor</li>
+  <li>Sponsor will vouch for you to Boss</li>
+  <li>Boss approves promotion</li>
+  <li>You now have access to: cocaine dealing, gang stash, recruitment</li>
+</ul>
+
+<h3>Step 8: Access Gang Stash House</h3>
+<ul>
+  <li>Once Rank 1, use <code>/gangstash</code> at stash house location</li>
+  <li>Withdraw weapons, drugs, or supplies as needed</li>
+  <li>Always log large withdrawals in Discord (transparency)</li>
+  <li>Contribute back to stash when possible</li>
+</ul>
+
+<h3>Step 9: Set Up Territory Drug Spots</h3>
+<ul>
+  <li>Work with Rank 2+ to identify high-traffic areas in controlled territory</li>
+  <li>Set up regular drug-dealing schedule (e.g., 8-10pm every night)</li>
+  <li>Use territory bonus (+25% profit) to maximize earnings</li>
+  <li>Coordinate with other dealers to avoid oversaturation</li>
+</ul>
+
+<h3>Step 10: Invest in Gang Business</h3>
+<ul>
+  <li>Contribute to gang bank for business purchases</li>
+  <li>Rank 2+ can authorize business investments</li>
+  <li>Work shifts at gang-owned businesses for hourly pay</li>
+  <li>Use businesses for money laundering (10% fee)</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>Pro Tip:</strong> The fastest way to Rank 2 is to be active, helpful, and drama-free. Skill in combat and drug dealing helps, but loyalty and RP quality matter more.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 13. GANG RULES & CODE                                         -->
+<!-- ============================================================ -->
+<h1 id="code">13. Gang Rules &amp; Code</h1>
+
+<p>Every gang member must follow these core rules. Violations result in disciplinary action, removal, or server ban.</p>
+
+<h3>13.1 The Code</h3>
+<ol>
+  <li><strong>Respect Hierarchy:</strong> Follow orders from higher ranks. Questioning leadership in public is disrespectful.</li>
+  <li><strong>Follow Boss Orders:</strong> Boss decisions are final. If you disagree, discuss privately, never publicly.</li>
+  <li><strong>Protect Territory:</strong> When territory is under attack, drop everything and defend. Gang before personal gain.</li>
+  <li><strong>No Snitching:</strong> Never cooperate with LEO. No deals, no information, no betrayal. Snitches are blacklisted permanently.</li>
+  <li><strong>Gang Before Self:</strong> Your gang's reputation is your reputation. Act with honor, avoid reckless behavior.</li>
+  <li><strong>Loyalty Above All:</strong> Betraying the gang results in permanent blacklist from all gangs and potential character death.</li>
+</ol>
+
+<h3>13.2 Disciplinary System</h3>
+<table>
+  <tr>
+    <th>Offense</th>
+    <th>1st Violation</th>
+    <th>2nd Violation</th>
+    <th>3rd Violation</th>
+  </tr>
+  <tr>
+    <td>Missing Territory Defense (no excuse)</td>
+    <td>Warning</td>
+    <td>Demotion</td>
+    <td>Removal</td>
+  </tr>
+  <tr>
+    <td>Stealing from Gang Stash</td>
+    <td>Removal + Blacklist</td>
+    <td>N/A</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Disrespecting Higher Ranks</td>
+    <td>Warning</td>
+    <td>Demotion</td>
+    <td>Removal</td>
+  </tr>
+  <tr>
+    <td>Fail RP / RDM</td>
+    <td>Warning</td>
+    <td>Removal</td>
+    <td>Server Ban</td>
+  </tr>
+  <tr>
+    <td>Snitching to LEO</td>
+    <td>Removal + Blacklist + Character Death</td>
+    <td>N/A</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Gang Vehicle Theft</td>
+    <td>Removal + Blacklist</td>
+    <td>N/A</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td>Starting Drama in Discord</td>
+    <td>Warning</td>
+    <td>Discord Mute (48h)</td>
+    <td>Removal</td>
+  </tr>
+</table>
+
+<h3>13.3 Leaving a Gang</h3>
+<ul>
+  <li>Must notify Boss and provide RP reason for leaving</li>
+  <li>24-hour cooldown before joining another gang (prevents gang-hopping)</li>
+  <li>Leaving during active war counts as desertion (blacklist risk)</li>
+  <li>Leaving on good terms maintains neutral standing (can return later)</li>
+</ul>
+
+<h3>13.4 Gang-Specific Rules</h3>
+<p>Each gang may have additional internal rules (e.g., Yakuza honor code, Cosa Nostra omertà oath). Check your gang's Discord for specific codes of conduct.</p>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 14. COMMANDS                                                  -->
+<!-- ============================================================ -->
+<h1 id="commands">14. Commands</h1>
+
+<p>Gang-related in-game commands:</p>
+
+<table>
+  <tr>
+    <th>Command</th>
+    <th>Description</th>
+    <th>Rank Required</th>
+  </tr>
+  <tr>
+    <td><code>/gang</code></td>
+    <td>Open gang management menu</td>
+    <td>All</td>
+  </tr>
+  <tr>
+    <td><code>/gangstash</code></td>
+    <td>Access gang stash house inventory</td>
+    <td>Rank 1+</td>
+  </tr>
+  <tr>
+    <td><code>/territory</code></td>
+    <td>View territory control info and capture status</td>
+    <td>All</td>
+  </tr>
+  <tr>
+    <td><code>/gangvehicle</code></td>
+    <td>Access gang garage and vehicle check-out</td>
+    <td>Rank 1+</td>
+  </tr>
+  <tr>
+    <td><code>/ganginvite [ID]</code></td>
+    <td>Invite player to gang (must have Discord application approved)</td>
+    <td>Rank 2+</td>
+  </tr>
+  <tr>
+    <td><code>/gangkick [ID]</code></td>
+    <td>Remove member from gang</td>
+    <td>Rank 3 (Boss)</td>
+  </tr>
+  <tr>
+    <td><code>/gangpromote [ID]</code></td>
+    <td>Promote member to next rank</td>
+    <td>Rank 2+ (limited by rank)</td>
+  </tr>
+  <tr>
+    <td><code>/gangdemote [ID]</code></td>
+    <td>Demote member to previous rank</td>
+    <td>Rank 2+</td>
+  </tr>
+  <tr>
+    <td><code>/gangbank</code></td>
+    <td>View gang bank balance and transaction history</td>
+    <td>All</td>
+  </tr>
+  <tr>
+    <td><code>/gangdeposit [amount]</code></td>
+    <td>Deposit money into gang bank</td>
+    <td>All</td>
+  </tr>
+  <tr>
+    <td><code>/gangwithdraw [amount]</code></td>
+    <td>Withdraw money from gang bank</td>
+    <td>Rank 2+</td>
+  </tr>
+  <tr>
+    <td><code>/radio [channel]</code></td>
+    <td>Join gang radio channel (see Section 8.1)</td>
+    <td>All</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 15. FAQ                                                       -->
+<!-- ============================================================ -->
+<h1 id="faq">15. FAQ</h1>
+
+<h3>Q: How do I join a gang?</h3>
+<p><strong>A:</strong> Apply via Discord in the <code>#gang-applications</code> channel. Provide character name, backstory, and why you want to join. Wait for Boss approval (24-48 hours).</p>
+
+<h3>Q: Can I switch gangs?</h3>
+<p><strong>A:</strong> Yes, but you must leave your current gang on good terms (notify Boss, provide RP reason). There is a 24-hour cooldown before joining another gang. Leaving during an active war may result in blacklist.</p>
+
+<h3>Q: What happens if I leave a gang?</h3>
+<p><strong>A:</strong> You lose all gang access (stash, vehicles, radio, Discord channels). Gang bank contributions are not refunded. You can reapply later if you left on good terms.</p>
+
+<h3>Q: How do I get promoted?</h3>
+<p><strong>A:</strong> Be active, contribute to gang operations, earn trust from higher ranks. Rank 1 requires 2 weeks active play + sponsor. Rank 2 requires 1 month + Boss approval. Rank 3 (Boss) is founder or elected.</p>
+
+<h3>Q: Can gangs ally with each other?</h3>
+<p><strong>A:</strong> Yes, gangs can form alliances for mutual defense and joint operations. Both Bosses must agree and announce in <code>#gang-wars</code>. Alliances can be broken, but betrayal without RP justification damages reputation.</p>
+
+<h3>Q: What are gang wars and how do they work?</h3>
+<p><strong>A:</strong> Gang wars are declared by Bosses in <code>#gang-wars</code> Discord channel. Wars require RP justification and 24-hour notice. Combat occurs in gang territories. First to 50 War Points wins (kills, territory captures, stash raids).</p>
+
+<h3>Q: Can LEO raid gang stash houses?</h3>
+<p><strong>A:</strong> Yes, but only with a valid search warrant. LEO must have probable cause and judge approval. Rival gangs cannot raid your stash (only LEO).</p>
+
+<h3>Q: What is the best way to make money as a new gang member?</h3>
+<p><strong>A:</strong> Start with weed dealing (Rank 0). Sell in controlled territory for +25% profit. Participate in store robberies with experienced members. Contribute to gang bank to build reputation. Once Rank 1, upgrade to cocaine dealing.</p>
+
+<h3>Q: Can I own a personal business and be in a gang?</h3>
+<p><strong>A:</strong> Yes, personal businesses are separate from gang businesses. However, gangs may require you to use your business for gang operations (laundering, meetings, etc.) in exchange for protection.</p>
+
+<h3>Q: What happens if I get caught by LEO with gang-related items?</h3>
+<p><strong>A:</strong> Standard LEO procedures apply (arrest, booking, trial). Do not snitch on gang members to reduce charges. Snitching results in permanent blacklist and potential character death. Serve your time with honor.</p>
+
+<h3>Q: Can I be in a gang and LEO at the same time?</h3>
+<p><strong>A:</strong> No. Gang membership and LEO employment are mutually exclusive. You must choose one. Attempting to infiltrate a gang as undercover LEO requires server admin approval and extensive RP.</p>
+
+<h3>Q: How do I report a gang rule violation?</h3>
+<p><strong>A:</strong> Report to your gang Boss first (internal discipline). If the issue involves the Boss or is unresolved, contact server admins via Discord ticket system. Provide evidence (screenshots, videos).</p>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                        -->
+<!-- ============================================================ -->
+<div class="footer">
+  <div class="org">PROZILLI ENTERTAINMENT</div>
+  <div style="color: #666; font-size: 11px; letter-spacing: 1px;">ZO SYNDICATE RP &mdash; WHERE LEGENDS ARE MADE</div>
+  <div style="margin-top: 12px;">
+    <a href="/zo/sop/lspd.html">LSPD SOP</a> &nbsp;|&nbsp;
+    <a href="/zo/sop/bcso.html">BCSO SOP</a> &nbsp;|&nbsp;
+    <a href="/zo/sop/sasp.html">SASP SOP</a> &nbsp;|&nbsp;
+    <a href="/zo/sop/ems.html">EMS SOP</a> &nbsp;|&nbsp;
+    <a href="/zo/sop/doj.html">DOJ SOP</a> &nbsp;|&nbsp;
+    <a href="/zo/sop/gangs.html" style="color: #a30000; font-weight: 600;">GANG OPS</a>
+  </div>
+  <div style="margin-top: 12px;">
+    <a href="https://discord.gg/zosyndicate" target="_blank">Join our Discord</a> &nbsp;|&nbsp;
+    <a href="https://prozilligaming.com" target="_blank">prozilligaming.com</a>
+  </div>
+  <div style="margin-top: 16px; font-size: 10px; color: #444;">
+    &copy; 2026 Prozilli Entertainment. All rights reserved.<br>
+    This document is the property of ZO Syndicate RP. Unauthorized distribution is prohibited.
+  </div>
+</div>
+
+</div>
+</body>
+</html>

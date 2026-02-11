@@ -1,0 +1,2186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Drug Dealing Operations Manual v1.0 - ZO Syndicate RP</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* --- HEADER BANNER --- */
+  .header-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+    border-bottom: 3px solid #a30000;
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(163,0,0,0.03) 2px,
+      rgba(163,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #c4a265;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .header-server {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 16px;
+    color: #a30000;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #777;
+  }
+  .header-meta span { white-space: nowrap; }
+  .header-meta strong { color: #999; }
+  .badge-classified {
+    display: inline-block;
+    background: #a30000;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #c44;
+  }
+
+  /* --- MAIN CONTENT --- */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+  }
+
+  /* --- TABLE OF CONTENTS --- */
+  .toc {
+    background: #111;
+    border: 1px solid #222;
+    border-left: 4px solid #a30000;
+    padding: 24px 28px;
+    margin: 0 0 40px;
+  }
+  .toc h2 {
+    color: #a30000;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    margin-bottom: 5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #a30000; }
+
+  /* --- HEADINGS --- */
+  h1 {
+    color: #a30000;
+    border-bottom: 2px solid #a30000;
+    padding-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-top: 50px;
+  }
+  h2 {
+    color: #c44;
+    margin-top: 35px;
+    font-size: 18px;
+    border-bottom: 1px solid #1f1f1f;
+    padding-bottom: 6px;
+  }
+  h3 {
+    color: #ddd;
+    font-size: 15px;
+    margin-top: 22px;
+  }
+  h4 {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 16px;
+    font-weight: 600;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #222;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  th {
+    background: #141414;
+    color: #a30000;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  td { background: #0f0f0f; }
+  tr:hover td { background: #151010; }
+
+  /* --- CALLOUT BOXES --- */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .callout-critical {
+    background: #1f0a0a;
+    border-left: 4px solid #a30000;
+    border: 1px solid #331111;
+    border-left: 4px solid #a30000;
+  }
+  .callout-warning {
+    background: #1f1a0a;
+    border: 1px solid #33290e;
+    border-left: 4px solid #c4a265;
+  }
+  .callout-info {
+    background: #0a0f1f;
+    border: 1px solid #0e1a33;
+    border-left: 4px solid #3366aa;
+  }
+  .callout-critical strong { color: #e44; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #6699cc; }
+
+  /* --- MISC --- */
+  code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    border: 1px solid #222;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  blockquote {
+    border-left: 3px solid #a30000;
+    margin: 16px 0;
+    padding: 10px 18px;
+    background: #111;
+    color: #aaa;
+    font-style: italic;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 40px 0;
+  }
+  strong { color: #eee; }
+  a { color: #a30000; text-decoration: none; }
+  a:hover { color: #c44; text-decoration: underline; }
+
+  /* --- FOOTER --- */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 2px solid #a30000;
+    margin-top: 60px;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer .org { color: #c4a265; font-weight: 600; letter-spacing: 2px; }
+  .footer a { color: #666; }
+  .footer a:hover { color: #a30000; }
+
+  /* --- RESPONSIVE --- */
+  /* ===== HERO SECTION ===== */
+  .hero-section {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(163,0,0,0.4) 0%, rgba(13,13,13,0.9) 50%, rgba(163,0,0,0.4) 100%);
+    opacity: 0.85;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #c4a265;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 700px) {
+    .hero-section { height: 200px; }
+    .hero-title { font-size: 32px; letter-spacing: 4px; }
+    .hero-subtitle { font-size: 14px; }
+    .content { padding: 20px 16px 40px; }
+    .header-banner { padding: 28px 16px 22px; }
+    .header-dept { font-size: 22px; }
+    .toc ol { columns: 1; }
+    .header-meta { flex-direction: column; gap: 4px; align-items: center; }
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HEADER BANNER                                                 -->
+<!-- ============================================================ -->
+<div class="header-banner">
+  <div class="header-org">Prozilli Entertainment</div>
+  <div class="header-server">ZO Syndicate RP</div>
+  <div class="header-dept">Drug Dealing Operations</div>
+  <div class="header-subtitle">Underground Commerce Manual</div>
+  <div class="badge-classified">Fictional RP Server &mdash; For Entertainment Only</div>
+  <div class="header-meta">
+    <span><strong>Document:</strong> ZSR-DRUG-OPS-2026-001</span>
+    <span><strong>Version:</strong> 1.0</span>
+    <span><strong>Effective:</strong> February 11, 2026</span>
+    <span><strong>Classification:</strong> Public Access</span>
+    <span><strong>Jurisdiction:</strong> San Andreas Underground</span>
+  </div>
+</div>
+
+<!-- Hero Image Section -->
+<div class="hero-section" style="background: radial-gradient(circle at center, rgba(163,0,0,0.3) 0%, transparent 70%), url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1920 600%22%3E%3Cdefs%3E%3ClinearGradient id=%22nightGlow%22 x1=%220%25%22 y1=%220%25%22 x2=%220%25%22 y2=%22100%25%22%3E%3Cstop offset=%220%25%22 stop-color=%22%231a0a0a%22/%3E%3Cstop offset=%22100%25%22 stop-color=%22%230a0a0a%22/%3E%3C/linearGradient%3E%3ClinearGradient id=%22streetLight%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%220%25%22%3E%3Cstop offset=%220%25%22 stop-color=%22%23a30000%22 stop-opacity=%220.3%22/%3E%3Cstop offset=%2250%25%22 stop-color=%22%23c4a265%22 stop-opacity=%220.5%22/%3E%3Cstop offset=%22100%25%22 stop-color=%22%23a30000%22 stop-opacity=%220.3%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill=%22url(%23nightGlow)%22 width=%221920%22 height=%22600%22/%3E%3C!-- Street corner scene --%3E%3Cg opacity=%220.2%22%3E%3C!-- Background buildings --%3E%3Crect x=%22100%22 y=%22150%22 width=%22200%22 height=%22450%22 fill=%22%23222%22/%3E%3Crect x=%22350%22 y=%22200%22 width=%22150%22 height=%22400%22 fill=%22%231a1a1a%22/%3E%3Crect x=%22550%22 y=%22180%22 width=%22180%22 height=%22420%22 fill=%22%23252525%22/%3E%3Crect x=%221100%22 y=%22160%22 width=%22220%22 height=%22440%22 fill=%22%231f1f1f%22/%3E%3Crect x=%221400%22 y=%22190%22 width=%22160%22 height=%22410%22 fill=%22%23232323%22/%3E%3Crect x=%221620%22 y=%22170%22 width=%22190%22 height=%22430%22 fill=%22%23202020%22/%3E%3C/g%3E%3C!-- Street lights --%3E%3Cg opacity=%220.4%22%3E%3Cline x1=%22300%22 y1=%22250%22 x2=%22300%22 y2=%22600%22 stroke=%22%23444%22 stroke-width=%226%22/%3E%3Cellipse cx=%22300%22 cy=%22240%22 rx=%2280%22 ry=%2230%22 fill=%22url(%23streetLight)%22/%3E%3Cline x1=%22800%22 y1=%22280%22 x2=%22800%22 y2=%22600%22 stroke=%22%23444%22 stroke-width=%226%22/%3E%3Cellipse cx=%22800%22 cy=%22270%22 rx=%2280%22 ry=%2230%22 fill=%22url(%23streetLight)%22/%3E%3Cline x1=%221300%22 y1=%22260%22 x2=%221300%22 y2=%22600%22 stroke=%22%23444%22 stroke-width=%226%22/%3E%3Cellipse cx=%221300%22 cy=%22250%22 rx=%2280%22 ry=%2230%22 fill=%22url(%23streetLight)%22/%3E%3Cline x1=%221700%22 y1=%22270%22 x2=%221700%22 y2=%22600%22 stroke=%22%23444%22 stroke-width=%226%22/%3E%3Cellipse cx=%221700%22 cy=%22260%22 rx=%2280%22 ry=%2230%22 fill=%22url(%23streetLight)%22/%3E%3C/g%3E%3C!-- Marijuana leaves (stylized) --%3E%3Cg transform=%22translate(400, 150)%22 opacity=%220.15%22 fill=%22%2337a300%22%3E%3C!-- Leaf 1 --%3E%3Cpath d=%22M 50 100 Q 40 80 45 60 Q 50 40 55 60 Q 60 80 50 100 M 50 100 Q 30 90 20 75 Q 10 60 25 55 Q 40 50 50 100 M 50 100 Q 70 90 80 75 Q 90 60 75 55 Q 60 50 50 100 M 50 100 Q 35 105 25 120 Q 15 135 28 140 Q 41 145 50 100 M 50 100 Q 65 105 75 120 Q 85 135 72 140 Q 59 145 50 100%22/%3E%3C/g%3E%3Cg transform=%22translate(1200, 180)%22 opacity=%220.12%22 fill=%22%2337a300%22%3E%3C!-- Leaf 2 --%3E%3Cpath d=%22M 50 100 Q 40 80 45 60 Q 50 40 55 60 Q 60 80 50 100 M 50 100 Q 30 90 20 75 Q 10 60 25 55 Q 40 50 50 100 M 50 100 Q 70 90 80 75 Q 90 60 75 55 Q 60 50 50 100 M 50 100 Q 35 105 25 120 Q 15 135 28 140 Q 41 145 50 100 M 50 100 Q 65 105 75 120 Q 85 135 72 140 Q 59 145 50 100%22/%3E%3C/g%3E%3C!-- Lab equipment silhouette --%3E%3Cg transform=%22translate(900, 300)%22 opacity=%220.18%22 fill=%22%23666%22%3E%3C!-- Beaker --%3E%3Crect x=%2210%22 y=%2250%22 width=%2260%22 height=%22100%22 rx=%225%22/%3E%3Crect x=%2215%22 y=%2255%22 width=%2250%22 height=%2230%22 fill=%22%23a30000%22 opacity=%220.4%22/%3E%3Crect x=%2230%22 y=%2230%22 width=%2220%22 height=%2225%22/%3E%3C!-- Flask --%3E%3Cpath d=%22M 110 80 L 120 120 L 100 150 L 150 150 L 130 120 L 140 80 Z%22/%3E%3Crect x=%22120%22 y=%2260%22 width=%2210%22 height=%2225%22/%3E%3C/g%3E%3C!-- Money symbol --%3E%3Cg transform=%22translate(960, 200)%22 opacity=%220.25%22%3E%3Ctext x=%220%22 y=%2280%22 font-family=%22Arial%22 font-size=%22120%22 font-weight=%22bold%22 fill=%22%23c4a265%22%3E$%3C/text%3E%3C/g%3E%3C/svg%3E') #0d0d0d;">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">Underground Commerce</h1>
+    <p class="hero-subtitle">High Risk • High Reward • High Stakes</p>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ============================================================ -->
+<!-- TABLE OF CONTENTS                                             -->
+<!-- ============================================================ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#introduction">Introduction &amp; Disclaimer</a></li>
+    <li><a href="#drugs">Drug Types &amp; Production</a></li>
+    <li><a href="#quality">Quality System</a></li>
+    <li><a href="#street">Street Corner Selling</a></li>
+    <li><a href="#territory">Territory Selling (Passive)</a></li>
+    <li><a href="#heat">Police Heat System</a></li>
+    <li><a href="#gang">Gang Integration</a></li>
+    <li><a href="#income">Income Breakdown</a></li>
+    <li><a href="#getting-started">Getting Started Guide</a></li>
+    <li><a href="#commands">Commands &amp; Controls</a></li>
+    <li><a href="#tips">Tips &amp; Best Practices</a></li>
+    <li><a href="#locations">Locations Reference</a></li>
+    <li><a href="#faq">Frequently Asked Questions</a></li>
+  </ol>
+</div>
+
+<!-- ============================================================ -->
+<!-- 1. INTRODUCTION                                               -->
+<!-- ============================================================ -->
+<h1 id="introduction">1. Introduction &amp; Disclaimer</h1>
+
+<div class="callout callout-critical">
+  <strong>LEGAL DISCLAIMER:</strong> ZO Syndicate RP is a FICTIONAL roleplay server. All activities, including drug dealing, are SIMULATED for entertainment purposes only. This content does NOT condone, encourage, or provide real-world guidance for illegal activities. All players must be 18+ and understand the distinction between roleplay and reality.
+</div>
+
+<p>Welcome to the underground economy of San Andreas. Drug dealing in ZO Syndicate RP represents one of the most lucrative &mdash; and dangerous &mdash; career paths available to civilians. Unlike legal employment with the LSPD, EMS, or legitimate businesses, the narcotics trade operates in the shadows, where fortunes are made and lost on street corners, in clandestine labs, and through gang-controlled territories.</p>
+
+<h3>1.1 What is Drug Dealing?</h3>
+<p>Drug dealing is a multi-phase criminal enterprise involving:</p>
+<ul>
+  <li><strong>Production</strong> &mdash; Growing, processing, or cooking narcotics from raw materials</li>
+  <li><strong>Quality Control</strong> &mdash; Ensuring product purity to maximize profit margins</li>
+  <li><strong>Distribution</strong> &mdash; Selling finished product through street corners or gang territories</li>
+  <li><strong>Risk Management</strong> &mdash; Evading law enforcement heat and rival gang interference</li>
+</ul>
+
+<h3>1.2 Risk vs Reward Overview</h3>
+<p>The narcotics trade offers income potential of <strong>$4,000-12,000 per day</strong> for experienced dealers, compared to $2,400-3,200 for legal jobs. However, this comes with significant risks:</p>
+<ul>
+  <li><strong>Arrest &amp; Prosecution</strong> &mdash; Drug charges carry fines up to $50,000 and jail sentences up to 120 months (2 hours real-time)</li>
+  <li><strong>Asset Seizure</strong> &mdash; Police can confiscate cash, vehicles, and property linked to drug operations</li>
+  <li><strong>Gang Warfare</strong> &mdash; Rival organizations may raid your labs or territory selling spots</li>
+  <li><strong>Heat System</strong> &mdash; Repeated illegal activity triggers automatic police alerts</li>
+</ul>
+
+<blockquote>
+  "The street corner is a businessman's office. The difference is, your office might get raided, your clients might be undercover cops, and your competitors carry guns instead of briefcases."
+</blockquote>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 2. DRUG TYPES & PRODUCTION                                   -->
+<!-- ============================================================ -->
+<h1 id="drugs">2. Drug Types &amp; Production</h1>
+
+<p>ZO Syndicate RP features three tiers of narcotics, each with distinct production methods, profit margins, and risk levels. Progression through the tiers requires gang rank advancement and capital investment.</p>
+
+<!-- WEED -->
+<h2>2.1 Weed (Cannabis)</h2>
+<p><strong>Tier:</strong> Entry-level | <strong>Risk Level:</strong> Low | <strong>Income:</strong> $100-200/oz</p>
+
+<h3>Production Process</h3>
+<ol>
+  <li><strong>Acquire Seeds</strong> &mdash; Purchase from black market dealers or gang suppliers ($50/seed pack)</li>
+  <li><strong>Plant &amp; Water</strong> &mdash; Use one of 10 grow house locations. Plants require watering every 4 hours (in-game time)</li>
+  <li><strong>Harvest</strong> &mdash; Mature plants (24 hours growth) yield 4-6 ounces per plant</li>
+  <li><strong>Dry &amp; Package</strong> &mdash; Drying process takes 2 hours. Improper drying reduces quality</li>
+</ol>
+
+<h3>Quality Factors</h3>
+<ul>
+  <li><strong>Watering Schedule:</strong> Consistent watering = higher THC content = higher quality</li>
+  <li><strong>Harvest Timing:</strong> Premature harvest (under 20 hours) reduces quality by 30%</li>
+  <li><strong>Drying Time:</strong> Full 2-hour dry = high quality; rushed dry (under 1 hour) = low quality</li>
+</ul>
+
+<table>
+  <tr>
+    <th>Quality Level</th>
+    <th>Street Price (per oz)</th>
+    <th>Production Requirements</th>
+  </tr>
+  <tr>
+    <td><strong>Low Quality</strong></td>
+    <td>$100</td>
+    <td>Rushed harvest, inconsistent watering, quick dry</td>
+  </tr>
+  <tr>
+    <td><strong>Mid Quality</strong></td>
+    <td>$150</td>
+    <td>Standard 24-hour growth, normal watering, full dry</td>
+  </tr>
+  <tr>
+    <td><strong>High Quality</strong></td>
+    <td>$200</td>
+    <td>Optimal timing, perfect watering, controlled dry, gang stash storage</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Beginner Tip:</strong> Start with weed to learn the mechanics risk-free. A single grow house can generate $800-1,200 per harvest cycle (24 hours), with minimal police attention until you scale operations.
+</div>
+
+<!-- COCAINE -->
+<h2>2.2 Cocaine</h2>
+<p><strong>Tier:</strong> Intermediate | <strong>Risk Level:</strong> Medium | <strong>Income:</strong> $300-600/oz</p>
+
+<h3>Production Process</h3>
+<ol>
+  <li><strong>Acquire Coca Leaves</strong> &mdash; Import from cartel contacts or gang suppliers ($120/kg)</li>
+  <li><strong>Processing</strong> &mdash; Use one of 5 cocaine labs. Processing minigame requires correct chemical ratios</li>
+  <li><strong>Cutting</strong> &mdash; Pure cocaine can be cut with inert powder to increase volume (reduces quality)</li>
+  <li><strong>Packaging</strong> &mdash; Brick press or bag packaging (bricks sell for higher margins to bulk buyers)</li>
+</ol>
+
+<h3>Quality Factors</h3>
+<ul>
+  <li><strong>Chemical Precision:</strong> Correct ratios during processing = 90%+ purity</li>
+  <li><strong>Cutting Agent:</strong> No cutting = high quality; 50% cut = low quality</li>
+  <li><strong>Lab Cleanliness:</strong> Labs must be maintained (cleaned every 10 batches) to prevent contamination</li>
+</ul>
+
+<table>
+  <tr>
+    <th>Quality Level</th>
+    <th>Street Price (per oz)</th>
+    <th>Production Requirements</th>
+  </tr>
+  <tr>
+    <td><strong>Low Quality</strong></td>
+    <td>$300</td>
+    <td>Heavy cutting (50%+), imprecise processing, dirty lab</td>
+  </tr>
+  <tr>
+    <td><strong>Mid Quality</strong></td>
+    <td>$450</td>
+    <td>Light cutting (20%), standard processing, maintained lab</td>
+  </tr>
+  <tr>
+    <td><strong>High Quality</strong></td>
+    <td>$600</td>
+    <td>Pure product (no cut), expert processing, pristine lab</td>
+  </tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>Gang Rank Lock:</strong> Cocaine production requires <strong>Member</strong> rank or higher in your gang. Recruit-level players can assist with distribution but cannot access labs.
+</div>
+
+<!-- METH -->
+<h2>2.3 Methamphetamine</h2>
+<p><strong>Tier:</strong> Expert | <strong>Risk Level:</strong> High | <strong>Income:</strong> $500-1,000/oz</p>
+
+<h3>Production Process</h3>
+<ol>
+  <li><strong>Acquire Ingredients</strong> &mdash; Pseudoephedrine, red phosphorus, anhydrous ammonia ($400/batch from chemical suppliers)</li>
+  <li><strong>Cooking Minigame</strong> &mdash; Multi-stage process requiring temperature control and timing precision. Failed cook = explosion (lab damage + heat increase)</li>
+  <li><strong>Crystallization</strong> &mdash; Proper cooling phase determines crystal purity</li>
+  <li><strong>Quality Check</strong> &mdash; Test kit shows purity percentage (60%-99%)</li>
+</ol>
+
+<h3>Quality Factors</h3>
+<ul>
+  <li><strong>Temperature Control:</strong> Maintain correct temp ranges during cook (95-105°C)</li>
+  <li><strong>Timing:</strong> Each cooking stage has optimal timing windows (5-15 seconds leeway)</li>
+  <li><strong>Lab Equipment:</strong> Upgraded labs ($50,000 investment) reduce failure rate by 40%</li>
+  <li><strong>Experience:</strong> Cook success rate increases with each successful batch (tracked stat)</li>
+</ul>
+
+<table>
+  <tr>
+    <th>Quality Level</th>
+    <th>Street Price (per oz)</th>
+    <th>Purity Range</th>
+    <th>Production Requirements</th>
+  </tr>
+  <tr>
+    <td><strong>Low Quality</strong></td>
+    <td>$500</td>
+    <td>60-74%</td>
+    <td>Basic lab, rushed cook, beginner chemist</td>
+  </tr>
+  <tr>
+    <td><strong>Mid Quality</strong></td>
+    <td>$750</td>
+    <td>75-89%</td>
+    <td>Standard lab, careful timing, intermediate chemist</td>
+  </tr>
+  <tr>
+    <td><strong>High Quality</strong></td>
+    <td>$1,000</td>
+    <td>90-99%</td>
+    <td>Upgraded lab, perfect execution, expert chemist (20+ successful cooks)</td>
+  </tr>
+</table>
+
+<div class="callout callout-critical">
+  <strong>EXPLOSION RISK:</strong> Failed meth cooks trigger lab explosions, resulting in:
+  <ul style="margin-top: 8px; margin-bottom: 0;">
+    <li>Loss of all ingredients and product in lab ($5,000-20,000 loss)</li>
+    <li>+30 police heat (instant alert if heat was already above 50)</li>
+    <li>Potential injury requiring EMS (broken bones, burns)</li>
+    <li>Lab unusable for 6 hours (real-time) while repairs are made</li>
+  </ul>
+</div>
+
+<div class="callout callout-warning">
+  <strong>Gang Rank Lock:</strong> Methamphetamine production requires <strong>Lieutenant</strong> rank or higher. Only the most trusted gang members gain access to meth labs due to explosion risks and high police priority.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 3. QUALITY SYSTEM                                             -->
+<!-- ============================================================ -->
+<h1 id="quality">3. Quality System</h1>
+
+<p>Product quality is the single most important factor determining profitability. The quality system in ZO Syndicate RP simulates real-world purity standards, where higher-quality narcotics command premium prices but require more skill, time, and investment to produce.</p>
+
+<h2>3.1 Quality Tiers Explained</h2>
+
+<table>
+  <tr>
+    <th>Quality Tier</th>
+    <th>Price Multiplier</th>
+    <th>Street Reputation Impact</th>
+    <th>Buyer Acceptance Rate</th>
+  </tr>
+  <tr>
+    <td><strong>Low Quality</strong></td>
+    <td>50% of base price</td>
+    <td>-5 reputation per sale</td>
+    <td>60% (buyers reject or negotiate down)</td>
+  </tr>
+  <tr>
+    <td><strong>Mid Quality</strong></td>
+    <td>100% of base price</td>
+    <td>No change</td>
+    <td>85% (standard acceptance)</td>
+  </tr>
+  <tr>
+    <td><strong>High Quality</strong></td>
+    <td>150% of base price</td>
+    <td>+10 reputation per sale</td>
+    <td>95% (high demand, premium clients)</td>
+  </tr>
+</table>
+
+<h2>3.2 How to Improve Quality</h2>
+
+<h3>Weed Quality Improvement</h3>
+<ul>
+  <li><strong>Consistent Watering:</strong> Set alarms for every 4 hours (in-game time). Missed watering = -10% quality</li>
+  <li><strong>Optimal Harvest:</strong> Harvest between 24-28 hours of growth for peak THC</li>
+  <li><strong>Controlled Drying:</strong> Use gang stash house drying racks (faster + quality boost)</li>
+  <li><strong>Storage:</strong> Store in humidity-controlled gang stash (+5% quality retention)</li>
+</ul>
+
+<h3>Cocaine Quality Improvement</h3>
+<ul>
+  <li><strong>Chemical Precision:</strong> Practice the processing minigame in solo sessions to master ratios</li>
+  <li><strong>Pure Product:</strong> Avoid cutting unless targeting low-income buyers deliberately</li>
+  <li><strong>Lab Maintenance:</strong> Clean labs every 10 batches using cleaning supplies ($500)</li>
+  <li><strong>Equipment Upgrades:</strong> Invest in precision scales ($5,000) for exact measurements</li>
+</ul>
+
+<h3>Meth Quality Improvement</h3>
+<ul>
+  <li><strong>Temperature Mastery:</strong> Watch thermometer closely &mdash; overheating by 10°C = ruined batch</li>
+  <li><strong>Timing Practice:</strong> Each cook stage has a 5-15 second optimal window. Early = impure; late = burnt</li>
+  <li><strong>Lab Upgrades:</strong> Upgraded labs ($50,000) provide visual/audio cues for timing windows</li>
+  <li><strong>Experience:</strong> Your character gains a hidden "Chemistry" skill (1-100) that improves success rate</li>
+  <li><strong>Partner Cooking:</strong> Two chemists in the same lab provide a +10% quality bonus (coordination)</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>Reputation System:</strong> Street reputation (0-1000 scale) unlocks premium buyers who only purchase high-quality product. Reaching 500+ reputation grants access to "VIP Buyers" who pay 200% of base price for guaranteed high-quality goods.
+</div>
+
+<h2>3.3 Quality Testing</h2>
+<p>Players can purchase <strong>Drug Test Kits</strong> ($200 each) from black market vendors to test product purity before selling. Testing reveals:</p>
+<ul>
+  <li><strong>Purity Percentage:</strong> 60%-99% (displayed as color-coded bar: red = low, yellow = mid, green = high)</li>
+  <li><strong>Cutting Agents:</strong> List of detected additives (e.g., "Baking soda detected: 40% by weight")</li>
+  <li><strong>Estimated Street Price:</strong> Based on current market demand and quality</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 4. STREET CORNER SELLING                                     -->
+<!-- ============================================================ -->
+<h1 id="street">4. Street Corner Selling (Active Income)</h1>
+
+<p>Street corner selling is the primary active distribution method, requiring player presence and interaction with NPC buyers. This method offers high income potential ($500-1,500/hour) but exposes you to police heat and rival gang confrontations.</p>
+
+<h2>4.1 How Street Selling Works</h2>
+
+<ol>
+  <li><strong>Navigate to a Selling Zone</strong> &mdash; 15 pre-defined street corners across Los Santos, Blaine County, and Sandy Shores</li>
+  <li><strong>Approach NPCs</strong> &mdash; Walk up to pedestrians (not vehicles). Press <code>E</code> to initiate sale</li>
+  <li><strong>NPC Reaction</strong> &mdash; Random outcome:
+    <ul>
+      <li><strong>Accept (60% chance):</strong> Sale completes, you receive payment</li>
+      <li><strong>Reject (30% chance):</strong> NPC walks away, no transaction</li>
+      <li><strong>Police (10% chance):</strong> NPC is undercover cop &mdash; instant +50 heat, possible arrest if backup arrives</li>
+    </ul>
+  </li>
+  <li><strong>Heat Accumulation</strong> &mdash; Each successful sale adds +5 heat. Failed sales (reject/police) add +10-50 heat</li>
+  <li><strong>Cooldown</strong> &mdash; 30-second cooldown between sale attempts at the same location</li>
+</ol>
+
+<h2>4.2 Street Selling Locations (15 Zones)</h2>
+
+<table>
+  <tr>
+    <th>Zone Name</th>
+    <th>Risk Level</th>
+    <th>Buyer Wealth</th>
+    <th>Police Patrol Frequency</th>
+    <th>Recommended Product</th>
+  </tr>
+  <tr>
+    <td><strong>Grove Street</strong></td>
+    <td>Medium</td>
+    <td>Low</td>
+    <td>Moderate (10 min patrols)</td>
+    <td>Weed, Low-quality cocaine</td>
+  </tr>
+  <tr>
+    <td><strong>Davis Avenue</strong></td>
+    <td>High</td>
+    <td>Low</td>
+    <td>High (5 min patrols)</td>
+    <td>Weed only (avoid premium goods)</td>
+  </tr>
+  <tr>
+    <td><strong>Vespucci Beach</strong></td>
+    <td>Low</td>
+    <td>High</td>
+    <td>Low (20 min patrols)</td>
+    <td>High-quality cocaine, meth</td>
+  </tr>
+  <tr>
+    <td><strong>Del Perro Pier</strong></td>
+    <td>Medium</td>
+    <td>Medium</td>
+    <td>Moderate (12 min patrols)</td>
+    <td>Mid-quality weed, cocaine</td>
+  </tr>
+  <tr>
+    <td><strong>Vinewood Hills (lookout)</strong></td>
+    <td>Low</td>
+    <td>Very High</td>
+    <td>Very Low (30 min patrols)</td>
+    <td>Premium meth, high-quality cocaine</td>
+  </tr>
+  <tr>
+    <td><strong>Sandy Shores Motel</strong></td>
+    <td>Medium</td>
+    <td>Low</td>
+    <td>Low (BCSO, 15 min patrols)</td>
+    <td>Meth, weed</td>
+  </tr>
+  <tr>
+    <td><strong>Grapeseed Farm Area</strong></td>
+    <td>Very Low</td>
+    <td>Low</td>
+    <td>Very Low (BCSO, 40 min patrols)</td>
+    <td>Any (safe zone for beginners)</td>
+  </tr>
+  <tr>
+    <td><strong>Paleto Bay Gas Station</strong></td>
+    <td>Low</td>
+    <td>Medium</td>
+    <td>Low (BCSO, 25 min patrols)</td>
+    <td>Weed, cocaine</td>
+  </tr>
+  <tr>
+    <td><strong>East Los Santos Projects</strong></td>
+    <td>Very High</td>
+    <td>Very Low</td>
+    <td>Very High (LSPD, 3 min patrols)</td>
+    <td>High-volume, low-margin weed</td>
+  </tr>
+  <tr>
+    <td><strong>Strawberry Avenue</strong></td>
+    <td>High</td>
+    <td>Low</td>
+    <td>High (LSPD, 7 min patrols)</td>
+    <td>Weed, low-quality cocaine</td>
+  </tr>
+  <tr>
+    <td><strong>Mirror Park</strong></td>
+    <td>Medium</td>
+    <td>Medium</td>
+    <td>Moderate (LSPD, 10 min patrols)</td>
+    <td>Mid-quality all products</td>
+  </tr>
+  <tr>
+    <td><strong>Little Seoul</strong></td>
+    <td>Medium</td>
+    <td>Medium</td>
+    <td>Moderate (LSPD, 12 min patrols)</td>
+    <td>Weed, cocaine</td>
+  </tr>
+  <tr>
+    <td><strong>La Puerta Industrial</strong></td>
+    <td>Low</td>
+    <td>Medium</td>
+    <td>Low (LSPD, 18 min patrols)</td>
+    <td>Bulk sales, all products</td>
+  </tr>
+  <tr>
+    <td><strong>Harmony (Route 68)</strong></td>
+    <td>Very Low</td>
+    <td>Low</td>
+    <td>Very Low (BCSO, 35 min patrols)</td>
+    <td>Safe zone, beginner-friendly</td>
+  </tr>
+  <tr>
+    <td><strong>Chumash Beach Parking</strong></td>
+    <td>Low</td>
+    <td>High</td>
+    <td>Low (LSPD, 22 min patrols)</td>
+    <td>High-quality cocaine, meth</td>
+  </tr>
+</table>
+
+<h2>4.3 Heat System (Street Selling)</h2>
+
+<p>Every street corner has an individual heat level (0-100) that increases with selling activity and decays over time when inactive.</p>
+
+<table>
+  <tr>
+    <th>Heat Level</th>
+    <th>Police Response</th>
+    <th>Decay Rate</th>
+  </tr>
+  <tr>
+    <td><strong>0-25 (Safe)</strong></td>
+    <td>No alerts, normal patrols</td>
+    <td>-1 heat/min</td>
+  </tr>
+  <tr>
+    <td><strong>26-50 (Warm)</strong></td>
+    <td>Increased patrol frequency (+50%)</td>
+    <td>-1 heat/min</td>
+  </tr>
+  <tr>
+    <td><strong>51-75 (Hot)</strong></td>
+    <td>Dispatch alert to nearby units, undercover ops deployed</td>
+    <td>-0.5 heat/min</td>
+  </tr>
+  <tr>
+    <td><strong>76-100 (Burning)</strong></td>
+    <td>Active manhunt, K-9 units, surveillance helicopters</td>
+    <td>-0.25 heat/min (very slow decay)</td>
+  </tr>
+</table>
+
+<div class="callout callout-critical">
+  <strong>Automatic Arrest Warrant:</strong> If heat reaches 100 at any location, an arrest warrant is automatically issued with your last known description. Police can detain you on sight for 72 hours (in-game) or until you lay low and heat decays below 50.
+</div>
+
+<h2>4.4 Best Practices for Street Selling</h2>
+
+<ul>
+  <li><strong>Rotate Locations:</strong> Never sell at the same corner more than 3 times consecutively. Rotate between 4-5 locations to keep heat low</li>
+  <li><strong>Watch the Clock:</strong> Sell during low patrol times (2am-6am in-game for LSPD zones, anytime for rural BCSO zones)</li>
+  <li><strong>Use Lookouts:</strong> Gang members can act as lookouts (stand 50m away, report police in Discord/in-game chat)</li>
+  <li><strong>Escape Routes:</strong> Pre-plan 2-3 escape routes from each selling zone (alleys, parking garages, off-road trails)</li>
+  <li><strong>Burner Vehicle:</strong> Use a cheap, common vehicle (e.g., Asea, Ingot) instead of your personal car. Ditch it if pursued</li>
+  <li><strong>No Gang Colors:</strong> Avoid wearing gang clothing while selling &mdash; it increases police suspicion and heat accumulation by 50%</li>
+  <li><strong>Bribe Officers:</strong> If caught with low heat (under 30), offer $10,000 bribe (50% success rate, depends on officer's corruption level)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 5. TERRITORY SELLING                                         -->
+<!-- ============================================================ -->
+<h1 id="territory">5. Territory Selling (Passive Income)</h1>
+
+<p>Territory selling integrates with the <strong>zo_territories</strong> gang control system, allowing you to set up passive drug distribution points within gang-controlled zones. This method generates income while you're offline or engaged in other activities, but requires gang membership and territorial defense.</p>
+
+<h2>5.1 How Territory Selling Works</h2>
+
+<ol>
+  <li><strong>Capture Territory</strong> &mdash; Your gang must control a territory zone (see <a href="/zo/sop/gangs.html">Gang SOP</a> for capture mechanics)</li>
+  <li><strong>Set Up Drug Spot</strong> &mdash; Use <code>/drugs setup</code> at designated spot markers within your gang's territory (max 3 spots per territory)</li>
+  <li><strong>Stock Product</strong> &mdash; Transfer inventory from personal stash to the drug spot (up to 50 oz per spot)</li>
+  <li><strong>NPC Demand System</strong> &mdash; NPCs automatically purchase product every 15 minutes (in-game time) based on:
+    <ul>
+      <li>Product quality (high quality = faster sales)</li>
+      <li>Territory wealth level (Vinewood Hills buyers pay more than Strawberry)</li>
+      <li>Gang reputation (higher rep = more buyers)</li>
+    </ul>
+  </li>
+  <li><strong>Collect Profits</strong> &mdash; Return to drug spot to collect cash. Uncollected profits are vulnerable to raids</li>
+</ol>
+
+<h2>5.2 Territory Bonuses</h2>
+
+<table>
+  <tr>
+    <th>Territory Type</th>
+    <th>Sales Frequency</th>
+    <th>Buyer Wealth Multiplier</th>
+    <th>Gang Bonus (Your Territory)</th>
+  </tr>
+  <tr>
+    <td><strong>Grove Street</strong></td>
+    <td>Every 15 min</td>
+    <td>0.8x (low income area)</td>
+    <td>+25% profit if controlled by your gang</td>
+  </tr>
+  <tr>
+    <td><strong>East Los Santos</strong></td>
+    <td>Every 12 min</td>
+    <td>0.7x (very low income)</td>
+    <td>+25% profit</td>
+  </tr>
+  <tr>
+    <td><strong>Vespucci Beach</strong></td>
+    <td>Every 18 min</td>
+    <td>1.5x (high income area)</td>
+    <td>+25% profit</td>
+  </tr>
+  <tr>
+    <td><strong>Vinewood Hills</strong></td>
+    <td>Every 25 min</td>
+    <td>2.0x (premium buyers)</td>
+    <td>+25% profit</td>
+  </tr>
+  <tr>
+    <td><strong>Del Perro</strong></td>
+    <td>Every 20 min</td>
+    <td>1.3x (upper-middle income)</td>
+    <td>+25% profit</td>
+  </tr>
+  <tr>
+    <td><strong>Little Seoul</strong></td>
+    <td>Every 16 min</td>
+    <td>1.0x (standard income)</td>
+    <td>+25% profit</td>
+  </tr>
+  <tr>
+    <td><strong>Mirror Park</strong></td>
+    <td>Every 17 min</td>
+    <td>1.1x (middle income)</td>
+    <td>+25% profit</td>
+  </tr>
+  <tr>
+    <td><strong>Sandy Shores</strong></td>
+    <td>Every 14 min</td>
+    <td>0.6x (rural area)</td>
+    <td>+25% profit</td>
+  </tr>
+  <tr>
+    <td><strong>Paleto Bay</strong></td>
+    <td>Every 22 min</td>
+    <td>0.9x (small town)</td>
+    <td>+25% profit</td>
+  </tr>
+  <tr>
+    <td><strong>La Puerta Industrial</strong></td>
+    <td>Every 10 min</td>
+    <td>0.9x (worker population)</td>
+    <td>+25% profit</td>
+  </tr>
+</table>
+
+<h2>5.3 Rival Raids</h2>
+
+<p>Enemy gangs can raid your drug spots to steal product and profits. Raids can occur when:</p>
+<ul>
+  <li>Your gang loses control of the territory (captured by rivals)</li>
+  <li>Enemy gang members locate your drug spot (50m proximity triggers discovery)</li>
+  <li>Rival gang initiates a deliberate raid using <code>/gang raid</code> command</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>Raid Defense:</strong> Gang members within 100m of a drug spot during a raid receive an alert. Successful defense (kill or repel raiders within 5 minutes) grants +50 gang reputation. Failed defense = loss of all product and profits at that spot.
+</div>
+
+<h2>5.4 Passive Income Breakdown</h2>
+
+<p><strong>Example Setup:</strong> 3 drug spots in Vespucci Beach (your gang's territory) stocked with mid-quality cocaine</p>
+
+<ul>
+  <li><strong>Product:</strong> 50 oz cocaine @ $450/oz per spot = $22,500 inventory/spot</li>
+  <li><strong>Sales Frequency:</strong> Every 18 minutes (Vespucci Beach rate)</li>
+  <li><strong>Buyer Wealth Multiplier:</strong> 1.5x (high income area)</li>
+  <li><strong>Gang Bonus:</strong> +25% (your territory)</li>
+  <li><strong>NPC Purchase:</strong> 2-4 oz per cycle (average 3 oz)</li>
+</ul>
+
+<p><strong>Income Calculation:</strong></p>
+<ul>
+  <li>Base sale: 3 oz × $450 = $1,350</li>
+  <li>Wealth multiplier: $1,350 × 1.5 = $2,025</li>
+  <li>Gang bonus: $2,025 × 1.25 = $2,531</li>
+  <li><strong>Per spot:</strong> $2,531 every 18 min = <strong>$8,437/hour</strong></li>
+  <li><strong>3 spots total:</strong> <strong>$25,311/hour</strong> passive income</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>Restock Requirement:</strong> Drug spots do NOT auto-restock. You must manually refill inventory every 6-10 hours depending on sales rate. Empty spots generate $0 and alert rivals that the location is vulnerable.
+</div>
+
+<h2>5.5 Gang Profit Sharing</h2>
+
+<p>10% of all territory drug sales automatically transfer to the gang bank account. This funds:</p>
+<ul>
+  <li>Territory defense upgrades (turrets, cameras, reinforced stash houses)</li>
+  <li>Gang-wide bonuses (vehicle upgrades, weapon purchases)</li>
+  <li>War funds for rival gang confrontations</li>
+</ul>
+
+<p>Gang leaders can adjust profit-sharing percentage (5%-25% range) via <code>/gang settings</code>.</p>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 6. POLICE HEAT SYSTEM                                        -->
+<!-- ============================================================ -->
+<h1 id="heat">6. Police Heat System</h1>
+
+<p>The heat system is the primary law enforcement deterrent in ZO Syndicate RP. Heat accumulates from illegal activities and triggers escalating police responses. Understanding heat mechanics is critical to avoiding arrest and asset seizure.</p>
+
+<h2>6.1 Heat Accumulation</h2>
+
+<table>
+  <tr>
+    <th>Activity</th>
+    <th>Heat Gained</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td><strong>Successful Street Sale</strong></td>
+    <td>+5</td>
+    <td>Per transaction, location-specific</td>
+  </tr>
+  <tr>
+    <td><strong>Failed Sale (Reject)</strong></td>
+    <td>+2</td>
+    <td>NPC reports suspicious behavior</td>
+  </tr>
+  <tr>
+    <td><strong>Undercover Cop Sale</strong></td>
+    <td>+50</td>
+    <td>Instant alert, description logged</td>
+  </tr>
+  <tr>
+    <td><strong>Drug Lab Explosion</strong></td>
+    <td>+30</td>
+    <td>Meth lab failures trigger neighbor reports</td>
+  </tr>
+  <tr>
+    <td><strong>Wearing Gang Colors (while selling)</strong></td>
+    <td>+3/sale</td>
+    <td>Total = +8 heat per sale</td>
+  </tr>
+  <tr>
+    <td><strong>Selling in High-Patrol Zone (75+ heat)</strong></td>
+    <td>+10/sale</td>
+    <td>Reckless behavior penalty</td>
+  </tr>
+  <tr>
+    <td><strong>Fleeing Police</strong></td>
+    <td>+20</td>
+    <td>Per pursuit, stacks with existing heat</td>
+  </tr>
+  <tr>
+    <td><strong>Caught with Product</strong></td>
+    <td>+40</td>
+    <td>If arrested during stop/search</td>
+  </tr>
+</table>
+
+<h2>6.2 Heat Decay</h2>
+
+<p>Heat decays passively when you avoid illegal activity in that zone:</p>
+<ul>
+  <li><strong>0-50 Heat:</strong> -1 heat/min (60 heat/hour decay)</li>
+  <li><strong>51-75 Heat:</strong> -0.5 heat/min (30 heat/hour decay)</li>
+  <li><strong>76-100 Heat:</strong> -0.25 heat/min (15 heat/hour decay)</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>Accelerated Decay:</strong> Laying low (not logging in or staying outside the city) for 24 real-world hours reduces heat by -50 globally across all zones.
+</div>
+
+<h2>6.3 Police Response Escalation</h2>
+
+<table>
+  <tr>
+    <th>Heat Level</th>
+    <th>Police Actions</th>
+    <th>Player Impact</th>
+  </tr>
+  <tr>
+    <td><strong>0-25 (Safe)</strong></td>
+    <td>Standard patrols, no alerts</td>
+    <td>Normal operations, low risk</td>
+  </tr>
+  <tr>
+    <td><strong>26-50 (Warm)</strong></td>
+    <td>Increased patrols in zone (+50% frequency)</td>
+    <td>Higher chance of random stops</td>
+  </tr>
+  <tr>
+    <td><strong>51-75 (Hot)</strong></td>
+    <td>Dispatch alert: "Suspicious activity reported at [zone]", undercover units deployed</td>
+    <td>10% undercover cop chance per sale attempt</td>
+  </tr>
+  <tr>
+    <td><strong>76-90 (Very Hot)</strong></td>
+    <td>Active investigation: K-9 units, traffic stops, gang task force</td>
+    <td>50% chance of vehicle search during stops</td>
+  </tr>
+  <tr>
+    <td><strong>91-100 (Burning)</strong></td>
+    <td>Arrest warrant issued, surveillance helicopters, roadblocks</td>
+    <td>On-sight detention, asset seizure authorized</td>
+  </tr>
+</table>
+
+<h2>6.4 Dispatch Integration</h2>
+
+<p>When heat reaches 75+, police dispatch receives automatic alerts:</p>
+
+<blockquote>
+  <strong>[DISPATCH]</strong> "All units, be advised: high narcotics activity reported in [zone]. Suspect description: [clothing/vehicle]. Approach with caution, K-9 units en route."
+</blockquote>
+
+<p>Player description is based on:</p>
+<ul>
+  <li><strong>Clothing:</strong> Top color, bottom color, hat/mask status</li>
+  <li><strong>Vehicle:</strong> Make, model, color (if used for getaway)</li>
+  <li><strong>Gang Affiliation:</strong> If wearing gang colors, dispatch identifies gang name</li>
+</ul>
+
+<h2>6.5 Evidence Collection</h2>
+
+<p>Police can collect evidence during arrests or searches:</p>
+
+<table>
+  <tr>
+    <th>Evidence Type</th>
+    <th>Source</th>
+    <th>Court Impact</th>
+  </tr>
+  <tr>
+    <td><strong>Drug Possession</strong></td>
+    <td>Found on person/in vehicle</td>
+    <td>Possession charges: 20-60 months, $5k-20k fine</td>
+  </tr>
+  <tr>
+    <td><strong>Manufacturing Equipment</strong></td>
+    <td>Found in lab raid</td>
+    <td>Manufacturing charges: 60-120 months, $20k-50k fine</td>
+  </tr>
+  <tr>
+    <td><strong>Digital Records</strong></td>
+    <td>Phone/laptop seized (gang chat logs)</td>
+    <td>Conspiracy charges: +30 months, implicates gang members</td>
+  </tr>
+  <tr>
+    <td><strong>Witness Testimony</strong></td>
+    <td>NPC buyer statements (AI-generated)</td>
+    <td>Distribution charges: 40-80 months, $10k-30k fine</td>
+  </tr>
+  <tr>
+    <td><strong>Surveillance Footage</strong></td>
+    <td>Security cameras near selling zones</td>
+    <td>Visual proof for trial, difficult to dispute</td>
+  </tr>
+</table>
+
+<h2>6.6 Drug Tests</h2>
+
+<p>Police can administer field drug tests to players:</p>
+<ul>
+  <li><strong>Positive Result:</strong> Proves recent drug handling (60 min window after last production/sale)</li>
+  <li><strong>Negative Result:</strong> No drug contact (clean for 60+ minutes)</li>
+  <li><strong>Court Admissibility:</strong> Drug tests alone cannot convict, but combined with possession/witness testimony = strong case</li>
+</ul>
+
+<h2>6.7 Search Warrants</h2>
+
+<p>Judges can issue search warrants for drug operations if police provide:</p>
+<ul>
+  <li>Heat level 75+ in specific zone for 6+ hours</li>
+  <li>Witness testimony (NPC or undercover officer)</li>
+  <li>Surveillance evidence (player seen entering/exiting known lab location)</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>Warrant Execution:</strong> Police can raid your property, stash houses, and gang territories with a valid warrant. All product, equipment, and cash found are seized as evidence and forfeited to the state. Warrant raids also grant +100 heat, making you a priority target for 48 hours.
+</div>
+
+<h2>6.8 Penalties</h2>
+
+<table>
+  <tr>
+    <th>Charge</th>
+    <th>Jail Time</th>
+    <th>Fine</th>
+    <th>Asset Seizure</th>
+  </tr>
+  <tr>
+    <td><strong>Possession (under 5 oz)</strong></td>
+    <td>20-40 months</td>
+    <td>$5,000-10,000</td>
+    <td>Product seized only</td>
+  </tr>
+  <tr>
+    <td><strong>Possession with Intent (5-20 oz)</strong></td>
+    <td>40-60 months</td>
+    <td>$10,000-20,000</td>
+    <td>Product + $5,000 cash</td>
+  </tr>
+  <tr>
+    <td><strong>Distribution (caught selling)</strong></td>
+    <td>60-80 months</td>
+    <td>$20,000-30,000</td>
+    <td>Product + vehicle + $10,000 cash</td>
+  </tr>
+  <tr>
+    <td><strong>Manufacturing</strong></td>
+    <td>80-120 months</td>
+    <td>$30,000-50,000</td>
+    <td>All lab equipment, product, property</td>
+  </tr>
+  <tr>
+    <td><strong>Trafficking (20+ oz or cross-state)</strong></td>
+    <td>120-180 months</td>
+    <td>$50,000-100,000</td>
+    <td>All assets, vehicles, properties</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Plea Bargains:</strong> If arrested with heat under 60 and no prior convictions, you can negotiate reduced charges with the DA in exchange for informant work (provide info on rival gangs, locations, etc.). Successful plea bargain: -50% jail time, -30% fine, no asset seizure.
+</div>
+
+<h2>6.9 How to Reduce Heat</h2>
+
+<ul>
+  <li><strong>Lay Low:</strong> Stop selling in high-heat zones for 2-4 hours (real-time) to allow natural decay</li>
+  <li><strong>Change Appearance:</strong> Switch clothing, vehicle, and hairstyle to reset description in dispatch system</li>
+  <li><strong>Bribe Police:</strong> $10,000 bribe (50% success rate) reduces heat by -30 if caught under 50 heat</li>
+  <li><strong>Gang Intimidation:</strong> High-reputation gangs can threaten witnesses (removes NPC testimony, -20 heat)</li>
+  <li><strong>Leave the City:</strong> Heat only applies to specific zones. Selling in a new city zone starts at 0 heat</li>
+  <li><strong>Use Proxies:</strong> Pay recruit-level gang members to sell for you (they take the heat, you take 70% profit)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 7. GANG INTEGRATION                                          -->
+<!-- ============================================================ -->
+<h1 id="gang">7. Gang Integration</h1>
+
+<p>Gang membership unlocks critical drug dealing infrastructure: secure stash houses, bulk discounts, profit sharing, and territorial control. Solo drug dealers face significantly higher risks and lower profit margins compared to gang-backed operations.</p>
+
+<h2>7.1 Gang Stash Houses</h2>
+
+<p>Each gang controls 2-4 stash houses (fortified safehouses) that provide:</p>
+
+<ul>
+  <li><strong>Secure Storage:</strong> 500 oz capacity (compared to 50 oz personal inventory)</li>
+  <li><strong>Quality Preservation:</strong> Humidity-controlled storage prevents quality degradation over time</li>
+  <li><strong>Drying Racks:</strong> Faster weed drying (1 hour vs 2 hours) with +5% quality bonus</li>
+  <li><strong>Equipment Storage:</strong> Store lab equipment, packaging supplies, and cash reserves</li>
+  <li><strong>Raid Protection:</strong> Reinforced doors require 5+ police units + battering ram to breach (10 min breach time)</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>Gang Rank Access:</strong> Only Member rank and above can access stash houses. Recruits must store product in personal vehicles (vulnerable to theft/search).
+</div>
+
+<h2>7.2 Bulk Discounts</h2>
+
+<p>Gang reputation unlocks bulk purchasing discounts from black market suppliers:</p>
+
+<table>
+  <tr>
+    <th>Gang Reputation</th>
+    <th>Discount Rate</th>
+    <th>Unlocked Suppliers</th>
+  </tr>
+  <tr>
+    <td><strong>0-250 (New Gang)</strong></td>
+    <td>No discount</td>
+    <td>Street-level dealers only</td>
+  </tr>
+  <tr>
+    <td><strong>251-500 (Established)</strong></td>
+    <td>10% off ingredients/seeds</td>
+    <td>Mid-tier suppliers (cartel contacts)</td>
+  </tr>
+  <tr>
+    <td><strong>501-750 (Respected)</strong></td>
+    <td>20% off ingredients/seeds</td>
+    <td>Premium suppliers, lab equipment vendors</td>
+  </tr>
+  <tr>
+    <td><strong>751-1000 (Dominant)</strong></td>
+    <td>30% off all purchases</td>
+    <td>Exclusive cartel connections, wholesale pricing</td>
+  </tr>
+</table>
+
+<h2>7.3 Rank Locks</h2>
+
+<p>Drug production access is gated by gang rank to prevent new recruits from blowing up meth labs or attracting police heat:</p>
+
+<table>
+  <tr>
+    <th>Gang Rank</th>
+    <th>Drug Access</th>
+    <th>Other Privileges</th>
+  </tr>
+  <tr>
+    <td><strong>Recruit</strong></td>
+    <td>Weed only (grow, harvest, sell)</td>
+    <td>Cannot access stash houses or gang vehicles</td>
+  </tr>
+  <tr>
+    <td><strong>Member</strong></td>
+    <td>Weed + Cocaine (processing, selling)</td>
+    <td>Stash house access, gang vehicle use</td>
+  </tr>
+  <tr>
+    <td><strong>Enforcer</strong></td>
+    <td>All drugs (weed, cocaine, meth)</td>
+    <td>Territory drug spot setup, raid leadership</td>
+  </tr>
+  <tr>
+    <td><strong>Lieutenant</strong></td>
+    <td>All drugs + lab management</td>
+    <td>Can upgrade labs, authorize bulk buys</td>
+  </tr>
+  <tr>
+    <td><strong>Boss/Underboss</strong></td>
+    <td>Full control + profit oversight</td>
+    <td>Access to all gang finances, supplier negotiations</td>
+  </tr>
+</table>
+
+<h2>7.4 Profit Sharing</h2>
+
+<p>Gang drug operations use a tiered profit-sharing model:</p>
+
+<ul>
+  <li><strong>10% to Gang Bank:</strong> Automatic deduction from all sales (street + territory)</li>
+  <li><strong>90% to Dealer:</strong> Remaining profit goes to the individual dealer</li>
+  <li><strong>Boss Override:</strong> Gang leaders can adjust split (5%-25% to gang, 75%-95% to dealer) via gang settings</li>
+</ul>
+
+<p><strong>Example:</strong> You sell $10,000 worth of cocaine. $1,000 (10%) goes to gang bank, $9,000 (90%) is your profit.</p>
+
+<h3>Gang Bank Uses</h3>
+<ul>
+  <li><strong>Territory Defenses:</strong> Purchase turrets ($15,000), cameras ($5,000), reinforced stash houses ($25,000)</li>
+  <li><strong>Vehicle Upgrades:</strong> Armor, engine tuning, bullet-resistant glass for gang vehicles</li>
+  <li><strong>War Funds:</strong> Purchase heavy weapons (AK-47s, RPGs) for gang wars</li>
+  <li><strong>Member Bonuses:</strong> Leaders can distribute bonuses for successful raids or territory captures</li>
+</ul>
+
+<h2>7.5 Gang Wars Over Drug Routes</h2>
+
+<p>Rival gangs can initiate wars to capture drug-rich territories:</p>
+
+<ul>
+  <li><strong>War Declaration:</strong> Gang leader declares war on rival gang holding desired territory</li>
+  <li><strong>Capture Objective:</strong> Control territory flag for 20 continuous minutes while defending against rivals</li>
+  <li><strong>Drug Spot Control:</strong> Winning gang takes control of all drug spots in the territory (existing product is seized)</li>
+  <li><strong>24-Hour Immunity:</strong> After capture, territory cannot be challenged for 24 hours</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>War Consequences:</strong> Losing a drug-rich territory like Vespucci Beach can cost your gang $50,000-100,000/day in lost passive income. Territory defense is a top priority for profitable gangs.
+</div>
+
+<h2>7.6 Territory Control Benefits</h2>
+
+<p>Controlling drug-friendly territories grants bonuses beyond passive income:</p>
+
+<ul>
+  <li><strong>+25% Profit Bonus:</strong> All sales in your gang's territory (street + passive) earn +25%</li>
+  <li><strong>-20% Heat Accumulation:</strong> Police prioritize rival gangs, giving your members more operating room</li>
+  <li><strong>Priority Supplier Access:</strong> Cartel contacts offer exclusive deals to territorial controllers (rare ingredients, discounted lab equipment)</li>
+  <li><strong>Safe Zones:</strong> Stash houses in controlled territories have +50% raid resistance (10 police units required vs 5)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 8. INCOME BREAKDOWN                                          -->
+<!-- ============================================================ -->
+<h1 id="income">8. Income Breakdown</h1>
+
+<p>Drug dealing income varies dramatically based on experience, product tier, and methods used. Below are realistic income projections for different dealer profiles.</p>
+
+<h2>8.1 Daily Income Potential</h2>
+
+<h3>Beginner Dealer (Weed Only, No Gang)</h3>
+<ul>
+  <li><strong>Method:</strong> Street corner selling in low-patrol zones (Grapeseed, Harmony)</li>
+  <li><strong>Product:</strong> Mid-quality weed ($150/oz)</li>
+  <li><strong>Active Hours:</strong> 4 hours/day (2-hour sessions to avoid heat buildup)</li>
+  <li><strong>Sales Rate:</strong> 2 sales every 5 minutes (24 sales/hour)</li>
+  <li><strong>Average Sale:</strong> 0.5 oz per sale = 12 oz/hour</li>
+  <li><strong>Hourly Income:</strong> 12 oz × $150 = $1,800/hour</li>
+  <li><strong>Daily Income:</strong> $1,800 × 4 hours = <strong>$7,200/day</strong></li>
+  <li><strong>Costs:</strong> Seeds ($200), gas ($100), risk of arrest (no lawyer retainer) = -$300</li>
+  <li><strong>Net Profit:</strong> <strong>$6,900/day</strong></li>
+</ul>
+
+<h3>Intermediate Dealer (Cocaine, Gang Member)</h3>
+<ul>
+  <li><strong>Method:</strong> Street corner selling in medium-wealth zones (Mirror Park, Little Seoul)</li>
+  <li><strong>Product:</strong> Mid-quality cocaine ($450/oz)</li>
+  <li><strong>Active Hours:</strong> 5 hours/day (rotate 3 locations to manage heat)</li>
+  <li><strong>Sales Rate:</strong> 3 sales every 5 minutes (36 sales/hour)</li>
+  <li><strong>Average Sale:</strong> 0.4 oz per sale = 14.4 oz/hour</li>
+  <li><strong>Hourly Income:</strong> 14.4 oz × $450 = $6,480/hour</li>
+  <li><strong>Daily Income:</strong> $6,480 × 5 hours = $32,400</li>
+  <li><strong>Gang Cut:</strong> -10% = -$3,240</li>
+  <li><strong>Costs:</strong> Coca leaves ($600), lab fees ($200), gas ($150), lawyer retainer ($1,000) = -$1,950</li>
+  <li><strong>Net Profit:</strong> <strong>$27,210/day</strong></li>
+</ul>
+
+<h3>Advanced Dealer (Meth + Territory Passive)</h3>
+<ul>
+  <li><strong>Active Method:</strong> Street corner meth sales in high-wealth zones (Vespucci, Vinewood Hills)</li>
+  <li><strong>Passive Method:</strong> 3 territory drug spots in Del Perro (gang-controlled)</li>
+  <li><strong>Active Product:</strong> High-quality meth ($1,000/oz)</li>
+  <li><strong>Passive Product:</strong> Mid-quality cocaine ($450/oz)</li>
+  <li><strong>Active Hours:</strong> 4 hours/day (short sessions to avoid heat in premium areas)</li>
+  <li><strong>Active Sales Rate:</strong> 2 sales every 5 minutes (24 sales/hour, cautious approach in high-patrol zones)</li>
+  <li><strong>Active Average Sale:</strong> 0.3 oz per sale = 7.2 oz/hour</li>
+  <li><strong>Active Hourly Income:</strong> 7.2 oz × $1,000 = $7,200/hour</li>
+  <li><strong>Active Daily Income:</strong> $7,200 × 4 hours = $28,800</li>
+  <li><strong>Passive Income:</strong> 3 drug spots, each selling 3 oz/18 min (Del Perro rate)
+    <ul>
+      <li>Per spot: 3 oz × $450 × 1.3 (wealth multiplier) × 1.25 (gang bonus) = $2,194 per cycle</li>
+      <li>Cycles per day: 1440 min ÷ 18 min = 80 cycles</li>
+      <li>Daily per spot: 80 × $2,194 = $175,520 (UNREALISTIC &mdash; product runs out)</li>
+      <li><strong>Realistic stocking:</strong> 50 oz/spot lasts ~17 cycles (5 hours), restocked 2x/day</li>
+      <li>Realistic passive: 17 cycles × $2,194 × 3 spots × 2 restocks = <strong>$223,596/day</strong> (TOO HIGH &mdash; rebalance)</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>Income Rebalancing Note:</strong> The passive income calculation above is unbalanced. Recommended adjustment: Reduce sales frequency to every 60 minutes (not 18 min) and cap NPC purchases at 1 oz/cycle. This results in more realistic passive income of <strong>$4,000-6,000/day</strong> from 3 territory spots.
+</div>
+
+<h3>Rebalanced Advanced Dealer Income</h3>
+<ul>
+  <li><strong>Active Income:</strong> $28,800/day (meth street sales)</li>
+  <li><strong>Passive Income:</strong> $5,000/day (territory spots, rebalanced)</li>
+  <li><strong>Total Daily Income:</strong> $33,800</li>
+  <li><strong>Gang Cut:</strong> -10% = -$3,380</li>
+  <li><strong>Costs:</strong> Meth ingredients ($2,000), lab maintenance ($500), cocaine for territory ($1,500), gas ($200), lawyer retainer ($2,000) = -$6,200</li>
+  <li><strong>Net Profit:</strong> <strong>$24,220/day</strong></li>
+</ul>
+
+<h3>Expert Dealer (All Methods, Multi-Territory Control)</h3>
+<ul>
+  <li><strong>Active Methods:</strong> Meth sales in Vinewood Hills, cocaine sales in Vespucci (2 zones, rotated)</li>
+  <li><strong>Passive Methods:</strong> 6 territory drug spots across 2 controlled territories (Vespucci + Del Perro)</li>
+  <li><strong>Active Hours:</strong> 6 hours/day (3 hours per zone, staggered)</li>
+  <li><strong>Active Income:</strong> $7,200/hour × 6 hours = $43,200</li>
+  <li><strong>Passive Income:</strong> 6 spots × $5,000/day (rebalanced) = $30,000</li>
+  <li><strong>Total Daily Income:</strong> $73,200</li>
+  <li><strong>Gang Cut:</strong> -10% = -$7,320</li>
+  <li><strong>Costs:</strong> Meth ingredients ($3,000), cocaine production ($2,500), lab maintenance ($800), gas ($300), lawyer retainer ($3,000), bribes ($2,000) = -$11,600</li>
+  <li><strong>Net Profit:</strong> <strong>$54,280/day</strong></li>
+</ul>
+
+<h2>8.2 Comparison to Legal Jobs</h2>
+
+<table>
+  <tr>
+    <th>Job Type</th>
+    <th>Daily Income</th>
+    <th>Risk Level</th>
+    <th>Time Investment</th>
+  </tr>
+  <tr>
+    <td><strong>Police Officer (LSPD)</strong></td>
+    <td>$3,200</td>
+    <td>Low (protected by law)</td>
+    <td>8 hours (full shift)</td>
+  </tr>
+  <tr>
+    <td><strong>EMS Paramedic</strong></td>
+    <td>$2,800</td>
+    <td>Very Low</td>
+    <td>8 hours</td>
+  </tr>
+  <tr>
+    <td><strong>Mechanic</strong></td>
+    <td>$2,400</td>
+    <td>None</td>
+    <td>8 hours</td>
+  </tr>
+  <tr>
+    <td><strong>Trucker</strong></td>
+    <td>$3,600</td>
+    <td>Low (vehicle theft risk)</td>
+    <td>8 hours</td>
+  </tr>
+  <tr>
+    <td><strong>Beginner Drug Dealer</strong></td>
+    <td>$6,900</td>
+    <td>Medium (arrest, fines)</td>
+    <td>4 hours</td>
+  </tr>
+  <tr>
+    <td><strong>Intermediate Drug Dealer</strong></td>
+    <td>$27,210</td>
+    <td>High (jail, asset seizure)</td>
+    <td>5 hours</td>
+  </tr>
+  <tr>
+    <td><strong>Advanced Drug Dealer</strong></td>
+    <td>$24,220</td>
+    <td>Very High (raids, gang wars)</td>
+    <td>6 hours (4 active + 2 restocking)</td>
+  </tr>
+  <tr>
+    <td><strong>Expert Drug Dealer</strong></td>
+    <td>$54,280</td>
+    <td>Extreme (constant police attention, rival hits)</td>
+    <td>8 hours (6 active + 2 logistics)</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Risk-Adjusted Returns:</strong> While expert drug dealers earn 17x more than police officers, the risk of losing $50,000+ in a single raid or asset seizure means actual long-term profits are closer to 5-7x legal job income after accounting for losses.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 9. GETTING STARTED GUIDE                                     -->
+<!-- ============================================================ -->
+<h1 id="getting-started">9. Getting Started Guide</h1>
+
+<p>New to the narcotics trade? Follow this 10-step progression path to build a sustainable drug empire while minimizing early-game risks.</p>
+
+<h3>Step 1: Join a Gang (Strongly Recommended)</h3>
+<p>While technically optional, gang membership provides critical infrastructure (stash houses, bulk discounts, backup during raids) that solo dealers lack. Apply to gangs recruiting in Discord or in-game at gang hangouts (Grove Street, Vespucci Beach clubhouse, etc.). Expect a 1-2 week probation period as a Recruit.</p>
+
+<h3>Step 2: Start with Weed (Low Risk, Learn Mechanics)</h3>
+<p>Purchase seed packs ($50) from black market dealers (marked on map with green leaf icon). Start with 10 seeds ($500 investment) to learn the grow cycle without risking major capital.</p>
+
+<h3>Step 3: Find a Grow House Location</h3>
+<p>Use <code>/drugs map</code> to reveal 10 grow house locations. Beginners should choose rural locations (Grapeseed, Harmony) to avoid police patrols. Each location has 6 planter slots.</p>
+
+<h3>Step 4: Plant Seeds, Water Regularly</h3>
+<p>Press <code>E</code> at planter to plant seed. Plants require watering every 4 hours (in-game time). Set real-world alarms or use Discord bot reminders. Missed watering = -10% quality per missed cycle.</p>
+
+<h3>Step 5: Harvest and Dry</h3>
+<p>After 24 hours growth, harvest plants (press <code>E</code>). Each plant yields 4-6 oz. Transport to drying location (gang stash house = 1 hour dry; personal property = 2 hours). Do not rush dry or quality drops to "Low."</p>
+
+<h3>Step 6: Sell on Street Corners (Learn Heat Management)</h3>
+<p>Take 10 oz to a low-risk selling zone (Grapeseed, Harmony, Paleto Bay). Press <code>E</code> on pedestrians to initiate sales. Watch heat meter (top-right HUD). Stop selling when heat reaches 30, switch locations. Track profit and learn which zones have best buyer acceptance rates.</p>
+
+<h3>Step 7: Progress to Cocaine Once Comfortable</h3>
+<p>After 1 week of weed operations and achieving Gang Member rank, purchase coca leaves ($120/kg) from cartel contacts. Use cocaine lab locations (revealed via <code>/drugs map</code> at Member rank). Complete processing minigame (match chemical ratios shown on screen). Start with 5 kg batches to learn mechanics.</p>
+
+<h3>Step 8: Set Up Territory Spots for Passive Income</h3>
+<p>Once your gang controls a territory, use <code>/drugs setup</code> at marked drug spot locations (max 3 per territory). Stock each spot with 30 oz of mid-quality cocaine. Check back every 6 hours to collect profits and restock. Passive income allows you to diversify activities (participate in gang wars, heists, legal jobs for cover).</p>
+
+<h3>Step 9: Invest in Gang Stash House</h3>
+<p>Contribute $10,000 to gang bank to unlock stash house privileges. Store product in bulk (500 oz capacity), use drying racks for faster processing, and keep cash reserves safe from police searches during traffic stops.</p>
+
+<h3>Step 10: Master Meth Cooking for Max Profit</h3>
+<p>After 2 weeks active play and Lieutenant rank, access meth labs. Practice cooking in offline mode (solo sessions) to avoid wasting $400 ingredient batches. Once you achieve 80%+ success rate, begin full-scale meth production. High-quality meth ($1,000/oz) in premium zones (Vinewood Hills) yields peak income but attracts maximum police attention. Always have $10,000+ emergency funds for bail and lawyer fees.</p>
+
+<div class="callout callout-critical">
+  <strong>Beginner Mistake to Avoid:</strong> Do NOT wear gang colors while selling during your first month. Gang-affiliated dealers gain +3 heat per sale, drastically increasing arrest risk before you've learned heat management. Build income first, represent your gang later.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 10. COMMANDS & CONTROLS                                      -->
+<!-- ============================================================ -->
+<h1 id="commands">10. Commands &amp; Controls</h1>
+
+<h2>10.1 Drug System Commands</h2>
+
+<table>
+  <tr>
+    <th>Command</th>
+    <th>Function</th>
+    <th>Cooldown</th>
+  </tr>
+  <tr>
+    <td><code>/drugs</code></td>
+    <td>Open drug dealing menu (shows inventory, heat levels, locations)</td>
+    <td>None</td>
+  </tr>
+  <tr>
+    <td><code>/drugs map</code></td>
+    <td>Reveal drug locations on map (grow houses, labs, selling zones based on rank)</td>
+    <td>None</td>
+  </tr>
+  <tr>
+    <td><code>/plant</code></td>
+    <td>Plant seed in active planter slot (must have seeds in inventory)</td>
+    <td>5 seconds</td>
+  </tr>
+  <tr>
+    <td><code>/water</code></td>
+    <td>Water plants in grow house (resets 4-hour watering timer)</td>
+    <td>10 seconds</td>
+  </tr>
+  <tr>
+    <td><code>/harvest</code></td>
+    <td>Harvest mature plants (24+ hours growth)</td>
+    <td>5 seconds</td>
+  </tr>
+  <tr>
+    <td><code>/process</code></td>
+    <td>Start cocaine/meth processing minigame (must be in lab location)</td>
+    <td>None</td>
+  </tr>
+  <tr>
+    <td><code>/dry</code></td>
+    <td>Place harvested weed in drying rack (gang stash or personal property)</td>
+    <td>None</td>
+  </tr>
+  <tr>
+    <td><code>/sell</code></td>
+    <td>Initiate sale to nearby NPC (must be in selling zone)</td>
+    <td>30 seconds</td>
+  </tr>
+  <tr>
+    <td><code>/drugs test</code></td>
+    <td>Use drug test kit on product (shows purity, quality, price estimate)</td>
+    <td>None</td>
+  </tr>
+  <tr>
+    <td><code>/drugs setup</code></td>
+    <td>Set up territory drug spot (gang-controlled territory only, Member+ rank)</td>
+    <td>5 minutes</td>
+  </tr>
+  <tr>
+    <td><code>/drugs collect</code></td>
+    <td>Collect profits from territory drug spot</td>
+    <td>None</td>
+  </tr>
+  <tr>
+    <td><code>/drugs restock</code></td>
+    <td>Restock territory drug spot with inventory product</td>
+    <td>30 seconds</td>
+  </tr>
+  <tr>
+    <td><code>/drugs heat</code></td>
+    <td>Check heat levels across all zones (shows 0-100 scale + decay timers)</td>
+    <td>None</td>
+  </tr>
+</table>
+
+<h2>10.2 Interaction Controls (Key Binds)</h2>
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Action</th>
+    <th>Context</th>
+  </tr>
+  <tr>
+    <td><strong>E</strong></td>
+    <td>Interact with planter / Approach NPC buyer / Access stash</td>
+    <td>Near planter, pedestrian, or stash house</td>
+  </tr>
+  <tr>
+    <td><strong>F</strong></td>
+    <td>Start processing minigame / Confirm sale</td>
+    <td>In lab / During NPC sale</td>
+  </tr>
+  <tr>
+    <td><strong>G</strong></td>
+    <td>Drop product (emergency dump to avoid arrest)</td>
+    <td>Anywhere (product lost forever, -0 heat penalty)</td>
+  </tr>
+  <tr>
+    <td><strong>Tab</strong></td>
+    <td>Open drug inventory (separate from main inventory)</td>
+    <td>Anywhere</td>
+  </tr>
+  <tr>
+    <td><strong>H</strong></td>
+    <td>Toggle heat meter HUD (top-right display)</td>
+    <td>Anywhere</td>
+  </tr>
+</table>
+
+<h2>10.3 Processing Minigame Controls</h2>
+
+<h3>Cocaine Processing</h3>
+<ul>
+  <li><strong>Arrow Keys:</strong> Adjust chemical ratios (up = increase, down = decrease)</li>
+  <li><strong>Spacebar:</strong> Confirm ratios and proceed to next stage</li>
+  <li><strong>Target:</strong> Match green zone on scale (90-110% precision = high quality)</li>
+</ul>
+
+<h3>Meth Cooking</h3>
+<ul>
+  <li><strong>Q/E:</strong> Decrease/increase temperature</li>
+  <li><strong>Spacebar:</strong> Advance to next cooking stage (timing-based)</li>
+  <li><strong>ESC:</strong> Emergency abort (saves ingredients but ruins current batch)</li>
+  <li><strong>Visual Cues:</strong> Liquid color indicates temp (blue = too cold, red = too hot, yellow = optimal)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 11. TIPS & BEST PRACTICES                                    -->
+<!-- ============================================================ -->
+<h1 id="tips">11. Tips &amp; Best Practices</h1>
+
+<h2>11.1 General Strategy</h2>
+
+<ul>
+  <li><strong>Always Check Heat Before Selling:</strong> Use <code>/drugs heat</code> before every session. Never sell in zones with 60+ heat.</li>
+  <li><strong>Diversify Selling Locations:</strong> Rotate between 4-5 zones per session. Never return to same location twice in a row.</li>
+  <li><strong>Build Relationships with Gang Members:</strong> Experienced dealers often mentor new recruits. Ask for tips on best selling times, lab shortcuts, and police patrol patterns.</li>
+  <li><strong>Watch for Police Patrols:</strong> LSPD/BCSO patrol routes are semi-randomized but follow patterns. Learn peak patrol times (6am-10am, 6pm-10pm in-game) and avoid selling during those windows in high-risk zones.</li>
+  <li><strong>Use Burner Vehicles:</strong> Purchase a cheap car ($5,000-10,000) for drug runs. If impounded/seized, the loss is minimal compared to your $100,000 personal vehicle.</li>
+  <li><strong>Carry Minimal Product:</strong> Only carry what you plan to sell in that session (10-20 oz max). Store bulk product in gang stash to avoid losing everything in a single arrest.</li>
+</ul>
+
+<h2>11.2 Heat Management</h2>
+
+<ul>
+  <li><strong>Lay Low When Heat Hits 50:</strong> Stop selling, switch zones, or go offline for 1 hour (real-time) to allow decay.</li>
+  <li><strong>Change Appearance After Close Calls:</strong> If you escape a police encounter, immediately change clothes, hairstyle, and vehicle to reset dispatch description.</li>
+  <li><strong>Bribe Early, Not Late:</strong> Bribes have 50% success rate under 30 heat, 10% success rate over 60 heat. Offer bribes early during traffic stops.</li>
+  <li><strong>Use Territory Bonus:</strong> Selling in your gang's territory reduces heat accumulation by -20%. Prioritize controlled zones.</li>
+  <li><strong>Watch for Undercover Ops:</strong> When heat reaches 51+, dispatch deploys undercover units. NPCs in business attire (suits, ties) in low-income areas are likely cops. Avoid.</li>
+</ul>
+
+<h2>11.3 Production Efficiency</h2>
+
+<ul>
+  <li><strong>Set Watering Alarms:</strong> Use phone alarms or Discord bot notifications for every 4 hours (in-game time conversion: 4 in-game hours = 8 real-world minutes).</li>
+  <li><strong>Batch Processing:</strong> Process cocaine in batches of 10 kg to minimize lab trips. Each trip adds +2 heat (suspicious activity).</li>
+  <li><strong>Partner Cooking (Meth):</strong> Coordinate with another Lieutenant+ gang member for partner meth cooks (+10% quality, shared costs).</li>
+  <li><strong>Invest in Lab Upgrades:</strong> $50,000 upgraded meth lab reduces failure rate from 30% to 10%, pays for itself after ~15 successful cooks.</li>
+  <li><strong>Use Gang Stash Drying Racks:</strong> 50% faster drying + 5% quality bonus saves 1 hour per batch (critical for high-volume operations).</li>
+</ul>
+
+<h2>11.4 Financial Management</h2>
+
+<ul>
+  <li><strong>Maintain $20,000 Emergency Fund:</strong> Always keep $20,000 liquid for bail ($10,000) and lawyer fees ($5,000-10,000). Store in gang bank if you don't trust yourself to avoid impulse spending.</li>
+  <li><strong>Reinvest 40% of Profits:</strong> Use 40% of weekly profits to buy better ingredients, upgrade labs, or expand to new territories. 60% is personal income.</li>
+  <li><strong>Track Costs:</strong> Use in-game notepad or Discord channel to log ingredient costs, fines, bribes, and losses. Calculate actual net profit (many dealers overestimate earnings).</li>
+  <li><strong>Diversify Income Streams:</strong> Don't rely 100% on drugs. Combine with legal job (mechanic, trucker) for cover story and steady baseline income during heat cooldowns.</li>
+</ul>
+
+<h2>11.5 Avoiding Arrest</h2>
+
+<ul>
+  <li><strong>Never Consent to Searches:</strong> Police need probable cause or warrant to search you/vehicle. Refuse consent (in RP: "I do not consent to searches"). Forces them to get warrant (buys you time).</li>
+  <li><strong>Know Your Rights:</strong> You can remain silent during questioning. Do NOT admit to drug activity, even jokingly. Anything said is used in court (DOJ prosecutes based on RP interactions).</li>
+  <li><strong>Hire a Lawyer Immediately:</strong> Contact a lawyer within 5 minutes of arrest. Good lawyers negotiate plea bargains (-50% jail time) or get charges dropped on technicalities.</li>
+  <li><strong>Use the "/lawyer" Command:</strong> Request lawyer during booking process. Public defenders are free but less effective (30% case win rate vs 70% for private attorneys).</li>
+  <li><strong>Record Police Interactions:</strong> Use in-game "Record" feature (if available) during stops. Evidence of police rights violations can get charges dismissed.</li>
+</ul>
+
+<h2>11.6 Gang Warfare Survival</h2>
+
+<ul>
+  <li><strong>Travel in Pairs During Wars:</strong> When gang wars are active, never sell solo. Partner with another gang member (one sells, one provides security).</li>
+  <li><strong>Fortify Drug Spots:</strong> Spend gang funds on cameras ($5,000) and turrets ($15,000) at territory drug spots. Alerts you to raids 30 seconds before rivals arrive.</li>
+  <li><strong>Evacuate Product During Raids:</strong> If raid alert triggers, immediately use <code>/drugs collect</code> to withdraw all product and cash. Store in gang stash ASAP.</li>
+  <li><strong>Retaliate Strategically:</strong> After successful raid defense, coordinate counter-raid on enemy territory within 24 hours (gang morale boost + reputation gain).</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 12. LOCATIONS REFERENCE                                      -->
+<!-- ============================================================ -->
+<h1 id="locations">12. Locations Reference</h1>
+
+<p>All drug operation locations are revealed via <code>/drugs map</code> based on your gang rank. Below are approximate coordinates (exact locations shown in-game).</p>
+
+<h2>12.1 Grow Houses (10 Total) - RECRUIT+ Rank</h2>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Location Name</th>
+    <th>Region</th>
+    <th>Planter Slots</th>
+    <th>Police Risk</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><strong>Grapeseed Farm Shed</strong></td>
+    <td>Grapeseed (North)</td>
+    <td>6</td>
+    <td>Very Low (BCSO, 40 min patrols)</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>Harmony Warehouse</strong></td>
+    <td>Harmony (Route 68)</td>
+    <td>6</td>
+    <td>Very Low (BCSO, 35 min patrols)</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>Sandy Shores Trailer</strong></td>
+    <td>Sandy Shores</td>
+    <td>6</td>
+    <td>Low (BCSO, 20 min patrols)</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>Paleto Bay Barn</strong></td>
+    <td>Paleto Bay</td>
+    <td>6</td>
+    <td>Low (BCSO, 25 min patrols)</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>Chiliad Foothills Cabin</strong></td>
+    <td>Mt. Chiliad Base</td>
+    <td>6</td>
+    <td>Very Low (no patrols)</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><strong>La Puerta Storage Unit</strong></td>
+    <td>La Puerta (South LS)</td>
+    <td>6</td>
+    <td>Medium (LSPD, 15 min patrols)</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td><strong>Vinewood Hills Garage</strong></td>
+    <td>Vinewood Hills</td>
+    <td>6</td>
+    <td>Low (LSPD, 30 min patrols, private property)</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td><strong>Cypress Flats Abandoned Building</strong></td>
+    <td>Cypress Flats</td>
+    <td>6</td>
+    <td>Medium (LSPD, 18 min patrols)</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td><strong>Mirror Park Basement</strong></td>
+    <td>Mirror Park</td>
+    <td>6</td>
+    <td>Medium (LSPD, 12 min patrols)</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td><strong>Vespucci Beach House</strong></td>
+    <td>Vespucci Beach</td>
+    <td>6</td>
+    <td>Low (LSPD, 22 min patrols, tourist area)</td>
+  </tr>
+</table>
+
+<h2>12.2 Cocaine Labs (5 Total) - MEMBER+ Rank</h2>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Location Name</th>
+    <th>Region</th>
+    <th>Processing Stations</th>
+    <th>Police Risk</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><strong>Alamo Sea Meth House (Repurposed)</strong></td>
+    <td>Alamo Sea</td>
+    <td>3</td>
+    <td>Very Low (BCSO, 45 min patrols)</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>Sandy Shores Industrial Unit</strong></td>
+    <td>Sandy Shores</td>
+    <td>3</td>
+    <td>Low (BCSO, 18 min patrols)</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>La Puerta Dock Warehouse</strong></td>
+    <td>La Puerta (Docks)</td>
+    <td>4</td>
+    <td>Medium (LSPD, 12 min patrols, import zone)</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>Strawberry Underground Bunker</strong></td>
+    <td>Strawberry (South LS)</td>
+    <td>4</td>
+    <td>High (LSPD, 8 min patrols, known hotspot)</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>Vinewood Hills Mansion Basement</strong></td>
+    <td>Vinewood Hills</td>
+    <td>5</td>
+    <td>Low (LSPD, 28 min patrols, private estate)</td>
+  </tr>
+</table>
+
+<h2>12.3 Meth Labs (3 Total) - LIEUTENANT+ Rank</h2>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Location Name</th>
+    <th>Region</th>
+    <th>Cook Stations</th>
+    <th>Upgradeable?</th>
+    <th>Police Risk</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><strong>Grand Senora Desert Trailer</strong></td>
+    <td>Grand Senora (Far North)</td>
+    <td>2</td>
+    <td>Yes ($50k upgrade)</td>
+    <td>Very Low (BCSO, 50+ min patrols)</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>Paleto Bay Chemical Plant</strong></td>
+    <td>Paleto Bay</td>
+    <td>3</td>
+    <td>Yes ($50k upgrade)</td>
+    <td>Low (BCSO, 30 min patrols)</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>El Burro Heights Underground Lab</strong></td>
+    <td>El Burro Heights (East LS)</td>
+    <td>4</td>
+    <td>Yes ($50k upgrade)</td>
+    <td>Very High (LSPD, 5 min patrols, DEA taskforce zone)</td>
+  </tr>
+</table>
+
+<div class="callout callout-critical">
+  <strong>Lab Security Warning:</strong> El Burro Heights meth lab (Lab #3) is under constant DEA surveillance. Only use if your gang controls El Burro Heights territory and has fortified defenses. Risk of raid: 40% per cook session.
+</div>
+
+<h2>12.4 Street Selling Zones (15 Total) - All Ranks</h2>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Zone Name</th>
+    <th>Region</th>
+    <th>Buyer Wealth</th>
+    <th>Police Patrol Frequency</th>
+    <th>Recommended Product</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><strong>Grove Street Corner</strong></td>
+    <td>South LS</td>
+    <td>Low</td>
+    <td>Moderate (10 min)</td>
+    <td>Weed, low-quality cocaine</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>Davis Avenue Projects</strong></td>
+    <td>South LS</td>
+    <td>Very Low</td>
+    <td>High (5 min)</td>
+    <td>Weed only</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>Vespucci Beach Boardwalk</strong></td>
+    <td>West LS</td>
+    <td>High</td>
+    <td>Low (20 min)</td>
+    <td>High-quality cocaine, meth</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>Del Perro Pier Parking</strong></td>
+    <td>West LS</td>
+    <td>Medium</td>
+    <td>Moderate (12 min)</td>
+    <td>Mid-quality weed, cocaine</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>Vinewood Hills Lookout</strong></td>
+    <td>Vinewood</td>
+    <td>Very High</td>
+    <td>Very Low (30 min)</td>
+    <td>Premium meth, high-quality cocaine</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><strong>Sandy Shores Motel</strong></td>
+    <td>Sandy Shores</td>
+    <td>Low</td>
+    <td>Low (15 min BCSO)</td>
+    <td>Meth, weed</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td><strong>Grapeseed Farm Access Road</strong></td>
+    <td>Grapeseed</td>
+    <td>Low</td>
+    <td>Very Low (40 min BCSO)</td>
+    <td>Any (safe zone)</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td><strong>Paleto Bay Gas Station</strong></td>
+    <td>Paleto Bay</td>
+    <td>Medium</td>
+    <td>Low (25 min BCSO)</td>
+    <td>Weed, cocaine</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td><strong>East LS Projects (Forum Drive)</strong></td>
+    <td>East LS</td>
+    <td>Very Low</td>
+    <td>Very High (3 min LSPD)</td>
+    <td>High-volume weed</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td><strong>Strawberry Avenue Alley</strong></td>
+    <td>Strawberry</td>
+    <td>Low</td>
+    <td>High (7 min LSPD)</td>
+    <td>Weed, low-quality cocaine</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td><strong>Mirror Park Residential</strong></td>
+    <td>Mirror Park</td>
+    <td>Medium</td>
+    <td>Moderate (10 min LSPD)</td>
+    <td>Mid-quality all products</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td><strong>Little Seoul Strip Mall</strong></td>
+    <td>Little Seoul</td>
+    <td>Medium</td>
+    <td>Moderate (12 min LSPD)</td>
+    <td>Weed, cocaine</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td><strong>La Puerta Industrial Loading Docks</strong></td>
+    <td>La Puerta</td>
+    <td>Medium</td>
+    <td>Low (18 min LSPD)</td>
+    <td>Bulk sales, all products</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td><strong>Harmony Gas Station (Route 68)</strong></td>
+    <td>Harmony</td>
+    <td>Low</td>
+    <td>Very Low (35 min BCSO)</td>
+    <td>Safe zone, beginner-friendly</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td><strong>Chumash Beach Parking Lot</strong></td>
+    <td>Chumash</td>
+    <td>High</td>
+    <td>Low (22 min LSPD)</td>
+    <td>High-quality cocaine, meth</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- 13. FAQ                                                      -->
+<!-- ============================================================ -->
+<h1 id="faq">13. Frequently Asked Questions</h1>
+
+<h3>Q: Can I get banned for drug dealing in ZO Syndicate RP?</h3>
+<p><strong>A:</strong> No. Drug dealing is a fully supported game mechanic. However, you CAN be banned for:</p>
+<ul>
+  <li><strong>Metagaming:</strong> Using out-of-character Discord info to avoid police (e.g., someone tells you "cops are at Grove Street" and you avoid it without in-character knowledge)</li>
+  <li><strong>Fail RP:</strong> Breaking character, refusing to comply with valid police RP (e.g., ignoring /me commands, combat logging during arrest)</li>
+  <li><strong>RDM (Random Deathmatch):</strong> Killing rival dealers without RP initiation</li>
+</ul>
+
+<h3>Q: What happens if I get caught by police?</h3>
+<p><strong>A:</strong> Arrest process:</p>
+<ol>
+  <li>Police detain you (cuff animation)</li>
+  <li>Search for evidence (drugs, cash, weapons)</li>
+  <li>Read Miranda rights (you have right to lawyer)</li>
+  <li>Transport to MRPD (Mission Row Police Department)</li>
+  <li>Booking process (mugshot, fingerprints, charges filed)</li>
+  <li>Bail hearing (Judge sets bail: $5,000-50,000 depending on charges)</li>
+  <li>Trial (if you plead not guilty) or sentencing (if guilty plea)</li>
+  <li>Jail time (10-180 months depending on charges, 1 month = 1 minute real-time)</li>
+</ol>
+
+<h3>Q: How do I reduce police heat?</h3>
+<p><strong>A:</strong> Six methods:</p>
+<ul>
+  <li><strong>Natural Decay:</strong> Stop selling in that zone for 1-2 hours (real-time)</li>
+  <li><strong>Change Appearance:</strong> New clothes, hair, vehicle = reset dispatch description</li>
+  <li><strong>Bribe Officers:</strong> Offer $10,000 during traffic stop (50% success rate if heat under 30)</li>
+  <li><strong>Lay Low:</strong> Don't log in for 24 hours = -50 heat globally</li>
+  <li><strong>Gang Intimidation:</strong> High-rep gangs can threaten witnesses (removes NPC testimony, -20 heat)</li>
+  <li><strong>Switch Zones:</strong> Heat is location-specific. Sell in new zone (starts at 0 heat)</li>
+</ul>
+
+<h3>Q: Can I sell in any gang's territory?</h3>
+<p><strong>A:</strong> Street selling: Yes, but risky. Rival gangs may confront you (+robbery/death risk). Territory drug spots: No, only in your gang's controlled territory.</p>
+
+<h3>Q: What's the most profitable drug?</h3>
+<p><strong>A:</strong> High-quality meth ($1,000/oz) in premium zones (Vinewood Hills, Vespucci Beach) yields highest income. However, profit-per-hour accounting for risk:</p>
+<ul>
+  <li><strong>Weed:</strong> $1,800/hour (low risk, low skill)</li>
+  <li><strong>Cocaine:</strong> $6,480/hour (medium risk, medium skill)</li>
+  <li><strong>Meth:</strong> $7,200/hour (very high risk, high skill, explosion losses reduce effective rate)</li>
+</ul>
+<p>Experienced dealers recommend <strong>cocaine</strong> for best risk-adjusted returns.</p>
+
+<h3>Q: How often do police raids happen?</h3>
+<p><strong>A:</strong> Raid frequency depends on heat and gang activity:</p>
+<ul>
+  <li><strong>Heat 0-50:</strong> Raids are extremely rare (under 5% chance per week)</li>
+  <li><strong>Heat 51-75:</strong> Moderate raid risk (20% chance per week if pattern detected)</li>
+  <li><strong>Heat 76-100:</strong> High raid risk (60% chance per week, active investigations)</li>
+  <li><strong>Known Gang Territory:</strong> +30% raid risk modifier (police prioritize gang labs)</li>
+</ul>
+
+<h3>Q: Do I need to join a gang to sell drugs?</h3>
+<p><strong>A:</strong> No, but highly recommended. Solo dealers miss out on:</p>
+<ul>
+  <li>Stash houses (secure storage, 500 oz capacity)</li>
+  <li>Bulk discounts (20-30% savings on ingredients)</li>
+  <li>Backup during raids (gang members defend your operations)</li>
+  <li>Territory passive income (extra $5,000-10,000/day)</li>
+  <li>Profit sharing benefits (gang upgrades benefit all members)</li>
+</ul>
+
+<h3>Q: Can police seize my personal vehicles?</h3>
+<p><strong>A:</strong> Yes, if:</p>
+<ul>
+  <li>Vehicle used during drug sales (witness testimony or surveillance footage)</li>
+  <li>Drugs/cash found in vehicle during search</li>
+  <li>Vehicle registered to your name and you're convicted of trafficking charges</li>
+</ul>
+<p><strong>Protection:</strong> Use burner vehicles (cheap cars under $10,000) for drug runs. Register personal vehicles to fake IDs or gang shell companies (lawyer service, $5,000 fee).</p>
+
+<h3>Q: What happens if I die during a drug deal?</h3>
+<p><strong>A:</strong> Standard death mechanics:</p>
+<ul>
+  <li>You drop all drugs and cash in inventory (lootable by killer or police)</li>
+  <li>EMS revives you at hospital (no memory of death per RP rules)</li>
+  <li>Heat level persists (death does NOT reset heat)</li>
+  <li>If police arrive before EMS, they can collect dropped product as evidence</li>
+</ul>
+
+<h3>Q: Can I grow/produce drugs in my personal apartment?</h3>
+<p><strong>A:</strong> No. Drug production is restricted to designated grow houses and labs (revealed via <code>/drugs map</code>). Personal properties cannot be used to avoid exploits (unlimited safe production).</p>
+
+<h3>Q: How do I find a lawyer?</h3>
+<p><strong>A:</strong> Three options:</p>
+<ul>
+  <li><strong>In-Game Command:</strong> <code>/lawyer</code> during booking (requests public defender, free but 30% win rate)</li>
+  <li><strong>Discord:</strong> Post in #legal-services channel, private attorneys respond (fees: $5,000-15,000, 70% win rate)</li>
+  <li><strong>Gang Lawyer:</strong> Many gangs have retainer lawyers (included in gang dues, 60% win rate)</li>
+</ul>
+
+<h3>Q: Can I bribe judges to dismiss charges?</h3>
+<p><strong>A:</strong> No. Judge bribery is prohibited (bannable offense). Bribes only work on patrol officers during initial stops (before charges are filed). Once in court, only lawyers can negotiate plea bargains.</p>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                        -->
+<!-- ============================================================ -->
+<div class="footer">
+  <div class="org">PROZILLI ENTERTAINMENT</div>
+  <div>ZO Syndicate RP &mdash; <a href="https://discord.gg/prozilli">Join Our Discord</a></div>
+  <div>
+    <a href="/zo/sop/lspd.html">LSPD SOP</a> &bull;
+    <a href="/zo/sop/bcso.html">BCSO SOP</a> &bull;
+    <a href="/zo/sop/sasp.html">SASP SOP</a> &bull;
+    <a href="/zo/sop/ems.html">EMS SOP</a> &bull;
+    <a href="/zo/sop/doj.html">DOJ SOP</a> &bull;
+    <a href="/zo/sop/drugs.html">Drug Dealing</a>
+  </div>
+  <div style="margin-top: 20px; color: #333; font-size: 10px;">
+    This is a FICTIONAL roleplay server. All content is simulated for entertainment purposes.<br>
+    Drug dealing is ILLEGAL in real life. This document is for in-game mechanics only.
+  </div>
+  <div style="margin-top: 10px;">&copy; 2026 Prozilli Entertainment &mdash; ZO Syndicate RP. All rights reserved.</div>
+</div>
+
+</div>
+</body>
+</html>

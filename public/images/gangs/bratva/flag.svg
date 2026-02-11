@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1500 1000">
+  <defs>
+    <linearGradient id="bratvaFlagGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0000FF;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#000080;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0000FF;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Russian flag -->
+  <rect width="1500" height="1000" fill="#ffffff"/>
+  <rect y="333" width="1500" height="334" fill="#0000FF"/>
+  <rect y="667" width="1500" height="333" fill="#FF0000"/>
+
+  <!-- Dark vignette overlay -->
+  <rect width="1500" height="1000" fill="#000000" opacity="0.3"/>
+
+  <!-- Large double-headed eagle -->
+  <g transform="translate(750, 500)">
+    <!-- Body -->
+    <ellipse cx="0" cy="0" rx="120" ry="150" fill="url(#bratvaFlagGrad)" stroke="#FFD700" stroke-width="6"/>
+
+    <!-- Shield on chest -->
+    <path d="M-45 -30 L-45 60 Q-45 90 0 105 Q45 90 45 60 L45 -30 Z"
+          fill="#FF0000" stroke="#FFD700" stroke-width="4"/>
+    <path d="M-22 -15 L0 15 L22 -15 L15 30 L-15 30 Z"
+          fill="#FFD700" stroke="#000000" stroke-width="2"/>
+
+    <!-- Left head -->
+    <g transform="translate(-60, -90)">
+      <circle cx="0" cy="0" r="52" fill="url(#bratvaFlagGrad)" stroke="#FFD700" stroke-width="5"/>
+      <circle cx="-12" cy="-8" r="10" fill="#FFD700"/>
+      <circle cx="-9" cy="-5" r="6" fill="#000000"/>
+      <path d="M-30 8 L-45 0 L-37 15 Z" fill="#FFD700" stroke="#FFD700" stroke-width="2"/>
+
+      <!-- Crown -->
+      <path d="M-30 -45 L-22 -60 L-15 -48 L-7 -60 L0 -48 L7 -60 L15 -48 L22 -60 L30 -45"
+            fill="#FFD700" stroke="#000000" stroke-width="2"/>
+      <circle cx="-22" cy="-60" r="5" fill="#FF0000"/>
+      <circle cx="-7" cy="-60" r="5" fill="#FF0000"/>
+      <circle cx="7" cy="-60" r="5" fill="#FF0000"/>
+      <circle cx="22" cy="-60" r="5" fill="#FF0000"/>
+    </g>
+
+    <!-- Right head -->
+    <g transform="translate(60, -90)">
+      <circle cx="0" cy="0" r="52" fill="url(#bratvaFlagGrad)" stroke="#FFD700" stroke-width="5"/>
+      <circle cx="12" cy="-8" r="10" fill="#FFD700"/>
+      <circle cx="9" cy="-5" r="6" fill="#000000"/>
+      <path d="M30 8 L45 0 L37 15 Z" fill="#FFD700" stroke="#FFD700" stroke-width="2"/>
+
+      <!-- Crown -->
+      <path d="M-30 -45 L-22 -60 L-15 -48 L-7 -60 L0 -48 L7 -60 L15 -48 L22 -60 L30 -45"
+            fill="#FFD700" stroke="#000000" stroke-width="2"/>
+      <circle cx="-22" cy="-60" r="5" fill="#FF0000"/>
+      <circle cx="-7" cy="-60" r="5" fill="#FF0000"/>
+      <circle cx="7" cy="-60" r="5" fill="#FF0000"/>
+      <circle cx="22" cy="-60" r="5" fill="#FF0000"/>
+    </g>
+
+    <!-- Left wing -->
+    <g fill="url(#bratvaFlagGrad)" stroke="#FFD700" stroke-width="5">
+      <path d="M-120 -45 Q-180 -60 -240 -45 Q-270 -35 -285 -15 L-275 -8 Q-260 -27 -240 -32 Q-195 -42 -145 -15 L-155 0 Q-187 -23 -232 -27 L-225 -12 Q-195 -15 -158 0 L-135 8 Z"/>
+      <ellipse cx="-127" cy="15" rx="15" ry="30" transform="rotate(-30 -127 15)"/>
+      <ellipse cx="-142" cy="30" rx="15" ry="30" transform="rotate(-40 -142 30)"/>
+      <ellipse cx="-157" cy="42" rx="15" ry="30" transform="rotate(-50 -157 42)"/>
+      <ellipse cx="-172" cy="52" rx="15" ry="30" transform="rotate(-60 -172 52)"/>
+    </g>
+
+    <!-- Right wing -->
+    <g fill="url(#bratvaFlagGrad)" stroke="#FFD700" stroke-width="5">
+      <path d="M120 -45 Q180 -60 240 -45 Q270 -35 285 -15 L275 -8 Q260 -27 240 -32 Q195 -42 145 -15 L155 0 Q187 -23 232 -27 L225 -12 Q195 -15 158 0 L135 8 Z"/>
+      <ellipse cx="127" cy="15" rx="15" ry="30" transform="rotate(30 127 15)"/>
+      <ellipse cx="142" cy="30" rx="15" ry="30" transform="rotate(40 142 30)"/>
+      <ellipse cx="157" cy="42" rx="15" ry="30" transform="rotate(50 157 42)"/>
+      <ellipse cx="172" cy="52" rx="15" ry="30" transform="rotate(60 172 52)"/>
+    </g>
+
+    <!-- Tail feathers -->
+    <path d="M-30 120 L-45 195 M0 128 L0 210 M30 120 L45 195"
+          stroke="url(#bratvaFlagGrad)" stroke-width="15" stroke-linecap="round"/>
+
+    <!-- Scepter (left talon) -->
+    <g transform="translate(-90, 135)">
+      <line x1="0" y1="0" x2="-22" y2="75" stroke="#FFD700" stroke-width="10"/>
+      <circle cx="-22" cy="75" r="12" fill="#0000FF" stroke="#FFD700" stroke-width="3"/>
+      <path d="M-34 62 L-22 48 L-10 62" fill="#FFD700" stroke="#000000" stroke-width="2"/>
+    </g>
+
+    <!-- Orb (right talon) -->
+    <g transform="translate(90, 135)">
+      <line x1="0" y1="0" x2="22" y2="75" stroke="#FFD700" stroke-width="10"/>
+      <circle cx="22" cy="75" r="18" fill="#0000FF" stroke="#FFD700" stroke-width="3"/>
+      <path d="M4 75 L40 75 M22 57 L22 93" stroke="#FFD700" stroke-width="3"/>
+    </g>
+  </g>
+
+  <!-- Large Cyrillic Б -->
+  <g transform="translate(300, 500)">
+    <path d="M-80 -150 L-80 150 L-30 150 L-30 15 L50 15 Q100 15 120 45 Q140 75 140 120 Q140 165 120 195 Q100 225 50 225 L-80 225 L-80 285 L50 285 Q130 285 170 232 Q210 179 210 120 Q210 61 170 8 Q130 -45 50 -45 L-30 -45 L-30 -150 Z"
+          fill="url(#bratvaFlagGrad)" stroke="#ffffff" stroke-width="8" opacity="0.8"/>
+  </g>
+
+  <!-- AK-47s -->
+  <g transform="translate(300, 800) rotate(-15)">
+    <rect x="-120" y="-12" width="300" height="24" fill="#333333" stroke="#0000FF" stroke-width="4"/>
+    <rect x="-135" y="-18" width="30" height="36" fill="#654321"/>
+    <rect x="150" y="-22" width="45" height="45" rx="5" fill="#333333"/>
+    <rect x="-30" y="-30" width="60" height="60" fill="#654321"/>
+  </g>
+
+  <g transform="translate(1200, 800) rotate(15)">
+    <rect x="-120" y="-12" width="300" height="24" fill="#333333" stroke="#0000FF" stroke-width="4"/>
+    <rect x="-135" y="-18" width="30" height="36" fill="#654321"/>
+    <rect x="150" y="-22" width="45" height="45" rx="5" fill="#333333"/>
+    <rect x="-30" y="-30" width="60" height="60" fill="#654321"/>
+  </g>
+
+  <!-- Soviet stars -->
+  <g fill="#FFD700" stroke="#000000" stroke-width="2">
+    <path d="M200 150 L220 210 L280 210 L230 245 L250 305 L200 270 L150 305 L170 245 L120 210 L180 210 Z"/>
+    <path d="M1300 150 L1320 210 L1380 210 L1330 245 L1350 305 L1300 270 L1250 305 L1270 245 L1220 210 L1280 210 Z"/>
+  </g>
+
+  <!-- Text -->
+  <text x="750" y="140" font-family="serif" font-size="108" font-weight="bold"
+        text-anchor="middle" fill="#0000FF" stroke="#ffffff" stroke-width="4">БРАТВА</text>
+  <text x="750" y="970" font-family="sans-serif" font-size="40" font-weight="bold"
+        text-anchor="middle" fill="#000000">RADIO 428 • DAVIS</text>
+</svg>
