@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1080">
+  <title>LISA Stream Alerts</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 1920px;
+      height: 1080px;
+      background: transparent;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      overflow: hidden;
+    }
+
+    /* Alert Container */
+    #alert-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #alert-container.show {
+      animation: slideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+    }
+
+    #alert-container.hide {
+      animation: slideOut 0.4s cubic-bezier(0.6, -0.28, 0.735, 0.045) forwards;
+    }
+
+    @keyframes slideIn {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) rotateX(90deg);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotateX(0deg);
+      }
+    }
+
+    @keyframes slideOut {
+      0% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1) rotateX(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.5) rotateX(-90deg);
+      }
+    }
+
+    /* Alert Box */
+    .alert-box {
+      background: linear-gradient(135deg, #1a0000 0%, #330000 50%, #1a0000 100%);
+      border: 3px solid #ff0000;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow:
+        0 0 40px rgba(255, 0, 0, 0.5),
+        inset 0 0 30px rgba(255, 0, 0, 0.1);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .alert-box::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        45deg,
+        transparent,
+        rgba(255, 0, 0, 0.1),
+        transparent
+      );
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Alert Header */
+    .alert-header {
+      font-size: 36px;
+      font-weight: bold;
+      color: #ff0000;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      margin-bottom: 20px;
+      text-shadow:
+        0 0 20px rgba(255, 0, 0, 0.8),
+        0 0 40px rgba(255, 0, 0, 0.4);
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Alert User */
+    .alert-user {
+      font-size: 48px;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 15px;
+      text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.5),
+        2px 2px 4px rgba(0, 0, 0, 0.8);
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Alert Message */
+    .alert-message {
+      font-size: 28px;
+      color: #ffcccc;
+      line-height: 1.4;
+      margin-top: 15px;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Alert Amount (for donations/subs) */
+    .alert-amount {
+      font-size: 64px;
+      font-weight: bold;
+      color: #00ff00;
+      margin: 20px 0;
+      text-shadow:
+        0 0 20px rgba(0, 255, 0, 0.8),
+        0 0 40px rgba(0, 255, 0, 0.4);
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Platform Badge */
+    .platform-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 8px 20px;
+      font-size: 18px;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 15px;
+      z-index: 1;
+      position: relative;
+    }
+
+    /* Event-specific colors */
+    .alert-box.sub,
+    .alert-box.gift_sub,
+    .alert-box.membership {
+      border-color: #9146ff;
+      box-shadow:
+        0 0 40px rgba(145, 70, 255, 0.5),
+        inset 0 0 30px rgba(145, 70, 255, 0.1);
+    }
+
+    .alert-box.sub .alert-header,
+    .alert-box.gift_sub .alert-header,
+    .alert-box.membership .alert-header {
+      color: #9146ff;
+      text-shadow:
+        0 0 20px rgba(145, 70, 255, 0.8),
+        0 0 40px rgba(145, 70, 255, 0.4);
+    }
+
+    .alert-box.donation,
+    .alert-box.tip,
+    .alert-box.super_chat,
+    .alert-box.order {
+      border-color: #ffd700;
+      box-shadow:
+        0 0 40px rgba(255, 215, 0, 0.5),
+        inset 0 0 30px rgba(255, 215, 0, 0.1);
+    }
+
+    .alert-box.donation .alert-header,
+    .alert-box.tip .alert-header,
+    .alert-box.super_chat .alert-header,
+    .alert-box.order .alert-header {
+      color: #ffd700;
+      text-shadow:
+        0 0 20px rgba(255, 215, 0, 0.8),
+        0 0 40px rgba(255, 215, 0, 0.4);
+    }
+
+    .alert-box.raid {
+      border-color: #00d9ff;
+      box-shadow:
+        0 0 40px rgba(0, 217, 255, 0.5),
+        inset 0 0 30px rgba(0, 217, 255, 0.1);
+    }
+
+    .alert-box.raid .alert-header {
+      color: #00d9ff;
+      text-shadow:
+        0 0 20px rgba(0, 217, 255, 0.8),
+        0 0 40px rgba(0, 217, 255, 0.4);
+    }
+
+    .alert-box.follow {
+      border-color: #ff69b4;
+      box-shadow:
+        0 0 40px rgba(255, 105, 180, 0.5),
+        inset 0 0 30px rgba(255, 105, 180, 0.1);
+    }
+
+    .alert-box.follow .alert-header {
+      color: #ff69b4;
+      text-shadow:
+        0 0 20px rgba(255, 105, 180, 0.8),
+        0 0 40px rgba(255, 105, 180, 0.4);
+    }
+
+    /* Debug Info (bottom right) */
+    #debug-info {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.7);
+      color: #00ff00;
+      padding: 10px;
+      border-radius: 5px;
+      font-family: monospace;
+      font-size: 12px;
+      z-index: 1000;
+      display: none; /* Hide by default, show for testing */
+    }
+
+    #debug-info.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div id="alert-container">
+    <div class="alert-box" id="alert-box">
+      <div class="alert-header" id="alert-header">NEW SUBSCRIBER</div>
+      <div class="alert-user" id="alert-user">Username</div>
+      <div class="alert-amount" id="alert-amount"></div>
+      <div class="alert-message" id="alert-message"></div>
+      <div class="platform-badge" id="platform-badge">Twitch</div>
+    </div>
+  </div>
+
+  <div id="debug-info">
+    <div>Status: <span id="status">Disconnected</span></div>
+    <div>Queue: <span id="queue-count">0</span></div>
+    <div>Last Event: <span id="last-event">None</span></div>
+  </div>
+
+  <script>
+    // Configuration
+    const ALERT_DURATION = 8000; // 8 seconds per alert
+    const ALERT_ENDPOINT = 'http://65.109.100.181:5084/alerts/stream';
+    const DEBUG = false; // Set to true to show debug info
+
+    // State
+    let alertQueue = [];
+    let isShowingAlert = false;
+    let eventSource = null;
+    let reconnectAttempts = 0;
+    const MAX_RECONNECT_ATTEMPTS = 10;
+
+    // DOM Elements
+    const container = document.getElementById('alert-container');
+    const box = document.getElementById('alert-box');
+    const header = document.getElementById('alert-header');
+    const user = document.getElementById('alert-user');
+    const amount = document.getElementById('alert-amount');
+    const message = document.getElementById('alert-message');
+    const badge = document.getElementById('platform-badge');
+    const debugInfo = document.getElementById('debug-info');
+    const statusEl = document.getElementById('status');
+    const queueCountEl = document.getElementById('queue-count');
+    const lastEventEl = document.getElementById('last-event');
+
+    // Show debug if enabled
+    if (DEBUG) {
+      debugInfo.classList.add('show');
+    }
+
+    // Event Type Configurations
+    const EVENT_CONFIG = {
+      sub: {
+        header: 'NEW SUBSCRIBER',
+        showAmount: false
+      },
+      gift_sub: {
+        header: 'GIFT SUBSCRIPTION',
+        showAmount: false
+      },
+      membership: {
+        header: 'NEW MEMBER',
+        showAmount: false
+      },
+      boost: {
+        header: 'SERVER BOOST',
+        showAmount: false
+      },
+      donation: {
+        header: 'DONATION',
+        showAmount: true
+      },
+      tip: {
+        header: 'TIP',
+        showAmount: true
+      },
+      super_chat: {
+        header: 'SUPER CHAT',
+        showAmount: true
+      },
+      star: {
+        header: 'STARS',
+        showAmount: true
+      },
+      spell: {
+        header: 'SPELL',
+        showAmount: true
+      },
+      cheer: {
+        header: 'BITS',
+        showAmount: true
+      },
+      follow: {
+        header: 'NEW FOLLOWER',
+        showAmount: false
+      },
+      raid: {
+        header: 'RAID',
+        showAmount: false
+      },
+      order: {
+        header: 'SHOP ORDER',
+        showAmount: true
+      },
+      hype_train: {
+        header: 'HYPE TRAIN',
+        showAmount: false
+      },
+      channel_points: {
+        header: 'CHANNEL POINTS',
+        showAmount: false
+      },
+      milestone: {
+        header: 'MILESTONE',
+        showAmount: false
+      }
+    };
+
+    // Connect to SSE endpoint
+    function connect() {
+      if (eventSource) {
+        eventSource.close();
+      }
+
+      console.log('Connecting to alert stream...');
+      updateStatus('Connecting...');
+
+      eventSource = new EventSource(ALERT_ENDPOINT);
+
+      eventSource.onopen = () => {
+        console.log('Connected to alert stream');
+        updateStatus('Connected');
+        reconnectAttempts = 0;
+      };
+
+      eventSource.onmessage = (event) => {
+        try {
+          const data = JSON.parse(event.data);
+          handleEvent(data);
+        } catch (err) {
+          console.error('Failed to parse event:', err);
+        }
+      };
+
+      eventSource.onerror = (err) => {
+        console.error('EventSource error:', err);
+        updateStatus('Disconnected');
+        eventSource.close();
+
+        // Attempt to reconnect
+        reconnectAttempts++;
+        if (reconnectAttempts <= MAX_RECONNECT_ATTEMPTS) {
+          const delay = Math.min(1000 * Math.pow(2, reconnectAttempts), 30000);
+          console.log(`Reconnecting in ${delay}ms... (attempt ${reconnectAttempts}/${MAX_RECONNECT_ATTEMPTS})`);
+          setTimeout(connect, delay);
+        } else {
+          console.error('Max reconnection attempts reached');
+          updateStatus('Failed');
+        }
+      };
+    }
+
+    // Handle incoming events
+    function handleEvent(data) {
+      console.log('Received event:', data);
+
+      if (data.type === 'connected') {
+        console.log('Connection confirmed');
+        return;
+      }
+
+      if (data.type === 'init') {
+        console.log('Received initial events:', data.events.length);
+        // Don't show initial events on page load
+        return;
+      }
+
+      // Add alert-worthy events to queue
+      if (EVENT_CONFIG[data.type]) {
+        queueAlert(data);
+      }
+    }
+
+    // Queue an alert
+    function queueAlert(data) {
+      alertQueue.push(data);
+      updateQueueCount();
+      console.log('Alert queued:', data.type, '- Queue length:', alertQueue.length);
+
+      if (!isShowingAlert) {
+        showNextAlert();
+      }
+    }
+
+    // Show next alert in queue
+    function showNextAlert() {
+      if (alertQueue.length === 0) {
+        isShowingAlert = false;
+        return;
+      }
+
+      isShowingAlert = true;
+      const event = alertQueue.shift();
+      updateQueueCount();
+      updateLastEvent(event.type);
+
+      displayAlert(event);
+    }
+
+    // Display an alert
+    function displayAlert(event) {
+      const config = EVENT_CONFIG[event.type];
+      if (!config) return;
+
+      // Set content
+      header.textContent = config.header;
+      user.textContent = event.user || 'Anonymous';
+      badge.textContent = (event.platform || 'unknown').toUpperCase();
+
+      // Set amount if applicable
+      if (config.showAmount && event.amount) {
+        amount.textContent = `$${event.amount.toFixed(2)}`;
+        amount.style.display = 'block';
+      } else if (event.type === 'cheer' && event.amount) {
+        amount.textContent = `${event.amount} BITS`;
+        amount.style.display = 'block';
+      } else if (event.type === 'raid' && event.amount) {
+        amount.textContent = `${event.amount} RAIDERS`;
+        amount.style.display = 'block';
+      } else {
+        amount.style.display = 'none';
+      }
+
+      // Set message
+      if (event.message && event.message.trim()) {
+        message.textContent = `"${event.message}"`;
+        message.style.display = 'block';
+      } else {
+        message.style.display = 'none';
+      }
+
+      // Set event-specific class
+      box.className = 'alert-box ' + event.type;
+
+      // Show alert
+      container.classList.remove('hide');
+      container.classList.add('show');
+
+      // Hide after duration
+      setTimeout(() => {
+        container.classList.remove('show');
+        container.classList.add('hide');
+
+        setTimeout(() => {
+          showNextAlert();
+        }, 500); // Wait for animation to complete
+      }, ALERT_DURATION);
+    }
+
+    // Update debug status
+    function updateStatus(status) {
+      if (statusEl) {
+        statusEl.textContent = status;
+      }
+    }
+
+    function updateQueueCount() {
+      if (queueCountEl) {
+        queueCountEl.textContent = alertQueue.length;
+      }
+    }
+
+    function updateLastEvent(type) {
+      if (lastEventEl) {
+        lastEventEl.textContent = type + ' @ ' + new Date().toLocaleTimeString();
+      }
+    }
+
+    // Initialize connection
+    connect();
+  </script>
+</body>
+</html>
