@@ -1,190 +1,162 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { getSetting, saveSetting, useDiscordTextChannels } from "@/lib/admin-api";
+import { useState } from "react";
 
-type TabType = "active" | "create" | "history";
+/* ============================================================
+   Giveaways Page
+   ============================================================ */
+
+type GiveawayStatus = "active" | "ended" | "draft" | "drawing";
 
 interface Giveaway {
   id: string;
-  prize: string;
-  winners: number;
+  title: string;
+  description: string;
+  prizes: string[];
+  platforms: string[];
   entries: number;
-  endsAt: string;
-  channel: string;
-  status: "active" | "ended" | "cancelled";
-  hostedBy: string;
+  maxEntries: number | null;
+  startDate: string;
+  endDate: string;
+  status: GiveawayStatus;
+  winners: string[];
+  requirements: string[];
 }
 
-const DEFAULT_NEW_GIVEAWAY = {
-  prize: "",
-  winners: 1,
-  duration: "24h",
-  channel: "",
-  requirements: {
-    roles: [] as string[],
-    minLevel: 0,
-    minMessages: 0,
+const GIVEAWAYS: Giveaway[] = [
+  {
+    id: "1",
+    title: "Valentine's Day Stream Giveaway",
+    description: "Win exclusive Prozilli merch and VIP access! Enter by chatting during the Valentine's Day stream.",
+    prizes: ["Prozilli Hoodie (Black)", "1 Month VIP Elite", "$25 Gift Card"],
+    platforms: ["Twitch", "Kick", "YouTube", "Discord"],
+    entries: 247,
+    maxEntries: null,
+    startDate: "Feb 14, 2026 5:00 PM",
+    endDate: "Feb 14, 2026 11:00 PM",
+    status: "active",
+    winners: [],
+    requirements: ["Must be following", "1+ chat messages", "Account 30+ days old"],
   },
-  bonusEntries: [] as { roleId: string; roleName: string; entries: number }[],
-};
+  {
+    id: "2",
+    title: "ZO Syndicate Launch Celebration",
+    description: "Celebrating the ZO Syndicate server launch with massive giveaways across all platforms.",
+    prizes: ["$50 Steam Gift Card", "Custom ZO Syndicate Role", "In-Game $500K"],
+    platforms: ["Discord", "Twitch"],
+    entries: 512,
+    maxEntries: 1000,
+    startDate: "Feb 10, 2026 12:00 PM",
+    endDate: "Feb 17, 2026 12:00 PM",
+    status: "active",
+    winners: [],
+    requirements: ["Must be in Discord", "Level 5+", "Verified account"],
+  },
+  {
+    id: "3",
+    title: "Weekly Chat Warrior",
+    description: "Most active chatter of the week wins!",
+    prizes: ["Subscriber Gifted (3 months)", "Custom Badge"],
+    platforms: ["Twitch", "Kick"],
+    entries: 89,
+    maxEntries: null,
+    startDate: "Feb 3, 2026",
+    endDate: "Feb 10, 2026",
+    status: "ended",
+    winners: ["NightRider_99"],
+    requirements: ["10+ messages during stream"],
+  },
+  {
+    id: "4",
+    title: "New Year's Mega Giveaway",
+    description: "Ring in 2026 with an epic giveaway.",
+    prizes: ["Gaming Headset", "$100 Gift Card", "1 Year VIP"],
+    platforms: ["Twitch", "Kick", "YouTube", "Discord"],
+    entries: 1847,
+    maxEntries: 2000,
+    startDate: "Dec 31, 2025",
+    endDate: "Jan 2, 2026",
+    status: "ended",
+    winners: ["PixelKing", "GhostPepper42", "BlazeMaster"],
+    requirements: ["Must be following", "Account 7+ days old"],
+  },
+];
 
 export default function GiveawaysPage() {
-  const [activeTab, setActiveTab] = useState<TabType>("active");
-  const [newGiveaway, setNewGiveaway] = useState(DEFAULT_NEW_GIVEAWAY);
-  const [giveaways, setGiveaways] = useState<Giveaway[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
+  const [giveaways] = useState(GIVEAWAYS);
+  const [activeTab, setActiveTab] = useState<"active" | "past" | "create">("active");
+  /* Create form state */
+  const [newTitle, setNewTitle] = useState("");
+  const [newDescription, setNewDescription] = useState("");
+  const [newPrize, setNewPrize] = useState("");
+  const [newPrizes, setNewPrizes] = useState<string[]>([]);
+  const [newDuration, setNewDuration] = useState("6");
 
-  const { channels: textChannels, loading: channelsLoading } =
-    useDiscordTextChannels();
+  const addPrize = () => {
+    if (newPrize.trim()) {
+      setNewPrizes((prev) => [...prev, newPrize.trim()]);
+      setNewPrize("");
+    }
+  };
 
-  // Load giveaways on mount
-  useEffect(() => {
-    (async () => {
-      try {
-        const stored = await getSetting<Giveaway[]>("giveaways");
-        if (stored) setGiveaways(stored);
-      } catch {
-        // silently fall back to empty array
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
+  const removePrize = (index: number) => {
+    setNewPrizes((prev) => prev.filter((_, i) => i !== index));
+  };
 
-  // Derived lists
-  const activeGiveaways = giveaways.filter((g) => g.status === "active");
-  const pastGiveaways = giveaways.filter(
-    (g) => g.status === "ended" || g.status === "cancelled"
-  );
+  const activeGiveaways = giveaways.filter((g) => g.status === "active" || g.status === "drawing");
+  const pastGiveaways = giveaways.filter((g) => g.status === "ended");
 
-  // Persist helper
-  const persistGiveaways = useCallback(
-    async (updated: Giveaway[]) => {
-      setSaving(true);
-      try {
-        await saveSetting("giveaways", updated);
-        setGiveaways(updated);
-      } catch {
-        // keep local state in sync even if save fails
-        setGiveaways(updated);
-      } finally {
-        setSaving(false);
-      }
-    },
-    []
-  );
-
-  // Start giveaway
-  const handleStartGiveaway = useCallback(async () => {
-    if (!newGiveaway.prize || !newGiveaway.channel) return;
-
-    const created: Giveaway = {
-      id: String(Date.now()),
-      prize: newGiveaway.prize,
-      winners: newGiveaway.winners,
-      entries: 0,
-      endsAt: newGiveaway.duration,
-      channel: newGiveaway.channel,
-      status: "active",
-      hostedBy: "Pro",
-    };
-
-    await persistGiveaways([...giveaways, created]);
-    setNewGiveaway(DEFAULT_NEW_GIVEAWAY);
-    setActiveTab("active");
-  }, [newGiveaway, giveaways, persistGiveaways]);
-
-  // End giveaway early
-  const handleEndEarly = useCallback(
-    async (id: string) => {
-      const updated = giveaways.map((g) =>
-        g.id === id ? { ...g, status: "ended" as const, endsAt: "Ended just now" } : g
-      );
-      await persistGiveaways(updated);
-    },
-    [giveaways, persistGiveaways]
-  );
-
-  // Cancel giveaway
-  const handleCancel = useCallback(
-    async (id: string) => {
-      const updated = giveaways.map((g) =>
-        g.id === id ? { ...g, status: "cancelled" as const, endsAt: "Cancelled" } : g
-      );
-      await persistGiveaways(updated);
-    },
-    [giveaways, persistGiveaways]
-  );
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-red border-t-transparent" />
-      </div>
-    );
-  }
+  const statusColors: Record<GiveawayStatus, string> = {
+    active: "badge-emerald",
+    drawing: "badge-gold",
+    ended: "badge-red",
+    draft: "badge-electric",
+  };
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Giveaways</h1>
-          <p className="mt-1 text-sm text-gray-400">
-            Create and manage server giveaways
-          </p>
+          <h1 className="text-2xl font-bold tracking-tight">Giveaways</h1>
+          <p className="text-sm text-muted mt-1">{activeGiveaways.length} active, {pastGiveaways.length} completed</p>
         </div>
-        <button
-          onClick={() => setActiveTab("create")}
-          className="flex items-center gap-2 rounded-lg bg-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red/90"
-        >
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
+        <button onClick={() => setActiveTab("create")} className="btn btn-primary btn-sm">
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
           </svg>
           New Giveaway
         </button>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="flex gap-1 rounded-lg bg-surface p-1">
+      {/* Quick Stats */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         {[
-          { id: "active", label: "Active", count: activeGiveaways.length },
-          { id: "create", label: "Create" },
-          { id: "history", label: "History", count: pastGiveaways.length },
-        ].map((tab) => (
+          { label: "Active Giveaways", value: activeGiveaways.length, color: "text-emerald" },
+          { label: "Total Entries", value: giveaways.reduce((sum, g) => sum + g.entries, 0).toLocaleString(), color: "text-electric" },
+          { label: "Prizes Awarded", value: giveaways.reduce((sum, g) => sum + g.winners.length, 0), color: "text-gold" },
+          { label: "Unique Winners", value: "4", color: "text-foreground" },
+        ].map((stat) => (
+          <div key={stat.label} className="card p-4 text-center">
+            <div className={`text-xl font-extrabold ${stat.color}`}>{stat.value}</div>
+            <div className="text-[10px] text-dim mt-1">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-1 p-1 rounded-lg bg-glass border border-glass-border w-fit">
+        {(["active", "past", "create"] as const).map((tab) => (
           <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as TabType)}
-            className={`flex-1 flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-              activeTab === tab.id
-                ? "bg-red text-white"
-                : "text-gray-400 hover:text-white hover:bg-surface"
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 rounded-md text-xs font-semibold transition-all capitalize ${
+              activeTab === tab
+                ? "bg-red/15 text-red-bright"
+                : "text-muted hover:text-foreground hover:bg-white/[0.04]"
             }`}
           >
-            {tab.label}
-            {tab.count !== undefined && (
-              <span
-                className={`rounded-full px-2 py-0.5 text-xs ${
-                  activeTab === tab.id
-                    ? "bg-white/20"
-                    : "bg-raised"
-                }`}
-              >
-                {tab.count}
-              </span>
-            )}
+            {tab === "create" ? "Create New" : tab === "past" ? "Past Giveaways" : "Active"}
           </button>
         ))}
       </div>
@@ -193,115 +165,90 @@ export default function GiveawaysPage() {
       {activeTab === "active" && (
         <div className="space-y-4">
           {activeGiveaways.length === 0 ? (
-            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-12 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red/10">
-                <svg
-                  className="h-8 w-8 text-red"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-white">
-                No Active Giveaways
-              </h3>
-              <p className="mt-2 text-sm text-gray-400">
-                Create a new giveaway to get started
-              </p>
-              <button
-                onClick={() => setActiveTab("create")}
-                className="mt-4 rounded-lg bg-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red/90"
-              >
-                Create Giveaway
-              </button>
+            <div className="card p-12 text-center">
+              <svg className="w-12 h-12 mx-auto text-dim mb-4" fill="none" stroke="currentColor" strokeWidth={1} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21" />
+              </svg>
+              <p className="text-sm text-muted">No active giveaways. Create one to get started.</p>
             </div>
           ) : (
             activeGiveaways.map((giveaway) => (
-              <div
-                key={giveaway.id}
-                className="rounded-xl border border-[var(--color-border)] bg-surface p-5"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-red/20 text-red">
-                      <svg
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
+              <div key={giveaway.id} className="card-holo p-6">
+                <div className="relative z-10">
+                  <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-4">
+                    <div>
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="text-lg font-bold">{giveaway.title}</h3>
+                        <span className={`badge text-[9px] ${statusColors[giveaway.status]}`}>{giveaway.status}</span>
+                      </div>
+                      <p className="text-xs text-muted">{giveaway.description}</p>
+                    </div>
+                    <div className="flex gap-2 flex-shrink-0">
+                      <button className="btn btn-gold btn-sm">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497m5.007 0a7.454 7.454 0 01-.982-3.172M9.497 14.25a7.454 7.454 0 00.981-3.172" />
+                        </svg>
+                        Draw Winner
+                      </button>
+                      <button className="btn btn-secondary btn-sm">End</button>
+                    </div>
+                  </div>
+
+                  {/* Progress */}
+                  <div className="mb-4">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <span className="text-xs text-muted">{giveaway.entries} entries</span>
+                      {giveaway.maxEntries && (
+                        <span className="text-xs text-dim">{giveaway.maxEntries} max</span>
+                      )}
+                    </div>
+                    {giveaway.maxEntries && (
+                      <div className="w-full h-2 rounded-full bg-glass overflow-hidden">
+                        <div
+                          className="h-full rounded-full bg-gradient-to-r from-red to-gold transition-all"
+                          style={{ width: `${(giveaway.entries / giveaway.maxEntries) * 100}%` }}
                         />
-                      </svg>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Details Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                      <div className="text-[10px] font-bold text-dim uppercase mb-1">Prizes</div>
+                      <div className="space-y-1">
+                        {giveaway.prizes.map((prize, i) => (
+                          <div key={i} className="text-xs text-muted flex items-center gap-1.5">
+                            <span className="w-1 h-1 rounded-full bg-gold flex-shrink-0" />
+                            {prize}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-white">
-                        {giveaway.prize}
-                      </h3>
-                      <p className="text-sm text-gray-400">
-                        {giveaway.winners} winner{giveaway.winners > 1 ? "s" : ""} •{" "}
-                        {giveaway.channel}
-                      </p>
+                      <div className="text-[10px] font-bold text-dim uppercase mb-1">Platforms</div>
+                      <div className="flex flex-wrap gap-1">
+                        {giveaway.platforms.map((p) => (
+                          <span key={p} className="text-[10px] px-2 py-0.5 rounded-full bg-glass border border-glass-border text-muted">
+                            {p}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-bold text-dim uppercase mb-1">Requirements</div>
+                      <div className="space-y-1">
+                        {giveaway.requirements.map((req, i) => (
+                          <div key={i} className="text-[10px] text-muted">{req}</div>
+                        ))}
+                      </div>
+                    </div>
+                    <div>
+                      <div className="text-[10px] font-bold text-dim uppercase mb-1">Timeline</div>
+                      <div className="text-[10px] text-muted">Start: {giveaway.startDate}</div>
+                      <div className="text-[10px] text-muted">End: {giveaway.endDate}</div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className="flex items-center gap-1 rounded-full bg-green-500/10 px-3 py-1 text-xs font-medium text-green-400">
-                      <span className="h-1.5 w-1.5 rounded-full bg-green-400 animate-pulse" />
-                      Active
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mt-4 grid gap-4 sm:grid-cols-3">
-                  <div className="rounded-lg bg-surface p-3 text-center">
-                    <p className="text-2xl font-bold text-white">
-                      {giveaway.entries}
-                    </p>
-                    <p className="text-xs text-gray-500">Entries</p>
-                  </div>
-                  <div className="rounded-lg bg-surface p-3 text-center">
-                    <p className="text-2xl font-bold text-gold">
-                      {giveaway.endsAt}
-                    </p>
-                    <p className="text-xs text-gray-500">Time Left</p>
-                  </div>
-                  <div className="rounded-lg bg-surface p-3 text-center">
-                    <p className="text-2xl font-bold text-white">
-                      {giveaway.hostedBy}
-                    </p>
-                    <p className="text-xs text-gray-500">Hosted By</p>
-                  </div>
-                </div>
-
-                <div className="mt-4 flex gap-2">
-                  <button className="flex-1 rounded-lg bg-surface px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-raised">
-                    View Entries
-                  </button>
-                  <button
-                    onClick={() => handleEndEarly(giveaway.id)}
-                    disabled={saving}
-                    className="flex-1 rounded-lg bg-brand-gold/10 px-4 py-2 text-sm font-medium text-gold transition-colors hover:bg-brand-gold/20 disabled:opacity-50"
-                  >
-                    {saving ? "Saving..." : "End Early"}
-                  </button>
-                  <button
-                    onClick={() => handleCancel(giveaway.id)}
-                    disabled={saving}
-                    className="rounded-lg bg-red-500/10 px-4 py-2 text-sm font-medium text-red-400 transition-colors hover:bg-red-500/20 disabled:opacity-50"
-                  >
-                    {saving ? "Saving..." : "Cancel"}
-                  </button>
                 </div>
               </div>
             ))
@@ -309,226 +256,193 @@ export default function GiveawaysPage() {
         </div>
       )}
 
-      {/* Create Giveaway */}
+      {/* Past Giveaways */}
+      {activeTab === "past" && (
+        <div className="space-y-4">
+          {pastGiveaways.map((giveaway) => (
+            <div key={giveaway.id} className="card p-5">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="text-sm font-bold">{giveaway.title}</h3>
+                    <span className={`badge text-[9px] ${statusColors[giveaway.status]}`}>{giveaway.status}</span>
+                  </div>
+                  <div className="text-[10px] text-dim">{giveaway.startDate} - {giveaway.endDate}</div>
+                </div>
+                <div className="text-right">
+                  <div className="text-sm font-bold">{giveaway.entries}</div>
+                  <div className="text-[10px] text-dim">entries</div>
+                </div>
+              </div>
+
+              {/* Winners */}
+              {giveaway.winners.length > 0 && (
+                <div className="p-3 rounded-lg bg-gold/5 border border-gold/15">
+                  <div className="text-[10px] font-bold text-gold uppercase mb-2">Winners</div>
+                  <div className="flex flex-wrap gap-2">
+                    {giveaway.winners.map((winner) => (
+                      <span key={winner} className="flex items-center gap-1.5 text-xs font-semibold text-gold">
+                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 18.75h-9m9 0a3 3 0 013 3h-15a3 3 0 013-3m9 0v-3.375c0-.621-.503-1.125-1.125-1.125h-.871M7.5 18.75v-3.375c0-.621.504-1.125 1.125-1.125h.872m5.007 0H9.497" />
+                        </svg>
+                        {winner}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Prizes */}
+              <div className="flex flex-wrap gap-1.5 mt-3">
+                {giveaway.prizes.map((prize) => (
+                  <span key={prize} className="text-[10px] px-2 py-0.5 rounded-full bg-glass border border-glass-border text-dim">
+                    {prize}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Create Tab */}
       {activeTab === "create" && (
-        <div className="space-y-6">
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <h3 className="text-sm font-semibold text-white mb-4">
-              Giveaway Details
-            </h3>
-            <div className="space-y-4">
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 card p-6">
+            <h2 className="text-lg font-bold mb-6">Create Giveaway</h2>
+            <div className="space-y-5">
               <div>
-                <label className="block text-xs font-medium text-gray-400 mb-2">
-                  Prize
-                </label>
+                <label className="text-xs font-semibold text-dim block mb-1.5">Title</label>
                 <input
                   type="text"
-                  value={newGiveaway.prize}
-                  onChange={(e) =>
-                    setNewGiveaway({ ...newGiveaway, prize: e.target.value })
-                  }
-                  placeholder="What are you giving away?"
-                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                  value={newTitle}
+                  onChange={(e) => setNewTitle(e.target.value)}
+                  placeholder="Enter giveaway title..."
+                  className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors"
                 />
               </div>
 
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="block text-xs font-medium text-gray-400 mb-2">
-                    Number of Winners
-                  </label>
+              <div>
+                <label className="text-xs font-semibold text-dim block mb-1.5">Description</label>
+                <textarea
+                  value={newDescription}
+                  onChange={(e) => setNewDescription(e.target.value)}
+                  placeholder="Describe the giveaway..."
+                  rows={3}
+                  className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors resize-none"
+                />
+              </div>
+
+              <div>
+                <label className="text-xs font-semibold text-dim block mb-1.5">Prizes</label>
+                <div className="flex gap-2 mb-2">
                   <input
-                    type="number"
-                    min="1"
-                    value={newGiveaway.winners}
-                    onChange={(e) =>
-                      setNewGiveaway({
-                        ...newGiveaway,
-                        winners: parseInt(e.target.value) || 1,
-                      })
-                    }
-                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    type="text"
+                    value={newPrize}
+                    onChange={(e) => setNewPrize(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && addPrize()}
+                    placeholder="Add a prize..."
+                    className="flex-1 px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors"
                   />
+                  <button onClick={addPrize} className="btn btn-secondary btn-sm">Add</button>
                 </div>
+                {newPrizes.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {newPrizes.map((prize, i) => (
+                      <span key={i} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/20 text-xs text-gold">
+                        {prize}
+                        <button onClick={() => removePrize(i)} className="hover:text-foreground">
+                          <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                            <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
+                          </svg>
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-gray-400 mb-2">
-                    Duration
-                  </label>
+                  <label className="text-xs font-semibold text-dim block mb-1.5">Duration (hours)</label>
                   <select
-                    value={newGiveaway.duration}
-                    onChange={(e) =>
-                      setNewGiveaway({ ...newGiveaway, duration: e.target.value })
-                    }
-                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    value={newDuration}
+                    onChange={(e) => setNewDuration(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground focus:outline-none focus:border-red/50 transition-colors"
                   >
-                    <option value="1h">1 Hour</option>
-                    <option value="6h">6 Hours</option>
-                    <option value="12h">12 Hours</option>
-                    <option value="24h">24 Hours</option>
-                    <option value="3d">3 Days</option>
-                    <option value="7d">1 Week</option>
+                    <option value="1">1 hour</option>
+                    <option value="3">3 hours</option>
+                    <option value="6">6 hours</option>
+                    <option value="12">12 hours</option>
+                    <option value="24">24 hours</option>
+                    <option value="72">3 days</option>
+                    <option value="168">1 week</option>
                   </select>
                 </div>
+                <div>
+                  <label className="text-xs font-semibold text-dim block mb-1.5">Max Entries (optional)</label>
+                  <input
+                    type="number"
+                    placeholder="Unlimited"
+                    className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors"
+                  />
+                </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-medium text-gray-400 mb-2">
-                  Channel
-                </label>
-                <select
-                  value={newGiveaway.channel}
-                  onChange={(e) =>
-                    setNewGiveaway({ ...newGiveaway, channel: e.target.value })
-                  }
-                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
-                >
-                  <option value="">
-                    {channelsLoading ? "Loading channels..." : "Select a channel..."}
-                  </option>
-                  {textChannels.map((ch) => (
-                    <option key={ch.id} value={`#${ch.name}`}>
-                      #{ch.name}
-                    </option>
-                  ))}
-                </select>
+              <div className="flex justify-end gap-3 pt-2">
+                <button className="btn btn-ghost btn-sm">Save Draft</button>
+                <button className="btn btn-gold btn-sm">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21" />
+                  </svg>
+                  Launch Giveaway
+                </button>
               </div>
             </div>
           </div>
 
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <h3 className="text-sm font-semibold text-white mb-4">
-              Entry Requirements
-            </h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-gray-400 mb-2">
-                  Minimum Level
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  value={newGiveaway.requirements.minLevel}
-                  onChange={(e) =>
-                    setNewGiveaway({
-                      ...newGiveaway,
-                      requirements: {
-                        ...newGiveaway.requirements,
-                        minLevel: parseInt(e.target.value) || 0,
-                      },
-                    })
-                  }
-                  placeholder="0 for no requirement"
-                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-400 mb-2">
-                  Minimum Messages
-                </label>
-                <input
-                  type="number"
-                  min="0"
-                  value={newGiveaway.requirements.minMessages}
-                  onChange={(e) =>
-                    setNewGiveaway({
-                      ...newGiveaway,
-                      requirements: {
-                        ...newGiveaway.requirements,
-                        minMessages: parseInt(e.target.value) || 0,
-                      },
-                    })
-                  }
-                  placeholder="0 for no requirement"
-                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-end gap-3">
-            <button
-              onClick={() => setActiveTab("active")}
-              className="rounded-lg bg-surface px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-raised"
-            >
-              Cancel
-            </button>
-            <button
-              onClick={handleStartGiveaway}
-              disabled={saving || !newGiveaway.prize || !newGiveaway.channel}
-              className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50"
-            >
-              {saving ? "Starting..." : "Start Giveaway"}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* History */}
-      {activeTab === "history" && (
-        <div className="space-y-4">
-          {pastGiveaways.length === 0 ? (
-            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-12 text-center">
-              <h3 className="text-lg font-semibold text-white">
-                No Past Giveaways
-              </h3>
-              <p className="mt-2 text-sm text-gray-400">
-                Completed and cancelled giveaways will appear here
-              </p>
-            </div>
-          ) : (
-            pastGiveaways.map((giveaway) => (
-              <div
-                key={giveaway.id}
-                className="rounded-xl border border-[var(--color-border)] bg-surface p-5 opacity-75"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-500/20 text-gray-400">
-                      <svg
-                        className="h-6 w-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z"
-                        />
-                      </svg>
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold text-white">
-                        {giveaway.prize}
-                      </h3>
-                      <p className="text-sm text-gray-400">
-                        {giveaway.winners} winner{giveaway.winners > 1 ? "s" : ""} •{" "}
-                        {giveaway.entries} entries • {giveaway.endsAt}
-                      </p>
+          {/* Sidebar */}
+          <div className="space-y-6">
+            <div className="card p-5">
+              <h3 className="text-sm font-bold mb-4">Entry Requirements</h3>
+              <div className="space-y-3">
+                {[
+                  { label: "Must be following", enabled: true },
+                  { label: "Minimum account age (30 days)", enabled: true },
+                  { label: "Must send 1+ chat messages", enabled: false },
+                  { label: "Must be subscribed", enabled: false },
+                  { label: "Must be in Discord", enabled: false },
+                  { label: "Minimum level requirement", enabled: false },
+                ].map((req) => (
+                  <div key={req.label} className="flex items-center justify-between p-2 rounded-lg hover:bg-glass transition-colors">
+                    <span className="text-xs text-muted">{req.label}</span>
+                    <div className={`w-8 h-4 rounded-full transition-colors ${
+                      req.enabled ? "bg-emerald" : "bg-dim"
+                    }`}>
+                      <div className={`w-3 h-3 rounded-full bg-white mt-0.5 transition-transform ${
+                        req.enabled ? "translate-x-4" : "translate-x-0.5"
+                      }`} />
                     </div>
                   </div>
-                  <span
-                    className={`rounded-full px-3 py-1 text-xs font-medium ${
-                      giveaway.status === "cancelled"
-                        ? "bg-red-500/10 text-red-400"
-                        : "bg-gray-500/10 text-gray-400"
-                    }`}
-                  >
-                    {giveaway.status === "cancelled" ? "Cancelled" : "Ended"}
-                  </span>
-                </div>
-                <div className="mt-4 flex gap-2">
-                  <button className="flex-1 rounded-lg bg-surface px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-raised">
-                    View Winners
-                  </button>
-                  <button className="rounded-lg bg-red/10 px-4 py-2 text-sm font-medium text-red transition-colors hover:bg-red/20">
-                    Reroll
-                  </button>
-                </div>
+                ))}
               </div>
-            ))
-          )}
+            </div>
+
+            <div className="card p-5">
+              <h3 className="text-sm font-bold mb-4">Multi-Platform Sync</h3>
+              <p className="text-xs text-muted mb-3">Entries from all selected platforms are pooled together. One entry per user (cross-platform dedup).</p>
+              <div className="space-y-2">
+                {["Twitch", "Kick", "YouTube", "Discord"].map((platform) => (
+                  <div key={platform} className="flex items-center justify-between p-2 rounded-lg bg-glass border border-glass-border">
+                    <span className="text-xs font-semibold">{platform}</span>
+                    <div className="w-8 h-4 rounded-full bg-emerald">
+                      <div className="w-3 h-3 rounded-full bg-white mt-0.5 translate-x-4" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

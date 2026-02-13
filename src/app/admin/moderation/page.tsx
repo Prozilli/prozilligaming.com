@@ -1,456 +1,282 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import {
-  getModerationConfig,
-  saveModerationConfig,
-  updateBannedWords,
-} from "@/lib/admin-api";
+import { useState } from "react";
 
-interface ModerationConfig {
+/* ============================================================
+   Moderation Page
+   ============================================================ */
+
+interface ModRule {
+  id: string;
+  name: string;
+  description: string;
   enabled: boolean;
-  linkFilter: boolean;
-  spamFilter: boolean;
-  capsFilter: boolean;
-  wordFilter: boolean;
-  bannedWords: string[];
-  allowedDomains: string[];
-  exemptPlatforms: string[];
+  severity: "low" | "medium" | "high";
+  action: string;
 }
 
-const DEFAULT_CONFIG: ModerationConfig = {
-  enabled: false,
-  linkFilter: true,
-  spamFilter: true,
-  capsFilter: false,
-  wordFilter: true,
-  bannedWords: [],
-  allowedDomains: [],
-  exemptPlatforms: [],
-};
-
-const ALL_PLATFORMS = [
-  { id: "twitch", label: "Twitch" },
-  { id: "kick", label: "Kick" },
-  { id: "discord", label: "Discord" },
-  { id: "youtube", label: "YouTube" },
-  { id: "trovo", label: "Trovo" },
-  { id: "facebook", label: "Facebook" },
+const AUTO_MOD_RULES: ModRule[] = [
+  { id: "links", name: "Link Filter", description: "Block unauthorized links. Permits whitelisted domains.", enabled: true, severity: "medium", action: "Delete + Warn" },
+  { id: "spam", name: "Spam Detection", description: "Detect repeated messages, character spam, and copypasta.", enabled: true, severity: "medium", action: "Delete + Timeout 5m" },
+  { id: "caps", name: "Caps Filter", description: "Limit messages with excessive capitalization (>70% caps).", enabled: true, severity: "low", action: "Delete + Warn" },
+  { id: "banned", name: "Banned Words", description: "Filter messages containing blacklisted words/phrases.", enabled: true, severity: "high", action: "Delete + Warn" },
+  { id: "slow", name: "Slow Mode", description: "Require delay between messages per user.", enabled: false, severity: "low", action: "Rate limit 5s" },
+  { id: "emotes", name: "Emote Spam", description: "Limit excessive emote usage in a single message.", enabled: false, severity: "low", action: "Delete" },
+  { id: "mentions", name: "Mass Mentions", description: "Block messages that @mention too many users.", enabled: true, severity: "high", action: "Delete + Timeout 10m" },
+  { id: "invites", name: "Discord Invites", description: "Block Discord server invite links.", enabled: true, severity: "high", action: "Delete + Warn" },
 ];
 
-const FILTER_CARDS = [
-  {
-    key: "linkFilter" as const,
-    title: "Link Filter",
-    description: "Blocks unauthorized links from being posted in chat",
-  },
-  {
-    key: "spamFilter" as const,
-    title: "Spam Filter",
-    description: "Blocks repeated or rapid-fire messages",
-  },
-  {
-    key: "capsFilter" as const,
-    title: "Caps Filter",
-    description: "Blocks messages with excessive capital letters",
-  },
-  {
-    key: "wordFilter" as const,
-    title: "Word Filter",
-    description: "Blocks messages containing banned words",
-  },
+const ESCALATION_STEPS = [
+  { step: 1, action: "Verbal Warning", description: "LISA sends a friendly warning", icon: "text-warning" },
+  { step: 2, action: "Final Warning", description: "Formal warning logged to database", icon: "text-warning" },
+  { step: 3, action: "Mute (10 min)", description: "Temporary mute across all platforms", icon: "text-error" },
+  { step: 4, action: "Temp Ban (1 hr)", description: "Temporary ban from chat", icon: "text-error" },
+  { step: 5, action: "Temp Ban (24 hr)", description: "Full day ban from chat", icon: "text-error" },
+  { step: 6, action: "Permanent Ban", description: "Permanently banned from all platforms", icon: "text-error" },
+];
+
+const MOD_LOG = [
+  { time: "2:34 PM", user: "ToxicUser123", action: "Banned Word", platform: "Twitch", result: "Deleted + Warning #1", moderator: "LISA" },
+  { time: "2:22 PM", user: "SpamBot_99", action: "Spam Detected", platform: "Kick", result: "Deleted + Timeout 5m", moderator: "LISA" },
+  { time: "1:58 PM", user: "LinkDropper", action: "Link Filter", platform: "Discord", result: "Deleted + Warning #1", moderator: "LISA" },
+  { time: "1:45 PM", user: "CapsLock_King", action: "Caps Filter", platform: "Twitch", result: "Deleted", moderator: "LISA" },
+  { time: "1:30 PM", user: "RaidBot_7", action: "Mass Mentions", platform: "Discord", result: "Timeout 10m", moderator: "LISA" },
+  { time: "12:15 PM", user: "ToxicUser123", action: "Banned Word (2nd)", platform: "Twitch", result: "Deleted + Warning #2", moderator: "LISA" },
+  { time: "11:52 AM", user: "InviteSpam", action: "Discord Invite", platform: "Kick", result: "Deleted + Warning #1", moderator: "LISA" },
+  { time: "11:30 AM", user: "TrollAccount", action: "Manual Ban", platform: "All", result: "Permanent Ban", moderator: "Pro" },
+];
+
+const BANNED_USERS = [
+  { user: "TrollAccount", reason: "Targeted harassment", date: "Feb 12, 2026", type: "Permanent", by: "Pro" },
+  { user: "HateBot_99", reason: "Hate speech", date: "Feb 10, 2026", type: "Permanent", by: "LISA" },
+  { user: "ScamLink_Pro", reason: "Phishing links", date: "Feb 8, 2026", type: "Permanent", by: "LISA" },
+  { user: "Impersonator_1", reason: "Impersonating staff", date: "Feb 5, 2026", type: "30 days", by: "Pro" },
 ];
 
 export default function ModerationPage() {
-  const [config, setConfig] = useState<ModerationConfig>(DEFAULT_CONFIG);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [toast, setToast] = useState<{ message: string; type: "success" | "error" } | null>(null);
+  const [rules, setRules] = useState(AUTO_MOD_RULES);
+  const [searchUser, setSearchUser] = useState("");
+  const [activeTab, setActiveTab] = useState<"rules" | "log" | "bans" | "escalation">("rules");
 
-  // Banned words input
-  const [newWord, setNewWord] = useState("");
-  // Allowed domains input
-  const [newDomain, setNewDomain] = useState("");
-
-  // Load config on mount
-  useEffect(() => {
-    async function loadConfig() {
-      try {
-        const result = await getModerationConfig();
-        if (result.config) {
-          setConfig({
-            enabled: Boolean(result.config.enabled ?? DEFAULT_CONFIG.enabled),
-            linkFilter: Boolean(result.config.linkFilter ?? DEFAULT_CONFIG.linkFilter),
-            spamFilter: Boolean(result.config.spamFilter ?? DEFAULT_CONFIG.spamFilter),
-            capsFilter: Boolean(result.config.capsFilter ?? DEFAULT_CONFIG.capsFilter),
-            wordFilter: Boolean(result.config.wordFilter ?? DEFAULT_CONFIG.wordFilter),
-            bannedWords: Array.isArray(result.config.bannedWords)
-              ? (result.config.bannedWords as string[])
-              : DEFAULT_CONFIG.bannedWords,
-            allowedDomains: Array.isArray(result.config.allowedDomains)
-              ? (result.config.allowedDomains as string[])
-              : DEFAULT_CONFIG.allowedDomains,
-            exemptPlatforms: Array.isArray(result.config.exemptPlatforms)
-              ? (result.config.exemptPlatforms as string[])
-              : DEFAULT_CONFIG.exemptPlatforms,
-          });
-        }
-      } catch (err) {
-        console.error("Failed to load moderation config:", err);
-        showToast("Failed to load moderation config", "error");
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadConfig();
-  }, []);
-
-  // Toast helper
-  const showToast = (message: string, type: "success" | "error") => {
-    setToast({ message, type });
-    setTimeout(() => setToast(null), 3000);
-  };
-
-  // Toggle a filter
-  const toggleFilter = (key: keyof ModerationConfig) => {
-    setConfig((prev) => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  // Add banned word
-  const addBannedWord = () => {
-    const word = newWord.trim().toLowerCase();
-    if (!word) return;
-    if (config.bannedWords.includes(word)) {
-      showToast("Word already in the list", "error");
-      return;
-    }
-    setConfig((prev) => ({
-      ...prev,
-      bannedWords: [...prev.bannedWords, word],
-    }));
-    setNewWord("");
-  };
-
-  // Remove banned word
-  const removeBannedWord = (word: string) => {
-    setConfig((prev) => ({
-      ...prev,
-      bannedWords: prev.bannedWords.filter((w) => w !== word),
-    }));
-  };
-
-  // Add allowed domain
-  const addAllowedDomain = () => {
-    const domain = newDomain.trim().toLowerCase();
-    if (!domain) return;
-    if (config.allowedDomains.includes(domain)) {
-      showToast("Domain already in the list", "error");
-      return;
-    }
-    setConfig((prev) => ({
-      ...prev,
-      allowedDomains: [...prev.allowedDomains, domain],
-    }));
-    setNewDomain("");
-  };
-
-  // Remove allowed domain
-  const removeAllowedDomain = (domain: string) => {
-    setConfig((prev) => ({
-      ...prev,
-      allowedDomains: prev.allowedDomains.filter((d) => d !== domain),
-    }));
-  };
-
-  // Toggle exempt platform
-  const toggleExemptPlatform = (platformId: string) => {
-    setConfig((prev) => ({
-      ...prev,
-      exemptPlatforms: prev.exemptPlatforms.includes(platformId)
-        ? prev.exemptPlatforms.filter((p) => p !== platformId)
-        : [...prev.exemptPlatforms, platformId],
-    }));
-  };
-
-  // Save all changes
-  const handleSave = async () => {
-    setSaving(true);
-    try {
-      await saveModerationConfig(config as unknown as Record<string, unknown>);
-      await updateBannedWords(config.bannedWords, []);
-      showToast("Moderation settings saved successfully", "success");
-    } catch (err) {
-      console.error("Failed to save moderation config:", err);
-      showToast("Failed to save settings", "error");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  // Handle Enter key on inputs
-  const handleWordKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      addBannedWord();
-    }
-  };
-
-  const handleDomainKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      addAllowedDomain();
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-red border-t-transparent" />
-      </div>
+  const toggleRule = (id: string) => {
+    setRules((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, enabled: !r.enabled } : r))
     );
-  }
+  };
 
   return (
     <div className="space-y-6">
-      {/* Toast */}
-      {toast && (
-        <div
-          className={`fixed right-6 top-20 z-50 rounded-lg px-4 py-3 text-sm font-medium shadow-lg transition-all ${
-            toast.type === "success"
-              ? "bg-green-500/20 text-green-400 border border-green-500/30"
-              : "bg-red-500/20 text-red-400 border border-red-500/30"
-          }`}
-        >
-          {toast.message}
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Moderation</h1>
+          <p className="text-sm text-muted mt-1">Auto-mod rules, user management, and moderation logs</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="badge badge-emerald">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+            </svg>
+            Auto-Mod Active
+          </div>
+        </div>
+      </div>
+
+      {/* Tabs */}
+      <div className="flex gap-1 p-1 rounded-lg bg-glass border border-glass-border w-fit">
+        {(["rules", "log", "bans", "escalation"] as const).map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 rounded-md text-xs font-semibold transition-all capitalize ${
+              activeTab === tab
+                ? "bg-red/15 text-red-bright"
+                : "text-muted hover:text-foreground hover:bg-white/[0.04]"
+            }`}
+          >
+            {tab === "log" ? "Mod Log" : tab === "bans" ? "Banned Users" : tab}
+          </button>
+        ))}
+      </div>
+
+      {/* Rules Tab */}
+      {activeTab === "rules" && (
+        <div className="space-y-6">
+          {/* Quick Stats */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            {[
+              { label: "Rules Active", value: rules.filter((r) => r.enabled).length, total: rules.length, color: "text-emerald" },
+              { label: "Actions Today", value: "47", total: "", color: "text-electric" },
+              { label: "Users Warned", value: "12", total: "", color: "text-warning" },
+              { label: "Users Banned", value: "2", total: "", color: "text-error" },
+            ].map((stat) => (
+              <div key={stat.label} className="card p-4 text-center">
+                <div className={`text-xl font-extrabold ${stat.color}`}>
+                  {stat.value}{stat.total && <span className="text-dim text-sm">/{stat.total}</span>}
+                </div>
+                <div className="text-[10px] text-dim mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+
+          {/* Rules Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {rules.map((rule) => (
+              <div key={rule.id} className={`card p-4 ${!rule.enabled ? "opacity-50" : ""}`}>
+                <div className="flex items-start justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-2 h-2 rounded-full ${
+                      rule.severity === "high" ? "bg-error" :
+                      rule.severity === "medium" ? "bg-warning" : "bg-info"
+                    }`} />
+                    <span className="text-sm font-bold">{rule.name}</span>
+                  </div>
+                  <button
+                    onClick={() => toggleRule(rule.id)}
+                    className={`w-10 h-5 rounded-full transition-colors flex-shrink-0 ${
+                      rule.enabled ? "bg-emerald" : "bg-dim"
+                    }`}
+                  >
+                    <div className={`w-4 h-4 rounded-full bg-white mt-0.5 transition-transform ${
+                      rule.enabled ? "translate-x-5" : "translate-x-0.5"
+                    }`} />
+                  </button>
+                </div>
+                <p className="text-xs text-muted mb-3">{rule.description}</p>
+                <div className="flex items-center justify-between">
+                  <span className={`text-[10px] px-2 py-0.5 rounded-full ${
+                    rule.severity === "high" ? "bg-error/10 text-error" :
+                    rule.severity === "medium" ? "bg-warning/10 text-warning" : "bg-info/10 text-info"
+                  }`}>
+                    {rule.severity}
+                  </span>
+                  <span className="text-[10px] text-dim">{rule.action}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-white">Moderation</h1>
-          <p className="mt-1 text-sm text-gray-400">
-            Cross-platform auto-moderation for all connected chat platforms
-          </p>
+      {/* Mod Log Tab */}
+      {activeTab === "log" && (
+        <div className="card overflow-hidden">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-glass-border">
+                  <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">Time</th>
+                  <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">User</th>
+                  <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">Action</th>
+                  <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">Platform</th>
+                  <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">Result</th>
+                  <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">By</th>
+                </tr>
+              </thead>
+              <tbody>
+                {MOD_LOG.map((entry, i) => (
+                  <tr key={i} className="border-b border-glass-border hover:bg-glass transition-colors">
+                    <td className="p-4 text-data text-xs text-dim">{entry.time}</td>
+                    <td className="p-4 text-xs font-semibold">{entry.user}</td>
+                    <td className="p-4 text-xs text-muted">{entry.action}</td>
+                    <td className="p-4 text-xs text-muted">{entry.platform}</td>
+                    <td className="p-4 text-xs text-muted">{entry.result}</td>
+                    <td className="p-4 text-xs text-electric">{entry.moderator}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-        <button
-          onClick={() => toggleFilter("enabled")}
-          className={`relative h-7 w-12 rounded-full transition-colors ${
-            config.enabled ? "bg-green-500" : "bg-raised"
-          }`}
-        >
-          <span
-            className={`absolute top-1 h-5 w-5 rounded-full bg-white transition-transform ${
-              config.enabled ? "left-6" : "left-1"
-            }`}
-          />
-        </button>
-      </div>
+      )}
 
-      {/* Filter Toggles - 2x2 Grid */}
-      <div>
-        <h2 className="mb-3 text-sm font-semibold text-white">Filters</h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {FILTER_CARDS.map((filter) => (
-            <div
-              key={filter.key}
-              className="flex items-center justify-between rounded-xl border border-[var(--color-border)] bg-surface p-6"
-            >
-              <div className="mr-4">
-                <p className="text-sm font-medium text-white">{filter.title}</p>
-                <p className="mt-1 text-xs text-gray-500">{filter.description}</p>
-              </div>
-              <button
-                onClick={() => toggleFilter(filter.key)}
-                className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
-                  config[filter.key] ? "bg-red" : "bg-raised"
-                }`}
-              >
-                <span
-                  className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${
-                    config[filter.key] ? "left-6" : "left-1"
-                  }`}
-                />
-              </button>
+      {/* Banned Users Tab */}
+      {activeTab === "bans" && (
+        <div className="space-y-4">
+          {/* Search + Actions */}
+          <div className="flex gap-3">
+            <input
+              type="text"
+              value={searchUser}
+              onChange={(e) => setSearchUser(e.target.value)}
+              placeholder="Search by username..."
+              className="flex-1 px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors"
+            />
+            <button className="btn btn-primary btn-sm">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
+              </svg>
+              Ban User
+            </button>
+          </div>
+
+          {/* Banned List */}
+          <div className="card overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-glass-border">
+                    <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">Username</th>
+                    <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">Reason</th>
+                    <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">Date</th>
+                    <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">Type</th>
+                    <th className="text-left text-[10px] font-bold uppercase tracking-wider text-dim p-4">By</th>
+                    <th className="text-right text-[10px] font-bold uppercase tracking-wider text-dim p-4">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {BANNED_USERS.map((user) => (
+                    <tr key={user.user} className="border-b border-glass-border hover:bg-glass transition-colors">
+                      <td className="p-4 text-xs font-semibold text-error">{user.user}</td>
+                      <td className="p-4 text-xs text-muted">{user.reason}</td>
+                      <td className="p-4 text-data text-xs text-dim">{user.date}</td>
+                      <td className="p-4">
+                        <span className={`text-[10px] px-2 py-0.5 rounded-full ${
+                          user.type === "Permanent" ? "bg-error/10 text-error" : "bg-warning/10 text-warning"
+                        }`}>
+                          {user.type}
+                        </span>
+                      </td>
+                      <td className="p-4 text-xs text-muted">{user.by}</td>
+                      <td className="p-4 text-right">
+                        <button className="btn btn-ghost btn-sm text-xs">Unban</button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Banned Words */}
-      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
-        <h2 className="mb-4 text-sm font-semibold text-white">Banned Words</h2>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={newWord}
-            onChange={(e) => setNewWord(e.target.value)}
-            onKeyDown={handleWordKeyDown}
-            placeholder="Add a banned word..."
-            className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
-          />
-          <button
-            onClick={addBannedWord}
-            className="rounded-lg bg-red px-5 py-2.5 text-sm font-medium text-white hover:bg-red/90 transition-colors"
-          >
-            Add
-          </button>
-        </div>
-        {config.bannedWords.length > 0 ? (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {config.bannedWords.map((word) => (
-              <span
-                key={word}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-red-500/10 px-3 py-1.5 text-sm text-red-400"
-              >
-                {word}
-                <button
-                  onClick={() => removeBannedWord(word)}
-                  className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-red-500/20"
-                >
-                  <svg
-                    className="h-3.5 w-3.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18 18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </span>
-            ))}
           </div>
-        ) : (
-          <p className="mt-4 text-xs text-gray-500">
-            No banned words configured. Add words above to auto-filter them from chat.
-          </p>
-        )}
-      </div>
-
-      {/* Allowed Domains */}
-      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
-        <h2 className="mb-4 text-sm font-semibold text-white">Allowed Domains</h2>
-        <p className="mb-3 text-xs text-gray-500">
-          When the Link Filter is enabled, only links from these domains will be permitted.
-        </p>
-        <div className="flex gap-2">
-          <input
-            type="text"
-            value={newDomain}
-            onChange={(e) => setNewDomain(e.target.value)}
-            onKeyDown={handleDomainKeyDown}
-            placeholder="e.g. youtube.com"
-            className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
-          />
-          <button
-            onClick={addAllowedDomain}
-            className="rounded-lg bg-red px-5 py-2.5 text-sm font-medium text-white hover:bg-red/90 transition-colors"
-          >
-            Add
-          </button>
         </div>
-        {config.allowedDomains.length > 0 ? (
-          <div className="mt-4 flex flex-wrap gap-2">
-            {config.allowedDomains.map((domain) => (
-              <span
-                key={domain}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-brand-gold/10 px-3 py-1.5 text-sm text-gold"
-              >
-                {domain}
-                <button
-                  onClick={() => removeAllowedDomain(domain)}
-                  className="ml-0.5 rounded-full p-0.5 transition-colors hover:bg-brand-gold/20"
-                >
-                  <svg
-                    className="h-3.5 w-3.5"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={2}
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M6 18 18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </span>
-            ))}
-          </div>
-        ) : (
-          <p className="mt-4 text-xs text-gray-500">
-            No allowed domains configured. All links will be blocked when the Link Filter is on.
-          </p>
-        )}
-      </div>
+      )}
 
-      {/* Exempt Platforms */}
-      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
-        <h2 className="mb-2 text-sm font-semibold text-white">Exempt Platforms</h2>
-        <p className="mb-4 text-xs text-gray-500">
-          Messages from these platforms will not be moderated.
-        </p>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-          {ALL_PLATFORMS.map((platform) => {
-            const isExempt = config.exemptPlatforms.includes(platform.id);
-            return (
-              <label
-                key={platform.id}
-                className="flex cursor-pointer items-center gap-3 rounded-lg bg-surface px-4 py-3 transition-colors hover:bg-raised"
-              >
-                <div
-                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors ${
-                    isExempt
-                      ? "border-brand-red bg-red"
-                      : "border-white/20 bg-transparent"
-                  }`}
-                  onClick={() => toggleExemptPlatform(platform.id)}
-                >
-                  {isExempt && (
-                    <svg
-                      className="h-3.5 w-3.5 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={3}
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m4.5 12.75 6 6 9-13.5"
-                      />
-                    </svg>
-                  )}
+      {/* Escalation Tab */}
+      {activeTab === "escalation" && (
+        <div className="card p-6">
+          <h2 className="text-sm font-bold mb-6">Warning Escalation Pipeline</h2>
+          <div className="relative">
+            {/* Connector line */}
+            <div className="absolute left-5 top-6 bottom-6 w-px bg-glass-border" />
+
+            <div className="space-y-6">
+              {ESCALATION_STEPS.map((step) => (
+                <div key={step.step} className="flex items-start gap-4 relative">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 bg-glass border border-glass-border z-10 ${step.icon}`}>
+                    {step.step}
+                  </div>
+                  <div className="pt-2">
+                    <div className="text-sm font-bold">{step.action}</div>
+                    <p className="text-xs text-muted mt-0.5">{step.description}</p>
+                  </div>
                 </div>
-                <input
-                  type="checkbox"
-                  checked={isExempt}
-                  onChange={() => toggleExemptPlatform(platform.id)}
-                  className="hidden"
-                />
-                <span className="text-sm text-white">{platform.label}</span>
-              </label>
-            );
-          })}
+              ))}
+            </div>
+          </div>
+          <div className="flex justify-end mt-8">
+            <button className="btn btn-secondary btn-sm">Customize Pipeline</button>
+          </div>
         </div>
-      </div>
-
-      {/* Save Button */}
-      <div className="flex justify-end">
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="rounded-lg bg-red px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50"
-        >
-          {saving ? "Saving..." : "Save Changes"}
-        </button>
-      </div>
+      )}
     </div>
   );
 }

@@ -1,515 +1,277 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { getLevelsConfig, saveLevelsConfig, getLeaderboard, getLevelRewards, saveLevelRewards, useDiscordTextChannels, useDiscordRoles } from "@/lib/admin-api";
+import { useState } from "react";
 
-type TabType = "settings" | "rewards" | "leaderboard";
+/* ============================================================
+   XP / Levels System Page
+   ============================================================ */
 
-interface LevelsConfig {
-  enabled: boolean;
-  minXp: number;
-  maxXp: number;
-  cooldownMs: number;
-  multiplier: number;
-  announceChannel: string | null;
-  announceDm: boolean;
-  announceMessage: string;
-  stackRoles: boolean;
-  removeOnLevelDown: boolean;
-  publicLeaderboard: boolean;
-}
+const LEADERBOARD = [
+  { rank: 1, user: "PixelKing", level: 42, xp: 84200, messages: 8912, platform: "Discord", avatar: "P" },
+  { rank: 2, user: "NightRider_99", level: 38, xp: 71400, messages: 7234, platform: "Twitch", avatar: "N" },
+  { rank: 3, user: "GhostPepper42", level: 35, xp: 62100, messages: 6891, platform: "Kick", avatar: "G" },
+  { rank: 4, user: "TurboFan_X", level: 31, xp: 55800, messages: 5432, platform: "Twitch", avatar: "T" },
+  { rank: 5, user: "LunaStream", level: 28, xp: 48900, messages: 4781, platform: "YouTube", avatar: "L" },
+  { rank: 6, user: "CyberNova", level: 26, xp: 44200, messages: 4321, platform: "Discord", avatar: "C" },
+  { rank: 7, user: "BlazeMaster", level: 24, xp: 39800, messages: 3890, platform: "Twitch", avatar: "B" },
+  { rank: 8, user: "ShadowFox", level: 22, xp: 35100, messages: 3456, platform: "Kick", avatar: "S" },
+  { rank: 9, user: "IceQueen_X", level: 20, xp: 31400, messages: 3012, platform: "Discord", avatar: "I" },
+  { rank: 10, user: "StormChaser", level: 18, xp: 27200, messages: 2678, platform: "Twitch", avatar: "S" },
+];
 
-interface LeaderboardUser {
-  platform: string;
-  user_id: string;
-  username: string;
-  xp: number;
+interface RoleReward {
   level: number;
-  messages: number;
+  roleName: string;
+  color: string;
+  perks: string[];
 }
 
-interface LevelReward {
-  level: number;
-  roleId: string;
-  roleName?: string;
-}
+const ROLE_REWARDS: RoleReward[] = [
+  { level: 5, roleName: "Newcomer", color: "#7a8599", perks: ["Access to #general", "Basic emotes"] },
+  { level: 10, roleName: "Regular", color: "#38bdf8", perks: ["Image permissions", "Custom nickname color"] },
+  { level: 20, roleName: "Veteran", color: "#34d399", perks: ["Voice channel priority", "Extended message length"] },
+  { level: 30, roleName: "Elite", color: "#c4a265", perks: ["Private channels access", "Custom role color"] },
+  { level: 50, roleName: "Legend", color: "#dc2626", perks: ["VIP lounge access", "Custom emote slot", "Direct message to Pro"] },
+];
 
-const DEFAULT_CONFIG: LevelsConfig = {
-  enabled: true,
-  minXp: 15,
-  maxXp: 25,
-  cooldownMs: 60000,
-  multiplier: 1.0,
-  announceChannel: null,
-  announceDm: false,
-  announceMessage: "🎉 {user} just reached **Level {level}**!",
-  stackRoles: true,
-  removeOnLevelDown: false,
-  publicLeaderboard: true,
-};
+const XP_MULTIPLIERS = [
+  { platform: "Twitch", multiplier: 1.0, color: "#9146ff" },
+  { platform: "Kick", multiplier: 1.2, color: "#53fc18" },
+  { platform: "YouTube", multiplier: 1.0, color: "#ff0000" },
+  { platform: "Discord", multiplier: 0.8, color: "#5865f2" },
+  { platform: "Trovo", multiplier: 1.5, color: "#19d65c" },
+];
 
 export default function LevelsPage() {
-  const [activeTab, setActiveTab] = useState<TabType>("settings");
-  const [config, setConfig] = useState<LevelsConfig>(DEFAULT_CONFIG);
-  const [leaderboard, setLeaderboard] = useState<LeaderboardUser[]>([]);
-  const [rewards, setRewards] = useState<LevelReward[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [saving, setSaving] = useState(false);
-  const [saveMsg, setSaveMsg] = useState("");
-  const { channels: textChannels } = useDiscordTextChannels();
-  const { roles } = useDiscordRoles();
+  const [xpPerMessage, setXpPerMessage] = useState(15);
+  const [xpPerMinute, setXpPerMinute] = useState(5);
+  const [levelUpAnnounce, setLevelUpAnnounce] = useState(true);
+  const [multipliers, setMultipliers] = useState(XP_MULTIPLIERS);
+  const [xpCurve, setXpCurve] = useState<"linear" | "exponential" | "logarithmic">("exponential");
 
-  // Add reward form
-  const [newRewardLevel, setNewRewardLevel] = useState(5);
-  const [newRewardRoleId, setNewRewardRoleId] = useState("");
-
-  const loadData = useCallback(async () => {
-    setLoading(true);
-    try {
-      const [configRes, lbRes, rewardsRes] = await Promise.all([
-        getLevelsConfig(),
-        getLeaderboard(20),
-        getLevelRewards(),
-      ]);
-      if (configRes.config) setConfig({ ...DEFAULT_CONFIG, ...configRes.config } as LevelsConfig);
-      if (lbRes.leaderboard) setLeaderboard(lbRes.leaderboard);
-      if (rewardsRes.rewards) setRewards(rewardsRes.rewards);
-    } catch (err) {
-      console.error("Failed to load levels data:", err);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => { loadData(); }, [loadData]);
-
-  const handleSaveConfig = async () => {
-    setSaving(true);
-    setSaveMsg("");
-    try {
-      await saveLevelsConfig(config as unknown as Record<string, unknown>);
-      setSaveMsg("Saved!");
-      setTimeout(() => setSaveMsg(""), 2000);
-    } catch {
-      setSaveMsg("Failed to save");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const handleSaveRewards = async () => {
-    setSaving(true);
-    try {
-      await saveLevelRewards(rewards);
-      setSaveMsg("Rewards saved!");
-      setTimeout(() => setSaveMsg(""), 2000);
-    } catch {
-      setSaveMsg("Failed to save rewards");
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  const addReward = () => {
-    if (!newRewardRoleId) return;
-    const role = roles.find(r => r.id === newRewardRoleId);
-    setRewards(prev => [...prev, { level: newRewardLevel, roleId: newRewardRoleId, roleName: role?.name }].sort((a, b) => a.level - b.level));
-    setNewRewardLevel(5);
-    setNewRewardRoleId("");
-  };
-
-  const removeReward = (index: number) => {
-    setRewards(prev => prev.filter((_, i) => i !== index));
-  };
-
-  const updateConfig = <K extends keyof LevelsConfig>(key: K, value: LevelsConfig[K]) => {
-    setConfig(prev => ({ ...prev, [key]: value }));
-  };
-
-  const formatNumber = (num: number) => new Intl.NumberFormat().format(num);
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-red border-t-transparent" />
-      </div>
+  const updateMultiplier = (platform: string, value: number) => {
+    setMultipliers((prev) =>
+      prev.map((m) => (m.platform === platform ? { ...m, multiplier: value } : m))
     );
-  }
+  };
 
   return (
     <div className="space-y-6">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white">Levels & XP</h1>
-          <p className="mt-1 text-sm text-gray-400">Reward active members with XP and level-based roles</p>
+          <h1 className="text-2xl font-bold tracking-tight">Levels & XP</h1>
+          <p className="text-sm text-muted mt-1">Configure experience points, level rewards, and leaderboards</p>
         </div>
         <div className="flex items-center gap-3">
-          <button
-            onClick={() => updateConfig("enabled", !config.enabled)}
-            className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-green-500" : "bg-raised"}`}
-          >
-            <span className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${config.enabled ? "left-6" : "left-1"}`} />
+          <button className="btn btn-secondary btn-sm">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" />
+            </svg>
+            Reset All XP
           </button>
-          <span className="text-sm text-gray-400">{config.enabled ? "Enabled" : "Disabled"}</span>
+          <button className="btn btn-primary btn-sm">Save Settings</button>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-1 rounded-lg bg-surface p-1">
-        {[
-          { id: "settings", label: "Settings" },
-          { id: "rewards", label: "Role Rewards" },
-          { id: "leaderboard", label: "Leaderboard" },
-        ].map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id as TabType)}
-            className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${activeTab === tab.id ? "bg-red text-white" : "text-gray-400 hover:text-white hover:bg-surface"}`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
-
-      {/* Settings Tab */}
-      {activeTab === "settings" && (
-        <div className="space-y-6">
-          {/* Rank Card Preview */}
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <div className="flex items-center gap-2 mb-4">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="text-gray-400">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.64 0 8.577 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.64 0-8.577-3.007-9.963-7.178z" />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <h3 className="text-sm font-semibold text-white">Rank Card Preview</h3>
-              <span className="text-xs text-gray-500 ml-1">How member rank cards appear</span>
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Left: Settings */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* XP Settings */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">XP Configuration</h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div>
+                <label className="text-xs font-semibold text-dim block mb-1.5">XP per Message</label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="range"
+                    min="1"
+                    max="50"
+                    value={xpPerMessage}
+                    onChange={(e) => setXpPerMessage(Number(e.target.value))}
+                    className="flex-1 h-1.5 rounded-full appearance-none bg-glass cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-electric [&::-webkit-slider-thumb]:cursor-pointer"
+                  />
+                  <span className="text-data text-sm font-bold w-10 text-right">{xpPerMessage}</span>
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-dim block mb-1.5">XP per Minute (Watch)</label>
+                <div className="flex items-center gap-3">
+                  <input
+                    type="range"
+                    min="1"
+                    max="20"
+                    value={xpPerMinute}
+                    onChange={(e) => setXpPerMinute(Number(e.target.value))}
+                    className="flex-1 h-1.5 rounded-full appearance-none bg-glass cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-electric [&::-webkit-slider-thumb]:cursor-pointer"
+                  />
+                  <span className="text-data text-sm font-bold w-10 text-right">{xpPerMinute}</span>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-center">
-              <div
-                className="relative w-full max-w-lg overflow-hidden rounded-2xl"
-                style={{
-                  background: "linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1a0a0a 100%)",
-                  boxShadow: "0 0 40px rgba(145, 0, 0, 0.2), 0 4px 30px rgba(0, 0, 0, 0.5)",
-                  border: "1px solid rgba(145, 0, 0, 0.3)",
-                }}
+
+            {/* XP Curve */}
+            <div className="mt-6">
+              <label className="text-xs font-semibold text-dim block mb-3">XP Curve</label>
+              <div className="flex gap-3">
+                {(["linear", "exponential", "logarithmic"] as const).map((curve) => (
+                  <button
+                    key={curve}
+                    onClick={() => setXpCurve(curve)}
+                    className={`flex-1 p-3 rounded-lg border text-center text-xs font-semibold capitalize transition-all ${
+                      xpCurve === curve
+                        ? "bg-electric/10 border-electric/30 text-electric"
+                        : "bg-glass border-glass-border text-muted hover:border-glass-border-hover"
+                    }`}
+                  >
+                    {curve}
+                  </button>
+                ))}
+              </div>
+              <p className="text-[10px] text-dim mt-2">
+                {xpCurve === "linear" && "Each level requires the same amount of XP. Simple and predictable."}
+                {xpCurve === "exponential" && "Higher levels require significantly more XP. Standard for most systems."}
+                {xpCurve === "logarithmic" && "Early levels are harder, later levels get progressively easier."}
+              </p>
+            </div>
+
+            {/* Announcements */}
+            <div className="mt-6 flex items-center justify-between p-3 rounded-lg bg-glass border border-glass-border">
+              <div>
+                <div className="text-xs font-semibold">Level-Up Announcements</div>
+                <div className="text-[10px] text-dim">Post a message when users level up</div>
+              </div>
+              <button
+                onClick={() => setLevelUpAnnounce(!levelUpAnnounce)}
+                className={`w-10 h-5 rounded-full transition-colors flex-shrink-0 ${
+                  levelUpAnnounce ? "bg-emerald" : "bg-dim"
+                }`}
               >
-                {/* Subtle top accent line */}
-                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-brand-red to-transparent" />
-                <div className="p-6">
-                  <div className="flex items-center gap-5">
-                    {/* Avatar */}
-                    <div className="relative flex-shrink-0">
-                      <div
-                        className="flex h-20 w-20 items-center justify-center rounded-full text-2xl font-bold text-white"
-                        style={{
-                          background: "linear-gradient(135deg, #910000 0%, #c41000 100%)",
-                          boxShadow: "0 0 20px rgba(145, 0, 0, 0.4)",
-                        }}
-                      >
-                        {leaderboard.length > 0 ? leaderboard[0].username.charAt(0).toUpperCase() : "P"}
-                      </div>
-                      {/* Online indicator */}
-                      <div className="absolute -bottom-0.5 -right-0.5 h-5 w-5 rounded-full border-[3px] border-[#0d1117] bg-green-500" />
-                    </div>
-                    {/* User Info */}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-3 mb-1">
-                        <h4 className="text-lg font-bold text-white truncate">
-                          {leaderboard.length > 0 ? leaderboard[0].username : "ProzilliGaming"}
-                        </h4>
-                        <span className="flex-shrink-0 rounded-md bg-red/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red">
-                          Rank #1
-                        </span>
-                      </div>
-                      {/* Level Display */}
-                      <div className="flex items-baseline gap-2 mb-3">
-                        <span className="text-3xl font-black" style={{ color: "#c41000", textShadow: "0 0 20px rgba(196, 16, 0, 0.3)" }}>
-                          {leaderboard.length > 0 ? leaderboard[0].level : 42}
-                        </span>
-                        <span className="text-xs font-semibold uppercase tracking-wider text-gray-500">Level</span>
-                      </div>
-                      {/* XP Progress Bar */}
-                      <div>
-                        <div className="flex items-center justify-between mb-1.5">
-                          <span className="text-[11px] font-medium text-gray-400">
-                            {leaderboard.length > 0 ? formatNumber(leaderboard[0].xp) : "12,450"} XP
-                          </span>
-                          <span className="text-[11px] font-medium text-gray-500">
-                            {leaderboard.length > 0 ? formatNumber(Math.ceil(leaderboard[0].xp * 1.2)) : "15,000"} XP
-                          </span>
-                        </div>
-                        <div className="h-2.5 w-full rounded-full bg-raised overflow-hidden">
-                          <div
-                            className="h-full rounded-full transition-all duration-500"
-                            style={{
-                              width: "72%",
-                              background: "linear-gradient(90deg, #910000, #c41000, #e63946)",
-                              boxShadow: "0 0 10px rgba(145, 0, 0, 0.5)",
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  {/* Stats Row */}
-                  <div className="mt-4 grid grid-cols-3 gap-3">
-                    <div className="rounded-lg bg-surface px-3 py-2 text-center">
-                      <p className="text-xs text-gray-500">Messages</p>
-                      <p className="text-sm font-bold text-white">{leaderboard.length > 0 ? formatNumber(leaderboard[0].messages) : "2,847"}</p>
-                    </div>
-                    <div className="rounded-lg bg-surface px-3 py-2 text-center">
-                      <p className="text-xs text-gray-500">Total XP</p>
-                      <p className="text-sm font-bold text-white">{leaderboard.length > 0 ? formatNumber(leaderboard[0].xp) : "12,450"}</p>
-                    </div>
-                    <div className="rounded-lg bg-surface px-3 py-2 text-center">
-                      <p className="text-xs text-gray-500">Platform</p>
-                      <p className="text-sm font-bold text-white">{leaderboard.length > 0 ? leaderboard[0].platform : "Discord"}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Section Divider */}
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-surface" />
-            <span className="text-xs font-medium uppercase tracking-wider text-gray-600">XP Settings</span>
-            <div className="h-px flex-1 bg-surface" />
-          </div>
-
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <h3 className="text-sm font-semibold text-white mb-4">XP Earning</h3>
-            <div className="space-y-4">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div>
-                  <label className="block text-xs font-medium text-gray-400 mb-2">Min XP per Message</label>
-                  <input type="number" value={config.minXp} onChange={(e) => updateConfig("minXp", parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red" />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-400 mb-2">Max XP per Message</label>
-                  <input type="number" value={config.maxXp} onChange={(e) => updateConfig("maxXp", parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red" />
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-400 mb-2">Cooldown (seconds)</label>
-                <input type="number" value={config.cooldownMs / 1000} onChange={(e) => updateConfig("cooldownMs", (parseInt(e.target.value) || 60) * 1000)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red" />
-                <p className="mt-1 text-xs text-gray-500">Time between XP gains to prevent spam</p>
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-400 mb-2">XP Multiplier</label>
-                <select value={config.multiplier} onChange={(e) => updateConfig("multiplier", parseFloat(e.target.value))} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red">
-                  <option value={0.5}>0.5x (Slow)</option>
-                  <option value={1}>1x (Normal)</option>
-                  <option value={1.5}>1.5x (Fast)</option>
-                  <option value={2}>2x (Double)</option>
-                  <option value={3}>3x (Triple)</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          {/* Section Divider */}
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-surface" />
-            <span className="text-xs font-medium uppercase tracking-wider text-gray-600">Announcements</span>
-            <div className="h-px flex-1 bg-surface" />
-          </div>
-
-          {/* Level Up Announcement */}
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <h3 className="text-sm font-semibold text-white mb-4">Level Up Announcement</h3>
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-gray-400 mb-2">Announce Channel</label>
-                <select value={config.announceChannel || ""} onChange={(e) => updateConfig("announceChannel", e.target.value || null)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red">
-                  <option value="">Don&apos;t Announce</option>
-                  {textChannels.map(ch => (
-                    <option key={ch.id} value={ch.id}>#{ch.name}</option>
-                  ))}
-                </select>
-              </div>
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={config.announceDm} onChange={(e) => updateConfig("announceDm", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red" />
-                <div>
-                  <p className="text-sm text-white">Also DM the user</p>
-                </div>
-              </label>
-              <div>
-                <label className="block text-xs font-medium text-gray-400 mb-2">Message Template</label>
-                <textarea value={config.announceMessage} onChange={(e) => updateConfig("announceMessage", e.target.value)} rows={3} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red resize-none" />
-                <p className="mt-1 text-xs text-gray-500">Variables: {"{user}"}, {"{level}"}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Section Divider */}
-          <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-surface" />
-            <span className="text-xs font-medium uppercase tracking-wider text-gray-600">Roles</span>
-            <div className="h-px flex-1 bg-surface" />
-          </div>
-
-          {/* Role Behavior */}
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <h3 className="text-sm font-semibold text-white mb-4">Role Behavior</h3>
-            <div className="space-y-3">
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={config.stackRoles} onChange={(e) => updateConfig("stackRoles", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red" />
-                <div>
-                  <p className="text-sm text-white">Stack Roles</p>
-                  <p className="text-xs text-gray-500">Keep all earned roles instead of just the highest</p>
-                </div>
-              </label>
-              <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={config.removeOnLevelDown} onChange={(e) => updateConfig("removeOnLevelDown", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red" />
-                <div>
-                  <p className="text-sm text-white">Remove on Level Down</p>
-                  <p className="text-xs text-gray-500">Remove role rewards if member loses levels</p>
-                </div>
-              </label>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-end gap-3">
-            {saveMsg && <span className="text-sm text-green-400">{saveMsg}</span>}
-            <button onClick={handleSaveConfig} disabled={saving} className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50">
-              {saving ? "Saving..." : "Save Changes"}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Role Rewards Tab */}
-      {activeTab === "rewards" && (
-        <div className="space-y-6">
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <h3 className="text-sm font-semibold text-white mb-4">Add Role Reward</h3>
-            <div className="flex gap-3 items-end">
-              <div className="w-24">
-                <label className="block text-xs font-medium text-gray-400 mb-2">Level</label>
-                <input type="number" min={1} value={newRewardLevel} onChange={(e) => setNewRewardLevel(parseInt(e.target.value) || 1)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none" />
-              </div>
-              <div className="flex-1">
-                <label className="block text-xs font-medium text-gray-400 mb-2">Role</label>
-                <select value={newRewardRoleId} onChange={(e) => setNewRewardRoleId(e.target.value)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none">
-                  <option value="">Select a role...</option>
-                  {roles.filter(r => !r.managed).map(role => (
-                    <option key={role.id} value={role.id}>{role.name}</option>
-                  ))}
-                </select>
-              </div>
-              <button onClick={addReward} disabled={!newRewardRoleId} className="rounded-lg bg-red px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50">
-                Add
+                <div className={`w-4 h-4 rounded-full bg-white mt-0.5 transition-transform ${
+                  levelUpAnnounce ? "translate-x-5" : "translate-x-0.5"
+                }`} />
               </button>
             </div>
           </div>
 
-          <div className="space-y-3">
-            {rewards.length === 0 && (
-              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-8 text-center">
-                <p className="text-gray-400">No role rewards configured yet.</p>
-              </div>
-            )}
-            {rewards.map((reward, index) => {
-              const role = roles.find(r => r.id === reward.roleId);
-              return (
-                <div key={index} className="flex items-center gap-4 rounded-xl border border-[var(--color-border)] bg-surface p-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-surface text-xl font-bold text-white">
+          {/* Platform Multipliers */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Platform XP Multipliers</h2>
+            <div className="space-y-3">
+              {multipliers.map((m) => (
+                <div key={m.platform} className="flex items-center gap-4 p-3 rounded-lg bg-glass border border-glass-border">
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
+                    style={{ backgroundColor: `${m.color}20`, color: m.color }}
+                  >
+                    {m.platform.charAt(0)}
+                  </div>
+                  <span className="text-xs font-semibold w-20">{m.platform}</span>
+                  <input
+                    type="range"
+                    min="0.1"
+                    max="3"
+                    step="0.1"
+                    value={m.multiplier}
+                    onChange={(e) => updateMultiplier(m.platform, Number(e.target.value))}
+                    className="flex-1 h-1.5 rounded-full appearance-none bg-glass cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-gold [&::-webkit-slider-thumb]:cursor-pointer"
+                  />
+                  <span className="text-data text-sm font-bold w-12 text-right">{m.multiplier}x</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Role Rewards */}
+          <div className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-bold">Level-Up Role Rewards</h2>
+              <button className="btn btn-ghost btn-sm text-xs">Add Reward</button>
+            </div>
+            <div className="space-y-3">
+              {ROLE_REWARDS.map((reward) => (
+                <div key={reward.level} className="flex items-start gap-4 p-4 rounded-lg bg-glass border border-glass-border">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-extrabold flex-shrink-0 bg-glass border border-glass-border">
                     {reward.level}
                   </div>
                   <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="h-3 w-3 rounded-full" style={{ backgroundColor: role?.color || "#888" }} />
-                      <span className="text-sm font-medium text-white">{reward.roleName || role?.name || "Unknown Role"}</span>
-                    </div>
-                    <p className="text-xs text-gray-500 mt-1">{role?.memberCount || 0} members</p>
-                  </div>
-                  <button onClick={() => removeReward(index)} className="rounded-lg bg-red-500/10 p-2 text-red-400 transition-colors hover:bg-red-500/20">
-                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                    </svg>
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="flex items-center justify-end gap-3">
-            {saveMsg && <span className="text-sm text-green-400">{saveMsg}</span>}
-            <button onClick={handleSaveRewards} disabled={saving} className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50">
-              {saving ? "Saving..." : "Save Rewards"}
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Leaderboard Tab */}
-      {activeTab === "leaderboard" && (
-        <div className="space-y-6">
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-white">Top Members</h3>
-              <button onClick={loadData} className="text-xs text-red hover:text-white transition-colors">Refresh</button>
-            </div>
-            {leaderboard.length === 0 ? (
-              <p className="text-center text-gray-400 py-8">No XP data yet. Members will appear as they chat.</p>
-            ) : (
-              <div className="space-y-3">
-                {leaderboard.map((user, i) => (
-                  <div
-                    key={`${user.platform}-${user.user_id}`}
-                    className={`flex items-center gap-4 rounded-lg p-4 transition-colors ${
-                      i === 0 ? "bg-brand-gold/10 border border-brand-gold/20" :
-                      i === 1 ? "bg-gray-400/5 border border-gray-400/10" :
-                      i === 2 ? "bg-amber-700/10 border border-amber-700/15" :
-                      "bg-surface border border-transparent"
-                    }`}
-                  >
-                    {/* Rank Badge */}
-                    <div className="relative flex-shrink-0">
-                      <span className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${i === 0 ? "bg-brand-gold text-black" : i === 1 ? "bg-gray-400 text-black" : i === 2 ? "bg-amber-700 text-white" : "bg-raised text-gray-400"}`}>
-                        {i + 1}
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="text-sm font-bold" style={{ color: reward.color }}>
+                        {reward.roleName}
                       </span>
-                      {i < 3 && (
-                        <svg className="absolute -top-2 -right-2" width="14" height="14" viewBox="0 0 24 24" fill={i === 0 ? "#c4a265" : i === 1 ? "#949d9f" : "#b45309"} stroke="none">
-                          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                        </svg>
-                      )}
+                      <span className="text-[10px] text-dim">Level {reward.level}</span>
                     </div>
-                    {/* Avatar */}
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red/20 text-red font-medium">
-                      {user.username.charAt(0).toUpperCase()}
-                    </div>
-                    {/* Info */}
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-white truncate">{user.username}</p>
-                      <p className="text-xs text-gray-500">{formatNumber(user.xp)} XP &middot; {formatNumber(user.messages)} messages &middot; {user.platform}</p>
-                    </div>
-                    {/* Level */}
-                    <div className="text-right flex-shrink-0">
-                      <p className={`text-lg font-bold ${i === 0 ? "text-gold" : "text-white"}`}>Lv.{user.level}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {reward.perks.map((perk) => (
+                        <span key={perk} className="text-[10px] px-2 py-0.5 rounded-full bg-glass border border-glass-border text-muted">
+                          {perk}
+                        </span>
+                      ))}
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Leaderboard Settings */}
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <h3 className="text-sm font-semibold text-white mb-4">Leaderboard Settings</h3>
-            <label className="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" checked={config.publicLeaderboard} onChange={(e) => updateConfig("publicLeaderboard", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red" />
-              <div>
-                <p className="text-sm text-white">Public Leaderboard</p>
-                <p className="text-xs text-gray-500">Allow members to view the leaderboard with !leaderboard</p>
-              </div>
-            </label>
+                  <button className="btn btn-ghost btn-sm text-xs flex-shrink-0">Edit</button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      )}
+
+        {/* Right: Leaderboard */}
+        <div className="space-y-6">
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Leaderboard</h2>
+            <div className="space-y-1">
+              {LEADERBOARD.map((entry) => (
+                <div
+                  key={entry.rank}
+                  className={`flex items-center gap-3 p-2.5 rounded-lg transition-colors hover:bg-glass ${
+                    entry.rank <= 3 ? "bg-glass/50" : ""
+                  }`}
+                >
+                  <span className={`text-data text-xs font-bold w-5 text-center ${
+                    entry.rank === 1 ? "text-gold" :
+                    entry.rank === 2 ? "text-muted" :
+                    entry.rank === 3 ? "text-[#cd7f32]" : "text-dim"
+                  }`}>
+                    {entry.rank}
+                  </span>
+                  <div className="w-7 h-7 rounded-full bg-glass border border-glass-border flex items-center justify-center text-[10px] font-bold flex-shrink-0">
+                    {entry.avatar}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-xs font-semibold truncate">{entry.user}</div>
+                    <div className="text-[10px] text-dim">Lv.{entry.level} &middot; {entry.xp.toLocaleString()} XP</div>
+                  </div>
+                  <div className="text-[10px] text-dim text-right">
+                    {entry.messages.toLocaleString()} msgs
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* XP Preview */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">XP to Next Level</h2>
+            <div className="space-y-3">
+              {[
+                { level: "1 -> 2", xp: "100 XP" },
+                { level: "5 -> 6", xp: "500 XP" },
+                { level: "10 -> 11", xp: "1,500 XP" },
+                { level: "20 -> 21", xp: "4,000 XP" },
+                { level: "30 -> 31", xp: "8,500 XP" },
+                { level: "50 -> 51", xp: "22,500 XP" },
+              ].map((preview) => (
+                <div key={preview.level} className="flex items-center justify-between p-2 rounded-lg hover:bg-glass transition-colors">
+                  <span className="text-xs text-muted">{preview.level}</span>
+                  <span className="text-data text-xs font-semibold">{preview.xp}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

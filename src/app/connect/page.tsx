@@ -1,624 +1,287 @@
-"use client";
+import type { Metadata } from "next";
 
-import { useState } from "react";
-
-// Complete scope definitions for each platform
-const PLATFORM_SCOPES = {
-  twitch: {
-    name: "Twitch",
-    icon: "🟣",
-    color: "#9146FF",
-    authUrl: "https://id.twitch.tv/oauth2/authorize",
-    clientId: "khtgcmrdffyautneihm3gpgpcwgh8q",
-    note: "",
-    requiresPKCE: false,
-    scopes: [
-      // Channel scopes
-      { id: "channel:read:subscriptions", desc: "View subscriber list", category: "Channel" },
-      { id: "channel:read:redemptions", desc: "View Channel Points redemptions", category: "Channel" },
-      { id: "channel:manage:redemptions", desc: "Manage Channel Points rewards", category: "Channel" },
-      { id: "channel:read:polls", desc: "View polls", category: "Channel" },
-      { id: "channel:manage:polls", desc: "Create and manage polls", category: "Channel" },
-      { id: "channel:read:predictions", desc: "View predictions", category: "Channel" },
-      { id: "channel:manage:predictions", desc: "Create and manage predictions", category: "Channel" },
-      { id: "channel:read:hype_train", desc: "View Hype Train status", category: "Channel" },
-      { id: "channel:read:goals", desc: "View Creator Goals", category: "Channel" },
-      { id: "channel:manage:broadcast", desc: "Edit stream info (title, game, tags)", category: "Channel" },
-      { id: "channel:read:ads", desc: "View ad schedule", category: "Channel" },
-      { id: "channel:manage:ads", desc: "Run and schedule ads", category: "Channel" },
-      { id: "channel:edit:commercial", desc: "Run commercials", category: "Channel" },
-      { id: "channel:read:editors", desc: "View channel editors", category: "Channel" },
-      { id: "channel:read:vips", desc: "View VIP list", category: "Channel" },
-      { id: "channel:manage:vips", desc: "Add/remove VIPs", category: "Channel" },
-      { id: "channel:manage:moderators", desc: "Add/remove moderators", category: "Channel" },
-      { id: "channel:manage:raids", desc: "Start and cancel raids", category: "Channel" },
-      { id: "channel:read:stream_key", desc: "View stream key", category: "Channel" },
-      { id: "channel:manage:schedule", desc: "Edit stream schedule", category: "Channel" },
-      { id: "channel:manage:videos", desc: "Delete videos", category: "Channel" },
-      { id: "channel:read:charity", desc: "View charity campaigns", category: "Channel" },
-      // Chat scopes
-      { id: "chat:read", desc: "Read chat messages (IRC)", category: "Chat", recommended: "bot" },
-      { id: "chat:edit", desc: "Send chat messages (IRC)", category: "Chat", recommended: "bot" },
-      { id: "user:read:chat", desc: "Read chat messages (API)", category: "Chat" },
-      { id: "user:write:chat", desc: "Send chat messages (API)", category: "Chat", recommended: "bot" },
-      { id: "user:bot", desc: "Appear as bot user in chat", category: "Chat", recommended: "bot" },
-      { id: "channel:bot", desc: "Join channel as bot", category: "Chat", recommended: "bot" },
-      // Moderation scopes
-      { id: "channel:moderate", desc: "Perform moderation actions", category: "Moderation" },
-      { id: "moderator:read:followers", desc: "View follower list", category: "Moderation" },
-      { id: "moderator:read:chatters", desc: "View chatter list", category: "Moderation" },
-      { id: "moderator:manage:chat_messages", desc: "Delete chat messages", category: "Moderation" },
-      { id: "moderator:manage:banned_users", desc: "Ban/unban users", category: "Moderation" },
-      { id: "moderator:read:banned_users", desc: "View ban list", category: "Moderation" },
-      { id: "moderator:manage:chat_settings", desc: "Manage chat settings (slow mode, etc)", category: "Moderation" },
-      { id: "moderator:read:chat_settings", desc: "View chat settings", category: "Moderation" },
-      { id: "moderator:manage:announcements", desc: "Send announcements", category: "Moderation" },
-      { id: "moderator:manage:shoutouts", desc: "Send shoutouts", category: "Moderation" },
-      { id: "moderator:read:shoutouts", desc: "View shoutouts", category: "Moderation" },
-      { id: "moderator:manage:automod", desc: "Manage AutoMod held messages", category: "Moderation" },
-      { id: "moderator:read:automod_settings", desc: "View AutoMod settings", category: "Moderation" },
-      { id: "moderator:manage:automod_settings", desc: "Edit AutoMod settings", category: "Moderation" },
-      { id: "moderator:read:blocked_terms", desc: "View blocked terms", category: "Moderation" },
-      { id: "moderator:manage:blocked_terms", desc: "Manage blocked terms", category: "Moderation" },
-      { id: "moderator:manage:shield_mode", desc: "Toggle Shield Mode", category: "Moderation" },
-      { id: "moderator:read:shield_mode", desc: "View Shield Mode status", category: "Moderation" },
-      { id: "moderator:manage:warnings", desc: "Warn users", category: "Moderation" },
-      { id: "moderator:read:warnings", desc: "View warnings", category: "Moderation" },
-      { id: "moderator:read:suspicious_users", desc: "View suspicious users", category: "Moderation" },
-      { id: "moderator:manage:suspicious_users", desc: "Update suspicious user status", category: "Moderation" },
-      { id: "moderator:read:unban_requests", desc: "View unban requests", category: "Moderation" },
-      { id: "moderator:manage:unban_requests", desc: "Manage unban requests", category: "Moderation" },
-      // User scopes
-      { id: "user:read:email", desc: "View email address", category: "User" },
-      { id: "user:read:follows", desc: "View followed channels", category: "User" },
-      { id: "user:read:subscriptions", desc: "View subscriptions", category: "User" },
-      { id: "user:read:blocked_users", desc: "View blocked users", category: "User" },
-      { id: "user:manage:blocked_users", desc: "Block/unblock users", category: "User" },
-      { id: "user:read:broadcast", desc: "View stream configuration", category: "User" },
-      { id: "user:edit:broadcast", desc: "Edit stream configuration", category: "User" },
-      { id: "user:read:emotes", desc: "View available emotes", category: "User" },
-      { id: "user:manage:chat_color", desc: "Change chat color", category: "User" },
-      { id: "user:read:moderated_channels", desc: "View moderated channels", category: "User" },
-      { id: "user:read:whispers", desc: "Receive whispers", category: "User" },
-      { id: "user:manage:whispers", desc: "Send whispers", category: "User" },
-      // Other
-      { id: "bits:read", desc: "View Bits leaderboard", category: "Other" },
-      { id: "clips:edit", desc: "Create clips", category: "Other" },
-      { id: "analytics:read:extensions", desc: "View extension analytics", category: "Other" },
-      { id: "analytics:read:games", desc: "View game analytics", category: "Other" },
-    ]
-  },
-  youtube: {
-    name: "YouTube",
-    icon: "🔴",
-    color: "#FF0000",
-    authUrl: "https://accounts.google.com/o/oauth2/v2/auth",
-    clientId: "527131954672-hc69an9k03tanh0vjqqarkd2ru4atgc7.apps.googleusercontent.com",
-    note: "App is in testing mode - add test users in Google Cloud Console first",
-    requiresPKCE: false,
-    scopes: [
-      { id: "https://www.googleapis.com/auth/youtube.readonly", desc: "View your YouTube account (videos, playlists, etc)", category: "Read" },
-      { id: "https://www.googleapis.com/auth/youtube", desc: "Manage your YouTube account", category: "Manage" },
-      { id: "https://www.googleapis.com/auth/youtube.force-ssl", desc: "View and manage videos, comments, ratings (requires SSL)", category: "Manage", recommended: "bot" },
-      { id: "https://www.googleapis.com/auth/youtube.upload", desc: "Upload videos", category: "Manage" },
-      { id: "https://www.googleapis.com/auth/youtube.channel-memberships.creator", desc: "View channel members and their levels", category: "Read" },
-      { id: "https://www.googleapis.com/auth/youtubepartner", desc: "View and manage YouTube partner assets", category: "Partner" },
-      { id: "https://www.googleapis.com/auth/youtubepartner-channel-audit", desc: "View private channel info during partner audit", category: "Partner" },
-    ]
-  },
-  kick: {
-    name: "Kick",
-    icon: "🟢",
-    color: "#53FC18",
-    authUrl: "https://id.kick.com/oauth/authorize",
-    clientId: "01JTS911DF9KYBZSZ7VX4B7V3S",
-    note: "",
-    requiresPKCE: true,
-    scopes: [
-      { id: "user:read", desc: "View user info (username, ID)", category: "User" },
-      { id: "channel:read", desc: "View channel info (description, category)", category: "Channel" },
-      { id: "channel:write", desc: "Update stream title, category", category: "Channel" },
-      { id: "channel:rewards:read", desc: "View Channel Points rewards", category: "Channel" },
-      { id: "channel:rewards:write", desc: "Manage Channel Points rewards", category: "Channel" },
-      { id: "chat:write", desc: "Send chat messages", category: "Chat", recommended: "bot" },
-      { id: "streamkey:read", desc: "View stream key", category: "Channel" },
-      { id: "events:subscribe", desc: "Subscribe to events (chat, follows, subs)", category: "Events", recommended: "both" },
-      { id: "moderation:ban", desc: "Ban/unban users", category: "Moderation" },
-      { id: "moderation:chat_message:manage", desc: "Delete chat messages", category: "Moderation" },
-      { id: "kicks:read", desc: "View KICKS leaderboards", category: "Other" },
-    ]
-  },
-  trovo: {
-    name: "Trovo",
-    icon: "🟡",
-    color: "#19D65C",
-    authUrl: "https://open.trovo.live/page/login.html",
-    clientId: "aeaf81c93a5f587c797cc9bde7ffa28e",
-    note: "",
-    requiresPKCE: false,
-    scopes: [
-      { id: "user_details_self", desc: "View email and user profile", category: "User" },
-      { id: "channel_details_self", desc: "View channel details including stream key", category: "Channel" },
-      { id: "channel_update_self", desc: "Update channel settings", category: "Channel" },
-      { id: "channel_subscriptions", desc: "View subscriber list", category: "Channel" },
-      { id: "chat_connect", desc: "Connect to chat and receive messages in real time", category: "Chat", recommended: "broadcaster" },
-      { id: "chat_send_self", desc: "Send chat messages as yourself", category: "Chat", recommended: "bot" },
-      { id: "send_to_my_channel", desc: "Send messages to your channel", category: "Chat", recommended: "bot" },
-      { id: "manage_messages", desc: "Delete messages and run chat commands", category: "Moderation" },
-    ]
-  },
-  discord: {
-    name: "Discord",
-    icon: "💬",
-    color: "#5865F2",
-    authUrl: "https://discord.com/api/oauth2/authorize",
-    clientId: "1445478850539683890",
-    note: "Bot is already connected via token. OAuth is for user authorization only.",
-    requiresPKCE: false,
-    scopes: [
-      // User scopes
-      { id: "identify", desc: "View username, avatar, banner, locale", category: "User" },
-      { id: "email", desc: "View email address", category: "User" },
-      { id: "connections", desc: "View linked accounts (Twitch, YouTube, Spotify, etc)", category: "User" },
-      { id: "openid", desc: "OpenID Connect authentication", category: "User" },
-      // Guild scopes
-      { id: "guilds", desc: "View list of servers user is in", category: "Guilds" },
-      { id: "guilds.join", desc: "Add user to servers (requires bot in server)", category: "Guilds" },
-      { id: "guilds.members.read", desc: "View member info (nickname, roles, etc)", category: "Guilds" },
-      { id: "role_connections.write", desc: "Update linked roles metadata", category: "Guilds" },
-      // Bot scopes
-      { id: "bot", desc: "Add bot to server with permissions", category: "Bot", recommended: "bot" },
-      { id: "applications.commands", desc: "Register and use slash commands", category: "Bot", recommended: "bot" },
-      { id: "webhook.incoming", desc: "Create webhook and get URL", category: "Bot" },
-    ]
-  },
-  facebook: {
-    name: "Facebook",
-    icon: "🔵",
-    color: "#1877F2",
-    authUrl: "https://www.facebook.com/v21.0/dialog/oauth",
-    clientId: "788626606846793",
-    note: "App is in development mode. Requires app review for public access.",
-    requiresPKCE: false,
-    scopes: [
-      // Pages
-      { id: "pages_show_list", desc: "View list of Pages you manage", category: "Pages", recommended: "broadcaster" },
-      { id: "pages_read_engagement", desc: "Read engagement data on your Pages", category: "Pages", recommended: "broadcaster" },
-      { id: "pages_manage_posts", desc: "Create and manage Page posts", category: "Pages" },
-      { id: "pages_read_user_content", desc: "Read user-generated content on your Pages", category: "Pages" },
-      // Content
-      { id: "pages_read_user_content", desc: "Read user-generated content on your Pages", category: "Content" },
-      { id: "pages_manage_engagement", desc: "Manage comments and reactions on your Pages", category: "Content" },
-      // Messaging
-      { id: "pages_messaging", desc: "Send and receive messages via Messenger", category: "Messaging" },
-    ]
-  },
-  instagram: {
-    name: "Instagram",
-    icon: "📸",
-    color: "#E4405F",
-    authUrl: "https://www.facebook.com/v21.0/dialog/oauth",
-    clientId: "788626606846793",
-    note: "Instagram via Facebook Login. Your Instagram must be a Business/Creator account linked to a Facebook Page.",
-    requiresPKCE: false,
-    scopes: [
-      { id: "instagram_basic", desc: "View your Instagram profile info and media", category: "Basic", recommended: "broadcaster" },
-      { id: "instagram_manage_comments", desc: "Read and manage comments on your posts", category: "Engagement" },
-      { id: "pages_show_list", desc: "View list of Pages you manage (required for Instagram access)", category: "Pages", recommended: "broadcaster" },
-      { id: "pages_read_engagement", desc: "Read engagement data on your Pages", category: "Pages" },
-    ]
-  },
-  tiktok: {
-    name: "TikTok",
-    icon: "🎵",
-    color: "#000000",
-    authUrl: "https://www.tiktok.com/v2/auth/authorize/",
-    clientId: "sbawuv28es89z6j29d",
-    note: "Sandbox mode — limited to test users. Public posting requires full app approval.",
-    requiresPKCE: false,
-    scopes: [
-      { id: "user.info.basic", desc: "View basic user info (open_id, avatar)", category: "User", recommended: "broadcaster" },
-      { id: "user.info.profile", desc: "View profile info (display name, bio, links)", category: "User", recommended: "broadcaster" },
-      { id: "user.info.stats", desc: "View account stats (follower/following count, likes)", category: "User" },
-      { id: "video.list", desc: "View list of published videos", category: "Video", recommended: "broadcaster" },
-      { id: "video.upload", desc: "Upload video files", category: "Video" },
-      { id: "video.publish", desc: "Publish videos (sandbox: drafts only)", category: "Video" },
-    ]
-  },
-  x: {
-    name: "X (Twitter)",
-    icon: "✖",
-    color: "#000000",
-    authUrl: "https://twitter.com/i/oauth2/authorize",
-    clientId: "b2Q0dmxsWUhQMGk5ZTV6S1hqVTY6MTpjaQ",
-    note: "",
-    requiresPKCE: true,
-    scopes: [
-      // Read
-      { id: "tweet.read", desc: "View tweets, timeline, lists, and spaces", category: "Read", recommended: "both" },
-      { id: "users.read", desc: "View user profile information", category: "Read", recommended: "both" },
-      { id: "follows.read", desc: "View who you follow and who follows you", category: "Read" },
-      { id: "list.read", desc: "View your lists", category: "Read" },
-      { id: "space.read", desc: "View spaces", category: "Read" },
-      { id: "mute.read", desc: "View muted accounts", category: "Read" },
-      { id: "like.read", desc: "View liked tweets", category: "Read" },
-      { id: "block.read", desc: "View blocked accounts", category: "Read" },
-      { id: "bookmark.read", desc: "View bookmarked tweets", category: "Read" },
-      // Write
-      { id: "tweet.write", desc: "Post, retweet, and delete tweets", category: "Write", recommended: "both" },
-      { id: "follows.write", desc: "Follow and unfollow accounts", category: "Write" },
-      { id: "list.write", desc: "Create and manage lists", category: "Write" },
-      { id: "mute.write", desc: "Mute and unmute accounts", category: "Write" },
-      { id: "like.write", desc: "Like and unlike tweets", category: "Write" },
-      { id: "block.write", desc: "Block and unblock accounts", category: "Write" },
-      { id: "bookmark.write", desc: "Bookmark and remove bookmarks", category: "Write" },
-      // DMs
-      { id: "dm.read", desc: "Read direct messages", category: "Direct Messages" },
-      { id: "dm.write", desc: "Send direct messages", category: "Direct Messages" },
-      // Auth
-      { id: "offline.access", desc: "Stay connected (refresh token)", category: "Auth", recommended: "both" },
-    ]
-  }
+export const metadata: Metadata = {
+  title: "Connect Accounts",
+  description:
+    "Link your accounts across 9 platforms to unlock cross-platform rewards, unified identity, VIP sync, and LISA recognition. Powered by PRISMAI OAuth.",
 };
 
-const API_BASE = "https://api.prozilli.com"; // Must use full URL for OAuth redirects (not proxy)
+const PLATFORMS = [
+  {
+    name: "Twitch",
+    description: "Link your Twitch account for sub recognition, channel point rewards, and LISA interaction across platforms.",
+    color: "#9146ff",
+    connected: false,
+    icon: "M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z",
+  },
+  {
+    name: "YouTube",
+    description: "Connect YouTube for membership sync, comment recognition, and cross-platform loyalty tracking.",
+    color: "#ff0000",
+    connected: false,
+    icon: "M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z",
+  },
+  {
+    name: "Kick",
+    description: "Link your Kick account for chat identity, subscriber perks, and LISA recognition on Kick streams.",
+    color: "#53fc18",
+    connected: false,
+    icon: "M4 2h6l4 7-4 7H4l4-7-4-7zm10 0h6l-4 7 4 7h-6l-4-7 4-7z",
+  },
+  {
+    name: "Discord",
+    description: "Connect Discord for role sync, VIP status, server permissions, and LISA interaction in all channels.",
+    color: "#5865f2",
+    connected: false,
+    icon: "M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03z",
+  },
+  {
+    name: "TikTok",
+    description: "Link TikTok for cross-platform content attribution and community recognition on short-form videos.",
+    color: "#ff0050",
+    connected: false,
+    icon: "M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z",
+  },
+  {
+    name: "X / Twitter",
+    description: "Connect your X account for tweet recognition, cross-posting attribution, and social engagement tracking.",
+    color: "#ffffff",
+    connected: false,
+    icon: "M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z",
+  },
+  {
+    name: "Instagram",
+    description: "Link Instagram for story mentions, content collaboration tracking, and visual community engagement.",
+    color: "#e4405f",
+    connected: false,
+    icon: "M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z",
+  },
+  {
+    name: "Facebook",
+    description: "Connect Facebook for page interaction sync, event RSVP tracking, and social cross-platform identity.",
+    color: "#1877f2",
+    connected: false,
+    icon: "M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z",
+  },
+  {
+    name: "Trovo",
+    description: "Link your Trovo account for livestream recognition, subscriber sync, and chat identity across platforms.",
+    color: "#19d65c",
+    connected: false,
+    icon: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z",
+  },
+];
 
-type PlatformKey = keyof typeof PLATFORM_SCOPES;
+const BENEFITS = [
+  {
+    title: "Unified Identity",
+    description: "One profile across all 9 platforms. LISA recognizes you whether you're on Twitch, Discord, Kick, or anywhere else.",
+    icon: "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z",
+    accent: "electric",
+  },
+  {
+    title: "Cross-Platform Rewards",
+    description: "Earn loyalty points on any platform and spend them anywhere. Watch on YouTube, redeem on Discord. It all counts.",
+    icon: "M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z",
+    accent: "gold",
+  },
+  {
+    title: "VIP Sync",
+    description: "Subscribe on any platform — Twitch, YouTube, Patreon, or Tebex — and your VIP status follows you everywhere automatically.",
+    icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z",
+    accent: "emerald",
+  },
+  {
+    title: "LISA Remembers You",
+    description: "Connect your accounts and LISA builds a relationship with you across every platform. She remembers your name, your jokes, and your history.",
+    icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
+    accent: "red",
+  },
+];
 
 export default function ConnectPage() {
-  const [selectedPlatform, setSelectedPlatform] = useState<PlatformKey | null>(null);
-  const [selectedScopes, setSelectedScopes] = useState<Record<string, Set<string>>>({});
-  const [role, setRole] = useState<"broadcaster" | "bot">("broadcaster");
-
-  const toggleScope = (platform: string, scopeId: string) => {
-    setSelectedScopes(prev => {
-      const platformScopes = new Set(prev[platform] || []);
-      if (platformScopes.has(scopeId)) {
-        platformScopes.delete(scopeId);
-      } else {
-        platformScopes.add(scopeId);
-      }
-      return { ...prev, [platform]: platformScopes };
-    });
-  };
-
-  const selectRecommended = (platform: PlatformKey, forRole: "broadcaster" | "bot") => {
-    const platformData = PLATFORM_SCOPES[platform];
-    const recommended = new Set<string>();
-
-    platformData.scopes.forEach(scope => {
-      if (scope.recommended === forRole || scope.recommended === "both") {
-        recommended.add(scope.id);
-      }
-    });
-
-    // Add some sensible defaults
-    if (forRole === "broadcaster") {
-      if (platform === "twitch") {
-        recommended.add("channel:read:subscriptions");
-        recommended.add("channel:read:redemptions");
-        recommended.add("moderator:read:followers");
-        recommended.add("bits:read");
-        recommended.add("channel:read:hype_train");
-      }
-    }
-
-    setSelectedScopes(prev => ({ ...prev, [platform]: recommended }));
-  };
-
-  const startOAuth = async (platform: PlatformKey) => {
-    const platformData = PLATFORM_SCOPES[platform];
-    const scopes = selectedScopes[platform];
-
-    if (!scopes || scopes.size === 0) {
-      alert("Please select at least one scope");
-      return;
-    }
-
-    const redirectUri = `${API_BASE}/callback/${platform}`;
-    const state = `${role}_${Date.now()}`;
-    const scopeString = Array.from(scopes).join(" ");
-
-    let authUrl = "";
-
-    switch (platform) {
-      case "twitch":
-        authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}&force_verify=true`;
-        break;
-
-      case "youtube":
-        authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}&access_type=offline&prompt=consent`;
-        break;
-
-      case "kick": {
-        // Kick requires PKCE with S256
-        // Embed verifier in state (KV has eventual consistency issues)
-        const codeVerifier = generateCodeVerifier();
-        const codeChallenge = await generateS256Challenge(codeVerifier);
-        const kickState = `${state}|${codeVerifier}`;
-        const kickUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${encodeURIComponent(kickState)}&code_challenge=${codeChallenge}&code_challenge_method=S256`;
-        window.open(kickUrl, `oauth_${platform}`, "width=600,height=800,left=200,top=50");
-        return;
-      }
-
-      case "trovo":
-        // Trovo scopes are joined with +
-        const trovoScopes = Array.from(scopes).join("+");
-        authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${trovoScopes}&state=${state}`;
-        break;
-
-      case "discord": {
-        // Discord supports combined bot + user auth in a single URL
-        const hasBot = scopes.has("bot");
-        const params = new URLSearchParams({
-          client_id: platformData.clientId,
-          scope: scopeString,
-        });
-        if (hasBot) {
-          params.set("permissions", "277025770560");
-        }
-        // Always include redirect_uri + response_type for user auth callback
-        params.set("redirect_uri", redirectUri);
-        params.set("response_type", "code");
-        params.set("state", state);
-        authUrl = `${platformData.authUrl}?${params.toString()}`;
-        break;
-      }
-
-      case "x": {
-        // X uses PKCE S256 — embed verifier in state (same pattern as Kick)
-        // X Developer Portal has callback registered as /callback/twitter
-        const xRedirectUri = `${API_BASE}/callback/twitter`;
-        const xVerifier = generateCodeVerifier();
-        const xChallenge = await generateS256Challenge(xVerifier);
-        const xState = `${state}|${xVerifier}`;
-        const xUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(xRedirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${encodeURIComponent(xState)}&code_challenge=${xChallenge}&code_challenge_method=S256`;
-        window.open(xUrl, `oauth_${platform}`, "width=600,height=800,left=200,top=50");
-        return;
-      }
-
-      case "tiktok":
-        // TikTok uses client_key (not client_id) and comma-separated scopes
-        authUrl = `${platformData.authUrl}?client_key=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(Array.from(scopes).join(","))}&state=${state}`;
-        break;
-
-      case "facebook":
-        authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}`;
-        break;
-      case "instagram":
-        // Instagram via Facebook Login — uses Facebook's OAuth with Instagram scopes
-        // Redirect goes to /callback/instagram so the Worker stores tokens under the "instagram" key
-        authUrl = `${platformData.authUrl}?client_id=${platformData.clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${encodeURIComponent(scopeString)}&state=${state}`;
-        break;
-    }
-
-    if (authUrl) {
-      window.open(authUrl, `oauth_${platform}`, "width=600,height=800,left=200,top=50");
-    }
-  };
-
-  const generateCodeVerifier = (): string => {
-    // RFC 7636: 43-128 chars from unreserved set [A-Z/a-z/0-9/-._~]
-    const array = new Uint8Array(32);
-    crypto.getRandomValues(array);
-    return btoa(String.fromCharCode(...array))
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/, "");
-  };
-
-  const generateS256Challenge = async (verifier: string): Promise<string> => {
-    const data = new TextEncoder().encode(verifier);
-    const digest = await crypto.subtle.digest("SHA-256", data);
-    return btoa(String.fromCharCode(...new Uint8Array(digest)))
-      .replace(/\+/g, "-")
-      .replace(/\//g, "_")
-      .replace(/=+$/, "");
-  };
-
-  const platform = selectedPlatform ? PLATFORM_SCOPES[selectedPlatform] : null;
-  const currentScopes = selectedPlatform ? (selectedScopes[selectedPlatform] || new Set()) : new Set();
-
-  // Group scopes by category
-  const scopesByCategory: Record<string, typeof PLATFORM_SCOPES.twitch.scopes> = {};
-  if (platform) {
-    platform.scopes.forEach(scope => {
-      if (!scopesByCategory[scope.category]) {
-        scopesByCategory[scope.category] = [];
-      }
-      scopesByCategory[scope.category].push(scope);
-    });
-  }
-
   return (
-    <main className="min-h-screen bg-base text-foreground">
-      {/* Header */}
-      <div className="border-b border-[var(--color-border)] bg-base/95 backdrop-blur-sm sticky top-0 z-10">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-          <h1 className="text-2xl font-bold text-foreground">Platform OAuth Configuration</h1>
-          <p className="text-muted text-sm mt-1">Select scopes for each platform connection</p>
+    <>
+      {/* ====== HERO ====== */}
+      <section className="hero-section min-h-[70vh] bg-grid">
+        <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-32">
+          <div className="max-w-3xl">
+            <div className="badge badge-electric mb-6 animate-reveal">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+              Account Linking
+            </div>
+            <h1 className="text-display mb-6 animate-reveal" style={{ animationDelay: "0.1s" }}>
+              Connect Your{" "}
+              <span className="text-shimmer">Platforms</span>
+            </h1>
+            <p
+              className="text-body-lg max-w-xl mb-10 animate-reveal"
+              style={{ animationDelay: "0.2s" }}
+            >
+              Link your accounts across all 9 platforms for a unified identity.
+              LISA recognizes you everywhere, your VIP status syncs automatically,
+              and your loyalty follows you across the entire ecosystem.
+            </p>
+            <div
+              className="animate-reveal"
+              style={{ animationDelay: "0.3s" }}
+            >
+              <div className="powered-by-prismai w-fit">
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" opacity="0.3" />
+                  <circle cx="12" cy="12" r="4" />
+                </svg>
+                Secured by PRISMAI OAuth
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-        {/* Role Selection */}
-        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row gap-3 sm:gap-4">
-          <button
-            onClick={() => setRole("broadcaster")}
-            className={`flex-1 sm:flex-none px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
-              role === "broadcaster"
-                ? "bg-red text-white"
-                : "bg-surface text-muted hover:bg-raised"
-            }`}
-          >
-            Broadcaster (Pro)
-          </button>
-          <button
-            onClick={() => setRole("bot")}
-            className={`flex-1 sm:flex-none px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
-              role === "bot"
-                ? "bg-gold text-black"
-                : "bg-surface text-muted hover:bg-raised"
-            }`}
-          >
-            Bot (LISA)
-          </button>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Platform List */}
-          <div className="space-y-3">
-            <h2 className="text-lg font-semibold text-muted mb-4">Platforms</h2>
-            {(Object.entries(PLATFORM_SCOPES) as [PlatformKey, typeof PLATFORM_SCOPES.twitch][]).map(([key, p]) => (
-              <button
-                key={key}
-                onClick={() => setSelectedPlatform(key)}
-                className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
-                  selectedPlatform === key
-                    ? "bg-raised border-2"
-                    : "panel"
-                }`}
-                style={{ borderColor: selectedPlatform === key ? p.color : undefined }}
-              >
-                <div
-                  className="w-10 h-10 rounded-lg flex items-center justify-center text-xl"
-                  style={{ backgroundColor: `${p.color}30` }}
-                >
-                  {p.icon}
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold text-foreground">{p.name}</div>
-                  <div className="text-xs text-dim">
-                    {selectedScopes[key]?.size || 0} scopes selected
-                  </div>
-                </div>
-              </button>
-            ))}
+      {/* ====== PLATFORM CONNECTIONS ====== */}
+      <section className="py-24 bg-dots">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="badge badge-gold mb-4">9 Platforms</div>
+            <h2 className="text-headline mb-4">Link Your Accounts</h2>
+            <p className="text-body-lg max-w-2xl mx-auto">
+              Click any platform below to connect your account via secure OAuth.
+              We never store your passwords — only authorized access tokens, encrypted at rest.
+            </p>
           </div>
 
-          {/* Scope Selection */}
-          <div className="lg:col-span-2">
-            {platform && selectedPlatform ? (
-              <div className="panel p-6">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-                  <div className="flex items-center gap-3">
-                    <span className="text-2xl">{platform.icon}</span>
-                    <h2 className="text-lg sm:text-xl font-bold text-foreground">{platform.name} Scopes</h2>
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => {
-                        const allScopes = new Set(platform.scopes.map(s => s.id));
-                        setSelectedScopes(prev => ({ ...prev, [selectedPlatform]: allScopes }));
-                      }}
-                      className="flex-1 sm:flex-none px-3 py-2 bg-red/20 text-red rounded text-xs sm:text-sm font-medium hover:bg-red/30"
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger">
+            {PLATFORMS.map((platform) => (
+              <div key={platform.name} className="card-holo p-6 group">
+                <div className="relative z-10">
+                  <div className="flex items-center gap-4 mb-4">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: `${platform.color}15` }}
                     >
-                      Select All
-                    </button>
-                    <button
-                      onClick={() => selectRecommended(selectedPlatform, role)}
-                      className="flex-1 sm:flex-none px-3 py-2 bg-gold/20 text-gold rounded text-xs sm:text-sm font-medium hover:bg-gold/30"
-                    >
-                      Recommended
-                    </button>
-                    <button
-                      onClick={() => setSelectedScopes(prev => ({ ...prev, [selectedPlatform]: new Set() }))}
-                      className="px-3 py-2 bg-raised text-muted rounded text-xs sm:text-sm hover:bg-surface"
-                    >
-                      Clear
-                    </button>
-                  </div>
-                </div>
-
-                {platform.note && (
-                  <div className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-lg text-gold text-sm">
-                    {platform.note}
-                  </div>
-                )}
-
-                <div className="space-y-6 max-h-[60vh] sm:max-h-[500px] overflow-y-auto pr-2 -mr-2">
-                  {Object.entries(scopesByCategory).map(([category, scopes]) => (
-                    <div key={category}>
-                      <h3 className="text-label text-muted mb-3">
-                        {category}
-                      </h3>
-                      <div className="space-y-2">
-                        {scopes.map(scope => (
-                          <label
-                            key={scope.id}
-                            className={`flex items-start gap-3 p-3 sm:p-3 rounded-lg cursor-pointer transition-all touch-manipulation ${
-                              currentScopes.has(scope.id)
-                                ? "bg-raised border border-[var(--color-border)]"
-                                : "bg-surface border border-transparent hover:bg-raised"
-                            }`}
-                          >
-                            <input
-                              type="checkbox"
-                              checked={currentScopes.has(scope.id)}
-                              onChange={() => toggleScope(selectedPlatform, scope.id)}
-                              className="mt-0.5 w-5 h-5 sm:w-4 sm:h-4 rounded border-dim text-red focus:ring-red flex-shrink-0"
-                            />
-                            <div className="flex-1 min-w-0">
-                              <div className="flex flex-wrap items-center gap-1 sm:gap-2">
-                                <code className="text-data text-[10px] sm:text-xs bg-base px-1.5 py-0.5 rounded text-muted break-all">
-                                  {scope.id}
-                                </code>
-                                {scope.recommended && (
-                                  <span className={`text-xs px-1.5 py-0.5 rounded ${
-                                    scope.recommended === "bot"
-                                      ? "bg-gold/20 text-gold"
-                                      : "bg-red/20 text-red"
-                                  }`}>
-                                    {scope.recommended === "bot" ? "Bot" : scope.recommended === "both" ? "Both" : "Broadcaster"}
-                                  </span>
-                                )}
-                              </div>
-                              <div className="text-sm text-muted mt-1">{scope.desc}</div>
-                            </div>
-                          </label>
-                        ))}
-                      </div>
+                      <svg
+                        className="w-6 h-6"
+                        style={{ color: platform.color }}
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d={platform.icon} />
+                      </svg>
                     </div>
-                  ))}
-                </div>
-
-                {/* Connect Button */}
-                <div className="mt-6 pt-6 border-t border-[var(--color-border)]">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-bold">{platform.name}</h3>
+                      <span className="text-xs text-dim">Not connected</span>
+                    </div>
+                    <div className="w-3 h-3 rounded-full bg-dim" />
+                  </div>
+                  <p className="text-sm text-muted mb-5">{platform.description}</p>
                   <button
-                    onClick={() => startOAuth(selectedPlatform)}
-                    disabled={currentScopes.size === 0}
-                    className="w-full py-4 rounded-xl font-bold text-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="btn btn-secondary w-full group-hover:border-glass-border-hover"
                     style={{
-                      backgroundColor: platform.color,
-                      color: selectedPlatform === "kick" || selectedPlatform === "trovo" ? "#000" : "#fff"
+                      borderColor: `${platform.color}30`,
                     }}
                   >
-                    Connect {platform.name} as {role === "broadcaster" ? "Broadcaster" : "Bot"}
-                    {currentScopes.size > 0 && ` (${currentScopes.size} scopes)`}
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                    </svg>
+                    Connect {platform.name}
                   </button>
                 </div>
               </div>
-            ) : (
-              <div className="panel p-12 text-center">
-                <p className="text-muted">Select a platform to configure scopes</p>
-              </div>
-            )}
+            ))}
           </div>
         </div>
+      </section>
 
-        {/* Status */}
-        <div className="mt-8 panel p-6">
-          <h3 className="font-bold text-foreground mb-3">Connection Status</h3>
-          <a
-            href="/api/prismai/platforms"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-primary inline-block"
-          >
-            View PRISMAI Status
-          </a>
+      <div className="divider-gold" />
+
+      {/* ====== BENEFITS ====== */}
+      <section className="py-24 bg-base">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="badge badge-emerald mb-4">Why Connect</div>
+            <h2 className="text-headline mb-4">Benefits of Linking</h2>
+            <p className="text-body-lg max-w-2xl mx-auto">
+              Connecting your accounts unlocks the full power of the PRISMAI ecosystem.
+              Here&apos;s what you get.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 stagger">
+            {BENEFITS.map((benefit) => (
+              <div key={benefit.title} className="card p-8">
+                <div className="flex items-start gap-4">
+                  <div className={`w-12 h-12 rounded-xl bg-${benefit.accent}/10 flex items-center justify-center flex-shrink-0`}>
+                    <svg className={`w-6 h-6 text-${benefit.accent}`} fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" d={benefit.icon} />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-bold mb-2">{benefit.title}</h3>
+                    <p className="text-body">{benefit.description}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    </main>
+      </section>
+
+      {/* ====== SECURITY ====== */}
+      <section className="py-24 bg-grid">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="glass-raised p-8 md:p-12 max-w-3xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="badge badge-emerald mb-4">
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+                Security
+              </div>
+              <h2 className="text-headline mb-4">Your Data is Safe</h2>
+            </div>
+
+            <ul className="space-y-4">
+              {[
+                { title: "OAuth 2.0 Standard", desc: "We use industry-standard OAuth 2.0 with PKCE for all platforms. We never see or store your passwords." },
+                { title: "AES-256-GCM Encryption", desc: "All tokens are encrypted at rest using AES-256-GCM with unique initialization vectors per encryption." },
+                { title: "Auto-Refresh", desc: "Tokens refresh automatically 30 minutes before expiry. If a platform goes down, circuit breakers protect the flow." },
+                { title: "Revoke Anytime", desc: "You can disconnect any platform at any time. We immediately delete all stored tokens for that connection." },
+                { title: "No Third Parties", desc: "Your data stays between you and PRISMAI. We don't sell, share, or expose your information to anyone." },
+              ].map((item) => (
+                <li key={item.title} className="flex items-start gap-4">
+                  <svg className="w-5 h-5 text-emerald mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  <div>
+                    <h4 className="font-bold text-foreground text-sm">{item.title}</h4>
+                    <p className="text-sm text-muted mt-1">{item.desc}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      {/* ====== POWERED BY PRISMAI ====== */}
+      <section className="py-16 bg-base border-t border-glass-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
+          <div className="powered-by-prismai mx-auto w-fit mb-4">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="10" opacity="0.3" />
+              <circle cx="12" cy="12" r="4" />
+            </svg>
+            OAuth Managed by PRISMAI
+          </div>
+          <p className="text-sm text-muted max-w-lg mx-auto">
+            PRISMAI handles all OAuth flows, token management, encryption, and auto-refresh
+            across 9 platforms. Your connections are secure, reliable, and always up to date.
+          </p>
+        </div>
+      </section>
+    </>
   );
 }

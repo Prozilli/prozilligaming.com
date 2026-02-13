@@ -1,149 +1,121 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useLiveStatus } from "@/hooks/useLiveStatus";
-import CartButton from "./shop/CartButton";
+import Link from "next/link";
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" },
   { href: "/watch", label: "Watch" },
-  { href: "/zo-syndicate", label: "ZO Syndicate" },
   { href: "/lisa", label: "LISA" },
+  { href: "/zo-syndicate", label: "ZO Syndicate" },
   { href: "/shop", label: "Shop" },
   { href: "/community", label: "Community" },
   { href: "/support", label: "Support" },
+  { href: "/blog", label: "Blog" },
 ];
 
-export default function Navbar() {
-  const [open, setOpen] = useState(false);
+export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const { isLive, totalViewers } = useLiveStatus(60000);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
-
-    function onScroll() {
-      setScrolled(window.scrollY > 10);
-    }
-
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   return (
-    <nav
-      aria-label="Main navigation"
-      className={`fixed top-0 left-0 right-0 z-50 transition-colors duration-200 ${
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "border-b border-[var(--color-border)] bg-base/95 backdrop-blur-md"
+          ? "bg-void/80 backdrop-blur-xl border-b border-glass-border"
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 sm:h-16 sm:px-6">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5">
-          <Image
-            src="/logos/ProzilliGaming_Logo.svg"
-            alt="Prozilli Gaming"
-            width={32}
-            height={32}
-            className="h-7 w-7 sm:h-8 sm:w-8"
-          />
-          <span className="text-sm font-bold tracking-wider text-foreground sm:text-base">
-            PROZILLI<span className="text-red">GAMING</span>
-          </span>
-        </Link>
+      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2 group">
+            <span className="text-xl font-extrabold tracking-tight">
+              PROZILLI
+              <span className="text-red-bright group-hover:text-shimmer-red transition-colors">
+                GAMING
+              </span>
+            </span>
+          </Link>
 
-        {/* Desktop nav */}
-        <div className="hidden items-center gap-5 lg:flex">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-sm text-muted transition-colors hover:text-foreground"
-            >
-              {link.label}
-            </Link>
-          ))}
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-1">
+            {NAV_LINKS.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="px-3 py-2 text-sm font-medium text-muted hover:text-foreground transition-colors rounded-md hover:bg-white/[0.04]"
+              >
+                {link.label}
+              </Link>
+            ))}
+            <div className="ml-3 flex items-center gap-2">
+              <Link
+                href="https://prozilli.com"
+                target="_blank"
+                className="badge badge-gold text-[10px]"
+              >
+                Corporate
+              </Link>
+              <Link href="/admin" className="btn btn-ghost btn-sm">
+                Admin
+              </Link>
+            </div>
+          </div>
 
-          {/* Live badge */}
-          {mounted && isLive && (
-            <Link
-              href="/watch"
-              className="flex items-center gap-1.5 rounded-full border border-red/30 bg-red/10 px-3 py-1 text-xs font-semibold text-red-bright transition-colors hover:bg-red/20"
-            >
-              <span className="animate-pulse-live h-2 w-2 rounded-full bg-red-bright" />
-              LIVE
-              {totalViewers > 0 && (
-                <span className="text-data text-muted ml-1">
-                  {totalViewers.toLocaleString()}
-                </span>
-              )}
-            </Link>
-          )}
-
-          {mounted && <CartButton />}
-        </div>
-
-        {/* Mobile controls */}
-        <div className="flex items-center gap-2 lg:hidden">
-          {mounted && isLive && (
-            <Link
-              href="/watch"
-              className="flex items-center gap-1.5 rounded-full border border-red/30 bg-red/10 px-2.5 py-1 text-[10px] font-semibold text-red-bright"
-            >
-              <span className="animate-pulse-live h-1.5 w-1.5 rounded-full bg-red-bright" />
-              LIVE
-            </Link>
-          )}
-          {mounted && <CartButton />}
+          {/* Mobile Toggle */}
           <button
-            onClick={() => setOpen(!open)}
-            className="flex flex-col gap-1.5 p-1"
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="md:hidden p-2 text-muted hover:text-foreground transition-colors"
             aria-label="Toggle menu"
-            aria-expanded={open}
           >
-            <span
-              className={`block h-0.5 w-5 bg-foreground transition-transform ${
-                open ? "translate-y-2 rotate-45" : ""
-              }`}
-            />
-            <span
-              className={`block h-0.5 w-5 bg-foreground transition-opacity ${
-                open ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`block h-0.5 w-5 bg-foreground transition-transform ${
-                open ? "-translate-y-2 -rotate-45" : ""
-              }`}
-            />
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              viewBox="0 0 24 24"
+            >
+              {menuOpen ? (
+                <path strokeLinecap="round" d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
           </button>
         </div>
-      </div>
 
-      {/* Mobile menu */}
-      <div
-        className={`overflow-hidden border-t border-[var(--color-border)] bg-base/95 backdrop-blur-md transition-all duration-300 lg:hidden ${
-          open ? "max-h-96 opacity-100" : "max-h-0 opacity-0 border-t-0"
-        }`}
-      >
-        <div className="flex flex-col px-4 py-2 sm:px-6">
-          {NAV_LINKS.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="border-b border-[var(--color-border)] py-3 text-sm text-muted transition-colors last:border-0 hover:text-foreground"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
-      </div>
-    </nav>
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden py-4 border-t border-glass-border animate-reveal">
+            <div className="flex flex-col gap-1">
+              {NAV_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  className="px-4 py-3 text-sm font-medium text-muted hover:text-foreground hover:bg-white/[0.04] rounded-lg transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <div className="mt-4 px-4 flex gap-2">
+                <Link href="/schedule" className="btn btn-secondary btn-sm flex-1 text-center">
+                  Schedule
+                </Link>
+                <Link href="/giveaways" className="btn btn-primary btn-sm flex-1 text-center">
+                  Giveaways
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+      </nav>
+    </header>
   );
 }

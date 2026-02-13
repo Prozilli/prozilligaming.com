@@ -1,470 +1,283 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import {
-  useDiscordTextChannels,
-  getSetting,
-  saveSetting,
-} from "@/lib/admin-api";
+import { useState } from "react";
 
-type TabType = "welcome" | "goodbye";
+/* ============================================================
+   Welcome System Page
+   ============================================================ */
 
-interface MessageConfig {
-  enabled: boolean;
-  channelId: string;
-  dmEnabled: boolean;
-  embedEnabled: boolean;
-  embedColor: string;
-  title: string;
-  description: string;
-  image: string;
-  thumbnail: string;
-  footer: string;
-}
+const CHANNEL_OPTIONS = [
+  { id: "welcome", name: "#welcome", category: "WELCOME" },
+  { id: "general", name: "#general-chat", category: "COMMUNITY" },
+  { id: "introductions", name: "#introductions", category: "COMMUNITY" },
+  { id: "announcements", name: "#announcements", category: "INFORMATION" },
+];
 
-const DEFAULT_WELCOME: MessageConfig = {
-  enabled: true,
-  channelId: "",
-  dmEnabled: false,
-  embedEnabled: true,
-  embedColor: "#910000",
-  title: "Welcome to Prozilli HQ!",
-  description:
-    "Hey {user}, welcome to the server! We're glad to have you here.\n\nMake sure to check out the rules and introduce yourself!",
-  image: "",
-  thumbnail: "{user.avatar}",
-  footer: "Member #{count} • Joined {date}",
-};
+const AUTO_ROLES = [
+  { id: "1", name: "Community", color: "#5865f2", enabled: true },
+  { id: "2", name: "Notifications", color: "#38bdf8", enabled: true },
+  { id: "3", name: "Newcomer", color: "#7a8599", enabled: true },
+  { id: "4", name: "Stream Alerts", color: "#ff0000", enabled: false },
+];
 
-const DEFAULT_GOODBYE: MessageConfig = {
-  enabled: true,
-  channelId: "",
-  dmEnabled: false,
-  embedEnabled: true,
-  embedColor: "#7a8899",
-  title: "Goodbye!",
-  description: "{user.tag} has left the server. We'll miss you!",
-  image: "",
-  thumbnail: "",
-  footer: "We now have {count} members",
-};
+const WELCOME_VARIABLES = [
+  { var: "{user}", desc: "Username/mention" },
+  { var: "{server}", desc: "Server name" },
+  { var: "{memberCount}", desc: "Total members" },
+  { var: "{user.avatar}", desc: "User avatar URL" },
+  { var: "{user.createdAt}", desc: "Account creation date" },
+];
 
 export default function WelcomePage() {
-  const [activeTab, setActiveTab] = useState<TabType>("welcome");
-  const [welcome, setWelcome] = useState(DEFAULT_WELCOME);
-  const [goodbye, setGoodbye] = useState(DEFAULT_GOODBYE);
-  const [saving, setSaving] = useState(false);
-  const [saveStatus, setSaveStatus] = useState<"idle" | "success" | "error">("idle");
+  const [welcomeEnabled, setWelcomeEnabled] = useState(true);
+  const [welcomeChannel, setWelcomeChannel] = useState("welcome");
+  const [welcomeMessage, setWelcomeMessage] = useState(
+    "Welcome to **ZO Syndicate**, {user}! You're member #{memberCount}.\n\nCheck out the rules in #rules and grab your roles in #role-selection.\n\nPowered by PRISMAI."
+  );
+  const [dmEnabled, setDmEnabled] = useState(true);
+  const [dmMessage, setDmMessage] = useState(
+    "Hey {user}! Welcome to the ZO Syndicate Discord.\n\nHere's what you need to know:\n- Read the rules\n- Grab your roles\n- Say hi in #general-chat\n\nSee you around!\n- LISA"
+  );
+  const [leaveEnabled, setLeaveEnabled] = useState(true);
+  const [leaveMessage, setLeaveMessage] = useState("{user} has left the server. We'll miss you.");
+  const [embedColor, setEmbedColor] = useState("#910000");
+  const [showEmbedPreview, setShowEmbedPreview] = useState(false);
+  const [roles, setRoles] = useState(AUTO_ROLES);
 
-  // Fetch Discord channels
-  const { channels, loading: channelsLoading, error: channelsError } = useDiscordTextChannels();
-
-  // Load saved settings on mount
-  useEffect(() => {
-    async function loadSettings() {
-      try {
-        const welcomeSettings = await getSetting<MessageConfig>("welcome_config");
-        const goodbyeSettings = await getSetting<MessageConfig>("goodbye_config");
-        if (welcomeSettings) setWelcome(welcomeSettings);
-        if (goodbyeSettings) setGoodbye(goodbyeSettings);
-      } catch (err) {
-        console.error("Failed to load settings:", err);
-      }
-    }
-    loadSettings();
-  }, []);
-
-  const currentConfig = activeTab === "welcome" ? welcome : goodbye;
-  const setCurrentConfig = activeTab === "welcome" ? setWelcome : setGoodbye;
-
-  const updateConfig = <K extends keyof MessageConfig>(
-    key: K,
-    value: MessageConfig[K]
-  ) => {
-    setCurrentConfig((prev) => ({ ...prev, [key]: value }));
-  };
-
-  // Save settings
-  const handleSave = async () => {
-    setSaving(true);
-    setSaveStatus("idle");
-    try {
-      await saveSetting("welcome_config", welcome);
-      await saveSetting("goodbye_config", goodbye);
-      setSaveStatus("success");
-      setTimeout(() => setSaveStatus("idle"), 2000);
-    } catch (err) {
-      console.error("Failed to save:", err);
-      setSaveStatus("error");
-    } finally {
-      setSaving(false);
-    }
+  const toggleRole = (id: string) => {
+    setRoles((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, enabled: !r.enabled } : r))
+    );
   };
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-white">Welcome & Goodbye</h1>
-        <p className="mt-1 text-sm text-gray-400">
-          Greet new members and say farewell when they leave
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Welcome System</h1>
+          <p className="text-sm text-muted mt-1">Configure welcome messages, DMs, and auto-roles</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => setWelcomeEnabled(!welcomeEnabled)}
+            className={`flex items-center gap-2 px-3 py-2 rounded-lg border text-xs font-semibold transition-all ${
+              welcomeEnabled
+                ? "bg-emerald/10 border-emerald/30 text-emerald"
+                : "bg-glass border-glass-border text-dim"
+            }`}
+          >
+            <div className={`w-2 h-2 rounded-full ${welcomeEnabled ? "bg-emerald" : "bg-dim"}`} />
+            {welcomeEnabled ? "System Active" : "System Disabled"}
+          </button>
+          <button className="btn btn-primary btn-sm">Save All</button>
+        </div>
       </div>
 
-      {/* Tab Navigation */}
-      <div className="flex gap-1 rounded-lg bg-white/5 p-1">
-        <button
-          onClick={() => setActiveTab("welcome")}
-          className={`flex-1 flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-            activeTab === "welcome"
-              ? "bg-green-500 text-white"
-              : "text-gray-400 hover:text-white hover:bg-white/5"
-          }`}
-        >
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"
-            />
-          </svg>
-          Welcome
-        </button>
-        <button
-          onClick={() => setActiveTab("goodbye")}
-          className={`flex-1 flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
-            activeTab === "goodbye"
-              ? "bg-gray-500 text-white"
-              : "text-gray-400 hover:text-white hover:bg-white/5"
-          }`}
-        >
-          <svg
-            className="h-4 w-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={1.5}
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15M12 9l3 3m0 0-3 3m3-3H2.25"
-            />
-          </svg>
-          Goodbye
-        </button>
-      </div>
-
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* Settings Column */}
-        <div className="space-y-6">
-          {/* Enable/Disable */}
-          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-            <div className="flex items-center justify-between">
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Left Column: Main Settings */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Welcome Message */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Welcome Message</h2>
+            <div className="space-y-4">
               <div>
-                <h3 className="text-sm font-semibold text-white">
-                  {activeTab === "welcome" ? "Welcome Messages" : "Goodbye Messages"}
-                </h3>
-                <p className="text-xs text-gray-500 mt-1">
-                  {activeTab === "welcome"
-                    ? "Send a message when members join"
-                    : "Send a message when members leave"}
-                </p>
+                <label className="text-xs font-semibold text-dim block mb-1.5">Channel</label>
+                <select
+                  value={welcomeChannel}
+                  onChange={(e) => setWelcomeChannel(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground focus:outline-none focus:border-red/50 transition-colors"
+                >
+                  {CHANNEL_OPTIONS.map((ch) => (
+                    <option key={ch.id} value={ch.id}>{ch.name} ({ch.category})</option>
+                  ))}
+                </select>
               </div>
-              <button
-                onClick={() => updateConfig("enabled", !currentConfig.enabled)}
-                className={`relative h-6 w-11 rounded-full transition-colors ${
-                  currentConfig.enabled ? "bg-green-500" : "bg-white/10"
-                }`}
-              >
-                <span
-                  className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${
-                    currentConfig.enabled ? "left-6" : "left-1"
-                  }`}
+
+              <div>
+                <label className="text-xs font-semibold text-dim block mb-1.5">Message Content</label>
+                <textarea
+                  value={welcomeMessage}
+                  onChange={(e) => setWelcomeMessage(e.target.value)}
+                  rows={5}
+                  className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors resize-none font-mono"
                 />
-              </button>
+              </div>
+
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold text-dim block mb-1.5">Embed Color</label>
+                  <div className="flex items-center gap-3">
+                    <input
+                      type="color"
+                      value={embedColor}
+                      onChange={(e) => setEmbedColor(e.target.value)}
+                      className="w-10 h-10 rounded-lg border border-glass-border cursor-pointer bg-transparent"
+                    />
+                    <input
+                      type="text"
+                      value={embedColor}
+                      onChange={(e) => setEmbedColor(e.target.value)}
+                      className="flex-1 px-3 py-2 rounded-lg bg-glass border border-glass-border text-data text-sm focus:outline-none focus:border-red/50 transition-colors"
+                    />
+                  </div>
+                </div>
+                <div className="flex items-end">
+                  <button
+                    onClick={() => setShowEmbedPreview(!showEmbedPreview)}
+                    className="btn btn-secondary btn-sm w-full"
+                  >
+                    {showEmbedPreview ? "Hide Preview" : "Show Preview"}
+                  </button>
+                </div>
+              </div>
+
+              {/* Embed Preview */}
+              {showEmbedPreview && (
+                <div className="p-4 rounded-lg bg-surface border-l-4" style={{ borderLeftColor: embedColor }}>
+                  <div className="text-xs font-bold mb-2">Welcome to ZO Syndicate!</div>
+                  <div className="text-xs text-muted whitespace-pre-line">
+                    {welcomeMessage
+                      .replace("{user}", "@NewUser")
+                      .replace("{memberCount}", "1,247")
+                      .replace("{server}", "ZO Syndicate")}
+                  </div>
+                  <div className="mt-3 text-[10px] text-dim">Today at 3:42 PM</div>
+                </div>
+              )}
             </div>
           </div>
 
-          {currentConfig.enabled && (
-            <>
-              {/* Channel Selection */}
-              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-                <h3 className="text-sm font-semibold text-white mb-4">
-                  Send To
-                </h3>
-                <div className="space-y-4">
-                  <div>
-                    <label className="block text-xs font-medium text-gray-400 mb-2">
-                      Channel
-                    </label>
-                    {channelsLoading ? (
-                      <div className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-gray-500">
-                        Loading channels...
-                      </div>
-                    ) : channelsError ? (
-                      <div className="w-full rounded-lg border border-red-500/50 bg-red-500/10 px-4 py-2.5 text-sm text-red-400">
-                        {channelsError}
-                      </div>
-                    ) : (
-                      <select
-                        value={currentConfig.channelId}
-                        onChange={(e) => updateConfig("channelId", e.target.value)}
-                        className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none focus:ring-1 focus:ring-red"
-                      >
-                        <option value="">Select a channel</option>
-                        {channels.map((channel) => (
-                          <option key={channel.id} value={channel.id}>
-                            #{channel.name}
-                          </option>
-                        ))}
-                      </select>
-                    )}
-                  </div>
-                  <label className="flex items-center gap-3 cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={currentConfig.dmEnabled}
-                      onChange={(e) => updateConfig("dmEnabled", e.target.checked)}
-                      className="h-4 w-4 rounded border-white/20 bg-white/5 text-red focus:ring-red"
-                    />
-                    <div>
-                      <p className="text-sm text-white">Also send as DM</p>
-                      <p className="text-xs text-gray-500">
-                        Send a copy directly to the member
-                      </p>
-                    </div>
-                  </label>
-                </div>
-              </div>
-
-              {/* Embed Settings */}
-              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-sm font-semibold text-white">
-                    Use Embed
-                  </h3>
-                  <button
-                    onClick={() =>
-                      updateConfig("embedEnabled", !currentConfig.embedEnabled)
-                    }
-                    className={`relative h-6 w-11 rounded-full transition-colors ${
-                      currentConfig.embedEnabled ? "bg-green-500" : "bg-white/10"
-                    }`}
-                  >
-                    <span
-                      className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${
-                        currentConfig.embedEnabled ? "left-6" : "left-1"
-                      }`}
-                    />
-                  </button>
-                </div>
-
-                {currentConfig.embedEnabled && (
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-xs font-medium text-gray-400 mb-2">
-                        Embed Color
-                      </label>
-                      <div className="flex gap-2">
-                        <input
-                          type="color"
-                          value={currentConfig.embedColor}
-                          onChange={(e) =>
-                            updateConfig("embedColor", e.target.value)
-                          }
-                          className="h-10 w-14 rounded cursor-pointer border-0 bg-transparent"
-                        />
-                        <input
-                          type="text"
-                          value={currentConfig.embedColor}
-                          onChange={(e) =>
-                            updateConfig("embedColor", e.target.value)
-                          }
-                          className="flex-1 rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-medium text-gray-400 mb-2">
-                        Title
-                      </label>
-                      <input
-                        type="text"
-                        value={currentConfig.title}
-                        onChange={(e) => updateConfig("title", e.target.value)}
-                        className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-medium text-gray-400 mb-2">
-                        Description
-                      </label>
-                      <textarea
-                        value={currentConfig.description}
-                        onChange={(e) =>
-                          updateConfig("description", e.target.value)
-                        }
-                        rows={4}
-                        className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none resize-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-medium text-gray-400 mb-2">
-                        Footer
-                      </label>
-                      <input
-                        type="text"
-                        value={currentConfig.footer}
-                        onChange={(e) => updateConfig("footer", e.target.value)}
-                        className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Variables Reference */}
-              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
-                <h3 className="text-sm font-semibold text-white mb-3">
-                  Available Variables
-                </h3>
-                <div className="grid gap-2 text-xs">
-                  <div className="flex justify-between">
-                    <code className="text-gold">{"{user}"}</code>
-                    <span className="text-gray-500">@mention the user</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <code className="text-gold">{"{user.tag}"}</code>
-                    <span className="text-gray-500">Username#0000</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <code className="text-gold">{"{user.avatar}"}</code>
-                    <span className="text-gray-500">Avatar URL</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <code className="text-gold">{"{server}"}</code>
-                    <span className="text-gray-500">Server name</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <code className="text-gold">{"{count}"}</code>
-                    <span className="text-gray-500">Member count</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <code className="text-gold">{"{date}"}</code>
-                    <span className="text-gray-500">Current date</span>
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-
-          {/* Save Button */}
-          <div className="flex items-center justify-end gap-3">
-            {saveStatus === "success" && (
-              <span className="text-sm text-green-400">Saved successfully!</span>
+          {/* Welcome DM */}
+          <div className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-bold">Welcome DM</h2>
+              <button
+                onClick={() => setDmEnabled(!dmEnabled)}
+                className={`w-10 h-5 rounded-full transition-colors ${
+                  dmEnabled ? "bg-emerald" : "bg-dim"
+                }`}
+              >
+                <div className={`w-4 h-4 rounded-full bg-white mt-0.5 transition-transform ${
+                  dmEnabled ? "translate-x-5" : "translate-x-0.5"
+                }`} />
+              </button>
+            </div>
+            {dmEnabled && (
+              <textarea
+                value={dmMessage}
+                onChange={(e) => setDmMessage(e.target.value)}
+                rows={6}
+                className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors resize-none font-mono"
+              />
             )}
-            {saveStatus === "error" && (
-              <span className="text-sm text-red-400">Failed to save</span>
+          </div>
+
+          {/* Leave Message */}
+          <div className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-bold">Leave Message</h2>
+              <button
+                onClick={() => setLeaveEnabled(!leaveEnabled)}
+                className={`w-10 h-5 rounded-full transition-colors ${
+                  leaveEnabled ? "bg-emerald" : "bg-dim"
+                }`}
+              >
+                <div className={`w-4 h-4 rounded-full bg-white mt-0.5 transition-transform ${
+                  leaveEnabled ? "translate-x-5" : "translate-x-0.5"
+                }`} />
+              </button>
+            </div>
+            {leaveEnabled && (
+              <div>
+                <textarea
+                  value={leaveMessage}
+                  onChange={(e) => setLeaveMessage(e.target.value)}
+                  rows={2}
+                  className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors resize-none font-mono"
+                />
+                <p className="text-[10px] text-dim mt-1.5">Sent to the welcome channel when a member leaves.</p>
+              </div>
             )}
-            <button
-              onClick={handleSave}
-              disabled={saving}
-              className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50"
-            >
-              {saving ? "Saving..." : "Save Changes"}
-            </button>
           </div>
         </div>
 
-        {/* Preview Column */}
-        <div className="space-y-4">
-          <h3 className="text-sm font-semibold text-white">Preview</h3>
-          <div className="rounded-xl border border-[var(--color-border)] bg-[#36393f] p-4">
-            {/* Discord-style message preview */}
-            <div className="flex gap-4">
-              <div className="h-10 w-10 rounded-full bg-[#5865F2] flex items-center justify-center text-white font-bold text-sm shrink-0">
-                P
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span className="font-semibold text-[#5865F2] text-sm">
-                    PRISMAI
-                  </span>
-                  <span className="rounded bg-[#5865F2] px-1 py-0.5 text-[10px] font-medium text-white">
-                    BOT
-                  </span>
-                  <span className="text-xs text-gray-500">Today at 12:00 PM</span>
-                </div>
-
-                {currentConfig.embedEnabled ? (
-                  <div
-                    className="mt-2 rounded border-l-4 bg-[#2f3136] p-3"
-                    style={{ borderColor: currentConfig.embedColor }}
-                  >
-                    {currentConfig.thumbnail && (
-                      <div className="float-right ml-4 mb-2">
-                        <div className="h-16 w-16 rounded-full bg-brand-red/20 flex items-center justify-center text-red">
-                          <svg
-                            className="h-8 w-8"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                    )}
-                    <p className="font-semibold text-white text-sm">
-                      {currentConfig.title}
-                    </p>
-                    <p className="mt-2 text-sm text-gray-300 whitespace-pre-wrap">
-                      {currentConfig.description
-                        .replace("{user}", "@NewMember")
-                        .replace("{user.tag}", "NewMember#1234")
-                        .replace("{server}", "Prozilli HQ")
-                        .replace("{count}", "3,248")
-                        .replace("{date}", "Feb 6, 2026")}
-                    </p>
-                    {currentConfig.footer && (
-                      <p className="mt-3 text-xs text-gray-500">
-                        {currentConfig.footer
-                          .replace("{count}", "3,248")
-                          .replace("{date}", "Feb 6, 2026")}
-                      </p>
-                    )}
+        {/* Right Column: Auto-Roles + Variables */}
+        <div className="space-y-6">
+          {/* Auto-Roles */}
+          <div className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-bold">Auto-Roles on Join</h2>
+              <button className="text-xs text-muted hover:text-foreground transition-colors">Add Role</button>
+            </div>
+            <div className="space-y-2">
+              {roles.map((role) => (
+                <div key={role.id} className="flex items-center justify-between p-3 rounded-lg bg-glass border border-glass-border">
+                  <div className="flex items-center gap-3">
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: role.color }}
+                    />
+                    <span className="text-xs font-semibold">{role.name}</span>
                   </div>
-                ) : (
-                  <p className="mt-1 text-sm text-gray-300">
-                    {currentConfig.description
-                      .replace("{user}", "@NewMember")
-                      .replace("{user.tag}", "NewMember#1234")
-                      .replace("{server}", "Prozilli HQ")
-                      .replace("{count}", "3,248")
-                      .replace("{date}", "Feb 6, 2026")}
-                  </p>
-                )}
-              </div>
+                  <button
+                    onClick={() => toggleRole(role.id)}
+                    className={`w-8 h-4 rounded-full transition-colors ${
+                      role.enabled ? "bg-emerald" : "bg-dim"
+                    }`}
+                  >
+                    <div className={`w-3 h-3 rounded-full bg-white mt-0.5 transition-transform ${
+                      role.enabled ? "translate-x-4" : "translate-x-0.5"
+                    }`} />
+                  </button>
+                </div>
+              ))}
             </div>
           </div>
-          <p className="text-xs text-gray-500 text-center">
-            This is how the message will appear in Discord
-          </p>
+
+          {/* Welcome Image */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Welcome Image</h2>
+            <div className="aspect-video rounded-lg bg-glass border border-glass-border flex flex-col items-center justify-center gap-3 cursor-pointer hover:border-glass-border-hover transition-colors">
+              <svg className="w-8 h-8 text-dim" fill="none" stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909M18 7.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z" />
+              </svg>
+              <span className="text-xs text-dim">Click to upload welcome banner</span>
+              <span className="text-[10px] text-dim">1200x400 recommended</span>
+            </div>
+          </div>
+
+          {/* Available Variables */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Variables</h2>
+            <div className="space-y-2">
+              {WELCOME_VARIABLES.map((v) => (
+                <div key={v.var} className="flex items-center justify-between p-2 rounded-lg hover:bg-glass transition-colors">
+                  <code className="text-data text-xs text-electric">{v.var}</code>
+                  <span className="text-[10px] text-dim">{v.desc}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Welcome Stats</h2>
+            <div className="space-y-3">
+              {[
+                { label: "Welcome Messages Sent", value: "1,247" },
+                { label: "DMs Delivered", value: "1,089" },
+                { label: "DMs Failed", value: "158" },
+                { label: "Auto-Roles Assigned", value: "3,741" },
+                { label: "Members This Week", value: "+23" },
+              ].map((stat) => (
+                <div key={stat.label} className="flex justify-between p-2 rounded-lg hover:bg-glass transition-colors">
+                  <span className="text-xs text-muted">{stat.label}</span>
+                  <span className="text-data text-xs font-semibold">{stat.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

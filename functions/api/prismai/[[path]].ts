@@ -36,7 +36,7 @@ async function safeFetch(url: string): Promise<{ ok: boolean; data: any }> {
   }
 }
 
-export const onRequestOptions: PagesFunction = async () => {
+export const onRequestOptions: PagesFunction = async (context) => {
   return new Response(null, { headers: getCorsHeaders(context.request.headers.get("Origin")) });
 };
 

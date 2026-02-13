@@ -1,578 +1,263 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import {
-  getPlatforms,
-  sendChatMessage,
-  sendBroadcast,
-  postTweet,
-} from "@/lib/admin-api";
-import type { PlatformStatus } from "@/lib/admin-api";
+import { useState } from "react";
 
-// Platform metadata for display
-const PLATFORM_OPTIONS = [
-  { value: "all", label: "All Platforms" },
-  { value: "twitch", label: "Twitch" },
-  { value: "kick", label: "Kick" },
-  { value: "discord", label: "Discord" },
-  { value: "trovo", label: "Trovo" },
-  { value: "youtube", label: "YouTube" },
-  { value: "facebook", label: "Facebook" },
-] as const;
+/* ============================================================
+   Stream Management Page
+   ============================================================ */
 
-const PLATFORM_COLORS: Record<string, { bg: string; text: string; dot: string }> = {
-  twitch: { bg: "bg-purple-500/20", text: "text-purple-400", dot: "bg-purple-500" },
-  kick: { bg: "bg-green-500/20", text: "text-green-400", dot: "bg-green-500" },
-  discord: { bg: "bg-indigo-500/20", text: "text-indigo-400", dot: "bg-indigo-500" },
-  trovo: { bg: "bg-teal-500/20", text: "text-teal-400", dot: "bg-teal-500" },
-  youtube: { bg: "bg-red-500/20", text: "text-red-400", dot: "bg-red-500" },
-  facebook: { bg: "bg-blue-500/20", text: "text-blue-400", dot: "bg-blue-500" },
-  x: { bg: "bg-gray-500/20", text: "text-gray-400", dot: "bg-gray-500" },
-  instagram: { bg: "bg-pink-500/20", text: "text-pink-400", dot: "bg-pink-500" },
-  tiktok: { bg: "bg-cyan-500/20", text: "text-cyan-400", dot: "bg-cyan-500" },
+const STREAM_PLATFORMS = [
+  { id: "twitch", name: "Twitch", color: "#9146ff", enabled: true, status: "offline" },
+  { id: "kick", name: "Kick", color: "#53fc18", enabled: true, status: "offline" },
+  { id: "youtube", name: "YouTube", color: "#ff0000", enabled: true, status: "offline" },
+  { id: "facebook", name: "Facebook", color: "#1877f2", enabled: false, status: "offline" },
+  { id: "trovo", name: "Trovo", color: "#19d65c", enabled: true, status: "offline" },
+  { id: "tiktok", name: "TikTok", color: "#ff0050", enabled: false, status: "disconnected" },
+];
+
+const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const TIME_SLOTS = ["12PM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM"];
+
+const SCHEDULE_DATA: Record<string, { start: number; end: number; game: string; color: string }[]> = {
+  Monday: [{ start: 5, end: 9, game: "GTA V - ZO Syndicate", color: "bg-red/30" }],
+  Tuesday: [],
+  Wednesday: [{ start: 4, end: 8, game: "Variety Night", color: "bg-electric/30" }],
+  Thursday: [],
+  Friday: [{ start: 5, end: 10, game: "GTA V - ZO Syndicate", color: "bg-red/30" }],
+  Saturday: [{ start: 2, end: 8, game: "Marathon Stream", color: "bg-gold/30" }],
+  Sunday: [{ start: 3, end: 7, game: "Community Games", color: "bg-emerald/30" }],
 };
 
-type ActionStatus = "idle" | "loading" | "success" | "error";
+const RECENT_VODS = [
+  { title: "ZO Syndicate - Gang Wars Pt.3", date: "Feb 12, 2026", duration: "4h 23m", viewers: 142, platforms: ["Twitch", "Kick", "YouTube"] },
+  { title: "Variety Night - Elden Ring DLC", date: "Feb 10, 2026", duration: "3h 45m", viewers: 98, platforms: ["Twitch", "Kick"] },
+  { title: "ZO Syndicate - Casino Heist", date: "Feb 8, 2026", duration: "5h 10m", viewers: 187, platforms: ["Twitch", "Kick", "YouTube", "Trovo"] },
+  { title: "Community Games - Fortnite", date: "Feb 5, 2026", duration: "2h 30m", viewers: 76, platforms: ["Twitch"] },
+];
 
-interface ActionFeedback {
-  status: ActionStatus;
-  message: string;
-}
+export default function StreamPage() {
+  const [streamTitle, setStreamTitle] = useState("ZO Syndicate RP - Building the City");
+  const [streamGame, setStreamGame] = useState("Grand Theft Auto V");
+  const [streamTags, setStreamTags] = useState("English, FiveM, Roleplay, ZOSyndicate");
+  const [chatBridgeEnabled, setChatBridgeEnabled] = useState(false);
+  const [platformToggles, setPlatformToggles] = useState<Record<string, boolean>>(
+    Object.fromEntries(STREAM_PLATFORMS.map((p) => [p.id, p.enabled]))
+  );
 
-export default function StreamControlPage() {
-  // Platform data
-  const [platforms, setPlatforms] = useState<PlatformStatus[]>([]);
-  const [platformsLoading, setPlatformsLoading] = useState(true);
-  const [platformsError, setPlatformsError] = useState<string | null>(null);
-
-  // Send Message form
-  const [chatMessage, setChatMessage] = useState("");
-  const [chatPlatform, setChatPlatform] = useState("all");
-  const [chatFeedback, setChatFeedback] = useState<ActionFeedback>({
-    status: "idle",
-    message: "",
-  });
-
-  // LISA Broadcast form
-  const [broadcastMessage, setBroadcastMessage] = useState("");
-  const [broadcastFeedback, setBroadcastFeedback] = useState<ActionFeedback>({
-    status: "idle",
-    message: "",
-  });
-
-  // Post Tweet form
-  const [tweetText, setTweetText] = useState("");
-  const [tweetFeedback, setTweetFeedback] = useState<ActionFeedback>({
-    status: "idle",
-    message: "",
-  });
-
-  // Fetch platforms on mount and poll every 30s
-  useEffect(() => {
-    async function fetchPlatforms() {
-      try {
-        const data = await getPlatforms();
-        setPlatforms(data.platforms);
-        setPlatformsError(null);
-      } catch (err) {
-        setPlatformsError(
-          err instanceof Error ? err.message : "Failed to fetch platforms"
-        );
-      } finally {
-        setPlatformsLoading(false);
-      }
-    }
-
-    fetchPlatforms();
-    const interval = setInterval(fetchPlatforms, 30000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  // Derived live state
-  const isAnyLive = platforms.some((p) => p.live);
-  const liveCount = platforms.filter((p) => p.live).length;
-  const livePlatformNames = platforms
-    .filter((p) => p.live)
-    .map((p) => p.name)
-    .join(", ");
-
-  // Clear feedback after delay
-  function clearFeedback(
-    setter: React.Dispatch<React.SetStateAction<ActionFeedback>>,
-    delay = 3000
-  ) {
-    setTimeout(() => setter({ status: "idle", message: "" }), delay);
-  }
-
-  // Handle Send Message
-  async function handleSendMessage(e: React.FormEvent) {
-    e.preventDefault();
-    if (!chatMessage.trim()) return;
-
-    setChatFeedback({ status: "loading", message: "Sending..." });
-    try {
-      const result = await sendChatMessage(chatPlatform, chatMessage.trim());
-      const sentCount = result.results?.filter((r) => r.sent).length ?? 0;
-      const totalCount = result.results?.length ?? 0;
-      setChatFeedback({
-        status: "success",
-        message: `Sent to ${sentCount}/${totalCount} platform${totalCount !== 1 ? "s" : ""}`,
-      });
-      setChatMessage("");
-      clearFeedback(setChatFeedback);
-    } catch (err) {
-      setChatFeedback({
-        status: "error",
-        message: err instanceof Error ? err.message : "Failed to send message",
-      });
-      clearFeedback(setChatFeedback, 5000);
-    }
-  }
-
-  // Handle LISA Broadcast
-  async function handleBroadcast(e: React.FormEvent) {
-    e.preventDefault();
-    if (!broadcastMessage.trim()) return;
-
-    setBroadcastFeedback({ status: "loading", message: "Broadcasting..." });
-    try {
-      const result = await sendBroadcast(broadcastMessage.trim());
-      const sentCount = result.results?.filter((r) => r.sent).length ?? 0;
-      const totalCount = result.results?.length ?? 0;
-      setBroadcastFeedback({
-        status: "success",
-        message: `Broadcast sent to ${sentCount}/${totalCount} platform${totalCount !== 1 ? "s" : ""}`,
-      });
-      setBroadcastMessage("");
-      clearFeedback(setBroadcastFeedback);
-    } catch (err) {
-      setBroadcastFeedback({
-        status: "error",
-        message:
-          err instanceof Error ? err.message : "Failed to send broadcast",
-      });
-      clearFeedback(setBroadcastFeedback, 5000);
-    }
-  }
-
-  // Handle Post Tweet
-  async function handlePostTweet(e: React.FormEvent) {
-    e.preventDefault();
-    if (!tweetText.trim() || tweetText.length > 280) return;
-
-    setTweetFeedback({ status: "loading", message: "Posting..." });
-    try {
-      await postTweet(tweetText.trim());
-      setTweetFeedback({
-        status: "success",
-        message: "Tweet posted successfully",
-      });
-      setTweetText("");
-      clearFeedback(setTweetFeedback);
-    } catch (err) {
-      setTweetFeedback({
-        status: "error",
-        message: err instanceof Error ? err.message : "Failed to post tweet",
-      });
-      clearFeedback(setTweetFeedback, 5000);
-    }
-  }
-
-  // Feedback badge component
-  function FeedbackBadge({ feedback }: { feedback: ActionFeedback }) {
-    if (feedback.status === "idle") return null;
-    return (
-      <span
-        className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-medium ${
-          feedback.status === "loading"
-            ? "bg-blue-500/20 text-blue-400"
-            : feedback.status === "success"
-            ? "bg-green-500/20 text-green-400"
-            : "bg-red-500/20 text-red-400"
-        }`}
-      >
-        {feedback.status === "loading" && (
-          <svg
-            className="h-3 w-3 animate-spin"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-            />
-          </svg>
-        )}
-        {feedback.status === "success" && (
-          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-          </svg>
-        )}
-        {feedback.status === "error" && (
-          <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-          </svg>
-        )}
-        {feedback.message}
-      </span>
-    );
-  }
+  const togglePlatform = (id: string) => {
+    setPlatformToggles((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
 
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-white">Stream Control</h1>
-        <p className="mt-1 text-sm text-gray-400">
-          Manage live streams, send messages, and broadcast across platforms
-        </p>
-      </div>
-
-      {/* ===== Section 1: Live Status Banner ===== */}
-      {platformsLoading ? (
-        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
-          <div className="flex items-center gap-3">
-            <div className="h-4 w-4 rounded-full bg-raised animate-pulse" />
-            <span className="text-sm text-gray-400">
-              Checking live status...
-            </span>
-          </div>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-bold tracking-tight">Stream Management</h1>
+          <p className="text-sm text-muted mt-1">Go live, manage streams, and schedule content</p>
         </div>
-      ) : platformsError ? (
-        <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-6">
-          <div className="flex items-center gap-3">
-            <svg className="h-5 w-5 text-red-400" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+        <div className="flex items-center gap-3">
+          <div className="badge badge-red">
+            <span className="w-1.5 h-1.5 rounded-full bg-dim" />
+            Offline
+          </div>
+          <button className="btn btn-primary btn-sm">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
             </svg>
-            <span className="text-sm text-red-400">{platformsError}</span>
-          </div>
-        </div>
-      ) : isAnyLive ? (
-        <div className="rounded-xl border border-green-500/20 bg-gradient-to-r from-green-500/10 via-green-500/5 to-transparent p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="relative flex h-4 w-4">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-green-400 opacity-75" />
-                <span className="relative inline-flex h-4 w-4 rounded-full bg-green-500" />
-              </span>
-              <div>
-                <p className="text-sm font-semibold text-green-400">
-                  LIVE on {liveCount} platform{liveCount !== 1 ? "s" : ""}
-                </p>
-                <p className="text-xs text-gray-400 mt-0.5">{livePlatformNames}</p>
-              </div>
-            </div>
-            <span className="rounded-lg bg-green-500/20 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-green-400">
-              Live
-            </span>
-          </div>
-        </div>
-      ) : (
-        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <span className="h-4 w-4 rounded-full bg-gray-600" />
-              <div>
-                <p className="text-sm font-medium text-gray-400">
-                  Currently Offline
-                </p>
-                <p className="text-xs text-gray-500 mt-0.5">
-                  No platforms are streaming right now
-                </p>
-              </div>
-            </div>
-            <span className="rounded-lg bg-surface px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-500">
-              Offline
-            </span>
-          </div>
-        </div>
-      )}
-
-      {/* ===== Main Grid: Send Message + LISA Broadcast ===== */}
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* Section 2: Send Message */}
-        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <svg className="h-4 w-4 text-gold" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-              </svg>
-              Send Message
-            </h3>
-            <FeedbackBadge feedback={chatFeedback} />
-          </div>
-          <form onSubmit={handleSendMessage} className="space-y-4">
-            <div>
-              <label className="block text-xs font-medium text-gray-400 mb-2">
-                Platform
-              </label>
-              <select
-                value={chatPlatform}
-                onChange={(e) => setChatPlatform(e.target.value)}
-                className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
-              >
-                {PLATFORM_OPTIONS.map((opt) => (
-                  <option key={opt.value} value={opt.value}>
-                    {opt.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="block text-xs font-medium text-gray-400 mb-2">
-                Message
-              </label>
-              <textarea
-                rows={3}
-                value={chatMessage}
-                onChange={(e) => setChatMessage(e.target.value)}
-                placeholder="Type your message..."
-                className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={
-                !chatMessage.trim() || chatFeedback.status === "loading"
-              }
-              className="w-full rounded-lg bg-red px-4 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {chatFeedback.status === "loading" ? "Sending..." : "Send"}
-            </button>
-          </form>
-        </div>
-
-        {/* Section 3: LISA Broadcast */}
-        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <svg className="h-4 w-4 text-red" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46" />
-              </svg>
-              LISA Broadcast
-            </h3>
-            <FeedbackBadge feedback={broadcastFeedback} />
-          </div>
-          <form onSubmit={handleBroadcast} className="space-y-4">
-            <div>
-              <label className="block text-xs font-medium text-gray-400 mb-2">
-                Broadcast Message
-              </label>
-              <textarea
-                rows={3}
-                value={broadcastMessage}
-                onChange={(e) => setBroadcastMessage(e.target.value)}
-                placeholder="Message from LISA to all platforms..."
-                className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
-              />
-              <p className="mt-1.5 text-[10px] text-gray-500">
-                This sends a message as LISA across all connected platforms
-              </p>
-            </div>
-            <button
-              type="submit"
-              disabled={
-                !broadcastMessage.trim() ||
-                broadcastFeedback.status === "loading"
-              }
-              className="w-full rounded-lg bg-gradient-to-r from-brand-red to-brand-red/80 px-4 py-2.5 text-sm font-medium text-white hover:from-brand-red/90 hover:to-brand-red/70 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {broadcastFeedback.status === "loading"
-                ? "Broadcasting..."
-                : "Broadcast to All"}
-            </button>
-          </form>
+            Go Live
+          </button>
         </div>
       </div>
 
-      {/* ===== Section 4: Post Tweet ===== */}
-      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-            <svg className="h-4 w-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-            </svg>
-            Post Tweet
-          </h3>
-          <div className="flex items-center gap-3">
-            <FeedbackBadge feedback={tweetFeedback} />
-            <span
-              className={`text-xs font-medium tabular-nums ${
-                tweetText.length > 280
-                  ? "text-red-400"
-                  : tweetText.length > 250
-                  ? "text-yellow-400"
-                  : "text-gray-500"
-              }`}
-            >
-              {tweetText.length}/280
-            </span>
-          </div>
-        </div>
-        <form onSubmit={handlePostTweet} className="space-y-4">
-          <textarea
-            rows={3}
-            value={tweetText}
-            onChange={(e) => setTweetText(e.target.value)}
-            placeholder="What's happening?"
-            maxLength={300}
-            className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
-          />
-          {tweetText.length > 280 && (
-            <p className="text-xs text-red-400">
-              Tweet exceeds 280 characters. Please shorten your message.
-            </p>
-          )}
-          <div className="flex items-center justify-between">
-            {/* Character progress bar */}
-            <div className="flex-1 mr-4">
-              <div className="h-1 rounded-full bg-surface overflow-hidden">
-                <div
-                  className={`h-full rounded-full transition-all duration-300 ${
-                    tweetText.length > 280
-                      ? "bg-red-500"
-                      : tweetText.length > 250
-                      ? "bg-yellow-500"
-                      : "bg-brand-gold"
-                  }`}
-                  style={{
-                    width: `${Math.min((tweetText.length / 280) * 100, 100)}%`,
-                  }}
+      <div className="grid lg:grid-cols-3 gap-6">
+        {/* Go Live Controls */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Stream Info */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Stream Information</h2>
+            <div className="space-y-4">
+              <div>
+                <label className="text-xs font-semibold text-dim block mb-1.5">Stream Title</label>
+                <input
+                  type="text"
+                  value={streamTitle}
+                  onChange={(e) => setStreamTitle(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors"
                 />
               </div>
-            </div>
-            <button
-              type="submit"
-              disabled={
-                !tweetText.trim() ||
-                tweetText.length > 280 ||
-                tweetFeedback.status === "loading"
-              }
-              className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            >
-              {tweetFeedback.status === "loading" ? "Posting..." : "Post"}
-            </button>
-          </div>
-        </form>
-      </div>
-
-      {/* ===== Section 5: Platform Status Cards ===== */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-sm font-semibold text-white">Platform Status</h3>
-          <span className="text-xs text-gray-500">
-            {platforms.filter((p) => p.connected).length}/{platforms.length}{" "}
-            connected
-          </span>
-        </div>
-
-        {platformsLoading ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-[var(--color-border)] bg-surface p-6 animate-pulse"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-surface" />
-                  <div className="space-y-2">
-                    <div className="h-4 w-20 rounded bg-surface" />
-                    <div className="h-3 w-16 rounded bg-surface" />
-                  </div>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div>
+                  <label className="text-xs font-semibold text-dim block mb-1.5">Game / Category</label>
+                  <input
+                    type="text"
+                    value={streamGame}
+                    onChange={(e) => setStreamGame(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs font-semibold text-dim block mb-1.5">Tags</label>
+                  <input
+                    type="text"
+                    value={streamTags}
+                    onChange={(e) => setStreamTags(e.target.value)}
+                    className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors"
+                  />
                 </div>
               </div>
-            ))}
+              <div className="flex justify-end gap-3">
+                <button className="btn btn-ghost btn-sm">Reset</button>
+                <button className="btn btn-secondary btn-sm">Update Info</button>
+              </div>
+            </div>
           </div>
-        ) : (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {platforms.map((platform) => {
-              const name = platform.name.toLowerCase();
-              const colors = PLATFORM_COLORS[name] || {
-                bg: "bg-gray-500/20",
-                text: "text-gray-400",
-                dot: "bg-gray-500",
-              };
 
-              return (
-                <div
-                  key={platform.name}
-                  className="rounded-xl border border-[var(--color-border)] bg-surface p-6 transition-colors hover:border-[var(--color-border)]"
+          {/* Multi-Platform Targets */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Platform Targets</h2>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+              {STREAM_PLATFORMS.map((platform) => (
+                <button
+                  key={platform.id}
+                  onClick={() => togglePlatform(platform.id)}
+                  className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
+                    platformToggles[platform.id]
+                      ? "bg-glass-active border-glass-border-hover"
+                      : "bg-glass/50 border-glass-border opacity-50"
+                  } ${platform.status === "disconnected" ? "cursor-not-allowed opacity-30" : "cursor-pointer"}`}
+                  disabled={platform.status === "disconnected"}
                 >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`flex h-10 w-10 items-center justify-center rounded-lg ${colors.bg}`}
-                      >
-                        <span
-                          className={`text-sm font-bold ${colors.text}`}
-                        >
-                          {platform.name.charAt(0).toUpperCase()}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="text-sm font-medium text-white">
-                          {platform.name}
-                        </p>
-                        <p className="text-xs text-gray-500 mt-0.5">
-                          {platform.connected
-                            ? platform.live
-                              ? "Streaming"
-                              : "Connected"
-                            : "Disconnected"}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-col items-end gap-1.5">
-                      {/* Connection status */}
-                      <span
-                        className={`flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[10px] font-medium ${
-                          platform.connected
-                            ? "bg-green-500/10 text-green-400"
-                            : "bg-red-500/10 text-red-400"
-                        }`}
-                      >
-                        <span
-                          className={`h-1.5 w-1.5 rounded-full ${
-                            platform.connected ? "bg-green-500" : "bg-red-500"
-                          }`}
-                        />
-                        {platform.connected ? "Online" : "Offline"}
-                      </span>
-                      {/* Live indicator */}
-                      {platform.live && (
-                        <span className="flex items-center gap-1.5 rounded-full bg-red/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red">
-                          <span className="relative flex h-1.5 w-1.5">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red opacity-75" />
-                            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red" />
-                          </span>
-                          Live
-                        </span>
-                      )}
-                    </div>
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
+                    style={{ backgroundColor: `${platform.color}20`, color: platform.color }}
+                  >
+                    {platform.name.charAt(0)}
                   </div>
-                </div>
-              );
-            })}
+                  <div className="text-left min-w-0">
+                    <div className="text-xs font-semibold truncate">{platform.name}</div>
+                    <div className="text-[10px] text-dim capitalize">{platform.status}</div>
+                  </div>
+                  <div className={`ml-auto w-8 h-4.5 rounded-full transition-colors flex-shrink-0 ${
+                    platformToggles[platform.id] ? "bg-emerald" : "bg-dim"
+                  }`}>
+                    <div className={`w-3.5 h-3.5 rounded-full bg-white mt-0.5 transition-transform ${
+                      platformToggles[platform.id] ? "translate-x-4" : "translate-x-0.5"
+                    }`} />
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
 
-            {platforms.length === 0 && !platformsError && (
-              <div className="col-span-full rounded-xl border border-[var(--color-border)] bg-surface p-6 text-center">
-                <p className="text-sm text-gray-400">
-                  No platform data available
-                </p>
+          {/* Chat Bridge */}
+          <div className="card p-5">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-sm font-bold">Chat Bridge</h2>
+                <p className="text-xs text-muted mt-1">Relay messages across all connected platforms in real-time</p>
+              </div>
+              <button
+                onClick={() => setChatBridgeEnabled(!chatBridgeEnabled)}
+                className={`w-12 h-6 rounded-full transition-colors flex-shrink-0 ${
+                  chatBridgeEnabled ? "bg-emerald" : "bg-dim"
+                }`}
+              >
+                <div className={`w-5 h-5 rounded-full bg-white mt-0.5 transition-transform ${
+                  chatBridgeEnabled ? "translate-x-6" : "translate-x-0.5"
+                }`} />
+              </button>
+            </div>
+            {chatBridgeEnabled && (
+              <div className="mt-4 p-3 rounded-lg bg-emerald/10 border border-emerald/20">
+                <div className="flex items-center gap-2 text-xs text-emerald">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Chat bridge active. Messages relay between all enabled platforms.
+                </div>
               </div>
             )}
           </div>
-        )}
+
+          {/* Clip Creation */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Quick Clip</h2>
+            <div className="flex items-center gap-4">
+              <div className="flex-1">
+                <label className="text-xs font-semibold text-dim block mb-1.5">Clip Title (optional)</label>
+                <input
+                  type="text"
+                  placeholder="Leave blank for auto-title"
+                  className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors"
+                />
+              </div>
+              <button className="btn btn-secondary btn-sm mt-5">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 3.75H6A2.25 2.25 0 003.75 6v1.5M16.5 3.75H18A2.25 2.25 0 0120.25 6v1.5m0 9V18A2.25 2.25 0 0118 20.25h-1.5m-9 0H6A2.25 2.25 0 013.75 18v-1.5M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+                Create Clip
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Sidebar */}
+        <div className="space-y-6">
+          {/* Stream Schedule */}
+          <div className="card p-5">
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-bold">Weekly Schedule</h2>
+              <button className="text-xs text-muted hover:text-foreground transition-colors">Edit</button>
+            </div>
+            <div className="space-y-1.5">
+              {DAYS.map((day) => {
+                const events = SCHEDULE_DATA[day] || [];
+                return (
+                  <div key={day} className="flex items-center gap-3 p-2 rounded-lg hover:bg-glass transition-colors">
+                    <span className="text-[10px] font-bold text-dim w-8">{day.slice(0, 3)}</span>
+                    {events.length > 0 ? (
+                      <div className="flex-1">
+                        {events.map((event, i) => (
+                          <div key={i} className={`px-2 py-1 rounded text-[10px] ${event.color}`}>
+                            <span className="font-semibold">{TIME_SLOTS[event.start]} - {TIME_SLOTS[event.end]}</span>
+                            <span className="text-muted ml-1">{event.game}</span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <span className="text-[10px] text-dim italic">Off</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Recent VODs */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Recent VODs</h2>
+            <div className="space-y-3">
+              {RECENT_VODS.map((vod, i) => (
+                <div key={i} className="p-3 rounded-lg bg-glass border border-glass-border hover:border-glass-border-hover transition-all cursor-pointer">
+                  <div className="text-xs font-semibold mb-1 truncate">{vod.title}</div>
+                  <div className="flex items-center gap-3 text-[10px] text-dim">
+                    <span>{vod.date}</span>
+                    <span>{vod.duration}</span>
+                    <span>{vod.viewers} peak</span>
+                  </div>
+                  <div className="flex gap-1 mt-2">
+                    {vod.platforms.map((p) => (
+                      <span key={p} className="text-[9px] px-1.5 py-0.5 rounded-full bg-glass border border-glass-border text-dim">
+                        {p}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
