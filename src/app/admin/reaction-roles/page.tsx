@@ -117,13 +117,13 @@ export default function ReactionRolesPage() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1 rounded-lg bg-white/5 p-1">
+      <div className="flex gap-1 rounded-lg bg-surface p-1">
         <button
           onClick={() => setActiveTab("active")}
           className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
             activeTab === "active"
-              ? "bg-brand-red text-white"
-              : "text-gray-400 hover:text-white hover:bg-white/5"
+              ? "bg-red text-white"
+              : "text-gray-400 hover:text-white hover:bg-surface"
           }`}
         >
           Active Reaction Roles ({reactionRoles.length})
@@ -132,8 +132,8 @@ export default function ReactionRolesPage() {
           onClick={() => setActiveTab("create")}
           className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
             activeTab === "create"
-              ? "bg-brand-red text-white"
-              : "text-gray-400 hover:text-white hover:bg-white/5"
+              ? "bg-red text-white"
+              : "text-gray-400 hover:text-white hover:bg-surface"
           }`}
         >
           Create New
@@ -152,9 +152,9 @@ export default function ReactionRolesPage() {
           ).map(([messageId, groupedRoles]) => (
             <div
               key={messageId}
-              className="rounded-xl border border-white/5 bg-[#161b22] overflow-hidden"
+              className="rounded-xl border border-[var(--color-border)] bg-surface overflow-hidden"
             >
-              <div className="flex items-center justify-between px-5 py-3 bg-white/5">
+              <div className="flex items-center justify-between px-5 py-3 bg-surface">
                 <div className="flex items-center gap-3">
                   <svg
                     className="h-5 w-5 text-gray-400"
@@ -179,7 +179,7 @@ export default function ReactionRolesPage() {
                   </div>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button className="rounded-md bg-white/5 px-3 py-1.5 text-xs font-medium text-gray-400 hover:bg-white/10 hover:text-white">
+                  <button className="rounded-md bg-surface px-3 py-1.5 text-xs font-medium text-gray-400 hover:bg-raised hover:text-white">
                     Edit
                   </button>
                   <button
@@ -195,7 +195,7 @@ export default function ReactionRolesPage() {
                   {groupedRoles.map((rr) => (
                     <div
                       key={rr.id}
-                      className="flex items-center gap-2 rounded-lg bg-white/5 px-3 py-2"
+                      className="flex items-center gap-2 rounded-lg bg-surface px-3 py-2"
                     >
                       <span className="text-xl">{rr.emoji}</span>
                       <svg
@@ -228,8 +228,8 @@ export default function ReactionRolesPage() {
           ))}
 
           {reactionRoles.length === 0 && (
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-12 text-center">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-12 text-center">
+              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-surface">
                 <svg
                   className="h-8 w-8 text-gray-500"
                   fill="none"
@@ -252,7 +252,7 @@ export default function ReactionRolesPage() {
               </p>
               <button
                 onClick={() => setActiveTab("create")}
-                className="mt-4 rounded-lg bg-brand-red px-4 py-2 text-sm font-medium text-white hover:bg-brand-red/90"
+                className="mt-4 rounded-lg bg-red px-4 py-2 text-sm font-medium text-white hover:bg-red/90"
               >
                 Create Reaction Role
               </button>
@@ -264,7 +264,7 @@ export default function ReactionRolesPage() {
           {/* Create Form */}
           <div className="space-y-6">
             {/* Message Settings */}
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <h3 className="text-sm font-semibold text-white mb-4">
                 Message Settings
               </h3>
@@ -274,7 +274,7 @@ export default function ReactionRolesPage() {
                     Channel
                   </label>
                   {channelsLoading ? (
-                    <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                    <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                       Loading channels...
                     </div>
                   ) : (
@@ -283,7 +283,7 @@ export default function ReactionRolesPage() {
                       onChange={(e) =>
                         setNewRole({ ...newRole, channel: e.target.value })
                       }
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                     >
                       <option value="">Select a channel</option>
                       {channels.map((channel) => (
@@ -306,8 +306,8 @@ export default function ReactionRolesPage() {
                       }
                       className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
                         newRole.messageMode === "new"
-                          ? "bg-brand-red text-white"
-                          : "bg-white/5 text-gray-400 hover:bg-white/10"
+                          ? "bg-red text-white"
+                          : "bg-surface text-gray-400 hover:bg-raised"
                       }`}
                     >
                       Create New Message
@@ -318,8 +318,8 @@ export default function ReactionRolesPage() {
                       }
                       className={`flex-1 rounded-lg px-4 py-2.5 text-sm font-medium transition-colors ${
                         newRole.messageMode === "existing"
-                          ? "bg-brand-red text-white"
-                          : "bg-white/5 text-gray-400 hover:bg-white/10"
+                          ? "bg-red text-white"
+                          : "bg-surface text-gray-400 hover:bg-raised"
                       }`}
                     >
                       Use Existing
@@ -342,7 +342,7 @@ export default function ReactionRolesPage() {
                       }
                       rows={4}
                       placeholder="React below to get your roles!"
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
                     />
                   </div>
                 ) : (
@@ -360,7 +360,7 @@ export default function ReactionRolesPage() {
                         })
                       }
                       placeholder="Right-click message → Copy Message ID"
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
                     />
                   </div>
                 )}
@@ -368,7 +368,7 @@ export default function ReactionRolesPage() {
             </div>
 
             {/* Role Settings */}
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <h3 className="text-sm font-semibold text-white mb-4">
                 Role Settings
               </h3>
@@ -384,7 +384,7 @@ export default function ReactionRolesPage() {
                       setNewRole({ ...newRole, emoji: e.target.value })
                     }
                     placeholder="🎮 or custom emoji name"
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
                   />
                 </div>
 
@@ -393,7 +393,7 @@ export default function ReactionRolesPage() {
                     Role to Assign
                   </label>
                   {rolesLoading ? (
-                    <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                    <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                       Loading roles...
                     </div>
                   ) : (
@@ -402,7 +402,7 @@ export default function ReactionRolesPage() {
                       onChange={(e) =>
                         setNewRole({ ...newRole, role: e.target.value })
                       }
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                     >
                       <option value="">Select a role</option>
                       {roles
@@ -448,14 +448,14 @@ export default function ReactionRolesPage() {
                         }
                         className={`rounded-lg p-3 text-left transition-colors ${
                           newRole.mode === mode.value
-                            ? "bg-brand-red/10 border border-brand-red"
-                            : "bg-white/5 border border-transparent hover:bg-white/10"
+                            ? "bg-red/10 border border-brand-red"
+                            : "bg-surface border border-transparent hover:bg-raised"
                         }`}
                       >
                         <p
                           className={`text-sm font-medium ${
                             newRole.mode === mode.value
-                              ? "text-brand-red"
+                              ? "text-red"
                               : "text-white"
                           }`}
                         >
@@ -471,13 +471,13 @@ export default function ReactionRolesPage() {
 
             {/* Actions */}
             <div className="flex justify-end gap-3">
-              <button className="rounded-lg bg-white/5 px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-white/10 hover:text-white">
+              <button className="rounded-lg bg-surface px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-raised hover:text-white">
                 Add Another Role
               </button>
               <button
                 onClick={createReactionRole}
                 disabled={saving}
-                className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+                className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
               >
                 {saving ? "Creating..." : "Create Reaction Role"}
               </button>
@@ -487,7 +487,7 @@ export default function ReactionRolesPage() {
           {/* Preview */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-white">Preview</h3>
-            <div className="rounded-xl border border-white/5 bg-[#36393f] p-4">
+            <div className="rounded-xl border border-[var(--color-border)] bg-[#36393f] p-4">
               <div className="flex gap-4">
                 <div className="h-10 w-10 rounded-full bg-[#5865F2] flex items-center justify-center text-white font-bold text-sm shrink-0">
                   P
@@ -510,16 +510,16 @@ export default function ReactionRolesPage() {
                   </p>
                   <div className="mt-3 flex gap-2">
                     {newRole.emoji && (
-                      <button className="flex items-center gap-1 rounded bg-white/10 px-2 py-1 text-sm hover:bg-white/20">
+                      <button className="flex items-center gap-1 rounded bg-raised px-2 py-1 text-sm hover:bg-white/20">
                         <span>{newRole.emoji}</span>
                         <span className="text-gray-400 text-xs">1</span>
                       </button>
                     )}
-                    <button className="flex items-center gap-1 rounded bg-white/10 px-2 py-1 text-sm hover:bg-white/20">
+                    <button className="flex items-center gap-1 rounded bg-raised px-2 py-1 text-sm hover:bg-white/20">
                       <span>🎮</span>
                       <span className="text-gray-400 text-xs">24</span>
                     </button>
-                    <button className="flex items-center gap-1 rounded bg-white/10 px-2 py-1 text-sm hover:bg-white/20">
+                    <button className="flex items-center gap-1 rounded bg-raised px-2 py-1 text-sm hover:bg-white/20">
                       <span>🎬</span>
                       <span className="text-gray-400 text-xs">18</span>
                     </button>

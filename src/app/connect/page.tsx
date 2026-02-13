@@ -431,12 +431,12 @@ export default function ConnectPage() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#001c3f]/20 to-[#0a0a0a] text-white">
+    <main className="min-h-screen bg-base text-foreground">
       {/* Header */}
-      <div className="border-b border-white/10 bg-black/50 backdrop-blur-sm sticky top-0 z-10">
+      <div className="border-b border-[var(--color-border)] bg-base/95 backdrop-blur-sm sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
-          <h1 className="text-2xl font-bold">🔗 Platform OAuth Configuration</h1>
-          <p className="text-gray-400 text-sm mt-1">Select scopes for each platform connection</p>
+          <h1 className="text-2xl font-bold text-foreground">Platform OAuth Configuration</h1>
+          <p className="text-muted text-sm mt-1">Select scopes for each platform connection</p>
         </div>
       </div>
 
@@ -447,36 +447,36 @@ export default function ConnectPage() {
             onClick={() => setRole("broadcaster")}
             className={`flex-1 sm:flex-none px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
               role === "broadcaster"
-                ? "bg-[#910000] text-white"
-                : "bg-white/5 text-gray-400 hover:bg-white/10"
+                ? "bg-red text-white"
+                : "bg-surface text-muted hover:bg-raised"
             }`}
           >
-            👤 Broadcaster (Pro)
+            Broadcaster (Pro)
           </button>
           <button
             onClick={() => setRole("bot")}
             className={`flex-1 sm:flex-none px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
               role === "bot"
-                ? "bg-[#c4a265] text-black"
-                : "bg-white/5 text-gray-400 hover:bg-white/10"
+                ? "bg-gold text-black"
+                : "bg-surface text-muted hover:bg-raised"
             }`}
           >
-            🤖 Bot (LISA)
+            Bot (LISA)
           </button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Platform List */}
           <div className="space-y-3">
-            <h2 className="text-lg font-semibold text-gray-300 mb-4">Platforms</h2>
+            <h2 className="text-lg font-semibold text-muted mb-4">Platforms</h2>
             {(Object.entries(PLATFORM_SCOPES) as [PlatformKey, typeof PLATFORM_SCOPES.twitch][]).map(([key, p]) => (
               <button
                 key={key}
                 onClick={() => setSelectedPlatform(key)}
                 className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all ${
                   selectedPlatform === key
-                    ? "bg-white/10 border-2"
-                    : "bg-white/5 border border-white/10 hover:border-white/20"
+                    ? "bg-raised border-2"
+                    : "panel"
                 }`}
                 style={{ borderColor: selectedPlatform === key ? p.color : undefined }}
               >
@@ -487,8 +487,8 @@ export default function ConnectPage() {
                   {p.icon}
                 </div>
                 <div className="text-left">
-                  <div className="font-semibold">{p.name}</div>
-                  <div className="text-xs text-gray-500">
+                  <div className="font-semibold text-foreground">{p.name}</div>
+                  <div className="text-xs text-dim">
                     {selectedScopes[key]?.size || 0} scopes selected
                   </div>
                 </div>
@@ -499,11 +499,11 @@ export default function ConnectPage() {
           {/* Scope Selection */}
           <div className="lg:col-span-2">
             {platform && selectedPlatform ? (
-              <div className="bg-white/5 rounded-xl border border-white/10 p-6">
+              <div className="panel p-6">
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
                   <div className="flex items-center gap-3">
                     <span className="text-2xl">{platform.icon}</span>
-                    <h2 className="text-lg sm:text-xl font-bold">{platform.name} Scopes</h2>
+                    <h2 className="text-lg sm:text-xl font-bold text-foreground">{platform.name} Scopes</h2>
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -511,19 +511,19 @@ export default function ConnectPage() {
                         const allScopes = new Set(platform.scopes.map(s => s.id));
                         setSelectedScopes(prev => ({ ...prev, [selectedPlatform]: allScopes }));
                       }}
-                      className="flex-1 sm:flex-none px-3 py-2 bg-[#910000]/20 text-[#910000] rounded text-xs sm:text-sm font-medium hover:bg-[#910000]/30"
+                      className="flex-1 sm:flex-none px-3 py-2 bg-red/20 text-red rounded text-xs sm:text-sm font-medium hover:bg-red/30"
                     >
                       Select All
                     </button>
                     <button
                       onClick={() => selectRecommended(selectedPlatform, role)}
-                      className="flex-1 sm:flex-none px-3 py-2 bg-[#c4a265]/20 text-[#c4a265] rounded text-xs sm:text-sm font-medium hover:bg-[#c4a265]/30"
+                      className="flex-1 sm:flex-none px-3 py-2 bg-gold/20 text-gold rounded text-xs sm:text-sm font-medium hover:bg-gold/30"
                     >
                       Recommended
                     </button>
                     <button
                       onClick={() => setSelectedScopes(prev => ({ ...prev, [selectedPlatform]: new Set() }))}
-                      className="px-3 py-2 bg-white/10 text-gray-400 rounded text-xs sm:text-sm hover:bg-white/20"
+                      className="px-3 py-2 bg-raised text-muted rounded text-xs sm:text-sm hover:bg-surface"
                     >
                       Clear
                     </button>
@@ -531,15 +531,15 @@ export default function ConnectPage() {
                 </div>
 
                 {platform.note && (
-                  <div className="mb-4 p-3 bg-yellow-500/10 border border-yellow-500/30 rounded-lg text-yellow-500 text-sm">
-                    ⚠️ {platform.note}
+                  <div className="mb-4 p-3 bg-gold/10 border border-gold/30 rounded-lg text-gold text-sm">
+                    {platform.note}
                   </div>
                 )}
 
                 <div className="space-y-6 max-h-[60vh] sm:max-h-[500px] overflow-y-auto pr-2 -mr-2">
                   {Object.entries(scopesByCategory).map(([category, scopes]) => (
                     <div key={category}>
-                      <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                      <h3 className="text-label text-muted mb-3">
                         {category}
                       </h3>
                       <div className="space-y-2">
@@ -548,32 +548,32 @@ export default function ConnectPage() {
                             key={scope.id}
                             className={`flex items-start gap-3 p-3 sm:p-3 rounded-lg cursor-pointer transition-all touch-manipulation ${
                               currentScopes.has(scope.id)
-                                ? "bg-white/10 border border-white/20"
-                                : "bg-white/5 border border-transparent hover:bg-white/8"
+                                ? "bg-raised border border-[var(--color-border)]"
+                                : "bg-surface border border-transparent hover:bg-raised"
                             }`}
                           >
                             <input
                               type="checkbox"
                               checked={currentScopes.has(scope.id)}
                               onChange={() => toggleScope(selectedPlatform, scope.id)}
-                              className="mt-0.5 w-5 h-5 sm:w-4 sm:h-4 rounded border-gray-600 text-[#910000] focus:ring-[#910000] flex-shrink-0"
+                              className="mt-0.5 w-5 h-5 sm:w-4 sm:h-4 rounded border-dim text-red focus:ring-red flex-shrink-0"
                             />
                             <div className="flex-1 min-w-0">
                               <div className="flex flex-wrap items-center gap-1 sm:gap-2">
-                                <code className="text-[10px] sm:text-xs bg-black/30 px-1.5 py-0.5 rounded text-gray-300 break-all">
+                                <code className="text-data text-[10px] sm:text-xs bg-base px-1.5 py-0.5 rounded text-muted break-all">
                                   {scope.id}
                                 </code>
                                 {scope.recommended && (
                                   <span className={`text-xs px-1.5 py-0.5 rounded ${
                                     scope.recommended === "bot"
-                                      ? "bg-[#c4a265]/20 text-[#c4a265]"
-                                      : "bg-[#910000]/20 text-[#910000]"
+                                      ? "bg-gold/20 text-gold"
+                                      : "bg-red/20 text-red"
                                   }`}>
                                     {scope.recommended === "bot" ? "Bot" : scope.recommended === "both" ? "Both" : "Broadcaster"}
                                   </span>
                                 )}
                               </div>
-                              <div className="text-sm text-gray-400 mt-1">{scope.desc}</div>
+                              <div className="text-sm text-muted mt-1">{scope.desc}</div>
                             </div>
                           </label>
                         ))}
@@ -583,7 +583,7 @@ export default function ConnectPage() {
                 </div>
 
                 {/* Connect Button */}
-                <div className="mt-6 pt-6 border-t border-white/10">
+                <div className="mt-6 pt-6 border-t border-[var(--color-border)]">
                   <button
                     onClick={() => startOAuth(selectedPlatform)}
                     disabled={currentScopes.size === 0}
@@ -599,24 +599,23 @@ export default function ConnectPage() {
                 </div>
               </div>
             ) : (
-              <div className="bg-white/5 rounded-xl border border-white/10 p-12 text-center">
-                <div className="text-4xl mb-4">👈</div>
-                <p className="text-gray-400">Select a platform to configure scopes</p>
+              <div className="panel p-12 text-center">
+                <p className="text-muted">Select a platform to configure scopes</p>
               </div>
             )}
           </div>
         </div>
 
         {/* Status */}
-        <div className="mt-8 p-6 rounded-xl bg-white/5 border border-white/10">
-          <h3 className="font-bold mb-3">🔍 Connection Status</h3>
+        <div className="mt-8 panel p-6">
+          <h3 className="font-bold text-foreground mb-3">Connection Status</h3>
           <a
             href="/api/prismai/platforms"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block px-4 py-2 bg-[#910000] rounded-lg text-sm font-semibold hover:bg-[#a10000] transition-colors"
+            className="btn-primary inline-block"
           >
-            View PRISMAI Status →
+            View PRISMAI Status
           </a>
         </div>
       </div>

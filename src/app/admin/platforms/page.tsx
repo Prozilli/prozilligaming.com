@@ -147,7 +147,7 @@ export default function PlatformsPage() {
       {/* Summary Stats */}
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {/* Connected count */}
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
           <p className="text-xs font-medium uppercase tracking-wider text-gray-500">
             Platforms Connected
           </p>
@@ -164,7 +164,7 @@ export default function PlatformsPage() {
         </div>
 
         {/* Engine status */}
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
           <p className="text-xs font-medium uppercase tracking-wider text-gray-500">
             PRISMAI Engine
           </p>
@@ -185,7 +185,7 @@ export default function PlatformsPage() {
         </div>
 
         {/* Uptime */}
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
           <p className="text-xs font-medium uppercase tracking-wider text-gray-500">
             Uptime
           </p>
@@ -206,7 +206,7 @@ export default function PlatformsPage() {
         </div>
 
         {/* Analytics */}
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
           <p className="text-xs font-medium uppercase tracking-wider text-gray-500">
             Analytics Engine
           </p>
@@ -240,13 +240,13 @@ export default function PlatformsPage() {
           {PLATFORM_ORDER.map((key) => (
             <div
               key={key}
-              className="animate-pulse rounded-xl border border-white/5 bg-[#161b22] p-5"
+              className="animate-pulse rounded-xl border border-[var(--color-border)] bg-surface p-5"
             >
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-lg bg-white/5" />
+                <div className="h-10 w-10 rounded-lg bg-surface" />
                 <div className="flex-1 space-y-2">
-                  <div className="h-4 w-24 rounded bg-white/5" />
-                  <div className="h-3 w-16 rounded bg-white/5" />
+                  <div className="h-4 w-24 rounded bg-surface" />
+                  <div className="h-3 w-16 rounded bg-surface" />
                 </div>
               </div>
             </div>
@@ -263,7 +263,7 @@ export default function PlatformsPage() {
             return (
               <div
                 key={key}
-                className="group rounded-xl border border-white/5 bg-[#161b22] p-5 transition-colors hover:border-white/10"
+                className="group rounded-xl border border-[var(--color-border)] bg-surface p-5 transition-colors hover:border-[var(--color-border)]"
               >
                 {/* Card Header: Icon + Name + Status Dot */}
                 <div className="flex items-start justify-between">
@@ -321,7 +321,7 @@ export default function PlatformsPage() {
                 </div>
 
                 {/* Card Footer */}
-                <div className="mt-4 flex items-center justify-between border-t border-white/5 pt-3">
+                <div className="mt-4 flex items-center justify-between border-t border-[var(--color-border)] pt-3">
                   {connected ? (
                     <span className="text-xs text-gray-500">
                       Token active
@@ -329,7 +329,7 @@ export default function PlatformsPage() {
                   ) : (
                     <Link
                       href="/connect"
-                      className="text-xs font-medium text-brand-red transition-colors hover:text-red-300"
+                      className="text-xs font-medium text-red transition-colors hover:text-red-300"
                     >
                       Reconnect &rarr;
                     </Link>
@@ -348,7 +348,7 @@ export default function PlatformsPage() {
       )}
 
       {/* Connection Help */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-semibold text-white">
@@ -361,7 +361,7 @@ export default function PlatformsPage() {
           </div>
           <Link
             href="/connect"
-            className="shrink-0 rounded-lg bg-brand-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600"
+            className="shrink-0 rounded-lg bg-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-600"
           >
             Go to Connect
           </Link>

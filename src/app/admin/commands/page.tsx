@@ -102,7 +102,7 @@ export default function CommandsPage() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 rounded-lg bg-brand-red px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90"
+          className="flex items-center gap-2 rounded-lg bg-red px-4 py-2.5 text-sm font-medium text-white hover:bg-red/90"
         >
           <svg
             className="h-4 w-4"
@@ -141,15 +141,15 @@ export default function CommandsPage() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search commands..."
-          className="w-full rounded-lg border border-white/10 bg-[#161b22] py-3 pl-12 pr-4 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+          className="w-full rounded-lg border border-[var(--color-border)] bg-surface py-3 pl-12 pr-4 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
         />
       </div>
 
       {/* Commands List */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] overflow-hidden">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface overflow-hidden">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-white/5 bg-white/5">
+            <tr className="border-b border-[var(--color-border)] bg-surface">
               <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">
                 Command
               </th>
@@ -174,12 +174,12 @@ export default function CommandsPage() {
             {filteredCommands.map((cmd) => (
               <tr
                 key={cmd.id}
-                className={`border-b border-white/5 last:border-0 ${
+                className={`border-b border-[var(--color-border)] last:border-0 ${
                   !cmd.enabled ? "opacity-50" : ""
                 }`}
               >
                 <td className="px-4 py-3">
-                  <code className="rounded bg-white/10 px-2 py-1 text-sm text-brand-gold">
+                  <code className="rounded bg-raised px-2 py-1 text-sm text-gold">
                     !{cmd.name}
                   </code>
                 </td>
@@ -199,7 +199,7 @@ export default function CommandsPage() {
                         : cmd.userLevel === "moderator"
                         ? "bg-purple-500/20 text-purple-400"
                         : cmd.userLevel === "subscriber"
-                        ? "bg-brand-gold/20 text-brand-gold"
+                        ? "bg-brand-gold/20 text-gold"
                         : "bg-gray-500/20 text-gray-400"
                     }`}
                   >
@@ -214,7 +214,7 @@ export default function CommandsPage() {
                     <button
                       onClick={() => toggleCommand(cmd.id)}
                       className={`relative h-5 w-9 rounded-full transition-colors ${
-                        cmd.enabled ? "bg-green-500" : "bg-white/10"
+                        cmd.enabled ? "bg-green-500" : "bg-raised"
                       }`}
                     >
                       <span
@@ -223,7 +223,7 @@ export default function CommandsPage() {
                         }`}
                       />
                     </button>
-                    <button className="rounded p-1.5 text-gray-400 hover:bg-white/5 hover:text-white">
+                    <button className="rounded p-1.5 text-gray-400 hover:bg-surface hover:text-white">
                       <svg
                         className="h-4 w-4"
                         fill="none"
@@ -265,41 +265,41 @@ export default function CommandsPage() {
       </div>
 
       {/* Variables Reference */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-3">
           Available Variables
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
           <div>
-            <code className="text-brand-gold">{"{user}"}</code>
+            <code className="text-gold">{"{user}"}</code>
             <p className="text-gray-500">Username of the sender</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{channel}"}</code>
+            <code className="text-gold">{"{channel}"}</code>
             <p className="text-gray-500">Current channel name</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{game}"}</code>
+            <code className="text-gold">{"{game}"}</code>
             <p className="text-gray-500">Current game category</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{title}"}</code>
+            <code className="text-gold">{"{title}"}</code>
             <p className="text-gray-500">Current stream title</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{uptime}"}</code>
+            <code className="text-gold">{"{uptime}"}</code>
             <p className="text-gray-500">Stream uptime</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{viewers}"}</code>
+            <code className="text-gold">{"{viewers}"}</code>
             <p className="text-gray-500">Current viewer count</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{followers}"}</code>
+            <code className="text-gold">{"{followers}"}</code>
             <p className="text-gray-500">Total follower count</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{count}"}</code>
+            <code className="text-gold">{"{count}"}</code>
             <p className="text-gray-500">Command use counter</p>
           </div>
         </div>
@@ -308,7 +308,7 @@ export default function CommandsPage() {
       {/* Create Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="w-full max-w-lg rounded-xl border border-white/10 bg-[#161b22] p-6">
+          <div className="w-full max-w-lg rounded-xl border border-[var(--color-border)] bg-surface p-6">
             <h2 className="text-lg font-bold text-white mb-4">
               Create Command
             </h2>
@@ -318,7 +318,7 @@ export default function CommandsPage() {
                   Command Name
                 </label>
                 <div className="flex">
-                  <span className="flex items-center rounded-l-lg border border-r-0 border-white/10 bg-white/5 px-3 text-sm text-gray-400">
+                  <span className="flex items-center rounded-l-lg border border-r-0 border-[var(--color-border)] bg-surface px-3 text-sm text-gray-400">
                     !
                   </span>
                   <input
@@ -328,7 +328,7 @@ export default function CommandsPage() {
                       setNewCommand({ ...newCommand, name: e.target.value })
                     }
                     placeholder="commandname"
-                    className="flex-1 rounded-r-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                    className="flex-1 rounded-r-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
                   />
                 </div>
               </div>
@@ -343,7 +343,7 @@ export default function CommandsPage() {
                   }
                   rows={3}
                   placeholder="What should the bot say?"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -361,7 +361,7 @@ export default function CommandsPage() {
                       })
                     }
                     min={0}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   />
                 </div>
                 <div>
@@ -376,7 +376,7 @@ export default function CommandsPage() {
                         userLevel: e.target.value as Command["userLevel"],
                       })
                     }
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   >
                     <option value="everyone">Everyone</option>
                     <option value="subscriber">Subscribers</option>
@@ -389,7 +389,7 @@ export default function CommandsPage() {
             <div className="mt-6 flex justify-end gap-3">
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="rounded-lg bg-white/5 px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-white/10 hover:text-white"
+                className="rounded-lg bg-surface px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-raised hover:text-white"
               >
                 Cancel
               </button>
@@ -414,7 +414,7 @@ export default function CommandsPage() {
                     setShowCreateModal(false);
                   }
                 }}
-                className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90"
+                className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90"
               >
                 Create Command
               </button>

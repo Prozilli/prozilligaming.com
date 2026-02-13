@@ -1,159 +1,147 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import NextStreamCountdown from "@/components/NextStreamCountdown";
+import LiveStatusBar from "@/components/LiveStatusBar";
+import SectionLabel from "@/components/ui/SectionLabel";
+import HeroLiveStatus from "@/components/HeroLiveStatus";
 
 export const metadata: Metadata = {
   title: "Prozilli Gaming — Live Multiplatform Streaming",
   description:
     "Watch Prozilli live across Twitch, YouTube, Kick, Trovo, and more. Cinematic gaming content, community events, and the PRISMAI-powered streaming experience.",
+  openGraph: {
+    title: "Prozilli Gaming — Live. Create. Dominate.",
+    description:
+      "Multiplatform live streaming across Twitch, YouTube, Kick, Trovo, and Facebook. Gaming, creative content, and community.",
+    type: "website",
+    url: "https://prozilligaming.com",
+    images: [
+      {
+        url: "/images/heroes/hero-home.png",
+        width: 1200,
+        height: 630,
+        alt: "Prozilli Gaming - Live. Create. Dominate.",
+      },
+    ],
+  },
 };
-
-const PLATFORMS = [
-  { name: "YouTube", href: "https://youtube.com/@prozilligaming" },
-  { name: "Twitch", href: "https://twitch.tv/ProzilliGaming" },
-  { name: "Kick", href: "https://kick.com/ProzilliGaming" },
-  { name: "Trovo", href: "https://trovo.live/ProzilliGaming" },
-  { name: "Facebook", href: "https://facebook.com/ProzilliGaming" },
-];
 
 const ECOSYSTEM = [
   {
     title: "Watch Live",
-    description: "Catch the stream on any platform. Multiplatform, multicam, multivibes.",
+    description: "Catch the stream on any platform.",
     href: "/watch",
   },
   {
-    title: "Merch Store",
-    description: "Official Prozilli Gaming gear. Rep the brand.",
-    href: "/shop",
-  },
-  {
     title: "ZO Syndicate",
-    description: "Cinematic FiveM roleplay. Where stories are born.",
+    description: "Cinematic FiveM roleplay. 48 players.",
     href: "/zo-syndicate",
   },
   {
-    title: "Community",
-    description: "Join the Discord. Be part of something bigger.",
-    href: "https://discord.gg/prozillihq",
+    title: "LISA",
+    description: "AI co-host. Never sleeps.",
+    href: "/lisa",
+  },
+  {
+    title: "Shop",
+    description: "Official Prozilli Gaming gear.",
+    href: "/shop",
   },
 ];
 
 export default function Home() {
   return (
     <>
-      {/* Hero */}
-      <section className="gradient-gaming scanlines relative flex min-h-[70vh] sm:min-h-[80vh] md:min-h-[90vh] flex-col items-center justify-center overflow-hidden px-4 sm:px-6 text-center">
-        {/* Cinematic smoke layers */}
-        <div className="cinematic-smoke" />
-
-        {/* Film grain texture */}
-        <div className="film-grain" />
-
-        {/* Vignette */}
-        <div className="vignette" />
-
-        {/* Hero background image */}
-        <div
-          className="hero-image-overlay"
-          style={{
-            backgroundImage: `url("/images/heroes/hero-home.webp")`,
-            opacity: 0.35,
-          }}
+      {/* ===== HERO ===== */}
+      <section
+        className="relative flex min-h-[80vh] flex-col items-center justify-center px-6 text-center sm:min-h-[90vh]"
+        style={{
+          background:
+            "radial-gradient(ellipse at 50% 0%, rgba(145,0,0,0.12) 0%, transparent 55%)",
+        }}
+      >
+        <Image
+          src="/logos/ProzilliGaming_Logo.svg"
+          alt="Prozilli Gaming"
+          width={96}
+          height={96}
+          className="mb-8 h-20 w-20 sm:h-24 sm:w-24"
+          priority
         />
 
-        <div className="relative z-10">
-          <Image
-            src="/logos/ProzilliGaming_Logo.svg"
-            alt="Prozilli Gaming"
-            width={120}
-            height={120}
-            className="animate-fade-in-up logo-float mx-auto mb-6 sm:mb-8 h-20 w-20 sm:h-24 sm:w-24 md:h-32 md:w-32"
-            priority
-          />
-          <h1 className="animate-fade-in-up animate-delay-100 text-glow-red text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-            PROZILLI<span className="text-brand-red">GAMING</span>
-          </h1>
-          <p className="animate-fade-in-up animate-delay-200 mt-4 sm:mt-6 text-sm sm:text-base md:text-lg lg:text-xl tracking-[0.1em] sm:tracking-[0.2em] uppercase text-brand-silver">
-            Live. Create. Dominate.
-          </p>
+        <h1 className="text-display text-foreground">
+          Prozilli Gaming
+        </h1>
 
-          {/* Platform buttons */}
-          <div className="animate-fade-in-up animate-delay-300 mt-6 sm:mt-10 flex flex-wrap justify-center gap-2 sm:gap-3">
-            {PLATFORMS.map((p) => (
-              <a
-                key={p.name}
-                href={p.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass glow-border rounded-lg px-3 py-2 sm:px-5 sm:py-2.5 text-xs sm:text-sm font-medium text-white transition-all hover:text-brand-red"
-              >
-                {p.name}
-              </a>
-            ))}
-          </div>
+        <p className="text-data mt-4 text-xs uppercase tracking-widest text-muted sm:text-sm">
+          Live. Create. Dominate.
+        </p>
 
-          {/* CTA */}
-          <div className="animate-fade-in-up animate-delay-400 mt-6 sm:mt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
-            <Link
-              href="/watch"
-              className="rounded-sm bg-brand-red px-6 py-2.5 sm:px-8 sm:py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-brand-red-glow"
-            >
-              Watch Now
-            </Link>
-            <Link
-              href="/support"
-              className="rounded-sm border border-brand-gold/30 px-6 py-2.5 sm:px-8 sm:py-3 text-sm font-medium tracking-wide text-brand-gold transition-colors hover:bg-brand-gold/10"
-            >
-              Support
-            </Link>
-          </div>
+        {/* Dynamic live status (client component) */}
+        <HeroLiveStatus />
 
-          {/* Next Stream Countdown */}
-          <NextStreamCountdown />
+        {/* CTAs */}
+        <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:gap-4">
+          <Link href="/watch" className="btn-primary">
+            Watch Now
+          </Link>
+          <Link href="#ecosystem" className="btn-secondary">
+            Explore
+          </Link>
         </div>
       </section>
 
-      {/* Ecosystem Grid */}
-      <section className="mx-auto max-w-7xl px-4 sm:px-6 py-12 sm:py-16 md:py-24">
-        <h2 className="mb-4 text-center text-xs font-semibold uppercase tracking-[0.15em] sm:tracking-[0.3em] text-brand-red">
-          The Ecosystem
-        </h2>
-        <p className="mx-auto mb-8 sm:mb-12 md:mb-16 max-w-2xl text-center text-sm sm:text-base text-muted">
-          More than a stream. An entire creator ecosystem powered by cinema-grade production.
-        </p>
-        <div className="grid gap-4 sm:gap-5 md:gap-6 grid-cols-1 md:grid-cols-2">
+      {/* ===== LIVE STATUS BAR ===== */}
+      <LiveStatusBar />
+
+      {/* ===== ECOSYSTEM GRID ===== */}
+      <section
+        id="ecosystem"
+        className="mx-auto max-w-5xl px-6 py-16 sm:py-24"
+      >
+        <div className="mb-10 text-center sm:mb-14">
+          <SectionLabel color="red">The Ecosystem</SectionLabel>
+        </div>
+
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2">
           {ECOSYSTEM.map((item) => (
             <Link
               key={item.title}
               href={item.href}
-              className="glass glow-border group rounded-lg p-5 sm:p-6 md:p-8 transition-all"
+              className="panel-interactive group flex items-start justify-between p-6 sm:p-8"
             >
-              <h3 className="text-lg font-semibold tracking-wide text-white transition-colors group-hover:text-brand-red">
-                {item.title}
-              </h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted">
-                {item.description}
-              </p>
+              <div>
+                <h3 className="text-base font-semibold text-foreground">
+                  {item.title}
+                </h3>
+                <p className="text-body mt-2">{item.description}</p>
+              </div>
+              <span className="mt-1 text-dim opacity-0 transition-opacity group-hover:opacity-100">
+                &rarr;
+              </span>
             </Link>
           ))}
         </div>
       </section>
 
-      {/* PRISMAI Powered */}
-      <section className="relative border-y border-white/5 bg-brand-darker overflow-hidden">
-        {/* Subtle smoke in this section */}
-        <div className="cinematic-smoke opacity-50" />
-
-        <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center px-4 sm:px-6 py-10 sm:py-12 md:py-16 text-center">
-          <span className="mb-3 inline-block rounded-full border border-brand-gold/20 bg-brand-gold/5 px-4 py-1 text-xs font-medium tracking-wider text-brand-gold">
-            POWERED BY PRISMAI
+      {/* ===== PRISMAI BAR ===== */}
+      <section className="border-y border-gold/10 bg-surface">
+        <div className="mx-auto flex max-w-5xl flex-col items-center gap-3 px-6 py-10 text-center sm:py-14">
+          <span className="text-shimmer text-label">
+            Powered by PRISMAI
           </span>
-          <p className="max-w-lg text-sm leading-relaxed text-muted">
+          <p className="text-body max-w-lg">
             Every chat message, every viewer stat, every interaction — unified
-            by PRISMAI, our cross-platform intelligence engine.
+            by our cross-platform intelligence engine.
           </p>
+          <a
+            href="https://prozilli.com/prismai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-ghost mt-2 text-xs"
+          >
+            Learn More
+          </a>
         </div>
       </section>
     </>

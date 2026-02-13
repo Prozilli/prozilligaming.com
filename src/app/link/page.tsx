@@ -168,11 +168,10 @@ export default function LinkPage() {
 
   if (confirmed) {
     return (
-      <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-4">
+      <div className="min-h-screen bg-base flex items-center justify-center px-4">
         <div className="max-w-md w-full text-center">
-          <div className="text-6xl mb-6">🎬</div>
-          <h1 className="text-3xl font-bold text-white mb-4">Accounts Linked!</h1>
-          <p className="text-gray-400 mb-8">
+          <h1 className="text-3xl font-bold text-foreground mb-4">Accounts Linked!</h1>
+          <p className="text-muted mb-8">
             Your accounts are linked! LISA will now recognize you everywhere —
             shared XP, economy, and conversation continuity across all platforms.
           </p>
@@ -182,17 +181,17 @@ export default function LinkPage() {
               return (
                 <div
                   key={platform}
-                  className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 flex items-center gap-2"
+                  className="panel px-4 py-2 flex items-center gap-2"
                 >
                   <span style={{ color: info?.color }}>{info?.name}</span>
-                  <span className="text-gray-400 text-sm">{acct.username}</span>
+                  <span className="text-muted text-sm">{acct.username}</span>
                 </div>
               );
             })}
           </div>
           <Link
             href="/"
-            className="inline-block rounded-lg bg-brand-red px-8 py-3 font-semibold text-white hover:bg-brand-red/90 transition"
+            className="btn-primary inline-block"
           >
             Back to Home
           </Link>
@@ -202,14 +201,14 @@ export default function LinkPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a]">
+    <div className="min-h-screen bg-base">
       <div className="mx-auto max-w-2xl px-4 py-16">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-display text-foreground mb-4">
             Link Your Accounts
           </h1>
-          <p className="text-lg text-gray-400 max-w-lg mx-auto">
+          <p className="text-body text-base max-w-lg mx-auto">
             Connect your streaming and social accounts to create a unified
             identity across all platforms. LISA will recognize you everywhere.
           </p>
@@ -218,17 +217,16 @@ export default function LinkPage() {
         {/* Benefits */}
         <div className="grid grid-cols-3 gap-4 mb-12">
           {[
-            { icon: "⚡", title: "Shared XP", desc: "Earn XP on any platform" },
-            { icon: "💰", title: "Unified Economy", desc: "One wallet everywhere" },
-            { icon: "💬", title: "Conversation Memory", desc: "LISA remembers you" },
+            { title: "Shared XP", desc: "Earn XP on any platform" },
+            { title: "Unified Economy", desc: "One wallet everywhere" },
+            { title: "Conversation Memory", desc: "LISA remembers you" },
           ].map((b) => (
             <div
               key={b.title}
-              className="rounded-xl border border-white/5 bg-[#161b22] p-4 text-center"
+              className="panel p-4 text-center"
             >
-              <div className="text-2xl mb-2">{b.icon}</div>
-              <p className="text-sm font-medium text-white">{b.title}</p>
-              <p className="text-xs text-gray-500 mt-1">{b.desc}</p>
+              <p className="text-sm font-medium text-foreground">{b.title}</p>
+              <p className="text-xs text-dim mt-1">{b.desc}</p>
             </div>
           ))}
         </div>
@@ -245,7 +243,7 @@ export default function LinkPage() {
                 className={`rounded-xl border p-5 flex items-center justify-between transition-all ${
                   isLinked
                     ? "border-green-500/30 bg-green-500/5"
-                    : "border-white/5 bg-[#161b22] hover:border-white/10"
+                    : "panel"
                 }`}
               >
                 <div className="flex items-center gap-4">
@@ -256,11 +254,11 @@ export default function LinkPage() {
                     {platform.icon}
                   </div>
                   <div>
-                    <p className="font-semibold text-white">{platform.name}</p>
+                    <p className="font-semibold text-foreground">{platform.name}</p>
                     {isLinked ? (
                       <p className="text-sm text-green-400">{acct.username}</p>
                     ) : (
-                      <p className="text-sm text-gray-500">Not linked</p>
+                      <p className="text-sm text-dim">Not linked</p>
                     )}
                   </div>
                 </div>
@@ -305,18 +303,18 @@ export default function LinkPage() {
             <button
               onClick={handleConfirm}
               disabled={confirming}
-              className="rounded-lg bg-brand-red px-8 py-3 text-lg font-semibold text-white hover:bg-brand-red/90 transition disabled:opacity-50"
+              className="btn-primary text-lg disabled:opacity-50"
             >
               {confirming ? "Confirming..." : `Confirm Link (${linkedCount} platforms)`}
             </button>
-            <p className="text-xs text-gray-500 mt-3">
+            <p className="text-xs text-dim mt-3">
               This will create a permanent link between your accounts
             </p>
           </div>
         )}
 
         {linkedCount > 0 && linkedCount < 2 && (
-          <p className="text-center text-sm text-gray-500">
+          <p className="text-center text-sm text-dim">
             Link at least 2 platforms to continue
           </p>
         )}
@@ -325,7 +323,7 @@ export default function LinkPage() {
           <div className="text-center mt-4">
             <button
               onClick={handleReset}
-              className="text-xs text-gray-600 hover:text-gray-400 transition"
+              className="text-xs text-dim hover:text-muted transition"
             >
               Start over
             </button>

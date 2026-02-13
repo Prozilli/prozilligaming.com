@@ -240,9 +240,9 @@ export default function StreamControlPage() {
 
       {/* ===== Section 1: Live Status Banner ===== */}
       {platformsLoading ? (
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
           <div className="flex items-center gap-3">
-            <div className="h-4 w-4 rounded-full bg-white/10 animate-pulse" />
+            <div className="h-4 w-4 rounded-full bg-raised animate-pulse" />
             <span className="text-sm text-gray-400">
               Checking live status...
             </span>
@@ -278,7 +278,7 @@ export default function StreamControlPage() {
           </div>
         </div>
       ) : (
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <span className="h-4 w-4 rounded-full bg-gray-600" />
@@ -291,7 +291,7 @@ export default function StreamControlPage() {
                 </p>
               </div>
             </div>
-            <span className="rounded-lg bg-white/5 px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-500">
+            <span className="rounded-lg bg-surface px-3 py-1.5 text-xs font-bold uppercase tracking-wider text-gray-500">
               Offline
             </span>
           </div>
@@ -301,10 +301,10 @@ export default function StreamControlPage() {
       {/* ===== Main Grid: Send Message + LISA Broadcast ===== */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Section 2: Send Message */}
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <svg className="h-4 w-4 text-brand-gold" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <svg className="h-4 w-4 text-gold" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
               </svg>
               Send Message
@@ -319,7 +319,7 @@ export default function StreamControlPage() {
               <select
                 value={chatPlatform}
                 onChange={(e) => setChatPlatform(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
               >
                 {PLATFORM_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -337,7 +337,7 @@ export default function StreamControlPage() {
                 value={chatMessage}
                 onChange={(e) => setChatMessage(e.target.value)}
                 placeholder="Type your message..."
-                className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
+                className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
               />
             </div>
             <button
@@ -345,7 +345,7 @@ export default function StreamControlPage() {
               disabled={
                 !chatMessage.trim() || chatFeedback.status === "loading"
               }
-              className="w-full rounded-lg bg-brand-red px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full rounded-lg bg-red px-4 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {chatFeedback.status === "loading" ? "Sending..." : "Send"}
             </button>
@@ -353,10 +353,10 @@ export default function StreamControlPage() {
         </div>
 
         {/* Section 3: LISA Broadcast */}
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-white flex items-center gap-2">
-              <svg className="h-4 w-4 text-brand-red" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+              <svg className="h-4 w-4 text-red" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46" />
               </svg>
               LISA Broadcast
@@ -373,7 +373,7 @@ export default function StreamControlPage() {
                 value={broadcastMessage}
                 onChange={(e) => setBroadcastMessage(e.target.value)}
                 placeholder="Message from LISA to all platforms..."
-                className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
+                className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
               />
               <p className="mt-1.5 text-[10px] text-gray-500">
                 This sends a message as LISA across all connected platforms
@@ -396,7 +396,7 @@ export default function StreamControlPage() {
       </div>
 
       {/* ===== Section 4: Post Tweet ===== */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold text-white flex items-center gap-2">
             <svg className="h-4 w-4 text-gray-400" viewBox="0 0 24 24" fill="currentColor">
@@ -426,7 +426,7 @@ export default function StreamControlPage() {
             onChange={(e) => setTweetText(e.target.value)}
             placeholder="What's happening?"
             maxLength={300}
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
+            className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
           />
           {tweetText.length > 280 && (
             <p className="text-xs text-red-400">
@@ -436,7 +436,7 @@ export default function StreamControlPage() {
           <div className="flex items-center justify-between">
             {/* Character progress bar */}
             <div className="flex-1 mr-4">
-              <div className="h-1 rounded-full bg-white/5 overflow-hidden">
+              <div className="h-1 rounded-full bg-surface overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all duration-300 ${
                     tweetText.length > 280
@@ -458,7 +458,7 @@ export default function StreamControlPage() {
                 tweetText.length > 280 ||
                 tweetFeedback.status === "loading"
               }
-              className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {tweetFeedback.status === "loading" ? "Posting..." : "Post"}
             </button>
@@ -481,13 +481,13 @@ export default function StreamControlPage() {
             {Array.from({ length: 6 }).map((_, i) => (
               <div
                 key={i}
-                className="rounded-xl border border-white/5 bg-[#161b22] p-6 animate-pulse"
+                className="rounded-xl border border-[var(--color-border)] bg-surface p-6 animate-pulse"
               >
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-lg bg-white/5" />
+                  <div className="h-10 w-10 rounded-lg bg-surface" />
                   <div className="space-y-2">
-                    <div className="h-4 w-20 rounded bg-white/5" />
-                    <div className="h-3 w-16 rounded bg-white/5" />
+                    <div className="h-4 w-20 rounded bg-surface" />
+                    <div className="h-3 w-16 rounded bg-surface" />
                   </div>
                 </div>
               </div>
@@ -506,7 +506,7 @@ export default function StreamControlPage() {
               return (
                 <div
                   key={platform.name}
-                  className="rounded-xl border border-white/5 bg-[#161b22] p-6 transition-colors hover:border-white/10"
+                  className="rounded-xl border border-[var(--color-border)] bg-surface p-6 transition-colors hover:border-[var(--color-border)]"
                 >
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
@@ -550,10 +550,10 @@ export default function StreamControlPage() {
                       </span>
                       {/* Live indicator */}
                       {platform.live && (
-                        <span className="flex items-center gap-1.5 rounded-full bg-brand-red/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-red">
+                        <span className="flex items-center gap-1.5 rounded-full bg-red/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red">
                           <span className="relative flex h-1.5 w-1.5">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-red opacity-75" />
-                            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand-red" />
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-red opacity-75" />
+                            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-red" />
                           </span>
                           Live
                         </span>
@@ -565,7 +565,7 @@ export default function StreamControlPage() {
             })}
 
             {platforms.length === 0 && !platformsError && (
-              <div className="col-span-full rounded-xl border border-white/5 bg-[#161b22] p-6 text-center">
+              <div className="col-span-full rounded-xl border border-[var(--color-border)] bg-surface p-6 text-center">
                 <p className="text-sm text-gray-400">
                   No platform data available
                 </p>

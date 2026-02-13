@@ -131,7 +131,7 @@ export default function TempChannelsPage() {
       </div>
 
       {/* Enable Toggle */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-semibold text-white">Enable Temp Channels</h3>
@@ -142,7 +142,7 @@ export default function TempChannelsPage() {
           <button
             onClick={() => setConfig({ ...config, enabled: !config.enabled })}
             className={`relative h-6 w-11 rounded-full transition-colors ${
-              config.enabled ? "bg-brand-red" : "bg-white/10"
+              config.enabled ? "bg-red" : "bg-raised"
             }`}
           >
             <span
@@ -157,7 +157,7 @@ export default function TempChannelsPage() {
       {config.enabled && (
         <>
           {/* Channel Settings */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Channel Settings</h3>
             <div className="space-y-4">
               {/* Creator Channel */}
@@ -169,7 +169,7 @@ export default function TempChannelsPage() {
                   The voice channel users join to create a new temporary channel
                 </p>
                 {channelsLoading ? (
-                  <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                  <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                     Loading channels...
                   </div>
                 ) : channelsError ? (
@@ -180,7 +180,7 @@ export default function TempChannelsPage() {
                   <select
                     value={config.creatorChannelId}
                     onChange={(e) => setConfig({ ...config, creatorChannelId: e.target.value })}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                   >
                     <option value="">Select a voice channel</option>
                     {voiceChannels.map((ch) => (
@@ -201,7 +201,7 @@ export default function TempChannelsPage() {
                   New temp channels will be created under this category
                 </p>
                 {channelsLoading ? (
-                  <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                  <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                     Loading channels...
                   </div>
                 ) : channelsError ? (
@@ -212,7 +212,7 @@ export default function TempChannelsPage() {
                   <select
                     value={config.categoryId}
                     onChange={(e) => setConfig({ ...config, categoryId: e.target.value })}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                   >
                     <option value="">Select a category</option>
                     {categoryChannels.map((ch) => (
@@ -230,14 +230,14 @@ export default function TempChannelsPage() {
                   Name Template
                 </label>
                 <p className="text-xs text-gray-500 mb-2">
-                  Use <code className="text-brand-gold">{"{user}"}</code> for the member&apos;s display name
+                  Use <code className="text-gold">{"{user}"}</code> for the member&apos;s display name
                 </p>
                 <input
                   type="text"
                   value={config.nameTemplate}
                   onChange={(e) => setConfig({ ...config, nameTemplate: e.target.value })}
                   placeholder="{user}'s Channel"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
                 />
                 <p className="mt-2 text-xs text-gray-500">
                   Preview: <span className="text-white">{config.nameTemplate.replace("{user}", "Pro")}</span>
@@ -247,7 +247,7 @@ export default function TempChannelsPage() {
           </div>
 
           {/* User Permissions */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-1">Owner Permissions</h3>
             <p className="text-xs text-gray-500 mb-4">
               What the channel creator can do with their temp channel
@@ -257,10 +257,10 @@ export default function TempChannelsPage() {
               {PERMISSION_OPTIONS.map((perm) => (
                 <div
                   key={perm.key}
-                  className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] p-3"
+                  className="flex items-center justify-between rounded-lg border border-[var(--color-border)] bg-white/[0.02] p-3"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-gray-400">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-surface text-gray-400">
                       <svg className="h-4.5 w-4.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                         {perm.icon}
                       </svg>
@@ -273,7 +273,7 @@ export default function TempChannelsPage() {
                   <button
                     onClick={() => togglePermission(perm.key)}
                     className={`relative h-6 w-11 rounded-full transition-colors shrink-0 ml-3 ${
-                      config.permissions[perm.key] ? "bg-brand-red" : "bg-white/10"
+                      config.permissions[perm.key] ? "bg-red" : "bg-raised"
                     }`}
                   >
                     <span
@@ -288,23 +288,23 @@ export default function TempChannelsPage() {
           </div>
 
           {/* How It Works */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-3">How It Works</h3>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-red/20 text-xs font-bold text-brand-red shrink-0">1</span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red/20 text-xs font-bold text-red shrink-0">1</span>
                 <p className="text-sm text-gray-400">A member joins the <span className="text-white">Creator Channel</span></p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-red/20 text-xs font-bold text-brand-red shrink-0">2</span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red/20 text-xs font-bold text-red shrink-0">2</span>
                 <p className="text-sm text-gray-400">PRISMAI creates a new voice channel named <span className="text-white">{config.nameTemplate.replace("{user}", "Username")}</span></p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-red/20 text-xs font-bold text-brand-red shrink-0">3</span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red/20 text-xs font-bold text-red shrink-0">3</span>
                 <p className="text-sm text-gray-400">The member is moved into their new channel with owner permissions</p>
               </div>
               <div className="flex items-start gap-3">
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-red/20 text-xs font-bold text-brand-red shrink-0">4</span>
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red/20 text-xs font-bold text-red shrink-0">4</span>
                 <p className="text-sm text-gray-400">When everyone leaves, the channel is automatically deleted</p>
               </div>
             </div>
@@ -323,7 +323,7 @@ export default function TempChannelsPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

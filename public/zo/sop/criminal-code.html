@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>San Andreas Criminal Code &amp; Penal Code v1.0 - ZO Syndicate RP</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* --- HEADER BANNER --- */
+  .header-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+    border-bottom: 3px solid #a30000;
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(163,0,0,0.03) 2px,
+      rgba(163,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #c4a265;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .header-server {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 16px;
+    color: #a30000;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #777;
+  }
+  .header-meta span { white-space: nowrap; }
+  .header-meta strong { color: #999; }
+  .badge-classified {
+    display: inline-block;
+    background: #a30000;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #c44;
+  }
+  .dept-badge {
+    width: 130px;
+    height: auto;
+    margin: 10px auto 14px;
+    display: block;
+    filter: drop-shadow(0 4px 16px rgba(163,0,0,0.4));
+  }
+
+  /* --- MAIN CONTENT --- */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+  }
+
+  /* --- TABLE OF CONTENTS --- */
+  .toc {
+    background: #111;
+    border: 1px solid #222;
+    border-left: 4px solid #a30000;
+    padding: 24px 28px;
+    margin: 0 0 40px;
+  }
+  .toc h2 {
+    color: #a30000;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    margin-bottom: 5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #a30000; }
+
+  /* --- HEADINGS --- */
+  h1 {
+    color: #a30000;
+    border-bottom: 2px solid #a30000;
+    padding-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-top: 50px;
+  }
+  h2 {
+    color: #c44;
+    margin-top: 35px;
+    font-size: 18px;
+    border-bottom: 1px solid #1f1f1f;
+    padding-bottom: 6px;
+  }
+  h3 {
+    color: #ddd;
+    font-size: 15px;
+    margin-top: 22px;
+  }
+  h4 {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 16px;
+    font-weight: 600;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #222;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  th {
+    background: #141414;
+    color: #a30000;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  td { background: #0f0f0f; }
+  tr:hover td { background: #151010; }
+  .code-col { font-family: 'Consolas', 'Courier New', monospace; font-size: 13px; color: #ccc; white-space: nowrap; }
+  .fine-col { color: #c4a265; white-space: nowrap; }
+  .jail-col { color: #e44; white-space: nowrap; }
+  .pts-col { color: #6699cc; text-align: center; }
+
+  /* --- CALLOUT BOXES --- */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .callout-critical {
+    background: #1f0a0a;
+    border: 1px solid #331111;
+    border-left: 4px solid #a30000;
+  }
+  .callout-warning {
+    background: #1f1a0a;
+    border: 1px solid #33290e;
+    border-left: 4px solid #c4a265;
+  }
+  .callout-info {
+    background: #0a0f1f;
+    border: 1px solid #0e1a33;
+    border-left: 4px solid #3366aa;
+  }
+  .callout-critical strong { color: #e44; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #6699cc; }
+
+  /* --- MISC --- */
+  code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    border: 1px solid #222;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  blockquote {
+    border-left: 3px solid #a30000;
+    margin: 16px 0;
+    padding: 10px 18px;
+    background: #111;
+    color: #aaa;
+    font-style: italic;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 40px 0;
+  }
+  strong { color: #eee; }
+  a { color: #a30000; text-decoration: none; }
+  a:hover { color: #c44; text-decoration: underline; }
+
+  /* --- SEVERITY BADGES --- */
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .badge-felony { background: #3a0e0e; color: #e44; border: 1px solid #551111; }
+  .badge-misdemeanor { background: #3a2e0e; color: #c4a265; border: 1px solid #554411; }
+  .badge-infraction { background: #0e1a3a; color: #6699cc; border: 1px solid #113355; }
+  .badge-traffic { background: #1a1a1a; color: #888; border: 1px solid #333; }
+
+  /* --- FOOTER --- */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 2px solid #a30000;
+    margin-top: 60px;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer .org { color: #c4a265; font-weight: 600; letter-spacing: 2px; }
+  .footer a { color: #666; }
+  .footer a:hover { color: #a30000; }
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<div class="header-banner">
+  <div class="header-org">Prozilli Entertainment</div>
+  <div class="header-server">ZO Syndicate Roleplay</div>
+  <img src="https://prozilligaming.com/zo/departments/doj_badge.png" alt="DOJ Badge" class="dept-badge">
+  <div class="badge-classified">Official Document</div>
+  <div class="header-dept">San Andreas Criminal &amp; Penal Code</div>
+  <div class="header-subtitle">State of San Andreas &mdash; Department of Justice</div>
+  <div class="header-meta">
+    <span><strong>Version:</strong> 1.0</span>
+    <span><strong>Effective:</strong> February 2026</span>
+    <span><strong>Authority:</strong> Chief Justice, DOJ</span>
+    <span><strong>Classification:</strong> Public Record</span>
+  </div>
+</div>
+
+<div class="content">
+
+<!-- ===== TABLE OF CONTENTS ===== -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#overview">Overview &amp; Jurisdiction</a></li>
+    <li><a href="#felonies">Title 1 &mdash; Felonies</a></li>
+    <li><a href="#misdemeanors">Title 2 &mdash; Misdemeanors</a></li>
+    <li><a href="#infractions">Title 3 &mdash; Infractions &amp; Traffic</a></li>
+    <li><a href="#sentencing">Title 4 &mdash; Sentencing Guidelines</a></li>
+    <li><a href="#search">Title 5 &mdash; Search &amp; Seizure</a></li>
+    <li><a href="#force">Title 6 &mdash; Use of Force</a></li>
+    <li><a href="#rights">Title 7 &mdash; Rights of the Accused</a></li>
+    <li><a href="#procedures">Title 8 &mdash; Arrest &amp; Booking Procedures</a></li>
+    <li><a href="#enhancements">Title 9 &mdash; Charge Enhancements</a></li>
+    <li><a href="#definitions">Title 10 &mdash; Legal Definitions</a></li>
+    <li><a href="#amendments">Amendments &amp; Revision History</a></li>
+  </ol>
+</div>
+
+<div class="callout callout-info">
+  <strong>MDT Integration:</strong> All charge codes listed in this document are pre-loaded into the ZO MDT system. Officers can search, stack, and calculate charges directly from the MDT Penal Code page.
+</div>
+
+<!-- ===== SECTION 1: OVERVIEW ===== -->
+<h1 id="overview">1. Overview &amp; Jurisdiction</h1>
+
+<h2>1.1 Purpose</h2>
+<p>This Criminal Code establishes the offenses, penalties, and procedural guidelines for all law enforcement, judicial, and civilian activities within the State of San Andreas. It serves as the authoritative legal reference for the ZO Syndicate RP server and is enforced by all LEO departments (LSPD, BCSO, SASP) and adjudicated by the Department of Justice (DOJ).</p>
+
+<h2>1.2 Jurisdiction</h2>
+<table>
+  <tr><th>Agency</th><th>Jurisdiction</th><th>Authority</th></tr>
+  <tr><td>LSPD</td><td>City of Los Santos</td><td>Municipal law enforcement within city limits</td></tr>
+  <tr><td>BCSO</td><td>Blaine County</td><td>County law enforcement outside city limits</td></tr>
+  <tr><td>SASP</td><td>Statewide</td><td>State highways, inter-jurisdictional, and federal-level enforcement</td></tr>
+  <tr><td>DOJ</td><td>Statewide</td><td>Judicial oversight, warrants, prosecution, sentencing</td></tr>
+</table>
+
+<h2>1.3 Charge Classification</h2>
+<table>
+  <tr><th>Classification</th><th>Severity</th><th>Fine Range</th><th>Jail Range</th><th>Points</th></tr>
+  <tr><td><span class="badge badge-felony">Felony</span></td><td>Most serious criminal offenses</td><td>$5,000 &ndash; $50,000</td><td>60 &ndash; 999 months</td><td>0&ndash;6</td></tr>
+  <tr><td><span class="badge badge-misdemeanor">Misdemeanor</span></td><td>Moderate criminal offenses</td><td>$250 &ndash; $10,000</td><td>5 &ndash; 90 months</td><td>0&ndash;4</td></tr>
+  <tr><td><span class="badge badge-infraction">Infraction</span></td><td>Minor violations (no jail)</td><td>$50 &ndash; $1,500</td><td>None</td><td>0&ndash;3</td></tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>Stackable Charges:</strong> All charges in this code are stackable. Multiple counts of the same offense result in cumulative fines and jail time. The DOJ may apply concurrent or consecutive sentencing at the judge's discretion.
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 2: FELONIES ===== -->
+<h1 id="felonies">2. Title 1 &mdash; Felonies</h1>
+<p>Felonies are the most serious criminal offenses in San Andreas. Conviction may result in extended incarceration at Bolingbroke Penitentiary, substantial fines, asset forfeiture, and permanent criminal record entries.</p>
+
+<h2>2.1 Crimes Against Persons (PC-1000 Series)</h2>
+<table>
+  <tr><th>Code</th><th>Offense</th><th>Fine</th><th>Jail (months)</th><th>Pts</th></tr>
+  <tr>
+    <td class="code-col">PC-1001</td>
+    <td><strong>First Degree Murder</strong><br><small>The premeditated and intentional killing of another person.</small></td>
+    <td class="fine-col">$50,000</td>
+    <td class="jail-col">600 &ndash; 999</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-1002</td>
+    <td><strong>Second Degree Murder</strong><br><small>The intentional killing of another person without premeditation.</small></td>
+    <td class="fine-col">$35,000 &ndash; $50,000</td>
+    <td class="jail-col">400 &ndash; 700</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-1003</td>
+    <td><strong>Attempted Murder</strong><br><small>The deliberate attempt to kill another person that does not result in death.</small></td>
+    <td class="fine-col">$25,000 &ndash; $40,000</td>
+    <td class="jail-col">300 &ndash; 500</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-1004</td>
+    <td><strong>Voluntary Manslaughter</strong><br><small>Killing another person in the heat of passion or during a sudden quarrel.</small></td>
+    <td class="fine-col">$20,000 &ndash; $35,000</td>
+    <td class="jail-col">200 &ndash; 400</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-1005</td>
+    <td><strong>Involuntary Manslaughter</strong><br><small>Unintentionally causing the death of another through criminal negligence.</small></td>
+    <td class="fine-col">$10,000 &ndash; $25,000</td>
+    <td class="jail-col">100 &ndash; 250</td>
+    <td class="pts-col">0</td>
+  </tr>
+</table>
+
+<h2>2.2 Property Crimes (PC-2000 Series)</h2>
+<table>
+  <tr><th>Code</th><th>Offense</th><th>Fine</th><th>Jail (months)</th><th>Pts</th></tr>
+  <tr>
+    <td class="code-col">PC-2001</td>
+    <td><strong>Armed Robbery</strong><br><small>Taking property from another person by force or threat while armed with a deadly weapon.</small></td>
+    <td class="fine-col">$15,000 &ndash; $30,000</td>
+    <td class="jail-col">150 &ndash; 350</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-2002</td>
+    <td><strong>Bank Robbery</strong><br><small>Robbing or attempting to rob a financial institution by force or intimidation.</small></td>
+    <td class="fine-col">$25,000 &ndash; $50,000</td>
+    <td class="jail-col">200 &ndash; 500</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-2003</td>
+    <td><strong>Grand Theft Auto</strong><br><small>The theft or attempted theft of a motor vehicle.</small></td>
+    <td class="fine-col">$5,000 &ndash; $15,000</td>
+    <td class="jail-col">60 &ndash; 150</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-2004</td>
+    <td><strong>Grand Theft</strong><br><small>Theft of property valued over $5,000.</small></td>
+    <td class="fine-col">$5,000 &ndash; $20,000</td>
+    <td class="jail-col">60 &ndash; 180</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-2005</td>
+    <td><strong>Burglary</strong><br><small>Unlawful entry into a structure with intent to commit a crime.</small></td>
+    <td class="fine-col">$5,000 &ndash; $15,000</td>
+    <td class="jail-col">60 &ndash; 150</td>
+    <td class="pts-col">0</td>
+  </tr>
+</table>
+
+<h2>2.3 Violent Crimes (PC-3000 Series)</h2>
+<table>
+  <tr><th>Code</th><th>Offense</th><th>Fine</th><th>Jail (months)</th><th>Pts</th></tr>
+  <tr>
+    <td class="code-col">PC-3001</td>
+    <td><strong>Assault with a Deadly Weapon</strong><br><small>Attacking another person with a weapon capable of causing death or great bodily harm.</small></td>
+    <td class="fine-col">$10,000 &ndash; $25,000</td>
+    <td class="jail-col">120 &ndash; 300</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-3002</td>
+    <td><strong>Aggravated Assault</strong><br><small>Assault causing serious bodily injury or involving a deadly weapon.</small></td>
+    <td class="fine-col">$8,000 &ndash; $20,000</td>
+    <td class="jail-col">90 &ndash; 250</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-3003</td>
+    <td><strong>Kidnapping</strong><br><small>Taking or detaining a person against their will by force or intimidation.</small></td>
+    <td class="fine-col">$20,000 &ndash; $40,000</td>
+    <td class="jail-col">200 &ndash; 500</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-3004</td>
+    <td><strong>Human Trafficking</strong><br><small>Recruiting, harboring, or transporting persons by means of force for exploitation.</small></td>
+    <td class="fine-col">$30,000 &ndash; $50,000</td>
+    <td class="jail-col">300 &ndash; 700</td>
+    <td class="pts-col">0</td>
+  </tr>
+</table>
+
+<h2>2.4 Drug Crimes (PC-4000 Series)</h2>
+<table>
+  <tr><th>Code</th><th>Offense</th><th>Fine</th><th>Jail (months)</th><th>Pts</th></tr>
+  <tr>
+    <td class="code-col">PC-4001</td>
+    <td><strong>Drug Trafficking</strong><br><small>Manufacturing, distributing, or dispensing controlled substances in large quantities.</small></td>
+    <td class="fine-col">$15,000 &ndash; $40,000</td>
+    <td class="jail-col">150 &ndash; 400</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-4002</td>
+    <td><strong>Possession with Intent to Distribute</strong><br><small>Possessing controlled substances with the intent to sell or distribute.</small></td>
+    <td class="fine-col">$10,000 &ndash; $25,000</td>
+    <td class="jail-col">100 &ndash; 250</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-4003</td>
+    <td><strong>Manufacturing Controlled Substances</strong><br><small>Producing or manufacturing illegal drugs or controlled substances.</small></td>
+    <td class="fine-col">$15,000 &ndash; $35,000</td>
+    <td class="jail-col">150 &ndash; 350</td>
+    <td class="pts-col">0</td>
+  </tr>
+</table>
+
+<h2>2.5 Public Safety &amp; Government Crimes (PC-5000 Series)</h2>
+<table>
+  <tr><th>Code</th><th>Offense</th><th>Fine</th><th>Jail (months)</th><th>Pts</th></tr>
+  <tr>
+    <td class="code-col">PC-5001</td>
+    <td><strong>Felony Evasion</strong><br><small>Fleeing from law enforcement in a motor vehicle with willful disregard for safety.</small></td>
+    <td class="fine-col">$8,000 &ndash; $20,000</td>
+    <td class="jail-col">80 &ndash; 200</td>
+    <td class="pts-col">6</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-5002</td>
+    <td><strong>Assault on a Peace Officer</strong><br><small>Physically attacking or assaulting a law enforcement officer.</small></td>
+    <td class="fine-col">$10,000 &ndash; $25,000</td>
+    <td class="jail-col">120 &ndash; 300</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-5003</td>
+    <td><strong>Possession of Illegal Firearms</strong><br><small>Possessing firearms that are illegal or possessing firearms as a prohibited person.</small></td>
+    <td class="fine-col">$8,000 &ndash; $20,000</td>
+    <td class="jail-col">80 &ndash; 200</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-5004</td>
+    <td><strong>Arson</strong><br><small>Willfully and maliciously setting fire to structures, forest land, or property.</small></td>
+    <td class="fine-col">$10,000 &ndash; $30,000</td>
+    <td class="jail-col">100 &ndash; 300</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-5005</td>
+    <td><strong>Extortion</strong><br><small>Obtaining property or money through coercion, threats, or abuse of authority.</small></td>
+    <td class="fine-col">$10,000 &ndash; $25,000</td>
+    <td class="jail-col">100 &ndash; 250</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-5006</td>
+    <td><strong>Money Laundering</strong><br><small>Concealing the origins of illegally obtained money through complex transactions.</small></td>
+    <td class="fine-col">$15,000 &ndash; $40,000</td>
+    <td class="jail-col">120 &ndash; 300</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-5007</td>
+    <td><strong>Racketeering (RICO)</strong><br><small>Engaging in a pattern of criminal activity as part of an organized criminal enterprise.</small></td>
+    <td class="fine-col">$25,000 &ndash; $50,000</td>
+    <td class="jail-col">200 &ndash; 500</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-5008</td>
+    <td><strong>Obstruction of Justice</strong><br><small>Interfering with the administration of justice, including witness tampering or evidence destruction.</small></td>
+    <td class="fine-col">$5,000 &ndash; $15,000</td>
+    <td class="jail-col">60 &ndash; 150</td>
+    <td class="pts-col">0</td>
+  </tr>
+</table>
+
+<div class="callout callout-critical">
+  <strong>Capital Offenses:</strong> First Degree Murder (PC-1001) and Human Trafficking (PC-3004) carry the maximum penalties under San Andreas law. These charges require DOJ review and cannot be plea-bargained below 50% of the maximum sentence.
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 3: MISDEMEANORS ===== -->
+<h1 id="misdemeanors">3. Title 2 &mdash; Misdemeanors</h1>
+<p>Misdemeanors are criminal offenses less severe than felonies. Penalties include fines, short-term incarceration at Bolingbroke, and potential license points. Officers may issue citations for lower-severity misdemeanors at their discretion.</p>
+
+<table>
+  <tr><th>Code</th><th>Offense</th><th>Fine</th><th>Jail (months)</th><th>Pts</th></tr>
+  <tr>
+    <td class="code-col">PC-6001</td>
+    <td><strong>Simple Assault</strong><br><small>Intentionally causing bodily harm or threatening imminent bodily harm to another.</small></td>
+    <td class="fine-col">$1,000 &ndash; $5,000</td>
+    <td class="jail-col">15 &ndash; 60</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6002</td>
+    <td><strong>Battery</strong><br><small>Willful and unlawful use of force or violence upon another person.</small></td>
+    <td class="fine-col">$1,500 &ndash; $6,000</td>
+    <td class="jail-col">20 &ndash; 80</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6003</td>
+    <td><strong>Petty Theft</strong><br><small>Theft of property valued under $5,000.</small></td>
+    <td class="fine-col">$500 &ndash; $2,500</td>
+    <td class="jail-col">10 &ndash; 45</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6004</td>
+    <td><strong>Vandalism</strong><br><small>Willfully destroying or damaging property belonging to another.</small></td>
+    <td class="fine-col">$500 &ndash; $3,000</td>
+    <td class="jail-col">10 &ndash; 45</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6005</td>
+    <td><strong>Trespassing</strong><br><small>Entering or remaining on property without permission of the owner.</small></td>
+    <td class="fine-col">$250 &ndash; $1,500</td>
+    <td class="jail-col">5 &ndash; 30</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6006</td>
+    <td><strong>Resisting Arrest</strong><br><small>Willfully resisting, delaying, or obstructing a peace officer in the performance of duties.</small></td>
+    <td class="fine-col">$1,000 &ndash; $5,000</td>
+    <td class="jail-col">15 &ndash; 60</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6007</td>
+    <td><strong>Disorderly Conduct</strong><br><small>Engaging in behavior that disturbs public peace or order.</small></td>
+    <td class="fine-col">$250 &ndash; $1,500</td>
+    <td class="jail-col">5 &ndash; 20</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6008</td>
+    <td><strong>Public Intoxication</strong><br><small>Being intoxicated in a public place to the degree of being unable to care for oneself.</small></td>
+    <td class="fine-col">$250 &ndash; $1,000</td>
+    <td class="jail-col">5 &ndash; 15</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6009</td>
+    <td><strong>Possession of Controlled Substance</strong><br><small>Possessing a controlled substance for personal use.</small></td>
+    <td class="fine-col">$1,000 &ndash; $5,000</td>
+    <td class="jail-col">15 &ndash; 60</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6010</td>
+    <td><strong>Reckless Driving</strong><br><small>Operating a vehicle with willful disregard for the safety of persons or property.</small></td>
+    <td class="fine-col">$1,000 &ndash; $5,000</td>
+    <td class="jail-col">15 &ndash; 45</td>
+    <td class="pts-col">4</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6011</td>
+    <td><strong>Brandishing a Weapon</strong><br><small>Drawing or exhibiting a weapon in a threatening manner in the presence of others.</small></td>
+    <td class="fine-col">$2,000 &ndash; $8,000</td>
+    <td class="jail-col">30 &ndash; 90</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6012</td>
+    <td><strong>Unauthorized Use of a Vehicle</strong><br><small>Using a motor vehicle without consent of the owner (joyriding).</small></td>
+    <td class="fine-col">$1,000 &ndash; $4,000</td>
+    <td class="jail-col">15 &ndash; 60</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6013</td>
+    <td><strong>Failure to Comply</strong><br><small>Failing to comply with lawful orders given by a peace officer.</small></td>
+    <td class="fine-col">$500 &ndash; $3,000</td>
+    <td class="jail-col">10 &ndash; 45</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6014</td>
+    <td><strong>Criminal Mischief</strong><br><small>Knowingly damaging property or tampering with property causing pecuniary loss.</small></td>
+    <td class="fine-col">$500 &ndash; $3,000</td>
+    <td class="jail-col">10 &ndash; 45</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6015</td>
+    <td><strong>Harassment</strong><br><small>Engaging in a course of conduct directed at a person that causes substantial emotional distress.</small></td>
+    <td class="fine-col">$500 &ndash; $3,000</td>
+    <td class="jail-col">10 &ndash; 45</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6016</td>
+    <td><strong>Impersonating a Peace Officer</strong><br><small>Falsely representing oneself as a law enforcement officer.</small></td>
+    <td class="fine-col">$3,000 &ndash; $10,000</td>
+    <td class="jail-col">30 &ndash; 90</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6017</td>
+    <td><strong>Misdemeanor Evasion</strong><br><small>Fleeing from law enforcement on foot or at low speeds.</small></td>
+    <td class="fine-col">$1,000 &ndash; $4,000</td>
+    <td class="jail-col">15 &ndash; 45</td>
+    <td class="pts-col">2</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6018</td>
+    <td><strong>Possession of Stolen Property</strong><br><small>Knowingly receiving, buying, or possessing stolen property.</small></td>
+    <td class="fine-col">$1,000 &ndash; $5,000</td>
+    <td class="jail-col">15 &ndash; 60</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">PC-6019</td>
+    <td><strong>Threatening a Government Employee</strong><br><small>Making threats against a government employee while performing their duties.</small></td>
+    <td class="fine-col">$2,000 &ndash; $8,000</td>
+    <td class="jail-col">20 &ndash; 60</td>
+    <td class="pts-col">0</td>
+  </tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>Officer Discretion:</strong> For misdemeanors PC-6005 (Trespassing), PC-6007 (Disorderly Conduct), and PC-6008 (Public Intoxication), officers may issue a verbal warning or citation in lieu of arrest for first-time offenders with no prior criminal history.
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 4: INFRACTIONS ===== -->
+<h1 id="infractions">4. Title 3 &mdash; Infractions &amp; Traffic Violations</h1>
+<p>Infractions are minor violations that carry fines and license points but no jail time. These are primarily traffic-related and are handled through citations. Accumulation of 12 or more points results in automatic license suspension.</p>
+
+<table>
+  <tr><th>Code</th><th>Offense</th><th>Fine</th><th>Points</th></tr>
+  <tr>
+    <td class="code-col">TC-1001</td>
+    <td><strong>Speeding (1&ndash;15 over)</strong><br><small>Exceeding the posted speed limit by 1 to 15 mph.</small></td>
+    <td class="fine-col">$150 &ndash; $300</td>
+    <td class="pts-col">1</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1002</td>
+    <td><strong>Speeding (16&ndash;25 over)</strong><br><small>Exceeding the posted speed limit by 16 to 25 mph.</small></td>
+    <td class="fine-col">$300 &ndash; $600</td>
+    <td class="pts-col">2</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1003</td>
+    <td><strong>Speeding (26+ over)</strong><br><small>Exceeding the posted speed limit by 26 or more mph.</small></td>
+    <td class="fine-col">$600 &ndash; $1,500</td>
+    <td class="pts-col">3</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1004</td>
+    <td><strong>Running a Red Light</strong><br><small>Failing to stop at a red traffic signal.</small></td>
+    <td class="fine-col">$200 &ndash; $500</td>
+    <td class="pts-col">2</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1005</td>
+    <td><strong>Running a Stop Sign</strong><br><small>Failing to come to a complete stop at a stop sign.</small></td>
+    <td class="fine-col">$150 &ndash; $350</td>
+    <td class="pts-col">1</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1006</td>
+    <td><strong>Illegal Parking</strong><br><small>Parking in a restricted area or in violation of posted signs.</small></td>
+    <td class="fine-col">$50 &ndash; $200</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1007</td>
+    <td><strong>Driving Without a License</strong><br><small>Operating a motor vehicle without a valid driver's license.</small></td>
+    <td class="fine-col">$500 &ndash; $1,500</td>
+    <td class="pts-col">2</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1008</td>
+    <td><strong>Expired Registration</strong><br><small>Operating a motor vehicle with expired registration.</small></td>
+    <td class="fine-col">$100 &ndash; $300</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1009</td>
+    <td><strong>Failure to Signal</strong><br><small>Failing to use turn signals when required.</small></td>
+    <td class="fine-col">$100 &ndash; $250</td>
+    <td class="pts-col">1</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1010</td>
+    <td><strong>Illegal U-Turn</strong><br><small>Making a U-turn where prohibited or in an unsafe manner.</small></td>
+    <td class="fine-col">$100 &ndash; $300</td>
+    <td class="pts-col">1</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1011</td>
+    <td><strong>Failure to Yield</strong><br><small>Failing to yield the right of way as required by traffic law.</small></td>
+    <td class="fine-col">$150 &ndash; $400</td>
+    <td class="pts-col">1</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1012</td>
+    <td><strong>Improper Lane Change</strong><br><small>Changing lanes in an unsafe manner or without proper signaling.</small></td>
+    <td class="fine-col">$100 &ndash; $300</td>
+    <td class="pts-col">1</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1013</td>
+    <td><strong>Driving on Wrong Side of Road</strong><br><small>Operating a vehicle on the wrong side of the road.</small></td>
+    <td class="fine-col">$200 &ndash; $500</td>
+    <td class="pts-col">2</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1014</td>
+    <td><strong>No Seatbelt</strong><br><small>Operating or riding in a motor vehicle without wearing a seatbelt.</small></td>
+    <td class="fine-col">$50 &ndash; $150</td>
+    <td class="pts-col">0</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1015</td>
+    <td><strong>Failure to Stop for Emergency Vehicle</strong><br><small>Failing to yield and stop for an approaching emergency vehicle.</small></td>
+    <td class="fine-col">$300 &ndash; $800</td>
+    <td class="pts-col">2</td>
+  </tr>
+  <tr>
+    <td class="code-col">TC-1016</td>
+    <td><strong>Window Tint Violation</strong><br><small>Vehicle window tint exceeding legal limits.</small></td>
+    <td class="fine-col">$100 &ndash; $250</td>
+    <td class="pts-col">0</td>
+  </tr>
+</table>
+
+<h2>4.1 License Point System</h2>
+<table>
+  <tr><th>Points Accumulated</th><th>Consequence</th></tr>
+  <tr><td>6 points</td><td>Written warning issued by DMV</td></tr>
+  <tr><td>9 points</td><td>Mandatory traffic school ($500 fee)</td></tr>
+  <tr><td>12 points</td><td>License suspension (30 days)</td></tr>
+  <tr><td>15+ points</td><td>License revocation (requires DOJ hearing for reinstatement)</td></tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Point Decay:</strong> License points decay at a rate of 1 point per 30 days of clean driving. Points from felony charges (PC-5001, PC-6010) decay at half rate.
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 5: SENTENCING ===== -->
+<h1 id="sentencing">5. Title 4 &mdash; Sentencing Guidelines</h1>
+
+<h2>5.1 Sentencing Authority</h2>
+<p>Sentencing for all criminal charges is determined as follows:</p>
+<ul>
+  <li><strong>Infractions:</strong> Handled by the citing officer via citation. No court appearance required.</li>
+  <li><strong>Misdemeanors:</strong> Arresting officer determines fine and jail within the prescribed range. Suspect may request DOJ hearing.</li>
+  <li><strong>Felonies:</strong> Arresting officer processes initial booking. DOJ judge determines final sentencing within or above prescribed ranges based on circumstances.</li>
+</ul>
+
+<h2>5.2 Sentence Types</h2>
+<table>
+  <tr><th>Type</th><th>Description</th><th>Applicable To</th></tr>
+  <tr><td><strong>Fine</strong></td><td>Monetary penalty deducted from bank account. If insufficient funds, converted to additional jail time at $100/month.</td><td>All charges</td></tr>
+  <tr><td><strong>Jail / Prison</strong></td><td>Incarceration at Bolingbroke Penitentiary. Time served in months (1 month = ~2 minutes real time).</td><td>Misdemeanors, Felonies</td></tr>
+  <tr><td><strong>Probation</strong></td><td>Supervised release with conditions. Violation results in immediate arrest and additional charges.</td><td>Misdemeanors, Felonies</td></tr>
+  <tr><td><strong>Community Service</strong></td><td>Required community service hours (garbage collection, vineyard work). Tracked via zo_jobs.</td><td>Misdemeanors</td></tr>
+  <tr><td><strong>License Suspension</strong></td><td>Driver's license suspended for specified duration. Operating during suspension = PC-6013.</td><td>Traffic, Misdemeanors</td></tr>
+  <tr><td><strong>Asset Forfeiture</strong></td><td>Seizure of vehicles, properties, or business assets connected to criminal activity.</td><td>Felonies (DOJ only)</td></tr>
+</table>
+
+<h2>5.3 Concurrent vs. Consecutive Sentencing</h2>
+<ul>
+  <li><strong>Concurrent (Default):</strong> Multiple sentences run at the same time. Total time served equals the longest individual sentence.</li>
+  <li><strong>Consecutive:</strong> Sentences run back-to-back. Applied at DOJ discretion for particularly egregious multi-count cases.</li>
+</ul>
+
+<h2>5.4 Plea Bargaining</h2>
+<p>The DOJ may authorize plea bargains under the following conditions:</p>
+<ul>
+  <li>Reduction of charges by no more than one severity level (felony to misdemeanor)</li>
+  <li>Fine reduction of up to 40% of the minimum</li>
+  <li>Jail reduction of up to 50% of the minimum</li>
+  <li>PC-1001 (First Degree Murder) and PC-3004 (Human Trafficking) may not be reduced below 50% of maximum</li>
+  <li>All plea bargains must be documented in the MDT case file</li>
+</ul>
+
+<h2>5.5 Bail Schedule</h2>
+<table>
+  <tr><th>Charge Classification</th><th>Bail Amount</th><th>Conditions</th></tr>
+  <tr><td><span class="badge badge-infraction">Infraction</span></td><td>N/A</td><td>Citation release, no bail required</td></tr>
+  <tr><td><span class="badge badge-misdemeanor">Misdemeanor</span></td><td>2x maximum fine</td><td>Standard release conditions</td></tr>
+  <tr><td><span class="badge badge-felony">Felony</span> (Non-violent)</td><td>3x maximum fine</td><td>GPS monitoring, travel restrictions</td></tr>
+  <tr><td><span class="badge badge-felony">Felony</span> (Violent)</td><td>5x maximum fine</td><td>House arrest, weapon surrender, GPS monitoring</td></tr>
+  <tr><td><span class="badge badge-felony">Felony</span> (Capital)</td><td>No bail</td><td>Held until trial (PC-1001, PC-3004)</td></tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 6: SEARCH & SEIZURE ===== -->
+<h1 id="search">6. Title 5 &mdash; Search &amp; Seizure</h1>
+
+<h2>6.1 Search Requirements</h2>
+<table>
+  <tr><th>Search Type</th><th>Requirement</th><th>Scope</th></tr>
+  <tr><td><strong>Consent Search</strong></td><td>Voluntary consent from the subject</td><td>Limited to areas consented to; can be revoked at any time</td></tr>
+  <tr><td><strong>Terry Stop (Stop &amp; Frisk)</strong></td><td>Reasonable suspicion of criminal activity</td><td>Pat-down for weapons only (outer clothing)</td></tr>
+  <tr><td><strong>Search Incident to Arrest</strong></td><td>Lawful arrest has been made</td><td>Person and immediate area (wingspan rule)</td></tr>
+  <tr><td><strong>Vehicle Search</strong></td><td>Probable cause or incident to arrest</td><td>Entire vehicle including trunk and containers</td></tr>
+  <tr><td><strong>Warrant Search</strong></td><td>DOJ-issued warrant based on probable cause</td><td>As specified in the warrant (location, items, persons)</td></tr>
+  <tr><td><strong>Exigent Circumstances</strong></td><td>Imminent danger, evidence destruction, hot pursuit</td><td>Limited to the exigent threat; must obtain warrant ASAP after</td></tr>
+</table>
+
+<h2>6.2 Warrant Procedures</h2>
+<ol>
+  <li>Officer prepares affidavit with probable cause statement</li>
+  <li>Affidavit submitted to DOJ via MDT warrant request</li>
+  <li>DOJ judge reviews and approves/denies within reasonable time</li>
+  <li>Approved warrants are active for 30 days (auto-expire in MDT)</li>
+  <li>Warrant must be served during reasonable hours unless "no-knock" is specified</li>
+  <li>All items seized must be logged in MDT Evidence Locker with chain of custody</li>
+</ol>
+
+<h2>6.3 Evidence Handling</h2>
+<ul>
+  <li>All evidence must be logged in the MDT Evidence Locker immediately upon seizure</li>
+  <li>Chain of custody must be maintained (every transfer logged)</li>
+  <li>Evidence must include: description, location found, collecting officer, date/time</li>
+  <li>Photographs of evidence in situ when possible</li>
+  <li>Tampering with evidence = PC-5008 (Obstruction of Justice)</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>Exclusionary Rule:</strong> Evidence obtained through illegal search or seizure is inadmissible in court proceedings. Officers who conduct unlawful searches may face internal affairs investigation and disciplinary action.
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 7: USE OF FORCE ===== -->
+<h1 id="force">7. Title 6 &mdash; Use of Force</h1>
+
+<h2>7.1 Force Continuum</h2>
+<p>Officers shall use the minimum force necessary to effect an arrest, prevent escape, or protect themselves and others. Force must be proportional to the threat.</p>
+
+<table>
+  <tr><th>Level</th><th>Force Type</th><th>Subject Behavior</th><th>Examples</th></tr>
+  <tr>
+    <td>1</td>
+    <td><strong>Officer Presence</strong></td>
+    <td>Cooperative / Compliant</td>
+    <td>Uniformed presence, marked vehicle, verbal identification</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><strong>Verbal Commands</strong></td>
+    <td>Resistant (Passive)</td>
+    <td>Direct orders, warnings, negotiation</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><strong>Soft Hands / Control</strong></td>
+    <td>Resistant (Active)</td>
+    <td>Escort holds, joint locks, pressure points, handcuffing</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><strong>Hard Hands / Intermediate</strong></td>
+    <td>Assaultive</td>
+    <td>Taser, pepper spray, baton strikes, takedowns</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><strong>Lethal Force</strong></td>
+    <td>Lethal Threat</td>
+    <td>Firearm discharge &mdash; only when life is in imminent danger</td>
+  </tr>
+</table>
+
+<h2>7.2 Lethal Force Authorization</h2>
+<p>Lethal force is authorized ONLY when:</p>
+<ul>
+  <li>The subject poses an <strong>imminent threat of death or serious bodily harm</strong> to the officer or others</li>
+  <li>All lesser force options have been exhausted or are not feasible</li>
+  <li>Warning shots are <strong>prohibited</strong></li>
+  <li>Shooting at moving vehicles is prohibited unless the vehicle is being used as a deadly weapon</li>
+</ul>
+
+<h2>7.3 Reporting Requirements</h2>
+<ul>
+  <li><strong>Level 1&ndash;3:</strong> No report required unless injury occurs</li>
+  <li><strong>Level 4:</strong> Use of Force report must be filed in MDT within 1 hour</li>
+  <li><strong>Level 5:</strong> Immediate supervisor notification, full MDT report, mandatory administrative review. Officer placed on administrative duty pending review.</li>
+</ul>
+
+<h2>7.4 Pursuit Policy</h2>
+<table>
+  <tr><th>Pursuit Level</th><th>Authorization</th><th>Conditions</th></tr>
+  <tr><td><strong>Level 1</strong> (Standard)</td><td>Any officer</td><td>Misdemeanor evasion, speeds under 80 mph, low civilian risk</td></tr>
+  <tr><td><strong>Level 2</strong> (Elevated)</td><td>Supervisor approval</td><td>Felony evasion, speeds 80&ndash;120 mph, moderate civilian risk</td></tr>
+  <tr><td><strong>Level 3</strong> (High Risk)</td><td>Watch Commander only</td><td>Violent felony suspect, speeds 120+ mph, high civilian risk</td></tr>
+  <tr><td><strong>Terminate</strong></td><td>Any officer/supervisor</td><td>Risk to public safety outweighs need for apprehension</td></tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>Spike Strip Usage:</strong> Spike strips may only be deployed by trained officers with supervisor approval. They must not be deployed on highways with oncoming traffic or in areas with heavy pedestrian activity.
+</div>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 8: RIGHTS ===== -->
+<h1 id="rights">8. Title 7 &mdash; Rights of the Accused</h1>
+
+<h2>8.1 Miranda Rights</h2>
+<p>Officers <strong>must</strong> read Miranda Rights to any person being placed under arrest before any custodial interrogation:</p>
+<blockquote>
+  "You have the right to remain silent. Anything you say can and will be used against you in a court of law. You have the right to an attorney. If you cannot afford an attorney, one will be appointed to you. Do you understand these rights as I have read them to you?"
+</blockquote>
+
+<div class="callout callout-critical">
+  <strong>Failure to Mirandize:</strong> Statements made during custodial interrogation without Miranda warnings are inadmissible. The arrest itself remains valid, but any statements made cannot be used as evidence.
+</div>
+
+<h2>8.2 Right to Legal Representation</h2>
+<ul>
+  <li>All accused persons have the right to hire a private attorney (bar-certified lawyer)</li>
+  <li>If unable to afford counsel, a Public Defender will be assigned through the DOJ</li>
+  <li>Interrogation must cease once a suspect invokes their right to counsel</li>
+  <li>Attorney-client communications are privileged and may not be intercepted</li>
+</ul>
+
+<h2>8.3 Right to a Fair Trial</h2>
+<ul>
+  <li>All felony cases may be brought before a DOJ judge for trial</li>
+  <li>The accused is presumed innocent until proven guilty beyond a reasonable doubt</li>
+  <li>The accused has the right to confront witnesses and present evidence</li>
+  <li>The accused has the right to appeal any conviction through the DOJ</li>
+</ul>
+
+<h2>8.4 Expungement</h2>
+<p>Criminal records may be expunged under the following conditions:</p>
+<ul>
+  <li><strong>Infractions:</strong> Automatically expunged after 60 days</li>
+  <li><strong>Misdemeanors:</strong> Eligible for expungement after 90 days, $2,500 filing fee, DOJ approval</li>
+  <li><strong>Felonies:</strong> Eligible after 180 days, $10,000 filing fee, DOJ hearing required</li>
+  <li><strong>Capital Felonies:</strong> Not eligible for expungement (PC-1001, PC-3004)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 9: PROCEDURES ===== -->
+<h1 id="procedures">9. Title 8 &mdash; Arrest &amp; Booking Procedures</h1>
+
+<h2>9.1 Arrest Procedure</h2>
+<ol>
+  <li><strong>Identification:</strong> Identify yourself as law enforcement (badge number, department)</li>
+  <li><strong>Probable Cause:</strong> Establish and articulate probable cause for arrest</li>
+  <li><strong>Miranda Warning:</strong> Read Miranda Rights before custodial interrogation</li>
+  <li><strong>Search:</strong> Conduct search incident to arrest (person and immediate area)</li>
+  <li><strong>Transport:</strong> Secure suspect in patrol vehicle for transport to booking</li>
+  <li><strong>Booking:</strong> Process at MRPD/BCSO/SASP station</li>
+</ol>
+
+<h2>9.2 Booking Process</h2>
+<ol>
+  <li>Record suspect's identity in MDT (name, DOB, citizenid)</li>
+  <li>Document all charges with penal code numbers</li>
+  <li>Inventory all personal property and contraband</li>
+  <li>Log evidence in MDT Evidence Locker</li>
+  <li>Calculate total fine and jail time using MDT Charge Calculator</li>
+  <li>Inform suspect of charges, fine, and jail time</li>
+  <li>Offer right to legal counsel and DOJ hearing</li>
+  <li>Process payment or assign jail time</li>
+  <li>File incident report in MDT</li>
+</ol>
+
+<h2>9.3 Contraband Seizure</h2>
+<table>
+  <tr><th>Item Category</th><th>Action</th><th>Associated Charges</th></tr>
+  <tr><td>Illegal drugs (any amount)</td><td>Seize and log in evidence</td><td>PC-6009 (personal) or PC-4001/PC-4002 (distribution)</td></tr>
+  <tr><td>Illegal firearms</td><td>Seize and log in evidence</td><td>PC-5003</td></tr>
+  <tr><td>Stolen property</td><td>Seize, log, and return to owner</td><td>PC-6018 or PC-2004</td></tr>
+  <tr><td>Drug manufacturing equipment</td><td>Seize and log in evidence</td><td>PC-4003</td></tr>
+  <tr><td>Large cash amounts ($10K+)</td><td>Document, may seize if connected to criminal activity</td><td>PC-5006 (if evidence of laundering)</td></tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 10: ENHANCEMENTS ===== -->
+<h1 id="enhancements">10. Title 9 &mdash; Charge Enhancements</h1>
+
+<p>Charge enhancements increase the severity or penalties of existing charges based on aggravating circumstances.</p>
+
+<table>
+  <tr><th>Enhancement</th><th>Effect</th><th>Conditions</th></tr>
+  <tr>
+    <td><strong>Gang Enhancement</strong></td>
+    <td>+50% fine, +50% jail time</td>
+    <td>Crime committed for the benefit of, at the direction of, or in association with a criminal street gang</td>
+  </tr>
+  <tr>
+    <td><strong>Weapon Enhancement</strong></td>
+    <td>+25% fine, +25% jail time</td>
+    <td>Crime committed while in possession of or using a deadly weapon</td>
+  </tr>
+  <tr>
+    <td><strong>Government Target Enhancement</strong></td>
+    <td>+50% fine, +50% jail time</td>
+    <td>Crime committed against a peace officer, EMS, or government employee on duty</td>
+  </tr>
+  <tr>
+    <td><strong>Repeat Offender Enhancement</strong></td>
+    <td>+25% per prior conviction (max +100%)</td>
+    <td>Suspect has prior convictions for the same or similar charge within 30 days</td>
+  </tr>
+  <tr>
+    <td><strong>Organized Crime Enhancement</strong></td>
+    <td>+75% fine, +75% jail time</td>
+    <td>Crime committed as part of an organized criminal enterprise (2+ persons, pattern of activity)</td>
+  </tr>
+  <tr>
+    <td><strong>High-Speed Enhancement</strong></td>
+    <td>+$5,000 fine, +30 months jail</td>
+    <td>Vehicle pursuit exceeding 120 mph during evasion</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Enhancement Stacking:</strong> Multiple enhancements may apply to a single charge. However, total enhanced penalties may not exceed 3x the base maximum. The MDT Charge Calculator factors in enhancements automatically when selected.
+</div>
+
+<h2>10.1 Three Strikes Rule</h2>
+<p>Under the San Andreas Three Strikes Law:</p>
+<ul>
+  <li><strong>First Strike:</strong> Standard sentencing within prescribed range</li>
+  <li><strong>Second Strike:</strong> Minimum sentence doubles (jail and fine)</li>
+  <li><strong>Third Strike:</strong> Maximum sentence applied with no possibility of plea bargain. DOJ mandatory hearing.</li>
+</ul>
+<p>Strikes apply only to felony convictions and persist for the lifetime of the character. Strikes cannot be expunged.</p>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 11: DEFINITIONS ===== -->
+<h1 id="definitions">11. Title 10 &mdash; Legal Definitions</h1>
+
+<table>
+  <tr><th>Term</th><th>Definition</th></tr>
+  <tr><td><strong>Probable Cause</strong></td><td>Facts and circumstances that would lead a reasonable person to believe a crime has been, is being, or is about to be committed.</td></tr>
+  <tr><td><strong>Reasonable Suspicion</strong></td><td>A standard lower than probable cause; articulable facts that suggest criminal activity may be afoot.</td></tr>
+  <tr><td><strong>Exigent Circumstances</strong></td><td>Emergency situations where waiting for a warrant would result in danger, evidence destruction, or suspect flight.</td></tr>
+  <tr><td><strong>Terry Stop</strong></td><td>A brief investigative detention based on reasonable suspicion, including a pat-down for weapons.</td></tr>
+  <tr><td><strong>Custodial Interrogation</strong></td><td>Questioning a suspect who is in custody or deprived of freedom in a significant way.</td></tr>
+  <tr><td><strong>Felony</strong></td><td>A serious criminal offense punishable by more than 60 months incarceration and/or fines exceeding $5,000.</td></tr>
+  <tr><td><strong>Misdemeanor</strong></td><td>A criminal offense punishable by up to 90 months incarceration and/or fines up to $10,000.</td></tr>
+  <tr><td><strong>Infraction</strong></td><td>A minor violation punishable by fine only, with no possibility of incarceration.</td></tr>
+  <tr><td><strong>Premeditation</strong></td><td>Planning or deliberation before committing a criminal act, distinguishing first-degree from second-degree offenses.</td></tr>
+  <tr><td><strong>Mens Rea</strong></td><td>The mental state or criminal intent required for conviction. May be intentional, knowing, reckless, or negligent.</td></tr>
+  <tr><td><strong>Concurrent Sentencing</strong></td><td>Multiple sentences served simultaneously; total time equals the longest individual sentence.</td></tr>
+  <tr><td><strong>Consecutive Sentencing</strong></td><td>Multiple sentences served back-to-back; total time equals the sum of all sentences.</td></tr>
+  <tr><td><strong>Expungement</strong></td><td>The legal process of sealing or destroying a criminal record, making it inaccessible.</td></tr>
+  <tr><td><strong>Asset Forfeiture</strong></td><td>Government seizure of property connected to or derived from criminal activity.</td></tr>
+  <tr><td><strong>Chain of Custody</strong></td><td>The documented trail showing the seizure, custody, control, transfer, and disposition of evidence.</td></tr>
+  <tr><td><strong>RICO</strong></td><td>Racketeer Influenced and Corrupt Organizations Act; targets patterns of criminal activity by organized groups.</td></tr>
+  <tr><td><strong>Plea Bargain</strong></td><td>A negotiated agreement where the defendant pleads guilty to reduced charges in exchange for lesser penalties.</td></tr>
+  <tr><td><strong>Bail</strong></td><td>A monetary guarantee ensuring a defendant's appearance at future court proceedings.</td></tr>
+  <tr><td><strong>Probation</strong></td><td>Supervised release in lieu of or following incarceration, with conditions that must be observed.</td></tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ===== SECTION 12: AMENDMENTS ===== -->
+<h1 id="amendments">12. Amendments &amp; Revision History</h1>
+
+<table>
+  <tr><th>Version</th><th>Date</th><th>Author</th><th>Changes</th></tr>
+  <tr><td>1.0</td><td>February 2026</td><td>Department of Justice</td><td>Initial publication. 24 felonies, 19 misdemeanors, 16 infractions. Full sentencing guidelines, search &amp; seizure, use of force, rights of accused, charge enhancements, legal definitions.</td></tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>Living Document:</strong> This Criminal Code is subject to amendment by the Department of Justice. All amendments require approval from the Chief Justice and a 48-hour notice period before taking effect. Officers will be notified of changes via dispatch and MDT notifications.
+</div>
+
+</div>
+
+<!-- ===== FOOTER ===== -->
+<div class="footer">
+  <div class="org">PROZILLI ENTERTAINMENT</div>
+  ZO Syndicate Roleplay &mdash; San Andreas Criminal &amp; Penal Code v1.0<br>
+  <a href="https://prozilligaming.com">prozilligaming.com</a> &bull;
+  <a href="https://discord.gg/HjpsGpC4R6">Discord</a><br>
+  &copy; 2026 Prozilli Entertainment. All rights reserved.<br>
+  This document is for roleplay purposes within ZO Syndicate RP.
+</div>
+
+</body>
+</html>

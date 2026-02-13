@@ -165,7 +165,7 @@ export default function WelcomePage() {
         {/* Settings Column */}
         <div className="space-y-6">
           {/* Enable/Disable */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-semibold text-white">
@@ -195,7 +195,7 @@ export default function WelcomePage() {
           {currentConfig.enabled && (
             <>
               {/* Channel Selection */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <h3 className="text-sm font-semibold text-white mb-4">
                   Send To
                 </h3>
@@ -205,7 +205,7 @@ export default function WelcomePage() {
                       Channel
                     </label>
                     {channelsLoading ? (
-                      <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                      <div className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-gray-500">
                         Loading channels...
                       </div>
                     ) : channelsError ? (
@@ -216,7 +216,7 @@ export default function WelcomePage() {
                       <select
                         value={currentConfig.channelId}
                         onChange={(e) => updateConfig("channelId", e.target.value)}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none focus:ring-1 focus:ring-red"
                       >
                         <option value="">Select a channel</option>
                         {channels.map((channel) => (
@@ -232,7 +232,7 @@ export default function WelcomePage() {
                       type="checkbox"
                       checked={currentConfig.dmEnabled}
                       onChange={(e) => updateConfig("dmEnabled", e.target.checked)}
-                      className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-red focus:ring-brand-red"
+                      className="h-4 w-4 rounded border-white/20 bg-white/5 text-red focus:ring-red"
                     />
                     <div>
                       <p className="text-sm text-white">Also send as DM</p>
@@ -245,7 +245,7 @@ export default function WelcomePage() {
               </div>
 
               {/* Embed Settings */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-sm font-semibold text-white">
                     Use Embed
@@ -287,7 +287,7 @@ export default function WelcomePage() {
                           onChange={(e) =>
                             updateConfig("embedColor", e.target.value)
                           }
-                          className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                          className="flex-1 rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
                         />
                       </div>
                     </div>
@@ -300,7 +300,7 @@ export default function WelcomePage() {
                         type="text"
                         value={currentConfig.title}
                         onChange={(e) => updateConfig("title", e.target.value)}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
                       />
                     </div>
 
@@ -314,7 +314,7 @@ export default function WelcomePage() {
                           updateConfig("description", e.target.value)
                         }
                         rows={4}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none resize-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none resize-none"
                       />
                     </div>
 
@@ -326,7 +326,7 @@ export default function WelcomePage() {
                         type="text"
                         value={currentConfig.footer}
                         onChange={(e) => updateConfig("footer", e.target.value)}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-white/5 px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
                       />
                     </div>
                   </div>
@@ -334,33 +334,33 @@ export default function WelcomePage() {
               </div>
 
               {/* Variables Reference */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <h3 className="text-sm font-semibold text-white mb-3">
                   Available Variables
                 </h3>
                 <div className="grid gap-2 text-xs">
                   <div className="flex justify-between">
-                    <code className="text-brand-gold">{"{user}"}</code>
+                    <code className="text-gold">{"{user}"}</code>
                     <span className="text-gray-500">@mention the user</span>
                   </div>
                   <div className="flex justify-between">
-                    <code className="text-brand-gold">{"{user.tag}"}</code>
+                    <code className="text-gold">{"{user.tag}"}</code>
                     <span className="text-gray-500">Username#0000</span>
                   </div>
                   <div className="flex justify-between">
-                    <code className="text-brand-gold">{"{user.avatar}"}</code>
+                    <code className="text-gold">{"{user.avatar}"}</code>
                     <span className="text-gray-500">Avatar URL</span>
                   </div>
                   <div className="flex justify-between">
-                    <code className="text-brand-gold">{"{server}"}</code>
+                    <code className="text-gold">{"{server}"}</code>
                     <span className="text-gray-500">Server name</span>
                   </div>
                   <div className="flex justify-between">
-                    <code className="text-brand-gold">{"{count}"}</code>
+                    <code className="text-gold">{"{count}"}</code>
                     <span className="text-gray-500">Member count</span>
                   </div>
                   <div className="flex justify-between">
-                    <code className="text-brand-gold">{"{date}"}</code>
+                    <code className="text-gold">{"{date}"}</code>
                     <span className="text-gray-500">Current date</span>
                   </div>
                 </div>
@@ -379,7 +379,7 @@ export default function WelcomePage() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-red/90 disabled:opacity-50"
+              className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50"
             >
               {saving ? "Saving..." : "Save Changes"}
             </button>
@@ -389,7 +389,7 @@ export default function WelcomePage() {
         {/* Preview Column */}
         <div className="space-y-4">
           <h3 className="text-sm font-semibold text-white">Preview</h3>
-          <div className="rounded-xl border border-white/5 bg-[#36393f] p-4">
+          <div className="rounded-xl border border-[var(--color-border)] bg-[#36393f] p-4">
             {/* Discord-style message preview */}
             <div className="flex gap-4">
               <div className="h-10 w-10 rounded-full bg-[#5865F2] flex items-center justify-center text-white font-bold text-sm shrink-0">
@@ -413,7 +413,7 @@ export default function WelcomePage() {
                   >
                     {currentConfig.thumbnail && (
                       <div className="float-right ml-4 mb-2">
-                        <div className="h-16 w-16 rounded-full bg-brand-red/20 flex items-center justify-center text-brand-red">
+                        <div className="h-16 w-16 rounded-full bg-brand-red/20 flex items-center justify-center text-red">
                           <svg
                             className="h-8 w-8"
                             fill="none"

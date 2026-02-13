@@ -197,9 +197,9 @@ export default function ChatPanel() {
   const tabs: FilterTab[] = ["all", ...connectedPlatforms.filter((p) => p in PLATFORMS)];
 
   return (
-    <div className="glass-strong glow-border flex flex-col rounded-xl overflow-hidden h-full">
+    <div className="panel-raised flex flex-col overflow-hidden h-full">
       {/* Header */}
-      <div className="flex items-center justify-between px-3 py-2 bg-brand-darker/50 shrink-0 border-b border-white/5">
+      <div className="flex items-center justify-between px-3 py-2 bg-raised shrink-0 border-b border-[var(--color-border)]">
         <div className="flex items-center gap-2">
           <span className={`h-1.5 w-1.5 rounded-full ${isConnected ? "bg-green-400" : "bg-red-500"}`} />
           <span className="text-xs font-semibold text-white">
@@ -247,7 +247,7 @@ export default function ChatPanel() {
         <>
           {/* Platform filter tabs */}
           {tabs.length > 2 && (
-            <div className="flex items-center gap-1 px-2 py-1.5 border-b border-white/5 overflow-x-auto shrink-0">
+            <div className="flex items-center gap-1 px-2 py-1.5 border-b border-[var(--color-border)] overflow-x-auto shrink-0">
               {tabs.map((tab) => (
                 <button
                   key={tab}
@@ -298,14 +298,14 @@ export default function ChatPanel() {
                 setAutoScroll(true);
                 messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="absolute bottom-12 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-brand-red/90 text-white text-[10px] font-medium shadow-lg hover:bg-brand-red transition-colors z-10"
+              className="absolute bottom-12 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-red text-white text-[10px] font-medium shadow-lg hover:bg-red-bright transition-colors z-10"
             >
               New messages
             </button>
           )}
 
           {/* Footer: connected platforms */}
-          <div className="flex items-center gap-2 px-3 py-1.5 border-t border-white/5 shrink-0">
+          <div className="flex items-center gap-2 px-3 py-1.5 border-t border-[var(--color-border)] shrink-0">
             <div className="flex items-center gap-1">
               {connectedPlatforms
                 .filter((p) => p in PLATFORMS)

@@ -106,7 +106,7 @@ export default function StarboardPage() {
         <button
           onClick={() => updateConfig("enabled", !config.enabled)}
           className={`relative h-7 w-12 rounded-full transition-colors ${
-            config.enabled ? "bg-brand-red" : "bg-white/10"
+            config.enabled ? "bg-red" : "bg-raised"
           }`}
         >
           <span
@@ -122,7 +122,7 @@ export default function StarboardPage() {
           {/* Configuration Column */}
           <div className="space-y-6">
             {/* Configuration Card */}
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
               <h3 className="text-sm font-semibold text-white mb-5">Configuration</h3>
               <div className="space-y-5">
                 {/* Channel Selector */}
@@ -134,7 +134,7 @@ export default function StarboardPage() {
                     Where starred messages will be reposted
                   </p>
                   {channelsLoading ? (
-                    <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                    <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                       Loading channels...
                     </div>
                   ) : channelsError ? (
@@ -145,7 +145,7 @@ export default function StarboardPage() {
                     <select
                       value={config.channelId}
                       onChange={(e) => updateConfig("channelId", e.target.value)}
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                     >
                       <option value="">Select a channel</option>
                       {channels.map((channel) => (
@@ -170,7 +170,7 @@ export default function StarboardPage() {
                     value={config.emoji}
                     onChange={(e) => updateConfig("emoji", e.target.value)}
                     placeholder="\u2B50"
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                   />
                 </div>
 
@@ -188,12 +188,12 @@ export default function StarboardPage() {
                     max={100}
                     value={config.threshold}
                     onChange={(e) => updateConfig("threshold", Math.max(1, parseInt(e.target.value) || 1))}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
                   />
                 </div>
 
                 {/* Divider */}
-                <div className="border-t border-white/5" />
+                <div className="border-t border-[var(--color-border)]" />
 
                 {/* Allow Self-Star Toggle */}
                 <div className="flex items-center justify-between">
@@ -206,7 +206,7 @@ export default function StarboardPage() {
                   <button
                     onClick={() => updateConfig("allowSelfStar", !config.allowSelfStar)}
                     className={`relative h-6 w-11 rounded-full transition-colors ${
-                      config.allowSelfStar ? "bg-brand-red" : "bg-white/10"
+                      config.allowSelfStar ? "bg-red" : "bg-raised"
                     }`}
                   >
                     <span
@@ -228,7 +228,7 @@ export default function StarboardPage() {
                   <button
                     onClick={() => updateConfig("includeBotMessages", !config.includeBotMessages)}
                     className={`relative h-6 w-11 rounded-full transition-colors ${
-                      config.includeBotMessages ? "bg-brand-red" : "bg-white/10"
+                      config.includeBotMessages ? "bg-red" : "bg-raised"
                     }`}
                   >
                     <span
@@ -262,7 +262,7 @@ export default function StarboardPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-red/90 disabled:opacity-50"
+                className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50"
               >
                 {saving ? "Saving..." : "Save Changes"}
               </button>
@@ -274,11 +274,11 @@ export default function StarboardPage() {
             <h3 className="text-sm font-semibold text-white">Preview</h3>
 
             {/* Starboard Post Preview */}
-            <div className="rounded-xl border border-white/5 bg-[#36393f] p-4">
+            <div className="rounded-xl border border-[var(--color-border)] bg-[#36393f] p-4">
               {/* Starboard header line */}
               <div className="flex items-center gap-2 mb-3">
                 <span className="text-lg">{config.emoji || "\u2B50"}</span>
-                <span className="text-sm font-bold text-brand-gold">{config.threshold}</span>
+                <span className="text-sm font-bold text-gold">{config.threshold}</span>
                 <span className="text-gray-500 text-sm">|</span>
                 <span className="text-sm text-gray-400">
                   {getChannelName(config.channelId)}
@@ -310,7 +310,7 @@ export default function StarboardPage() {
               <div className="mt-3 flex items-center gap-2">
                 <div className="flex items-center gap-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 px-2.5 py-1">
                   <span className="text-sm">{config.emoji || "\u2B50"}</span>
-                  <span className="text-xs font-medium text-brand-gold">{config.threshold}</span>
+                  <span className="text-xs font-medium text-gold">{config.threshold}</span>
                 </div>
                 <span className="text-xs text-gray-500">
                   Posted to starboard
@@ -323,23 +323,23 @@ export default function StarboardPage() {
             </p>
 
             {/* Info Card */}
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <h4 className="text-sm font-semibold text-white mb-3">How It Works</h4>
               <div className="space-y-3 text-xs text-gray-400">
                 <div className="flex gap-3">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gold/10 text-brand-gold font-bold text-[10px]">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gold/10 text-gold font-bold text-[10px]">
                     1
                   </div>
                   <p>Members react to a message with {config.emoji || "\u2B50"}</p>
                 </div>
                 <div className="flex gap-3">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gold/10 text-brand-gold font-bold text-[10px]">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gold/10 text-gold font-bold text-[10px]">
                     2
                   </div>
                   <p>Once the message reaches {config.threshold} reaction{config.threshold !== 1 ? "s" : ""}, it gets posted to the starboard channel</p>
                 </div>
                 <div className="flex gap-3">
-                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gold/10 text-brand-gold font-bold text-[10px]">
+                  <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-gold/10 text-gold font-bold text-[10px]">
                     3
                   </div>
                   <p>The starboard post updates in real-time as more reactions are added</p>
@@ -352,8 +352,8 @@ export default function StarboardPage() {
 
       {/* Disabled State */}
       {!config.enabled && (
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-12 text-center">
-          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/5">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-12 text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-surface">
             <svg
               className="h-8 w-8 text-gray-500"
               fill="none"
@@ -374,7 +374,7 @@ export default function StarboardPage() {
           </p>
           <button
             onClick={() => updateConfig("enabled", true)}
-            className="mt-4 rounded-lg bg-brand-red px-4 py-2 text-sm font-medium text-white hover:bg-brand-red/90"
+            className="mt-4 rounded-lg bg-red px-4 py-2 text-sm font-medium text-white hover:bg-red/90"
           >
             Enable Starboard
           </button>

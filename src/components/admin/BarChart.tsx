@@ -31,7 +31,7 @@ export default function BarChart({ data, color = "from-brand-red to-brand-gold" 
               </span>
               <span className="text-xs text-muted">{entry.value.toLocaleString()}</span>
             </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-white/5">
+            <div className="h-2 w-full overflow-hidden rounded-full bg-surface">
               <div
                 className={"h-full rounded-full bg-gradient-to-r " + color}
                 style={{ width: pct + "%" }}

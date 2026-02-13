@@ -62,10 +62,10 @@ function TimeUnit({ value, label }: { value: number; label: string }) {
 function LoadingState() {
   return (
     <div className="animate-fade-in-up animate-delay-500 mt-6 sm:mt-8">
-      <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-6 py-4 backdrop-blur-sm">
+      <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-[var(--color-border)] bg-surface px-6 py-4 backdrop-blur-sm">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-brand-gold animate-pulse" />
-          <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-brand-gold">
+          <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
+          <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-gold">
             Loading Schedule...
           </span>
         </div>
@@ -147,17 +147,17 @@ export default function NextStreamCountdown() {
   if (error) {
     return (
       <div className="animate-fade-in-up animate-delay-500 mt-6 sm:mt-8">
-        <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-6 py-4 backdrop-blur-sm">
+        <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-[var(--color-border)] bg-surface px-6 py-4 backdrop-blur-sm">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-brand-gold animate-pulse" />
-            <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-brand-gold">
+            <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
+            <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-gold">
               Next Stream
             </span>
           </div>
           <p className="text-sm text-muted">Check the schedule for upcoming streams</p>
           <Link
             href="/schedule"
-            className="text-xs text-brand-red hover:text-brand-red-glow transition-colors"
+            className="text-xs text-red hover:text-red transition-colors"
           >
             View Schedule &rarr;
           </Link>
@@ -170,10 +170,10 @@ export default function NextStreamCountdown() {
   if (scheduleData?.isLive && scheduleData.liveData) {
     return (
       <div className="animate-fade-in-up animate-delay-500 mt-6 sm:mt-8">
-        <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-brand-red/30 bg-brand-red/10 px-6 py-4 backdrop-blur-sm">
+        <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-red/30 bg-brand-red/10 px-6 py-4 backdrop-blur-sm">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-brand-red animate-live-pulse" />
-            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-red">
+            <span className="h-2 w-2 rounded-full bg-red animate-live-pulse" />
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-red">
               Live Now
             </span>
             {scheduleData.liveData.viewerCount > 0 && (
@@ -186,13 +186,13 @@ export default function NextStreamCountdown() {
             {scheduleData.liveData.title}
           </p>
           {scheduleData.liveData.gameName && (
-            <span className="text-xs text-brand-gold">
+            <span className="text-xs text-gold">
               Playing: {scheduleData.liveData.gameName}
             </span>
           )}
           <Link
             href="/watch"
-            className="rounded-sm bg-brand-red px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-brand-red-glow"
+            className="rounded-sm bg-red px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-red/80"
           >
             Watch Now &rarr;
           </Link>
@@ -205,10 +205,10 @@ export default function NextStreamCountdown() {
   if (!scheduleData?.nextStream) {
     return (
       <div className="animate-fade-in-up animate-delay-500 mt-6 sm:mt-8">
-        <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-white/10 bg-white/5 px-6 py-4 backdrop-blur-sm">
+        <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-[var(--color-border)] bg-surface px-6 py-4 backdrop-blur-sm">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-brand-gold animate-pulse" />
-            <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-brand-gold">
+            <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
+            <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-gold">
               Next Stream
             </span>
           </div>
@@ -216,7 +216,7 @@ export default function NextStreamCountdown() {
           <div className="flex items-center gap-3">
             <Link
               href="/schedule"
-              className="text-xs text-brand-red hover:text-brand-red-glow transition-colors"
+              className="text-xs text-red hover:text-red transition-colors"
             >
               View Schedule &rarr;
             </Link>
@@ -238,17 +238,17 @@ export default function NextStreamCountdown() {
   if (!timeLeft) {
     return (
       <div className="animate-fade-in-up animate-delay-500 mt-6 sm:mt-8">
-        <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-brand-red/30 bg-brand-red/10 px-6 py-4 backdrop-blur-sm">
+        <div className="inline-flex flex-col items-center gap-3 rounded-xl border border-red/30 bg-brand-red/10 px-6 py-4 backdrop-blur-sm">
           <div className="flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-brand-red animate-live-pulse" />
-            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-red">
+            <span className="h-2 w-2 rounded-full bg-red animate-live-pulse" />
+            <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-red">
               Starting Soon
             </span>
           </div>
           <p className="text-sm text-white font-medium">{scheduleData.nextStream.title}</p>
           <Link
             href="/watch"
-            className="rounded-sm bg-brand-red px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-brand-red-glow"
+            className="rounded-sm bg-red px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-red/80"
           >
             Watch Now &rarr;
           </Link>
@@ -260,10 +260,10 @@ export default function NextStreamCountdown() {
   // Countdown active
   return (
     <div className="animate-fade-in-up animate-delay-500 mt-6 sm:mt-8">
-      <div className="inline-flex flex-col items-center gap-4 rounded-xl border border-white/10 bg-white/5 px-4 sm:px-6 py-4 backdrop-blur-sm">
+      <div className="inline-flex flex-col items-center gap-4 rounded-xl border border-[var(--color-border)] bg-surface px-4 sm:px-6 py-4 backdrop-blur-sm">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-brand-gold animate-pulse" />
-          <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-brand-gold">
+          <span className="h-2 w-2 rounded-full bg-gold animate-pulse" />
+          <span className="text-xs sm:text-sm font-medium uppercase tracking-wider text-gold">
             Next Stream
           </span>
         </div>
@@ -290,7 +290,7 @@ export default function NextStreamCountdown() {
 
         <Link
           href="/schedule"
-          className="text-xs text-brand-gold hover:text-white transition-colors"
+          className="text-xs text-gold hover:text-white transition-colors"
         >
           View Full Schedule &rarr;
         </Link>

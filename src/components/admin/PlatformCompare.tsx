@@ -38,7 +38,7 @@ export default function PlatformCompare({ data }: PlatformCompareProps) {
     <div className="overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-white/10">
+          <tr className="border-b border-[var(--color-border)]">
             <th className="pb-3 text-left text-xs font-medium uppercase tracking-wider text-muted">Platform</th>
             <th className="pb-3 text-right text-xs font-medium uppercase tracking-wider text-muted">Messages</th>
             <th className="pb-3 text-right text-xs font-medium uppercase tracking-wider text-muted">Chatters</th>
@@ -52,7 +52,7 @@ export default function PlatformCompare({ data }: PlatformCompareProps) {
           {data.map((p) => {
             const pct = (p.messages / maxMsg) * 100;
             return (
-              <tr key={p.platform} className="border-b border-white/5">
+              <tr key={p.platform} className="border-b border-[var(--color-border)]">
                 <td className="py-3">
                   <span className="flex items-center gap-2 capitalize text-white">
                     <span>{PLATFORM_ICONS[p.platform] || "\u26AA"}</span>
@@ -63,11 +63,11 @@ export default function PlatformCompare({ data }: PlatformCompareProps) {
                 <td className="py-3 text-right text-muted">{p.chatters.toLocaleString()}</td>
                 <td className="py-3 text-right text-muted">{p.follows.toLocaleString()}</td>
                 <td className="py-3 text-right text-muted">{p.subs.toLocaleString()}</td>
-                <td className="py-3 text-right text-brand-gold font-medium">
+                <td className="py-3 text-right text-gold font-medium">
                   {p.revenue > 0 ? "$" + p.revenue.toFixed(2) : "-"}
                 </td>
                 <td className="py-3">
-                  <div className="h-2 w-full overflow-hidden rounded-full bg-white/5">
+                  <div className="h-2 w-full overflow-hidden rounded-full bg-surface">
                     <div
                       className="h-full rounded-full bg-gradient-to-r from-brand-red to-brand-gold"
                       style={{ width: pct + "%" }}

@@ -139,12 +139,12 @@ export default function AdminDashboard() {
         <div className="film-grain" />
         <div className="vignette" />
         <div className="relative z-10">
-          <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-brand-gold">
+          <span className="mb-3 inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-gold">
             <span className="h-2 w-2 rounded-full bg-brand-gold animate-pulse" />
             PRISMAI Dashboard
           </span>
           <h1 className="animate-fade-in-up text-glow-red text-2xl sm:text-3xl md:text-5xl font-bold tracking-tight">
-            ADMIN <span className="text-brand-red">CONTROL</span>
+            ADMIN <span className="text-red">CONTROL</span>
           </h1>
           <p className="animate-fade-in-up animate-delay-100 mt-3 max-w-xl text-sm text-muted">
             Real-time monitoring and control of the PRISMAI ecosystem
@@ -164,14 +164,14 @@ export default function AdminDashboard() {
             <button
               onClick={fetchData}
               disabled={loading}
-              className="rounded-sm border border-brand-red/30 px-4 py-2 text-xs font-medium text-brand-red transition-colors hover:bg-brand-red/10 disabled:opacity-50"
+              className="rounded-sm border border-brand-red/30 px-4 py-2 text-xs font-medium text-red transition-colors hover:bg-red/10 disabled:opacity-50"
             >
               {loading ? "Refreshing..." : "Refresh"}
             </button>
           </div>
           <Link
             href="/connect"
-            className="rounded-sm bg-brand-red px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-brand-red/80"
+            className="rounded-sm bg-red px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-red/80"
           >
             Connect Platforms
           </Link>
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
             {
               label: "PRISMAI Core",
               health: coreHealth,
-              color: "text-brand-red",
+              color: "text-red",
               extra: coreHealth?.uptime
                 ? "Uptime: " + formatUptime(coreHealth.uptime)
                 : null,
@@ -213,7 +213,7 @@ export default function AdminDashboard() {
             {
               label: "PRISMAI Analytics",
               health: analyticsHealth,
-              color: "text-brand-gold",
+              color: "text-gold",
               extra: analyticsHealth?.uptime
                 ? "Uptime: " + formatUptime(analyticsHealth.uptime)
                 : analyticsHealth?.status === "operational"
@@ -221,7 +221,7 @@ export default function AdminDashboard() {
                   : null,
             },
           ].map((server) => (
-            <div key={server.label} className="glass glow-border rounded-xl p-6">
+            <div key={server.label} className="panel glow-border rounded-xl p-6">
               <div className="flex items-center justify-between">
                 <h2
                   className={
@@ -268,7 +268,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Live Status Banner */}
-        <div className="mb-8 glass glow-border rounded-xl p-6">
+        <div className="mb-8 panel glow-border rounded-xl p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold uppercase tracking-wider text-white">
               Stream Status
@@ -277,13 +277,13 @@ export default function AdminDashboard() {
               className={
                 "flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-bold " +
                 (liveStatus?.isLive
-                  ? "bg-brand-red/20 text-brand-red"
-                  : "bg-white/5 text-muted")
+                  ? "bg-red/20 text-red"
+                  : "bg-surface text-muted")
               }
             >
               {liveStatus?.isLive ? (
                 <>
-                  <span className="h-3 w-3 rounded-full bg-brand-red animate-live-pulse" />
+                  <span className="h-3 w-3 rounded-full bg-red animate-live-pulse" />
                   {"LIVE ON " +
                     liveStatus.liveCount +
                     " PLATFORM" +
@@ -299,7 +299,7 @@ export default function AdminDashboard() {
         {/* Platforms */}
         <div className="mb-8">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">
+            <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-red">
               Platform Connections
             </h2>
             <span className="text-xs text-muted">
@@ -311,7 +311,7 @@ export default function AdminDashboard() {
               <div
                 key={p.name}
                 className={
-                  "glass rounded-lg p-4 transition-all " +
+                  "panel rounded-lg p-4 transition-all " +
                   (p.connected ? "" : "opacity-50")
                 }
               >
@@ -337,7 +337,7 @@ export default function AdminDashboard() {
                       }
                     />
                     {p.live && (
-                      <span className="text-[10px] font-bold text-brand-red">
+                      <span className="text-[10px] font-bold text-red">
                         LIVE
                       </span>
                     )}
@@ -350,7 +350,7 @@ export default function AdminDashboard() {
 
         {/* Stats */}
         <div className="mb-8">
-          <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">
+          <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
             Statistics
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -363,7 +363,7 @@ export default function AdminDashboard() {
               },
               { value: stats?.totalEvents ?? 0, label: "Total Events" },
             ].map((stat) => (
-              <div key={stat.label} className="glass rounded-lg p-5 text-center">
+              <div key={stat.label} className="panel rounded-lg p-5 text-center">
                 <p className="text-3xl font-bold text-white">
                   {stat.value.toLocaleString()}
                 </p>
@@ -375,21 +375,21 @@ export default function AdminDashboard() {
 
         {/* Analytics Summary Row */}
         {analyticsSummary && (
-          <div className="mb-8 glass rounded-xl p-6">
+          <div className="mb-8 panel rounded-xl p-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">
+              <h2 className="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                 Revenue Snapshot (7d)
               </h2>
               <Link
                 href="/admin/analytics"
-                className="text-xs font-medium text-brand-red hover:text-brand-red/80 transition-colors"
+                className="text-xs font-medium text-red hover:text-red/80 transition-colors"
               >
                 View Analytics &rarr;
               </Link>
             </div>
             <div className="flex items-center gap-8">
               <div>
-                <p className="text-2xl font-bold text-brand-gold">
+                <p className="text-2xl font-bold text-gold">
                   ${analyticsSummary.revenue.total.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
                 <p className={"text-xs font-medium " + (analyticsSummary.revenue.change >= 0 ? "text-green-400" : "text-red-400")}>
@@ -426,7 +426,7 @@ export default function AdminDashboard() {
             <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               Top Chatters
             </h2>
-            <div className="glass rounded-xl p-6">
+            <div className="panel rounded-xl p-6">
               {stats?.topChatters && stats.topChatters.length > 0 ? (
                 <div className="space-y-3">
                   {stats.topChatters.map((chatter, i) => (
@@ -435,7 +435,7 @@ export default function AdminDashboard() {
                       className="flex items-center justify-between"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-red/20 text-xs font-bold text-brand-red">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-red/20 text-xs font-bold text-red">
                           {i + 1}
                         </span>
                         <span className="text-white">{chatter.username}</span>
@@ -457,7 +457,7 @@ export default function AdminDashboard() {
             <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               Recent Chat
             </h2>
-            <div className="glass rounded-xl p-6 max-h-80 overflow-y-auto">
+            <div className="panel rounded-xl p-6 max-h-80 overflow-y-auto">
               {recentChat.length > 0 ? (
                 <div className="space-y-2">
                   {recentChat.map((msg, i) => (
@@ -466,7 +466,7 @@ export default function AdminDashboard() {
                         {PLATFORM_ICONS[msg.platform] || "⚪"}
                       </span>
                       <div className="min-w-0">
-                        <span className="font-medium text-brand-gold">
+                        <span className="font-medium text-gold">
                           {msg.user}
                         </span>
                         <span className="ml-2 text-xs text-muted">
@@ -492,7 +492,7 @@ export default function AdminDashboard() {
             <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
               Messages by Platform
             </h2>
-            <div className="glass rounded-xl p-6">
+            <div className="panel rounded-xl p-6">
               <div className="space-y-3">
                 {stats.platformBreakdown.map((entry) => {
                   const max = Math.max(
@@ -510,7 +510,7 @@ export default function AdminDashboard() {
                           {entry.count}
                         </span>
                       </div>
-                      <div className="h-2 w-full overflow-hidden rounded-full bg-white/5">
+                      <div className="h-2 w-full overflow-hidden rounded-full bg-surface">
                         <div
                           className="h-full rounded-full bg-gradient-to-r from-brand-red to-brand-gold"
                           style={{ width: pct + "%" }}
@@ -527,10 +527,10 @@ export default function AdminDashboard() {
         {/* Discord Server Info */}
         {discordInfo && (
           <div className="mb-8">
-            <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">
+            <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-red">
               Discord Server
             </h2>
-            <div className="glass rounded-xl p-6">
+            <div className="panel rounded-xl p-6">
               <div className="flex items-center gap-4">
                 {discordInfo.icon && (
                   <img
@@ -554,26 +554,26 @@ export default function AdminDashboard() {
         )}
 
         {/* Quick Actions */}
-        <div className="border-t border-white/5 pt-8">
+        <div className="border-t border-[var(--color-border)] pt-8">
           <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-muted">
             Quick Actions
           </h2>
           <div className="flex flex-wrap gap-3">
             <Link
               href="/connect"
-              className="rounded-sm border border-brand-red/30 px-5 py-2.5 text-sm font-medium text-brand-red transition-colors hover:bg-brand-red/10"
+              className="rounded-sm border border-brand-red/30 px-5 py-2.5 text-sm font-medium text-red transition-colors hover:bg-red/10"
             >
               Connect Platforms
             </Link>
             <Link
               href="/watch"
-              className="rounded-sm border border-white/10 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/5"
+              className="rounded-sm border border-[var(--color-border)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-surface"
             >
               View Stream
             </Link>
             <Link
               href="/shop"
-              className="rounded-sm border border-white/10 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/5"
+              className="rounded-sm border border-[var(--color-border)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-surface"
             >
               Manage Shop
             </Link>
@@ -581,7 +581,7 @@ export default function AdminDashboard() {
               href="https://discord.gg/prozillihq"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-sm border border-white/10 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/5"
+              className="rounded-sm border border-[var(--color-border)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-surface"
             >
               Discord
             </a>
@@ -589,7 +589,7 @@ export default function AdminDashboard() {
               href="https://panel.cybrancee.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-sm border border-white/10 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/5"
+              className="rounded-sm border border-[var(--color-border)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-surface"
             >
               Server Panel
             </a>

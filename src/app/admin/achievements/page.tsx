@@ -169,7 +169,7 @@ export default function AchievementsPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setConfig({ ...config, enabled: !config.enabled })}
-            className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-brand-red" : "bg-white/10"}`}
+            className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-red" : "bg-raised"}`}
           >
             <span className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${config.enabled ? "left-6" : "left-1"}`} />
           </button>
@@ -178,7 +178,7 @@ export default function AchievementsPage() {
       </div>
 
       {/* Achievement Notification Preview */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <div className="flex items-center gap-2 mb-4">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="text-gray-400">
             <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.64 0 8.577 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.64 0-8.577-3.007-9.963-7.178z" />
@@ -188,7 +188,7 @@ export default function AchievementsPage() {
           <span className="text-xs text-gray-500 ml-1">How achievement announcements appear</span>
         </div>
         <div className="flex justify-center">
-          <div className="glass glow-border w-full max-w-md rounded-xl p-4" style={{ boxShadow: "0 0 30px rgba(145, 0, 0, 0.15), inset 0 0 30px rgba(145, 0, 0, 0.03)" }}>
+          <div className="panel glow-border w-full max-w-md rounded-xl p-4" style={{ boxShadow: "0 0 30px rgba(145, 0, 0, 0.15), inset 0 0 30px rgba(145, 0, 0, 0.03)" }}>
             <div className="flex items-center gap-4">
               {/* Trophy Icon */}
               <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-amber-500/15" style={{ boxShadow: "0 0 20px rgba(245, 158, 11, 0.15)" }}>
@@ -218,7 +218,7 @@ export default function AchievementsPage() {
                     <span className="text-[10px] text-gray-500">Progress</span>
                     <span className="text-[10px] text-gray-500">{config.milestones[0]?.threshold || 1}/{config.milestones[0]?.threshold || 1}</span>
                   </div>
-                  <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
+                  <div className="h-1.5 w-full rounded-full bg-raised overflow-hidden">
                     <div className="h-full rounded-full bg-gradient-to-r from-amber-500 to-amber-400" style={{ width: "100%" }} />
                   </div>
                 </div>
@@ -230,19 +230,19 @@ export default function AchievementsPage() {
 
       {/* Section Divider */}
       <div className="flex items-center gap-3">
-        <div className="h-px flex-1 bg-white/5" />
+        <div className="h-px flex-1 bg-surface" />
         <span className="text-xs font-medium uppercase tracking-wider text-gray-600">Configuration</span>
-        <div className="h-px flex-1 bg-white/5" />
+        <div className="h-px flex-1 bg-surface" />
       </div>
 
       {/* Announce Channel */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-4">Announce Channel</h3>
         <p className="text-xs text-gray-500 mb-3">
           Where achievement unlock announcements will be posted
         </p>
         {channelsLoading ? (
-          <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+          <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
             Loading channels...
           </div>
         ) : channelsError ? (
@@ -253,7 +253,7 @@ export default function AchievementsPage() {
           <select
             value={config.channelId}
             onChange={(e) => setConfig({ ...config, channelId: e.target.value })}
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+            className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
           >
             <option value="">Select a channel</option>
             {channels.map((channel) => (
@@ -266,7 +266,7 @@ export default function AchievementsPage() {
       </div>
 
       {/* Milestones Table */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-sm font-semibold text-white">Milestones</h3>
@@ -276,7 +276,7 @@ export default function AchievementsPage() {
           </div>
           <button
             onClick={addMilestone}
-            className="flex items-center gap-1.5 rounded-lg bg-white/5 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-white/10"
+            className="flex items-center gap-1.5 rounded-lg bg-surface px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-raised"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -305,12 +305,12 @@ export default function AchievementsPage() {
             {config.milestones.map((milestone, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 sm:grid-cols-12 gap-3 rounded-lg bg-white/5 p-3 items-center transition-colors hover:bg-white/[0.07]"
+                className="grid grid-cols-1 sm:grid-cols-12 gap-3 rounded-lg bg-surface p-3 items-center transition-colors hover:bg-white/[0.07]"
                 style={{ borderLeft: `3px solid ${TRIGGER_COLORS[milestone.trigger] || "#888"}` }}
               >
                 {/* Trophy Icon */}
                 <div className="hidden sm:flex sm:col-span-1 justify-center">
-                  <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${TRIGGER_BG[milestone.trigger] || "bg-white/10"}`}>
+                  <div className={`flex h-9 w-9 items-center justify-center rounded-lg ${TRIGGER_BG[milestone.trigger] || "bg-raised"}`}>
                     <TrophyIcon trigger={milestone.trigger} size={18} />
                   </div>
                 </div>
@@ -319,7 +319,7 @@ export default function AchievementsPage() {
                 <div className="sm:col-span-3">
                   <label className="block text-xs font-medium text-gray-500 mb-1 sm:hidden">Name</label>
                   <div className="flex items-center gap-2 sm:block">
-                    <div className={`flex sm:hidden h-8 w-8 items-center justify-center rounded-lg ${TRIGGER_BG[milestone.trigger] || "bg-white/10"}`}>
+                    <div className={`flex sm:hidden h-8 w-8 items-center justify-center rounded-lg ${TRIGGER_BG[milestone.trigger] || "bg-raised"}`}>
                       <TrophyIcon trigger={milestone.trigger} size={16} />
                     </div>
                     <input
@@ -327,7 +327,7 @@ export default function AchievementsPage() {
                       value={milestone.name}
                       onChange={(e) => updateMilestone(index, "name", e.target.value)}
                       placeholder="Achievement name"
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                     />
                   </div>
                 </div>
@@ -338,7 +338,7 @@ export default function AchievementsPage() {
                   <select
                     value={milestone.trigger}
                     onChange={(e) => updateMilestone(index, "trigger", e.target.value)}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                   >
                     {TRIGGER_TYPES.map((t) => (
                       <option key={t.value} value={t.value}>
@@ -356,7 +356,7 @@ export default function AchievementsPage() {
                     min={1}
                     value={milestone.threshold}
                     onChange={(e) => updateMilestone(index, "threshold", parseInt(e.target.value) || 1)}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                   />
                 </div>
 
@@ -369,7 +369,7 @@ export default function AchievementsPage() {
                       value={milestone.reward}
                       onChange={(e) => updateMilestone(index, "reward", e.target.value)}
                       placeholder="Reward description"
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                     />
                     {milestone.reward && (
                       <span
@@ -413,7 +413,7 @@ export default function AchievementsPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

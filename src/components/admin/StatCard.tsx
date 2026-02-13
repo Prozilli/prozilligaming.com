@@ -10,7 +10,7 @@ interface StatCardProps {
 
 export default function StatCard({ label, value, change, prefix, color = "text-white" }: StatCardProps) {
   return (
-    <div className="glass rounded-lg p-5 text-center">
+    <div className="panel rounded-lg p-5 text-center">
       <p className={"text-3xl font-bold " + color}>
         {prefix}{typeof value === "number" ? value.toLocaleString() : value}
       </p>

@@ -124,11 +124,11 @@ export default function ProductModal({
       />
 
       {/* Modal */}
-      <div className="relative z-10 w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto rounded-none sm:rounded-lg bg-brand-darker border-0 sm:border border-white/10 shadow-2xl">
+      <div className="relative z-10 w-full max-w-4xl max-h-[85vh] sm:max-h-[90vh] overflow-y-auto rounded-none sm:rounded-lg bg-raised border-0 sm:border border-[var(--color-border)] shadow-2xl">
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute right-3 top-3 sm:right-4 sm:top-4 z-20 rounded-full bg-white/10 p-2 text-white transition-colors hover:bg-white/20"
+          className="absolute right-3 top-3 sm:right-4 sm:top-4 z-20 rounded-full bg-raised p-2 text-white transition-colors hover:bg-white/20"
           aria-label="Close"
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -157,7 +157,7 @@ export default function ProductModal({
               )}
               {isOutOfStock && (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/50">
-                  <span className="rounded-sm bg-white/10 px-4 py-2 text-sm font-medium text-white">
+                  <span className="rounded-lg bg-raised px-4 py-2 text-sm font-medium text-white">
                     Sold Out
                   </span>
                 </div>
@@ -173,7 +173,7 @@ export default function ProductModal({
                     onClick={() => setCurrentImageIndex(idx)}
                     className={`relative h-14 w-14 sm:h-16 sm:w-16 flex-shrink-0 overflow-hidden rounded-md border-2 transition-colors ${
                       idx === currentImageIndex
-                        ? "border-brand-red"
+                        ? "border-red"
                         : "border-transparent hover:border-white/30"
                     }`}
                   >
@@ -186,7 +186,7 @@ export default function ProductModal({
                         sizes="64px"
                       />
                     ) : (
-                      <div className="h-full w-full bg-white/5" />
+                      <div className="h-full w-full bg-surface" />
                     )}
                   </button>
                 ))}
@@ -197,7 +197,7 @@ export default function ProductModal({
           {/* Product Details */}
           <div className="flex flex-col">
             {/* Category */}
-            <span className="text-xs font-medium uppercase tracking-wider text-brand-red">
+            <span className="text-xs font-medium uppercase tracking-wider text-red">
               {product.category}
             </span>
 
@@ -208,7 +208,7 @@ export default function ProductModal({
 
             {/* Price */}
             <div className="mt-3 sm:mt-4 flex flex-wrap items-center gap-2 sm:gap-3">
-              <span className="text-xl sm:text-2xl font-bold text-brand-gold">
+              <span className="text-xl sm:text-2xl font-bold text-gold">
                 {formatPrice(displayPrice)}
               </span>
               {displayComparePrice && (
@@ -217,7 +217,7 @@ export default function ProductModal({
                 </span>
               )}
               {displayComparePrice && (
-                <span className="rounded-sm bg-brand-red px-2 py-1 text-xs font-semibold text-white">
+                <span className="rounded-lg bg-red px-2 py-1 text-xs font-semibold text-white">
                   SALE
                 </span>
               )}
@@ -233,7 +233,7 @@ export default function ProductModal({
               {/* Color Selector */}
               {colors.length > 0 && (
                 <div>
-                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-brand-silver">
+                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-muted">
                     Color: {selectedColor}
                   </label>
                   <div className="flex flex-wrap gap-2 sm:gap-2">
@@ -250,8 +250,8 @@ export default function ProductModal({
                           onClick={() => setSelectedColor(color)}
                           className={`relative h-9 w-9 sm:h-10 sm:w-10 rounded-full border-2 transition-all ${
                             isSelected
-                              ? "border-brand-red ring-2 ring-brand-red/30"
-                              : "border-white/20 hover:border-white/40"
+                              ? "border-red ring-2 ring-red/30"
+                              : "border-[var(--color-border)] hover:border-white/40"
                           }`}
                           style={{
                             backgroundColor: getColorHex(swatch),
@@ -280,7 +280,7 @@ export default function ProductModal({
               {/* Size Selector */}
               {sizes.length > 0 && (
                 <div>
-                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-brand-silver">
+                  <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-muted">
                     Size
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -298,12 +298,12 @@ export default function ProductModal({
                           key={size}
                           onClick={() => setSelectedSize(size)}
                           disabled={!isAvailable}
-                          className={`min-w-[3rem] rounded-sm border px-3 py-2 text-sm font-medium transition-all ${
+                          className={`min-w-[3rem] rounded-lg border px-3 py-2 text-sm font-medium transition-all ${
                             isSelected
-                              ? "border-brand-red bg-brand-red text-white"
+                              ? "border-red bg-red text-white"
                               : isAvailable
-                              ? "border-white/20 text-white hover:border-brand-red/50"
-                              : "cursor-not-allowed border-white/10 text-white/30 line-through"
+                              ? "border-[var(--color-border)] text-white hover:border-red/50"
+                              : "cursor-not-allowed border-[var(--color-border)] text-white/30 line-through"
                           }`}
                         >
                           {size}
@@ -316,13 +316,13 @@ export default function ProductModal({
 
               {/* Quantity Selector */}
               <div>
-                <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-brand-silver">
+                <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-muted">
                   Quantity
                 </label>
                 <div className="flex items-center gap-3">
                   <button
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                    className="flex h-10 w-10 items-center justify-center rounded-sm border border-white/20 text-white transition-colors hover:border-white/40"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--color-border)] text-white transition-colors hover:border-white/40"
                     disabled={quantity <= 1}
                     aria-label="Decrease quantity"
                   >
@@ -335,7 +335,7 @@ export default function ProductModal({
                   </span>
                   <button
                     onClick={() => setQuantity((q) => Math.min(10, q + 1))}
-                    className="flex h-10 w-10 items-center justify-center rounded-sm border border-white/20 text-white transition-colors hover:border-white/40"
+                    className="flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--color-border)] text-white transition-colors hover:border-white/40"
                     disabled={quantity >= 10}
                     aria-label="Increase quantity"
                   >
@@ -352,10 +352,10 @@ export default function ProductModal({
               <button
                 onClick={handleAddToCart}
                 disabled={isOutOfStock || !selectedVariant}
-                className={`w-full rounded-sm px-6 py-3.5 sm:py-4 text-sm font-semibold uppercase tracking-wider transition-all ${
+                className={`w-full rounded-lg px-6 py-3.5 sm:py-4 text-sm font-semibold uppercase tracking-wider transition-all ${
                   isOutOfStock || !selectedVariant
-                    ? "cursor-not-allowed bg-white/10 text-white/40"
-                    : "bg-brand-red text-white hover:bg-brand-red/80 active:scale-[0.98]"
+                    ? "cursor-not-allowed bg-raised text-white/40"
+                    : "bg-red text-white hover:bg-red/80 active:scale-[0.98]"
                 }`}
               >
                 {isOutOfStock ? "Sold Out" : "Add to Cart"}

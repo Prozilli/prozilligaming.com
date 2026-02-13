@@ -179,7 +179,7 @@ export default function YouTubeAlertsPage() {
             className={`relative rounded-xl border p-4 text-left transition-all ${
               activeAlertType === type.id
                 ? "border-[#FF0000] bg-[#FF0000]/10"
-                : "border-white/5 bg-[#161b22] hover:border-white/10"
+                : "border-[var(--color-border)] bg-surface hover:border-[var(--color-border)]"
             }`}
           >
             <span className="text-2xl">{type.icon}</span>
@@ -198,7 +198,7 @@ export default function YouTubeAlertsPage() {
         {/* Settings */}
         <div className="space-y-6">
           {/* Enable Toggle */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-semibold text-white">
@@ -223,7 +223,7 @@ export default function YouTubeAlertsPage() {
               <button
                 onClick={() => updateAlert("enabled", !currentAlert.enabled)}
                 className={`relative h-6 w-11 rounded-full transition-colors ${
-                  currentAlert.enabled ? "bg-[#FF0000]" : "bg-white/10"
+                  currentAlert.enabled ? "bg-[#FF0000]" : "bg-raised"
                 }`}
               >
                 <span
@@ -238,7 +238,7 @@ export default function YouTubeAlertsPage() {
           {currentAlert.enabled && (
             <>
               {/* Channel & Role */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <h3 className="text-sm font-semibold text-white mb-4">
                   Destination
                 </h3>
@@ -248,14 +248,14 @@ export default function YouTubeAlertsPage() {
                       Channel
                     </label>
                     {channelsLoading ? (
-                      <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                      <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                         Loading channels...
                       </div>
                     ) : (
                       <select
                         value={currentAlert.channelId}
                         onChange={(e) => updateAlert("channelId", e.target.value)}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none"
                       >
                         <option value="">Select a channel</option>
                         {channels.map((channel) => (
@@ -271,7 +271,7 @@ export default function YouTubeAlertsPage() {
                       Mention Role (Optional)
                     </label>
                     {rolesLoading ? (
-                      <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                      <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                         Loading roles...
                       </div>
                     ) : (
@@ -280,7 +280,7 @@ export default function YouTubeAlertsPage() {
                         onChange={(e) =>
                           updateAlert("mentionRoleId", e.target.value)
                         }
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none"
                       >
                         <option value="">No mention</option>
                         <option value="everyone">@everyone</option>
@@ -297,7 +297,7 @@ export default function YouTubeAlertsPage() {
               </div>
 
               {/* Message Settings */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-sm font-semibold text-white">
                     Embed Message
@@ -307,7 +307,7 @@ export default function YouTubeAlertsPage() {
                       updateAlert("embedEnabled", !currentAlert.embedEnabled)
                     }
                     className={`relative h-6 w-11 rounded-full transition-colors ${
-                      currentAlert.embedEnabled ? "bg-[#FF0000]" : "bg-white/10"
+                      currentAlert.embedEnabled ? "bg-[#FF0000]" : "bg-raised"
                     }`}
                   >
                     <span
@@ -339,7 +339,7 @@ export default function YouTubeAlertsPage() {
                           onChange={(e) =>
                             updateAlert("embedColor", e.target.value)
                           }
-                          className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none"
+                          className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none"
                         />
                       </div>
                     </div>
@@ -351,7 +351,7 @@ export default function YouTubeAlertsPage() {
                         type="text"
                         value={currentAlert.title}
                         onChange={(e) => updateAlert("title", e.target.value)}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none"
                       />
                     </div>
                     <div>
@@ -364,7 +364,7 @@ export default function YouTubeAlertsPage() {
                           updateAlert("description", e.target.value)
                         }
                         rows={4}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none resize-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF0000] focus:outline-none resize-none"
                       />
                     </div>
                     <div className="flex flex-wrap gap-4">
@@ -375,7 +375,7 @@ export default function YouTubeAlertsPage() {
                           onChange={(e) =>
                             updateAlert("showThumbnail", e.target.checked)
                           }
-                          className="h-4 w-4 rounded border-white/20 bg-white/5 text-[#FF0000] focus:ring-[#FF0000]"
+                          className="h-4 w-4 rounded border-white/20 bg-surface text-[#FF0000] focus:ring-[#FF0000]"
                         />
                         <span className="text-sm text-gray-400">
                           Show Thumbnail
@@ -388,7 +388,7 @@ export default function YouTubeAlertsPage() {
                           onChange={(e) =>
                             updateAlert("showViewers", e.target.checked)
                           }
-                          className="h-4 w-4 rounded border-white/20 bg-white/5 text-[#FF0000] focus:ring-[#FF0000]"
+                          className="h-4 w-4 rounded border-white/20 bg-surface text-[#FF0000] focus:ring-[#FF0000]"
                         />
                         <span className="text-sm text-gray-400">
                           Show Viewer Count
@@ -400,7 +400,7 @@ export default function YouTubeAlertsPage() {
               </div>
 
               {/* Variables */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <h3 className="text-sm font-semibold text-white mb-3">
                   Available Variables
                 </h3>
@@ -450,7 +450,7 @@ export default function YouTubeAlertsPage() {
         {/* Preview */}
         <div className="space-y-4">
           <h3 className="text-sm font-semibold text-white">Preview</h3>
-          <div className="rounded-xl border border-white/5 bg-[#36393f] p-4">
+          <div className="rounded-xl border border-[var(--color-border)] bg-[#36393f] p-4">
             <div className="flex gap-4">
               <div className="h-10 w-10 rounded-full bg-[#5865F2] flex items-center justify-center text-white font-bold text-sm shrink-0">
                 P

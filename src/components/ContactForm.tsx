@@ -30,7 +30,7 @@ export default function ContactForm() {
 
   if (sent) {
     return (
-      <div className="glass glow-border rounded-lg p-8 text-center">
+      <div className="panel rounded-lg p-8 text-center">
         <div className="mb-4 text-4xl">&#9993;</div>
         <h3 className="text-xl font-bold text-white">Email Client Opened</h3>
         <p className="mt-3 text-sm text-muted">
@@ -38,7 +38,7 @@ export default function ContactForm() {
           If it didn&apos;t, you can email us directly at{" "}
           <a
             href="mailto:business@prozilli.com"
-            className="text-brand-gold transition-colors hover:text-white"
+            className="text-gold transition-colors hover:text-white"
           >
             business@prozilli.com
           </a>
@@ -46,7 +46,7 @@ export default function ContactForm() {
         <button
           type="button"
           onClick={() => setSent(false)}
-          className="mt-6 text-sm font-medium text-brand-gold transition-colors hover:text-white"
+          className="mt-6 text-sm font-medium text-gold transition-colors hover:text-white"
         >
           Send another message
         </button>
@@ -55,7 +55,7 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="glass glow-border rounded-lg p-8">
+    <div className="panel rounded-lg p-8">
       <h2 className="text-xl font-bold tracking-wide text-white">
         Send a Message
       </h2>
@@ -67,7 +67,7 @@ export default function ContactForm() {
         <div>
           <label
             htmlFor="contact-name"
-            className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-brand-silver"
+            className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-muted"
           >
             Name
           </label>
@@ -77,13 +77,13 @@ export default function ContactForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Your name"
-            className="w-full rounded-md border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-brand-red/50"
+            className="w-full rounded-md border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-muted outline-none transition-colors focus:border-red/50"
           />
         </div>
         <div>
           <label
             htmlFor="contact-email"
-            className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-brand-silver"
+            className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-muted"
           >
             Email
           </label>
@@ -93,13 +93,13 @@ export default function ContactForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="your@email.com"
-            className="w-full rounded-md border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-brand-red/50"
+            className="w-full rounded-md border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-muted outline-none transition-colors focus:border-red/50"
           />
         </div>
         <div>
           <label
             htmlFor="contact-subject"
-            className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-brand-silver"
+            className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-muted"
           >
             Topic
           </label>
@@ -107,7 +107,7 @@ export default function ContactForm() {
             id="contact-subject"
             value={subject}
             onChange={(e) => setSubject(e.target.value)}
-            className="w-full rounded-md border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white/60 outline-none transition-colors focus:border-brand-red/50"
+            className="w-full rounded-md border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-muted outline-none transition-colors focus:border-red/50"
           >
             <option value="">Select a topic</option>
             {Object.entries(SUBJECTS).map(([value, label]) => (
@@ -120,7 +120,7 @@ export default function ContactForm() {
         <div>
           <label
             htmlFor="contact-message"
-            className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-brand-silver"
+            className="mb-1.5 block text-xs font-semibold uppercase tracking-widest text-muted"
           >
             Message
           </label>
@@ -130,18 +130,18 @@ export default function ContactForm() {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="What's on your mind?"
-            className="w-full resize-none rounded-md border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-white placeholder-white/30 outline-none transition-colors focus:border-brand-red/50"
+            className="w-full resize-none rounded-md border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-muted outline-none transition-colors focus:border-red/50"
           />
         </div>
         <button
           type="button"
           onClick={handleSubmit}
           disabled={!isValid}
-          className="w-full rounded-md bg-brand-red px-6 py-2.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-brand-red/80 disabled:cursor-not-allowed disabled:opacity-40"
+          className="w-full rounded-md bg-red px-6 py-2.5 text-sm font-semibold tracking-wide text-white transition-colors hover:bg-red/80 disabled:cursor-not-allowed disabled:opacity-40"
         >
           Send Message
         </button>
-        <p className="text-center text-xs text-white/30">
+        <p className="text-center text-xs text-dim">
           Opens your email client with the message pre-filled
         </p>
       </div>

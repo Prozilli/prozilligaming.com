@@ -72,12 +72,12 @@ export default function WatchHero() {
       <div className="relative z-10">
         {/* Live status badge */}
         {isLive ? (
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-red/30 bg-brand-red/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-brand-red">
-            <span className="animate-live-pulse h-2 w-2 rounded-full bg-brand-red" />
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-red/30 bg-brand-red/10 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-red">
+            <span className="animate-live-pulse h-2 w-2 rounded-full bg-red" />
             Live Now
           </span>
         ) : (
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-muted">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-surface px-4 py-1.5 text-xs font-medium uppercase tracking-wider text-muted">
             <span className="h-2 w-2 rounded-full bg-gray-500" />
             {nextStream
               ? `Next stream ${formatNextStream(nextStream.startTime)}`
@@ -86,7 +86,7 @@ export default function WatchHero() {
         )}
 
         <h1 className="animate-fade-in-up text-glow-red text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-          WATCH <span className="text-brand-red">LIVE</span>
+          WATCH <span className="text-red">LIVE</span>
         </h1>
 
         {isLive && live?.gameName ? (
@@ -95,12 +95,12 @@ export default function WatchHero() {
               {live.title}
             </p>
             <div className="mt-2 flex items-center justify-center gap-4 text-xs text-muted">
-              <span className="text-brand-gold">{live.gameName}</span>
+              <span className="text-gold">{live.gameName}</span>
               {live.viewerCount !== undefined && (
                 <>
                   <span className="text-white/20">|</span>
                   <span className="flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-brand-red" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-red" />
                     {live.viewerCount.toLocaleString()} viewers
                   </span>
                 </>

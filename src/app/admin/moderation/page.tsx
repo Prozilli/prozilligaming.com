@@ -236,7 +236,7 @@ export default function ModerationPage() {
         <button
           onClick={() => toggleFilter("enabled")}
           className={`relative h-7 w-12 rounded-full transition-colors ${
-            config.enabled ? "bg-green-500" : "bg-white/10"
+            config.enabled ? "bg-green-500" : "bg-raised"
           }`}
         >
           <span
@@ -254,7 +254,7 @@ export default function ModerationPage() {
           {FILTER_CARDS.map((filter) => (
             <div
               key={filter.key}
-              className="flex items-center justify-between rounded-xl border border-white/5 bg-[#161b22] p-6"
+              className="flex items-center justify-between rounded-xl border border-[var(--color-border)] bg-surface p-6"
             >
               <div className="mr-4">
                 <p className="text-sm font-medium text-white">{filter.title}</p>
@@ -263,7 +263,7 @@ export default function ModerationPage() {
               <button
                 onClick={() => toggleFilter(filter.key)}
                 className={`relative h-6 w-11 shrink-0 rounded-full transition-colors ${
-                  config[filter.key] ? "bg-brand-red" : "bg-white/10"
+                  config[filter.key] ? "bg-red" : "bg-raised"
                 }`}
               >
                 <span
@@ -278,7 +278,7 @@ export default function ModerationPage() {
       </div>
 
       {/* Banned Words */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
         <h2 className="mb-4 text-sm font-semibold text-white">Banned Words</h2>
         <div className="flex gap-2">
           <input
@@ -287,11 +287,11 @@ export default function ModerationPage() {
             onChange={(e) => setNewWord(e.target.value)}
             onKeyDown={handleWordKeyDown}
             placeholder="Add a banned word..."
-            className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+            className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
           />
           <button
             onClick={addBannedWord}
-            className="rounded-lg bg-brand-red px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 transition-colors"
+            className="rounded-lg bg-red px-5 py-2.5 text-sm font-medium text-white hover:bg-red/90 transition-colors"
           >
             Add
           </button>
@@ -333,7 +333,7 @@ export default function ModerationPage() {
       </div>
 
       {/* Allowed Domains */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
         <h2 className="mb-4 text-sm font-semibold text-white">Allowed Domains</h2>
         <p className="mb-3 text-xs text-gray-500">
           When the Link Filter is enabled, only links from these domains will be permitted.
@@ -345,11 +345,11 @@ export default function ModerationPage() {
             onChange={(e) => setNewDomain(e.target.value)}
             onKeyDown={handleDomainKeyDown}
             placeholder="e.g. youtube.com"
-            className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+            className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
           />
           <button
             onClick={addAllowedDomain}
-            className="rounded-lg bg-brand-red px-5 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 transition-colors"
+            className="rounded-lg bg-red px-5 py-2.5 text-sm font-medium text-white hover:bg-red/90 transition-colors"
           >
             Add
           </button>
@@ -359,7 +359,7 @@ export default function ModerationPage() {
             {config.allowedDomains.map((domain) => (
               <span
                 key={domain}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-brand-gold/10 px-3 py-1.5 text-sm text-brand-gold"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-brand-gold/10 px-3 py-1.5 text-sm text-gold"
               >
                 {domain}
                 <button
@@ -391,7 +391,7 @@ export default function ModerationPage() {
       </div>
 
       {/* Exempt Platforms */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
         <h2 className="mb-2 text-sm font-semibold text-white">Exempt Platforms</h2>
         <p className="mb-4 text-xs text-gray-500">
           Messages from these platforms will not be moderated.
@@ -402,12 +402,12 @@ export default function ModerationPage() {
             return (
               <label
                 key={platform.id}
-                className="flex cursor-pointer items-center gap-3 rounded-lg bg-white/5 px-4 py-3 transition-colors hover:bg-white/10"
+                className="flex cursor-pointer items-center gap-3 rounded-lg bg-surface px-4 py-3 transition-colors hover:bg-raised"
               >
                 <div
                   className={`flex h-5 w-5 shrink-0 items-center justify-center rounded border transition-colors ${
                     isExempt
-                      ? "border-brand-red bg-brand-red"
+                      ? "border-brand-red bg-red"
                       : "border-white/20 bg-transparent"
                   }`}
                   onClick={() => toggleExemptPlatform(platform.id)}
@@ -446,7 +446,7 @@ export default function ModerationPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-8 py-3 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

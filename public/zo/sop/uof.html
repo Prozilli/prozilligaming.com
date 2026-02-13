@@ -1,0 +1,1820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Use of Force Policy v1.0 - ZO Syndicate RP</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* --- HEADER BANNER --- */
+  .header-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+    border-bottom: 3px solid #a30000;
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(163,0,0,0.03) 2px,
+      rgba(163,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #c4a265;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .header-server {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 16px;
+    color: #a30000;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #777;
+  }
+  .header-meta span { white-space: nowrap; }
+  .header-meta strong { color: #999; }
+  .badge-classified {
+    display: inline-block;
+    background: #a30000;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #c44;
+  }
+
+  /* --- MAIN CONTENT --- */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+  }
+
+  /* --- TABLE OF CONTENTS --- */
+  .toc {
+    background: #111;
+    border: 1px solid #222;
+    border-left: 4px solid #a30000;
+    padding: 24px 28px;
+    margin: 0 0 40px;
+  }
+  .toc h2 {
+    color: #a30000;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    margin-bottom: 5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #a30000; }
+
+  /* --- HEADINGS --- */
+  h1 {
+    color: #a30000;
+    border-bottom: 2px solid #a30000;
+    padding-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-top: 50px;
+  }
+  h2 {
+    color: #c44;
+    margin-top: 35px;
+    font-size: 18px;
+    border-bottom: 1px solid #1f1f1f;
+    padding-bottom: 6px;
+  }
+  h3 {
+    color: #ddd;
+    font-size: 15px;
+    margin-top: 22px;
+  }
+  h4 {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 16px;
+    font-weight: 600;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #222;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  th {
+    background: #141414;
+    color: #a30000;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  td { background: #0f0f0f; }
+  tr:hover td { background: #151010; }
+
+  /* --- CALLOUT BOXES --- */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .callout-critical {
+    background: #1f0a0a;
+    border: 1px solid #331111;
+    border-left: 4px solid #a30000;
+  }
+  .callout-warning {
+    background: #1f1a0a;
+    border: 1px solid #33290e;
+    border-left: 4px solid #c4a265;
+  }
+  .callout-info {
+    background: #0a0f1f;
+    border: 1px solid #0e1a33;
+    border-left: 4px solid #3366aa;
+  }
+  .callout-success {
+    background: #0a1f0a;
+    border: 1px solid #0e330e;
+    border-left: 4px solid #2a8a2a;
+  }
+  .callout-critical strong { color: #e44; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #6699cc; }
+  .callout-success strong { color: #4a4; }
+
+  /* --- MISC --- */
+  code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    border: 1px solid #222;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  blockquote {
+    border-left: 3px solid #a30000;
+    margin: 16px 0;
+    padding: 10px 18px;
+    background: #111;
+    color: #aaa;
+    font-style: italic;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 40px 0;
+  }
+  strong { color: #eee; }
+  a { color: #a30000; text-decoration: none; }
+  a:hover { color: #c44; text-decoration: underline; }
+
+  /* --- FOOTER --- */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 2px solid #a30000;
+    margin-top: 60px;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer .org { color: #c4a265; font-weight: 600; letter-spacing: 2px; }
+  .footer a { color: #666; }
+  .footer a:hover { color: #a30000; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 768px) {
+    .header-dept { font-size: 22px; }
+    .header-meta { gap: 12px; }
+    .toc ol { columns: 1; }
+    .content { padding: 20px 16px 40px; }
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================== HEADER ============================== -->
+<div class="header-banner">
+  <div class="header-org">PROZILLI ENTERTAINMENT</div>
+  <div class="header-server">ZO SYNDICATE RP</div>
+  <div class="badge-classified">LAW ENFORCEMENT</div>
+  <div class="header-dept">USE OF FORCE POLICY</div>
+  <div class="header-subtitle">STANDARD OPERATING PROCEDURES</div>
+  <div class="header-meta">
+    <span><strong>Version:</strong> 1.0</span>
+    <span><strong>Effective:</strong> February 2026</span>
+    <span><strong>Classification:</strong> RESTRICTED - LEO ONLY</span>
+    <span><strong>Authority:</strong> Chief of Police / Sheriff / Colonel</span>
+  </div>
+</div>
+
+<!-- ============================== CONTENT ============================== -->
+<div class="content">
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#purpose">Purpose &amp; Policy Statement</a></li>
+    <li><a href="#definitions">Definitions</a></li>
+    <li><a href="#continuum">Use of Force Continuum</a></li>
+    <li><a href="#deescalation">De-Escalation Techniques</a></li>
+    <li><a href="#verbal">Verbal Commands &amp; Warnings</a></li>
+    <li><a href="#physical">Physical Control Techniques</a></li>
+    <li><a href="#lesslethal">Less-Lethal Weapons</a></li>
+    <li><a href="#taser">Taser-Specific Procedures</a></li>
+    <li><a href="#lethal">Lethal Force Authorization</a></li>
+    <li><a href="#prohibited">Prohibited Uses of Force</a></li>
+    <li><a href="#intervene">Duty to Intervene</a></li>
+    <li><a href="#medical">Medical Attention Requirements</a></li>
+    <li><a href="#reporting">Reporting Requirements</a></li>
+    <li><a href="#investigation">Investigation &amp; Review Process</a></li>
+    <li><a href="#training">Training Requirements</a></li>
+    <li><a href="#special">Special Populations</a></li>
+    <li><a href="#crowd">Crowd Control &amp; Civil Disturbance</a></li>
+    <li><a href="#revisions">Revision History &amp; Amendments</a></li>
+  </ol>
+</div>
+
+<!-- ====================================================================== -->
+<!-- SECTION 1: PURPOSE & POLICY STATEMENT                                  -->
+<!-- ====================================================================== -->
+<h1 id="purpose">1. Purpose &amp; Policy Statement</h1>
+
+<h2>1.1 Purpose</h2>
+<p>This Use of Force Policy establishes the guidelines, standards, and procedures governing the application of force by all sworn law enforcement personnel within the ZO Syndicate RP jurisdiction. This policy applies equally to the <strong>Los Santos Police Department (LSPD)</strong>, the <strong>Blaine County Sheriff's Office (BCSO)</strong>, and the <strong>San Andreas State Police (SASP)</strong>.</p>
+
+<p>The purpose of this policy is to:</p>
+<ul>
+  <li>Provide clear, unambiguous guidance on when and how force may be used</li>
+  <li>Protect the constitutional rights of all civilians</li>
+  <li>Protect officers from unnecessary risk and liability</li>
+  <li>Establish accountability and transparency in all use of force incidents</li>
+  <li>Ensure public trust through consistent, lawful, and ethical policing</li>
+</ul>
+
+<h2>1.2 Policy Statement</h2>
+<div class="callout callout-critical">
+  <strong>CORE PRINCIPLE:</strong> The sanctity of human life shall be the foundation of all law enforcement actions. Officers shall use only the <strong>minimum force necessary</strong> to accomplish a lawful objective. De-escalation shall always be the first and preferred response to any situation.
+</div>
+
+<p>All sworn personnel are authorized to use reasonable force in the performance of their duties in accordance with the following principles:</p>
+
+<ol>
+  <li><strong>Sanctity of Life</strong> &mdash; Every person's life has value. Officers shall make every reasonable effort to preserve life, including the life of the subject.</li>
+  <li><strong>Minimum Force Necessary</strong> &mdash; Officers shall use only the level of force that is objectively reasonable and proportional to the threat presented.</li>
+  <li><strong>De-Escalation First</strong> &mdash; Before resorting to force, officers shall attempt to de-escalate the situation using verbal communication, tactical repositioning, time, distance, and other non-force options when safe and feasible to do so.</li>
+  <li><strong>Proportionality</strong> &mdash; The force used must be proportional to the threat or resistance encountered. Force shall never be used as punishment.</li>
+  <li><strong>Duty to Report</strong> &mdash; All uses of force shall be reported, documented, and reviewed without exception.</li>
+  <li><strong>Duty to Intervene</strong> &mdash; Officers have an affirmative duty to intervene when they observe another officer using excessive or unauthorized force.</li>
+</ol>
+
+<h2>1.3 Legal Standard</h2>
+<p>The legal standard for use of force is <strong>objective reasonableness</strong>, evaluated from the perspective of a reasonable officer on the scene at the time force was used. Factors to be considered include:</p>
+<ul>
+  <li>The severity of the crime at issue</li>
+  <li>Whether the subject poses an immediate threat to the safety of officers or others</li>
+  <li>Whether the subject is actively resisting arrest or attempting to evade arrest by flight</li>
+  <li>The totality of the circumstances known to the officer at the time</li>
+</ul>
+
+<h2>1.4 Applicability</h2>
+<table>
+  <tr>
+    <th>Department</th>
+    <th>Coverage</th>
+    <th>Authorizing Authority</th>
+  </tr>
+  <tr>
+    <td>LSPD</td>
+    <td>All sworn LSPD officers, including reserves and probationary</td>
+    <td>Chief of Police</td>
+  </tr>
+  <tr>
+    <td>BCSO</td>
+    <td>All sworn BCSO deputies, including reserves and probationary</td>
+    <td>Sheriff</td>
+  </tr>
+  <tr>
+    <td>SASP</td>
+    <td>All sworn SASP troopers, including cadets and probationary</td>
+    <td>Colonel</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 2: DEFINITIONS                                                 -->
+<!-- ====================================================================== -->
+<h1 id="definitions">2. Definitions</h1>
+
+<p>For the purposes of this policy, the following definitions apply:</p>
+
+<table>
+  <tr>
+    <th>Term</th>
+    <th>Definition</th>
+  </tr>
+  <tr>
+    <td><strong>Force</strong></td>
+    <td>Any physical action, technique, weapon deployment, or use of equipment by an officer against another person to compel compliance, overcome resistance, effect an arrest, prevent escape, or protect life. Includes any action beyond unresisted handcuffing.</td>
+  </tr>
+  <tr>
+    <td><strong>Deadly Force</strong></td>
+    <td>Any force that is likely to cause death or serious bodily harm. This includes, but is not limited to, the discharge of a firearm, intentional strikes to the head/neck/throat, and the use of a vehicle as a weapon against a person.</td>
+  </tr>
+  <tr>
+    <td><strong>Less-Lethal Force</strong></td>
+    <td>Force employed that is not intended or expected to cause death or serious bodily harm, though the risk of such outcomes cannot be entirely eliminated. Includes tasers, OC spray, batons, bean bag rounds, and approved physical control techniques.</td>
+  </tr>
+  <tr>
+    <td><strong>Passive Resistance</strong></td>
+    <td>Non-compliance without physical opposition. The subject does not follow verbal commands but does not physically resist the officer. Examples: going limp, refusing to move, locking arms.</td>
+  </tr>
+  <tr>
+    <td><strong>Active Resistance</strong></td>
+    <td>Physical actions by the subject to prevent the officer from gaining control. The subject is not attempting to harm the officer but is physically opposing arrest or control. Examples: pulling away, running, bracing against a surface.</td>
+  </tr>
+  <tr>
+    <td><strong>Aggressive Resistance</strong></td>
+    <td>The subject is physically attacking or attempting to attack an officer or another person. This constitutes an assault. Examples: punching, kicking, biting, advancing with clenched fists, using a weapon offensively.</td>
+  </tr>
+  <tr>
+    <td><strong>Lethal Threat</strong></td>
+    <td>A subject whose actions present an imminent danger of death or serious bodily harm to an officer or any other person. The subject has the means, opportunity, and apparent intent to cause death or great bodily injury. Examples: pointing a firearm, stabbing or slashing with a blade, vehicular assault.</td>
+  </tr>
+  <tr>
+    <td><strong>Imminent Threat</strong></td>
+    <td>A threat that is immediate, present, and real &mdash; not speculative or merely potential. The subject's actions at that moment in time pose a risk that force is necessary to prevent harm.</td>
+  </tr>
+  <tr>
+    <td><strong>Reasonable Officer Standard</strong></td>
+    <td>An objective standard evaluating what a trained, experienced officer would do under the same or similar circumstances, considering the totality of the situation, without the benefit of hindsight.</td>
+  </tr>
+  <tr>
+    <td><strong>De-Escalation</strong></td>
+    <td>Actions taken by an officer to reduce the intensity of a situation so that less force is needed or no force is needed. Includes verbal techniques, time, distance, positioning, and resource coordination.</td>
+  </tr>
+  <tr>
+    <td><strong>Serious Bodily Harm</strong></td>
+    <td>Injury that creates a substantial risk of death, causes permanent disfigurement, or results in long-term loss or impairment of any body part or organ function.</td>
+  </tr>
+  <tr>
+    <td><strong>Objectively Reasonable</strong></td>
+    <td>The amount of force that a reasonable and trained officer would use under the same or similar circumstances, based on the totality of the circumstances known at the time force was applied.</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 3: USE OF FORCE CONTINUUM                                      -->
+<!-- ====================================================================== -->
+<h1 id="continuum">3. Use of Force Continuum</h1>
+
+<h2>3.1 Overview</h2>
+<p>The Use of Force Continuum is a framework that guides officers in determining the appropriate level of force in response to a subject's behavior. The continuum is <strong>not rigid or linear</strong> &mdash; officers may escalate or de-escalate through levels as the situation changes. Officers shall always strive to use the <strong>lowest level of force</strong> that is effective and reasonable under the circumstances.</p>
+
+<div class="callout callout-info">
+  <strong>IMPORTANT:</strong> The continuum is a <em>guideline</em>, not a step-by-step requirement. Officers are not required to exhaust every lower level before escalating. The response must be objectively reasonable based on the totality of the circumstances at the moment force is applied.
+</div>
+
+<h2>3.2 Force Continuum Table</h2>
+<table>
+  <tr>
+    <th>Level</th>
+    <th>Officer Response</th>
+    <th>Subject Behavior</th>
+    <th>Description</th>
+    <th>Examples</th>
+  </tr>
+  <tr>
+    <td><strong>1</strong></td>
+    <td><strong>Officer Presence</strong></td>
+    <td>Cooperative / Compliant</td>
+    <td>The mere presence of an officer in uniform or marked vehicle. No force is used. Professional demeanor, visible authority, and calm confidence deter non-compliance.</td>
+    <td>Arriving on scene, standing at a traffic stop, positioning near a disturbance, visible patrol</td>
+  </tr>
+  <tr>
+    <td><strong>2</strong></td>
+    <td><strong>Verbal Commands</strong></td>
+    <td>Verbal Non-Compliance / Passive Resistance</td>
+    <td>The officer issues clear, direct verbal commands and warnings. Calm and authoritative tone is used first; commands may become more assertive as needed. Includes verbal warnings of consequences.</td>
+    <td>"Stop." "Show me your hands." "Step out of the vehicle." "If you do not comply, you will be arrested." "Taser, taser, taser!"</td>
+  </tr>
+  <tr>
+    <td><strong>3</strong></td>
+    <td><strong>Soft Hand Control</strong></td>
+    <td>Passive Resistance</td>
+    <td>Light physical contact to guide, direct, or control a subject who is passively resisting. These techniques are not intended to cause pain and carry minimal risk of injury.</td>
+    <td>Escort holds, wrist locks (low pressure), guiding a subject by the arm, joint manipulation (light), pressure point control (light)</td>
+  </tr>
+  <tr>
+    <td><strong>4</strong></td>
+    <td><strong>Hard Hand Control</strong></td>
+    <td>Active Resistance</td>
+    <td>Stronger physical techniques to overcome active resistance. These techniques may cause temporary pain or discomfort and carry a moderate risk of injury. Pain compliance techniques are included.</td>
+    <td>Takedowns, arm bars, wrist locks (high pressure), pressure points (forceful), knee strikes to large muscle groups, controlled tackles, pain compliance holds</td>
+  </tr>
+  <tr>
+    <td><strong>5</strong></td>
+    <td><strong>Less-Lethal Weapons</strong></td>
+    <td>Aggressive Resistance / Assaultive Behavior</td>
+    <td>Deployment of department-approved less-lethal weapons to stop aggressive resistance or assaultive behavior. These tools are designed to temporarily incapacitate without causing permanent injury, though injury risk exists.</td>
+    <td>Taser (probe mode or drive stun), OC spray (pepper spray), baton strikes (approved target areas), bean bag shotgun rounds, 40mm foam rounds</td>
+  </tr>
+  <tr>
+    <td><strong>6</strong></td>
+    <td><strong>Lethal Force</strong></td>
+    <td>Lethal Threat / Imminent Danger of Death or Serious Bodily Harm</td>
+    <td>Force that is likely to cause death or serious bodily harm. Authorized ONLY when the officer or another person faces an imminent threat of death or serious bodily injury and no lesser force option can reasonably address the threat.</td>
+    <td>Discharge of a firearm, intentional vehicle contact against an armed subject, any technique applied with intent to cause death or serious bodily harm</td>
+  </tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>ESCALATION &amp; DE-ESCALATION:</strong> Officers shall continuously reassess the situation and adjust their force response accordingly. When a subject's resistance decreases, the officer <strong>must</strong> de-escalate their response. When a subject's resistance increases, the officer <strong>may</strong> escalate to the appropriate level. Skipping levels is authorized when circumstances demand it.
+</div>
+
+<h2>3.3 Factors Influencing Force Level Selection</h2>
+<p>Officers shall consider the following factors when selecting an appropriate force response:</p>
+<ul>
+  <li><strong>Relative size and strength</strong> of the officer versus the subject</li>
+  <li><strong>Number of subjects</strong> versus number of officers present</li>
+  <li><strong>Known or suspected weapons</strong> possessed by the subject</li>
+  <li><strong>Subject's apparent mental state</strong> (intoxication, mental health crisis, altered state)</li>
+  <li><strong>Environmental factors</strong> (confined space, elevation, proximity to traffic, bystanders)</li>
+  <li><strong>Severity of the underlying offense</strong></li>
+  <li><strong>Subject's known history</strong> of violence (if known at the time)</li>
+  <li><strong>Proximity of potential weapons</strong> in the environment</li>
+  <li><strong>Availability of backup</strong> and time to wait for additional resources</li>
+  <li><strong>Potential for injury to bystanders</strong></li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 4: DE-ESCALATION TECHNIQUES                                    -->
+<!-- ====================================================================== -->
+<h1 id="deescalation">4. De-Escalation Techniques</h1>
+
+<h2>4.1 Mandate</h2>
+<div class="callout callout-critical">
+  <strong>MANDATORY:</strong> All officers shall attempt de-escalation techniques <strong>before</strong> resorting to force, whenever it is safe and feasible to do so. Failure to attempt de-escalation when it was reasonable and safe to do so may result in a finding that subsequent force was not justified.
+</div>
+
+<h2>4.2 Verbal Judo &amp; Communication</h2>
+<p>Verbal de-escalation is the primary and most effective tool available to officers. The following principles shall guide all officer-subject communication:</p>
+<ul>
+  <li><strong>Empathize:</strong> Acknowledge the subject's feelings and perspective. "I can see you're upset."</li>
+  <li><strong>Listen Actively:</strong> Allow the subject to speak. Do not interrupt unless safety requires it.</li>
+  <li><strong>Explain:</strong> Tell the subject what you are doing and why. Transparency reduces anxiety.</li>
+  <li><strong>Offer Options:</strong> Give the subject choices that lead to voluntary compliance. "You can step over here, or I can walk with you."</li>
+  <li><strong>Redirect:</strong> Guide the conversation away from confrontation and toward resolution.</li>
+  <li><strong>Maintain Calm Tone:</strong> Do not match the subject's volume or hostility. Speak in a controlled, even tone.</li>
+  <li><strong>Use First Names:</strong> When known, use the subject's name. Personalization reduces hostility.</li>
+  <li><strong>Avoid Ultimatums:</strong> Except when immediate compliance is required for safety, avoid language that corners the subject.</li>
+</ul>
+
+<h2>4.3 Tactical Repositioning</h2>
+<p>Officers may reposition themselves to create tactical advantage and reduce the need for force:</p>
+<ul>
+  <li><strong>Create Distance:</strong> Increase the physical space between the officer and the subject to allow more reaction time and reduce immediate threat.</li>
+  <li><strong>Use Cover:</strong> Position behind vehicles, walls, or other barriers to reduce personal risk while maintaining communication.</li>
+  <li><strong>Change Angles:</strong> Move laterally to avoid being in a direct line of threat and to create options.</li>
+  <li><strong>Control Exits:</strong> Position to prevent escape routes while avoiding cornering the subject (which can escalate desperation).</li>
+  <li><strong>Withdraw and Contain:</strong> When safe to do so, pull back from the immediate confrontation and establish a perimeter while maintaining communication.</li>
+</ul>
+
+<h2>4.4 Time, Distance &amp; Shielding</h2>
+<p>These three elements are the foundation of tactical de-escalation:</p>
+
+<table>
+  <tr>
+    <th>Element</th>
+    <th>Application</th>
+    <th>Benefit</th>
+  </tr>
+  <tr>
+    <td><strong>Time</strong></td>
+    <td>Slow the encounter down. Do not rush to a resolution. Allow the subject time to process commands, calm down, and make rational decisions.</td>
+    <td>Reduces emotional escalation; allows adrenaline to subside; creates opportunities for negotiation; allows backup to arrive.</td>
+  </tr>
+  <tr>
+    <td><strong>Distance</strong></td>
+    <td>Maintain a safe reactionary gap (minimum 21 feet from an edged weapon, more when feasible). Increase distance whenever possible.</td>
+    <td>Provides reaction time; reduces immediate threat level; creates space for less-lethal options; allows disengagement if needed.</td>
+  </tr>
+  <tr>
+    <td><strong>Shielding</strong></td>
+    <td>Use physical barriers (vehicles, walls, ballistic shields, furniture) between the officer and the subject.</td>
+    <td>Reduces risk to officer; allows continued communication from a position of safety; reduces the urgency to use force.</td>
+  </tr>
+</table>
+
+<h2>4.5 Crisis Intervention Techniques</h2>
+<p>Officers trained in Crisis Intervention (CIT) shall employ the following techniques when encountering subjects who appear to be in a mental health crisis, under the influence of substances, or in extreme emotional distress:</p>
+
+<ul>
+  <li><strong>Identify the Crisis:</strong> Recognize behavioral indicators (erratic behavior, self-harm statements, disorientation, extreme paranoia).</li>
+  <li><strong>Request CIT-Trained Officer:</strong> If not CIT-trained, request a CIT-trained officer to respond if time and circumstances permit.</li>
+  <li><strong>Establish Rapport:</strong> Introduce yourself by name. Speak calmly and slowly. Use simple, clear language.</li>
+  <li><strong>Avoid Escalation Triggers:</strong> Do not crowd the subject, do not use aggressive body language, do not issue rapid-fire commands.</li>
+  <li><strong>Determine Needs:</strong> Ask what the subject needs. Determine if there is an underlying issue (medication, fear, trauma).</li>
+  <li><strong>Coordinate EMS:</strong> If mental health crisis is identified, coordinate with EMS for medical/psychiatric evaluation transport.</li>
+  <li><strong>Negotiate &amp; Wait:</strong> Be prepared to extend the encounter beyond normal timeframes. Patience is the most effective de-escalation tool for crisis situations.</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>REMINDER:</strong> A subject in crisis is not necessarily a criminal. The primary objective is to resolve the situation safely for all parties. Arrest is not always the appropriate outcome. Consider voluntary transport for medical evaluation as an alternative.
+</div>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 5: VERBAL COMMANDS & WARNINGS                                  -->
+<!-- ====================================================================== -->
+<h1 id="verbal">5. Verbal Commands &amp; Warnings</h1>
+
+<h2>5.1 Standardized Verbal Commands</h2>
+<p>Officers shall use clear, concise, and standardized commands. All commands shall be issued in a controlled, authoritative tone. Commands shall be repeated if there is any indication the subject did not hear or understand them.</p>
+
+<table>
+  <tr>
+    <th>Situation</th>
+    <th>Standard Command</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Initial Contact</td>
+    <td>"Police! Stop where you are." / "Sheriff's Office, stop!"</td>
+    <td>Identify department first. Clear and loud.</td>
+  </tr>
+  <tr>
+    <td>Hands Visibility</td>
+    <td>"Let me see your hands! Hands up now!"</td>
+    <td>Priority command in any potentially armed encounter.</td>
+  </tr>
+  <tr>
+    <td>Vehicle Stop</td>
+    <td>"Driver, turn off the engine. Put your hands on the steering wheel."</td>
+    <td>Step-by-step. Do not issue multiple commands simultaneously.</td>
+  </tr>
+  <tr>
+    <td>Prone Out</td>
+    <td>"Get on the ground! Lay flat on your stomach! Arms out to the side!"</td>
+    <td>Used in felony stops and high-risk encounters.</td>
+  </tr>
+  <tr>
+    <td>Exit Vehicle</td>
+    <td>"Step out of the vehicle slowly. Keep your hands where I can see them."</td>
+    <td>One command at a time. Allow subject time to comply.</td>
+  </tr>
+  <tr>
+    <td>Drop Weapon</td>
+    <td>"Drop the weapon! Drop it now! Do it now!"</td>
+    <td>Repeat with increasing urgency. Clear warning of consequences if not complied.</td>
+  </tr>
+  <tr>
+    <td>Pre-Taser Warning</td>
+    <td>"Stop resisting or you will be tased! Taser! Taser! Taser!"</td>
+    <td>Three-call warning is mandatory before deployment unless immediate threat.</td>
+  </tr>
+  <tr>
+    <td>Pre-OC Spray Warning</td>
+    <td>"Stop! If you do not comply you will be sprayed!"</td>
+    <td>Warning required unless immediate threat.</td>
+  </tr>
+  <tr>
+    <td>Pre-Lethal Force Warning</td>
+    <td>"Stop or I will shoot!"</td>
+    <td>Required when feasible. Not required when immediate lethal threat leaves no time for warning.</td>
+  </tr>
+</table>
+
+<h2>5.2 Warning Requirements Before Force</h2>
+<div class="callout callout-critical">
+  <strong>MANDATORY WARNINGS:</strong> Officers <strong>must</strong> provide a verbal warning before deploying force whenever it is safe and feasible to do so. The warning shall clearly identify the officer, state the consequence of non-compliance, and provide the subject a reasonable opportunity to comply. The only exception is when the delay caused by a warning would result in imminent death or serious bodily harm.
+</div>
+
+<p>Warning requirements by force type:</p>
+<ul>
+  <li><strong>Soft/Hard Hand Control:</strong> Warning preferred but not mandatory. Officer should state intent: "If you do not stop resisting, I will take you to the ground."</li>
+  <li><strong>Taser:</strong> Warning <strong>mandatory</strong>. Three-call "Taser! Taser! Taser!" must be issued before deployment, unless the delay would result in harm to the officer or others.</li>
+  <li><strong>OC Spray:</strong> Warning <strong>mandatory</strong>. Subject must be told they will be sprayed if they do not comply.</li>
+  <li><strong>Baton:</strong> Warning <strong>mandatory</strong> when feasible. "Stop resisting or you will be struck."</li>
+  <li><strong>Bean Bag / Foam Rounds:</strong> Warning <strong>mandatory</strong>. Must announce deployment to other officers and the subject.</li>
+  <li><strong>Lethal Force:</strong> Warning required <strong>when feasible</strong>. "Stop or I will shoot." Not required when the subject is actively shooting or presenting an immediate lethal threat.</li>
+</ul>
+
+<h2>5.3 Language Requirements</h2>
+<ul>
+  <li>Commands shall be issued in <strong>English</strong> as the primary language.</li>
+  <li>If the subject does not appear to understand English, officers shall attempt basic Spanish commands when possible: "Alto!" (Stop), "Manos arriba!" (Hands up), "Suelo!" (Ground).</li>
+  <li>If a language barrier exists and the situation is not immediately dangerous, officers shall request a translator or use available translation resources before escalating force.</li>
+  <li>Officers shall <strong>never</strong> use profanity, slurs, derogatory language, or taunting language when issuing commands.</li>
+  <li>Commands shall be <strong>specific and singular</strong>. Issue one command at a time. Allow time for compliance before issuing the next command.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 6: PHYSICAL CONTROL TECHNIQUES                                 -->
+<!-- ====================================================================== -->
+<h1 id="physical">6. Physical Control Techniques</h1>
+
+<h2>6.1 Approved Techniques</h2>
+<p>The following physical control techniques are approved for use by all sworn personnel. Officers shall use only techniques they have been trained in and certified for.</p>
+
+<h3>6.1.1 Soft Hand Control (Level 3)</h3>
+<ul>
+  <li><strong>Escort holds</strong> &mdash; Controlling a subject by grasping the arm above the elbow and guiding them.</li>
+  <li><strong>Wrist locks (low pressure)</strong> &mdash; Controlling the subject's wrist with enough pressure to guide movement but not cause significant pain.</li>
+  <li><strong>Joint manipulation (light)</strong> &mdash; Bending joints to guide movement without applying pain compliance.</li>
+  <li><strong>Pressure point control (light)</strong> &mdash; Applying light pressure to sensitive areas (behind the ear, under the jaw) to gain attention and compliance.</li>
+  <li><strong>Body positioning</strong> &mdash; Using body weight and positioning to guide or block a subject's movement.</li>
+</ul>
+
+<h3>6.1.2 Hard Hand Control (Level 4)</h3>
+<ul>
+  <li><strong>Takedowns</strong> &mdash; Controlled techniques to bring a subject to the ground (leg sweeps, hip throws, body weight takedowns).</li>
+  <li><strong>Arm bars</strong> &mdash; Hyperextending the arm to control the subject and bring them to the ground or apply restraints.</li>
+  <li><strong>Wrist locks (high pressure)</strong> &mdash; Pain compliance through forceful wrist manipulation.</li>
+  <li><strong>Pressure points (forceful)</strong> &mdash; Significant pressure applied to nerve clusters to gain pain compliance.</li>
+  <li><strong>Knee strikes</strong> &mdash; Strikes to large muscle groups (thigh, common peroneal) only. Never to the head, neck, spine, or groin.</li>
+  <li><strong>Controlled tackles</strong> &mdash; Taking a fleeing or resisting subject to the ground using a controlled tackle technique.</li>
+  <li><strong>Elbow strikes</strong> &mdash; Authorized only against aggressive resistance, targeting large muscle groups.</li>
+  <li><strong>Hair control</strong> &mdash; Grasping hair to control head position during an active struggle. Not for pain compliance alone.</li>
+</ul>
+
+<h2>6.2 Prohibited Techniques</h2>
+<div class="callout callout-critical">
+  <strong>THE FOLLOWING TECHNIQUES ARE STRICTLY PROHIBITED:</strong> Any officer who employs a prohibited technique will face immediate disciplinary action, up to and including termination and criminal referral.
+</div>
+
+<table>
+  <tr>
+    <th>Prohibited Technique</th>
+    <th>Reason</th>
+    <th>Exception</th>
+  </tr>
+  <tr>
+    <td><strong>Chokeholds (all types)</strong></td>
+    <td>Extreme risk of death from airway obstruction and vascular compression. Unpredictable outcomes.</td>
+    <td><strong>NONE.</strong> Under no circumstances shall a chokehold be applied, even in a lethal force scenario. Use firearm or other lethal force options instead.</td>
+  </tr>
+  <tr>
+    <td><strong>Neck Restraints (lateral vascular, carotid)</strong></td>
+    <td>High risk of brain injury, stroke, and death. Medical outcomes are unpredictable even when properly applied.</td>
+    <td><strong>NONE.</strong> Absolute prohibition regardless of circumstances.</td>
+  </tr>
+  <tr>
+    <td><strong>Hog-tying / Hogtie Restraint</strong></td>
+    <td>Risk of positional asphyxia, especially in agitated or intoxicated subjects. Multiple in-custody deaths documented.</td>
+    <td><strong>NONE.</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Strikes to Head, Neck, Throat, or Spine</strong></td>
+    <td>Risk of death, permanent brain injury, spinal cord damage, and airway obstruction.</td>
+    <td>Only when deadly force is authorized AND no other option exists (e.g., ground fighting where the officer's life is in imminent danger).</td>
+  </tr>
+  <tr>
+    <td><strong>Strikes to Groin</strong></td>
+    <td>Extreme pain with unpredictable medical consequences. Disproportionate force in most scenarios.</td>
+    <td>Only when deadly force is authorized and no other option exists.</td>
+  </tr>
+  <tr>
+    <td><strong>Kneeling on Neck or Back</strong></td>
+    <td>Risk of positional asphyxia and death. Subject's ability to breathe cannot be reliably assessed under these conditions.</td>
+    <td><strong>NONE.</strong> Absolute prohibition.</td>
+  </tr>
+  <tr>
+    <td><strong>Stomping / Curb Stomping</strong></td>
+    <td>Excessive force in all circumstances. Risk of death and permanent disfigurement.</td>
+    <td><strong>NONE.</strong></td>
+  </tr>
+  <tr>
+    <td><strong>Bending Fingers / Small Joint Manipulation</strong></td>
+    <td>High risk of fracture with minimal compliance benefit. Unnecessary pain.</td>
+    <td><strong>NONE.</strong></td>
+  </tr>
+</table>
+
+<h2>6.3 Positional Asphyxia Prevention</h2>
+<div class="callout callout-warning">
+  <strong>WARNING:</strong> Officers must be aware of the risks of positional asphyxia. Subjects who are prone (face down), obese, under the influence of stimulants, or in excited delirium are at extreme risk of sudden death from restricted breathing.
+</div>
+
+<ul>
+  <li>Once a subject is handcuffed and under control, they must be placed in a <strong>recovery position</strong> (on their side) or seated upright immediately.</li>
+  <li>Officers shall <strong>not</strong> keep a subject face-down longer than necessary to apply restraints.</li>
+  <li>Officers shall <strong>not</strong> place body weight on a subject's back or chest once the subject is prone and restrained.</li>
+  <li>Any subject who states "I can't breathe" must be immediately repositioned and assessed. EMS shall be called.</li>
+  <li>Constant monitoring of a restrained subject's breathing, consciousness, and skin color is mandatory.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 7: LESS-LETHAL WEAPONS                                         -->
+<!-- ====================================================================== -->
+<h1 id="lesslethal">7. Less-Lethal Weapons</h1>
+
+<h2>7.1 Authorized Less-Lethal Weapons</h2>
+<p>The following less-lethal weapons are authorized for use by trained and certified officers:</p>
+
+<table>
+  <tr>
+    <th>Weapon</th>
+    <th>Authorized Level</th>
+    <th>Effective Range</th>
+    <th>Authorization Criteria</th>
+    <th>Certification Required</th>
+  </tr>
+  <tr>
+    <td><strong>Conducted Energy Device (Taser)</strong></td>
+    <td>Level 5</td>
+    <td>7-25 feet (probe mode)</td>
+    <td>Aggressive resistance, fleeing felony suspect, combative subject, self-harm subject (under specific conditions)</td>
+    <td>Annual Taser certification</td>
+  </tr>
+  <tr>
+    <td><strong>OC Spray (Pepper Spray)</strong></td>
+    <td>Level 5</td>
+    <td>6-15 feet</td>
+    <td>Active resistance escalating to aggressive, crowd dispersal (with supervisor approval), combative subject</td>
+    <td>Annual OC certification</td>
+  </tr>
+  <tr>
+    <td><strong>Expandable Baton (ASP)</strong></td>
+    <td>Level 5</td>
+    <td>Contact / arm's length</td>
+    <td>Aggressive resistance, defense against unarmed attack, creating distance from an assaultive subject</td>
+    <td>Annual defensive tactics certification</td>
+  </tr>
+  <tr>
+    <td><strong>Bean Bag Shotgun (12-gauge)</strong></td>
+    <td>Level 5</td>
+    <td>15-60 feet</td>
+    <td>Aggressive resistance with potential for escalation, barricaded subject, subject with edged weapon (outside lethal range), crowd control</td>
+    <td>Less-lethal shotgun certification</td>
+  </tr>
+  <tr>
+    <td><strong>40mm Foam Rounds</strong></td>
+    <td>Level 5</td>
+    <td>20-75 feet</td>
+    <td>Same as bean bag shotgun. Preferred for greater accuracy and range.</td>
+    <td>40mm launcher certification</td>
+  </tr>
+</table>
+
+<h2>7.2 OC Spray (Pepper Spray) Procedures</h2>
+<ul>
+  <li>OC spray shall be deployed in <strong>short, controlled bursts</strong> targeting the subject's face from a distance of 6-15 feet.</li>
+  <li><strong>Warning required:</strong> "Stop resisting or you will be sprayed!"</li>
+  <li>After deployment, officers shall immediately assess for compliance and move to handcuff if the subject complies.</li>
+  <li>Exposed subjects must be moved to <strong>fresh air</strong> as soon as practical.</li>
+  <li>Exposed subjects must be offered <strong>water to flush eyes and face</strong> within 10 minutes of deployment.</li>
+  <li>OC spray shall <strong>not</strong> be used in confined spaces with poor ventilation unless no other option exists.</li>
+  <li>OC spray shall <strong>not</strong> be used against subjects who are already restrained and compliant.</li>
+  <li>Wind direction shall be considered before deployment to avoid officer and bystander exposure.</li>
+</ul>
+
+<h2>7.3 Baton Procedures</h2>
+<ul>
+  <li>Baton strikes are authorized against <strong>large muscle groups only</strong>: outer thigh (common peroneal), upper arm (brachial plexus), calf.</li>
+  <li><strong>Prohibited target areas:</strong> Head, neck, throat, spine, collarbone, sternum, kidneys, groin, knee cap.</li>
+  <li>The baton shall be used for <strong>strikes only</strong> &mdash; not for choking, neck restraints, or pressure on the throat.</li>
+  <li>Officers shall not continue baton strikes once the subject has stopped their aggressive resistance.</li>
+  <li>Each baton strike constitutes a separate use of force that must be individually documented.</li>
+</ul>
+
+<h2>7.4 Bean Bag Shotgun / 40mm Foam Round Procedures</h2>
+<ul>
+  <li><strong>Target areas:</strong> Lower abdomen, buttocks, thigh, calf. Shots to the torso (above the navel), head, neck, spine, or groin are <strong>prohibited</strong> except when lethal force would be authorized.</li>
+  <li><strong>Minimum range:</strong> 15 feet for bean bag, 20 feet for 40mm. Closer deployment creates unacceptable injury risk.</li>
+  <li><strong>Supervisor authorization required</strong> before deployment in planned operations.</li>
+  <li>Each round shall be treated as a separate use of force event.</li>
+  <li>Medical assessment is mandatory after any impact.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 8: TASER-SPECIFIC PROCEDURES                                   -->
+<!-- ====================================================================== -->
+<h1 id="taser">8. Taser-Specific Procedures</h1>
+
+<h2>8.1 Deployment Criteria</h2>
+<p>The Conducted Energy Device (Taser) may be deployed under the following conditions:</p>
+<ul>
+  <li>The subject is exhibiting <strong>aggressive resistance</strong> or <strong>assaultive behavior</strong>.</li>
+  <li>The subject is <strong>actively fleeing</strong> from a felony arrest and verbal commands have failed.</li>
+  <li>The subject is <strong>threatening to harm themselves</strong> and is in possession of a means to do so (blade, elevated position), provided the taser deployment will not cause secondary injury (e.g., falling from height).</li>
+  <li>The subject is <strong>combative and physical control techniques</strong> have failed or are impractical due to size disparity, number of subjects, or environmental factors.</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>TASER SHALL NOT BE USED:</strong>
+  <ul style="margin-bottom:0;">
+    <li>Against <strong>passively resisting</strong> subjects</li>
+    <li>Against subjects who are <strong>only verbally non-compliant</strong></li>
+    <li>Near <strong>flammable substances</strong> (gasoline, OC spray residue, alcohol)</li>
+    <li>Against subjects in <strong>elevated positions</strong> where a fall could cause serious injury or death</li>
+    <li>Against subjects in or near <strong>water</strong> (drowning risk)</li>
+    <li>Against <strong>handcuffed or restrained</strong> subjects (except under extreme threat of serious harm)</li>
+    <li>Against subjects who are <strong>visibly pregnant</strong></li>
+    <li>Against <strong>children under 12 years old</strong> (except immediate lethal threat)</li>
+    <li>Against subjects who are <strong>fleeing from misdemeanor</strong> offenses</li>
+    <li>As <strong>punishment</strong> or to gain compliance through pain after a subject has ceased resistance</li>
+  </ul>
+</div>
+
+<h2>8.2 Probe Mode vs. Drive Stun</h2>
+<table>
+  <tr>
+    <th>Mode</th>
+    <th>Description</th>
+    <th>Effectiveness</th>
+    <th>Preferred Use</th>
+  </tr>
+  <tr>
+    <td><strong>Probe Mode</strong></td>
+    <td>Two probes are fired from the cartridge, creating an electrical circuit through the subject's body. The wider the probe spread, the more effective the Neuro-Muscular Incapacitation (NMI).</td>
+    <td><strong>High.</strong> Causes full NMI when probes achieve adequate spread (minimum 12 inches apart). Subject loses voluntary muscle control.</td>
+    <td>Primary deployment mode. Preferred in all situations where distance permits (7-25 feet). Aim for center mass with a downward angle to maximize probe spread.</td>
+  </tr>
+  <tr>
+    <td><strong>Drive Stun</strong></td>
+    <td>The taser is pressed directly against the subject's body and activated. No probes are fired. Creates localized pain compliance only.</td>
+    <td><strong>Low.</strong> Does NOT cause NMI. Pain compliance only. Subject retains muscle control and may continue fighting through the pain.</td>
+    <td>Secondary deployment mode. Used only when probe mode has failed, probes have missed, or at extremely close range during a physical struggle. Drive stun to a muscle group paired with a previously deployed probe can create NMI.</td>
+  </tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>DRIVE STUN LIMITATION:</strong> Drive stun mode alone is significantly less effective than probe mode and shall not be used as a primary deployment method. Repeated drive stun applications without NMI effect are considered pain compliance and may constitute excessive force if the subject is not presenting an aggressive threat.
+</div>
+
+<h2>8.3 Five-Second Rule</h2>
+<ul>
+  <li>Each taser cycle lasts <strong>5 seconds</strong>. Officers shall allow the full 5-second cycle to complete before assessing the subject's compliance.</li>
+  <li>During the 5-second cycle, cover officers shall <strong>move in to control and handcuff</strong> the subject if safe to do so.</li>
+  <li>The deploying officer shall provide verbal commands during the cycle: "Stop resisting! Get on the ground!"</li>
+  <li>After the cycle completes, the officer shall immediately reassess: Has the subject complied? Is another cycle necessary?</li>
+</ul>
+
+<h2>8.4 Multiple Deployments</h2>
+<div class="callout callout-critical">
+  <strong>THREE-CYCLE MAXIMUM:</strong> A taser shall not be deployed more than <strong>three (3) cycles</strong> against the same subject without explicit supervisor authorization. If three cycles have not achieved compliance, the taser is ineffective against that subject, and the officer must transition to alternative force options.
+</div>
+
+<ul>
+  <li><strong>First cycle:</strong> Standard deployment. Assess compliance after 5 seconds.</li>
+  <li><strong>Second cycle:</strong> Authorized if the first cycle was ineffective (missed probes, inadequate spread, clothing disconnect). Officer must articulate why a second cycle was necessary.</li>
+  <li><strong>Third cycle:</strong> Authorized only if previous cycles had identifiable failures AND the subject continues to pose an aggressive threat. Officer must have a cover officer with an alternative force option ready.</li>
+  <li><strong>Fourth+ cycles:</strong> Requires <strong>on-scene supervisor authorization</strong>. Supervisor must be physically present. Medical attention shall be requested immediately.</li>
+</ul>
+
+<h2>8.5 Post-Taser Procedures</h2>
+<ol>
+  <li>Once the subject is under control, <strong>disconnect the taser</strong> immediately.</li>
+  <li>Photograph probe placement on the subject's body before removal.</li>
+  <li>If probes are embedded in soft tissue (not face, neck, or groin), they may be removed by the officer using approved technique.</li>
+  <li>If probes are in the <strong>face, neck, groin, or female breast area</strong>, they shall be removed by <strong>EMS/medical personnel only</strong>.</li>
+  <li><strong>Medical assessment is mandatory</strong> after any taser deployment (see Section 12).</li>
+  <li>Download taser data log within 24 hours of deployment.</li>
+  <li>Collect and retain all spent cartridges, AFIDs (Anti-Felon Identification tags), and probes as evidence.</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 9: LETHAL FORCE AUTHORIZATION                                  -->
+<!-- ====================================================================== -->
+<h1 id="lethal">9. Lethal Force Authorization</h1>
+
+<h2>9.1 When Lethal Force Is Authorized</h2>
+<div class="callout callout-critical">
+  <strong>LETHAL FORCE IS AUTHORIZED ONLY WHEN:</strong> An officer reasonably believes that the subject poses an <strong>imminent threat of death or serious bodily harm</strong> to the officer or any other person, AND no lesser force option can reasonably address the threat under the totality of the circumstances.
+</div>
+
+<p>Lethal force may be used in the following circumstances:</p>
+
+<h3>9.1.1 Defense of Self</h3>
+<p>An officer may use lethal force to protect themselves from an imminent threat of death or serious bodily harm when:</p>
+<ul>
+  <li>The subject has the <strong>means</strong> (weapon, overwhelming physical force) to cause death or serious harm.</li>
+  <li>The subject has the <strong>opportunity</strong> (close enough, unobstructed path) to deliver the threat.</li>
+  <li>The subject has demonstrated <strong>intent</strong> (actions, statements, or behavior indicating they will use lethal force).</li>
+  <li>The threat is <strong>imminent</strong> &mdash; the harm is about to occur, not speculative or distant.</li>
+</ul>
+
+<h3>9.1.2 Defense of Others</h3>
+<p>An officer may use lethal force to protect any person (officer, civilian, or subject) from an imminent threat of death or serious bodily harm. The same means/opportunity/intent/imminence analysis applies. Officers bear the responsibility of ensuring their rounds do not endanger the person they are trying to protect.</p>
+
+<h3>9.1.3 Fleeing Felon Doctrine</h3>
+<p>An officer may use lethal force to prevent the escape of a fleeing subject when <strong>ALL</strong> of the following conditions are met:</p>
+<ol>
+  <li>The subject is fleeing from a <strong>violent felony</strong> (murder, attempted murder, armed robbery, kidnapping, aggravated assault with a deadly weapon).</li>
+  <li>The subject poses a <strong>significant and ongoing threat</strong> to the public if they escape (e.g., armed and demonstrated willingness to use the weapon).</li>
+  <li>A <strong>verbal warning</strong> has been given when feasible ("Stop or I will shoot!").</li>
+  <li><strong>No lesser force option</strong> can reasonably prevent the escape.</li>
+</ol>
+
+<div class="callout callout-warning">
+  <strong>FLEEING FELON RESTRICTION:</strong> Lethal force against a fleeing subject is NOT authorized merely because the subject is fleeing from any felony. The felony must be <strong>violent</strong>, and the subject must pose an <strong>ongoing, imminent threat to public safety</strong> if they escape. Flight from a non-violent felony (drug possession, fraud, burglary of an unoccupied structure) does NOT authorize lethal force.
+</div>
+
+<h2>9.2 Firearms Discharge Procedures</h2>
+<ul>
+  <li><strong>Aimed fire only:</strong> Officers shall fire only aimed shots at the center mass of the subject. Warning shots are <strong>prohibited</strong>.</li>
+  <li><strong>Fire until the threat stops:</strong> Officers shall continue firing until the subject is no longer a lethal threat. This is not a fixed number of rounds &mdash; it is determined by when the threat ceases.</li>
+  <li><strong>Cease fire immediately</strong> when the threat ends (subject drops weapon, falls, stops aggressive actions, surrenders).</li>
+  <li><strong>Backdrop awareness:</strong> Officers must be aware of what is behind and around the subject. If the backdrop presents unacceptable risk to bystanders, the officer must reposition before firing or use an alternative.</li>
+  <li><strong>Moving vehicles:</strong> See Section 10 (Prohibited Uses).</li>
+</ul>
+
+<h2>9.3 Post-Lethal Force Immediate Actions</h2>
+<ol>
+  <li><strong>Secure the scene.</strong> Ensure no additional threats exist.</li>
+  <li><strong>Request EMS immediately.</strong> "Shots fired, subject down, send EMS to [location]."</li>
+  <li><strong>Render first aid</strong> to the injured subject if it is safe to do so, until EMS arrives.</li>
+  <li><strong>Notify supervisor immediately.</strong> The on-scene supervisor shall respond and take command.</li>
+  <li><strong>Protect the scene.</strong> Establish a perimeter. No one enters without authorization.</li>
+  <li><strong>Separate involved officers.</strong> Officers who discharged firearms shall be separated and not allowed to discuss the incident with each other before providing statements.</li>
+  <li><strong>Invoke critical incident protocol.</strong> The officer may consult with a representative or attorney before making a detailed statement.</li>
+  <li><strong>Administrative leave.</strong> Officers involved in a lethal force incident shall be placed on administrative leave pending investigation (this is non-punitive).</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 10: PROHIBITED USES OF FORCE                                   -->
+<!-- ====================================================================== -->
+<h1 id="prohibited">10. Prohibited Uses of Force</h1>
+
+<div class="callout callout-critical">
+  <strong>THE FOLLOWING USES OF FORCE ARE ABSOLUTELY PROHIBITED.</strong> Violation of any of these prohibitions shall result in immediate suspension, internal affairs investigation, and potential criminal referral. There are NO exceptions unless explicitly stated below.
+</div>
+
+<h2>10.1 Force as Punishment</h2>
+<p>Force shall <strong>never</strong> be used as punishment, retaliation, or retribution against any person, regardless of the severity of their crime, their behavior, their statements, or any personal animosity an officer may feel. Force is a tool to gain control and ensure safety &mdash; nothing more.</p>
+
+<h2>10.2 Force as Retaliation</h2>
+<p>Force shall <strong>never</strong> be applied in response to:</p>
+<ul>
+  <li>Verbal insults, profanity, or disrespectful language directed at an officer</li>
+  <li>A subject exercising their constitutional rights (right to remain silent, right to refuse consent to search, right to record officers)</li>
+  <li>A subject filing or threatening to file a complaint against an officer</li>
+  <li>A subject requesting badge numbers, names, or supervisor information</li>
+  <li>Prior encounters with the same subject, even if those encounters involved violence</li>
+</ul>
+
+<h2>10.3 Force Against Restrained Subjects</h2>
+<p>Force shall <strong>not</strong> be used against subjects who are handcuffed, hobbled, or otherwise fully restrained and are <strong>not</strong> presenting an immediate threat of serious bodily harm. A restrained subject who is verbally abusive, spitting, or passively resisting does not meet the threshold for additional force. Spit hoods may be applied to spitting subjects without constituting a use of force.</p>
+
+<h2>10.4 Shooting at Moving Vehicles</h2>
+<div class="callout callout-critical">
+  <strong>SHOOTING AT OR FROM MOVING VEHICLES IS PROHIBITED</strong> except when the vehicle itself is being used as a deadly weapon against the officer or another person AND the officer cannot move to safety. Officers shall attempt to move out of the vehicle's path rather than fire at it.
+</div>
+
+<p>Specific prohibitions:</p>
+<ul>
+  <li>Officers shall <strong>not</strong> fire at a vehicle that is merely fleeing from a traffic stop or pursuit, even if the driver has committed a felony.</li>
+  <li>Officers shall <strong>not</strong> position themselves in the path of a vehicle and then claim the vehicle was a deadly weapon.</li>
+  <li>Officers shall <strong>not</strong> fire at the tires of a moving vehicle.</li>
+  <li>Officers <strong>may</strong> fire at the occupants of a vehicle only if the occupants are using a weapon other than the vehicle (e.g., firing from the vehicle) and the backdrop is safe.</li>
+  <li>Officers in a moving vehicle shall <strong>not</strong> fire their weapon unless the circumstances meet the lethal force threshold and there is no alternative.</li>
+</ul>
+
+<h2>10.5 Additional Prohibited Actions</h2>
+<table>
+  <tr>
+    <th>Prohibited Action</th>
+    <th>Explanation</th>
+  </tr>
+  <tr>
+    <td><strong>Warning shots</strong></td>
+    <td>Firing a weapon into the air or ground is prohibited. Every round must be aimed at a specific target. Warning shots create unacceptable risk to bystanders.</td>
+  </tr>
+  <tr>
+    <td><strong>Firing into crowds</strong></td>
+    <td>Officers shall not fire into a group of people unless a specific individual in the group poses an imminent lethal threat AND the shot can be taken without unreasonable risk to others.</td>
+  </tr>
+  <tr>
+    <td><strong>Flashbang / CS gas without authorization</strong></td>
+    <td>Chemical agents and flashbang grenades require supervisor authorization and shall only be deployed by trained personnel during planned tactical operations or when lethal force would otherwise be authorized.</td>
+  </tr>
+  <tr>
+    <td><strong>Using non-issued weapons</strong></td>
+    <td>Officers shall only use department-issued or department-approved weapons. Personal weapons, improvised weapons, or confiscated weapons are prohibited.</td>
+  </tr>
+  <tr>
+    <td><strong>Force to prevent recording</strong></td>
+    <td>Officers shall not use force, intimidation, or threats to prevent any person from lawfully recording police activity in a public place.</td>
+  </tr>
+  <tr>
+    <td><strong>Force during consensual encounters</strong></td>
+    <td>Force is not authorized during a consensual encounter. If force becomes necessary, the encounter has escalated beyond consensual and must be documented as such.</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 11: DUTY TO INTERVENE                                          -->
+<!-- ====================================================================== -->
+<h1 id="intervene">11. Duty to Intervene</h1>
+
+<h2>11.1 Obligation</h2>
+<div class="callout callout-critical">
+  <strong>MANDATORY:</strong> Every officer has an affirmative duty to intervene to prevent or stop the use of excessive force by another officer, regardless of rank, seniority, department affiliation, or personal relationship. Failure to intervene is a <strong>policy violation equal in severity</strong> to the excessive force itself.
+</div>
+
+<h2>11.2 When Intervention Is Required</h2>
+<p>An officer shall intervene when they observe or become aware of any of the following:</p>
+<ul>
+  <li>Force being applied that is <strong>clearly excessive</strong> given the subject's level of resistance</li>
+  <li>Force being used as <strong>punishment or retaliation</strong></li>
+  <li>A <strong>prohibited technique</strong> being applied (chokehold, neck restraint, kneeling on neck/back)</li>
+  <li>Continued force being applied to a subject who is <strong>clearly restrained and no longer resisting</strong></li>
+  <li>Force being applied to a subject who is <strong>visibly injured, unconscious, or in medical distress</strong> and not presenting a threat</li>
+  <li>An officer who is <strong>emotionally compromised</strong> (rage, personal vendetta, loss of self-control) and continuing to apply force</li>
+</ul>
+
+<h2>11.3 Intervention Methods</h2>
+<p>Intervention shall be performed using the least disruptive method that is effective:</p>
+<ol>
+  <li><strong>Verbal:</strong> "Hey, that's enough." / "He's in cuffs, stop." / "Partner, ease up."</li>
+  <li><strong>Physical separation:</strong> Gently pull the officer away from the subject or position yourself between them.</li>
+  <li><strong>Command authority:</strong> A supervisor shall order the officer to cease the use of force immediately.</li>
+  <li><strong>Physical restraint of officer:</strong> If the officer does not respond to verbal or gentle physical intervention, other officers may physically restrain the officer from continuing the assault.</li>
+</ol>
+
+<h2>11.4 Reporting Requirements</h2>
+<ul>
+  <li>Any officer who intervenes or witnesses excessive force <strong>must</strong> report the incident to their immediate supervisor before the end of their shift.</li>
+  <li>If the immediate supervisor was the officer using excessive force, the report shall be made to the next level of the chain of command.</li>
+  <li>A <strong>written report</strong> documenting the intervention must be submitted within 24 hours.</li>
+  <li>Reports shall be factual, objective, and include: the date/time/location, the officers involved, the force observed, the intervention taken, and the outcome.</li>
+</ul>
+
+<h2>11.5 Whistleblower Protections</h2>
+<div class="callout callout-success">
+  <strong>PROTECTIONS:</strong> Officers who report excessive force or intervene to stop it are <strong>protected from retaliation</strong>. Any officer who retaliates against a reporting officer &mdash; through intimidation, harassment, adverse assignments, negative evaluations, or any other means &mdash; will face disciplinary action up to and including termination.
+</div>
+
+<ul>
+  <li>Reports may be filed anonymously if the officer fears retaliation, though identified reports are preferred for investigation purposes.</li>
+  <li>The reporting officer's identity shall be protected to the extent permitted by law during the investigation.</li>
+  <li>An officer's career shall not be adversely affected for good-faith reporting of excessive force.</li>
+  <li>Annual reviews shall include recognition of officers who have upheld their duty to intervene.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 12: MEDICAL ATTENTION REQUIREMENTS                             -->
+<!-- ====================================================================== -->
+<h1 id="medical">12. Medical Attention Requirements</h1>
+
+<h2>12.1 Mandatory Medical Assessment</h2>
+<div class="callout callout-critical">
+  <strong>MANDATORY:</strong> Medical assessment shall be provided after <strong>ANY</strong> use of force that results in injury, complaint of injury, or deployment of a weapon (taser, OC spray, baton, less-lethal munition, or firearm). There are NO exceptions. The subject's refusal of medical treatment must be documented but does not relieve the officer of the obligation to offer and arrange it.
+</div>
+
+<h2>12.2 Medical Assessment Matrix</h2>
+<table>
+  <tr>
+    <th>Force Type Used</th>
+    <th>Medical Action Required</th>
+    <th>EMS Transport Required?</th>
+    <th>Hospital Clearance Required?</th>
+  </tr>
+  <tr>
+    <td>Soft Hand Control (no visible injury)</td>
+    <td>Ask subject if injured. Document response.</td>
+    <td>Only if injury reported or visible</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>Hard Hand Control</td>
+    <td>Visual assessment for injuries. Ask subject. Photograph injuries.</td>
+    <td>If injury is visible or reported</td>
+    <td>If head struck ground or loss of consciousness</td>
+  </tr>
+  <tr>
+    <td>Taser (any mode)</td>
+    <td><strong>Mandatory EMS assessment.</strong> Photograph probe sites. Check for burns. Monitor heart rhythm if available.</td>
+    <td><strong>Yes, always.</strong></td>
+    <td>If probes in face/neck/groin or subject has cardiac history, or subject complains of chest pain</td>
+  </tr>
+  <tr>
+    <td>OC Spray</td>
+    <td>Decontamination (fresh air + water flush). Monitor breathing. Assess for respiratory distress.</td>
+    <td>If respiratory distress, asthma, or COPD</td>
+    <td>If subject shows signs of allergic reaction or continued respiratory distress</td>
+  </tr>
+  <tr>
+    <td>Baton Strike</td>
+    <td><strong>Mandatory EMS assessment.</strong> Photograph strike locations. Check for fractures.</td>
+    <td><strong>Yes, always.</strong></td>
+    <td>If strike to prohibited area or suspected fracture</td>
+  </tr>
+  <tr>
+    <td>Bean Bag / Foam Round</td>
+    <td><strong>Mandatory EMS assessment.</strong> Photograph impact sites. Assess for internal injuries.</td>
+    <td><strong>Yes, always.</strong></td>
+    <td><strong>Yes, always.</strong> Internal injuries may not be immediately apparent.</td>
+  </tr>
+  <tr>
+    <td>Lethal Force (firearm)</td>
+    <td><strong>Immediate EMS and hospital.</strong> Officer shall render first aid until EMS arrives.</td>
+    <td><strong>Yes, emergency transport.</strong></td>
+    <td><strong>Yes, mandatory.</strong></td>
+  </tr>
+  <tr>
+    <td>Subject complains of injury (any force level)</td>
+    <td>EMS assessment. Document complaint verbatim.</td>
+    <td>Yes, if complaint is credible</td>
+    <td>Based on EMS recommendation</td>
+  </tr>
+</table>
+
+<h2>12.3 Taser Probe Removal</h2>
+<ul>
+  <li><strong>Officer removal authorized:</strong> Probes in the torso, arms, legs, or buttocks may be removed by the officer using approved technique (gloves, straight pull, place in biohazard container).</li>
+  <li><strong>EMS removal required:</strong> Probes in the face, head, neck, throat, groin, or female breast area must be removed by EMS or medical personnel.</li>
+  <li>All probe sites must be <strong>photographed</strong> before and after removal.</li>
+  <li>Probes and wires shall be retained as <strong>evidence</strong>.</li>
+  <li>Bandage probe sites with adhesive bandage after removal.</li>
+</ul>
+
+<h2>12.4 Documentation of Medical Care</h2>
+<ul>
+  <li>The Use of Force Report shall include: whether medical care was offered, whether it was accepted or refused, the nature of any injuries observed, the name of responding EMS personnel, and the disposition (treated on scene, transported to hospital, refused medical attention).</li>
+  <li>If the subject refuses medical care, the refusal must be documented in writing with the subject's signature when possible. If the subject refuses to sign, document "subject refused to sign" and have a witness officer sign.</li>
+  <li>Body camera footage shall capture the offer of medical care and any refusal.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 13: REPORTING REQUIREMENTS                                     -->
+<!-- ====================================================================== -->
+<h1 id="reporting">13. Reporting Requirements</h1>
+
+<h2>13.1 Mandatory Reporting</h2>
+<div class="callout callout-critical">
+  <strong>EVERY use of force shall be reported.</strong> There are no exceptions, regardless of how minor the force or how uninjured the subject appears. Failure to report a use of force is a serious policy violation that may result in termination.
+</div>
+
+<h2>13.2 Use of Force Report (UOF Form)</h2>
+<p>The officer who deployed force shall complete a Use of Force Report that includes:</p>
+<ol>
+  <li><strong>Officer identification:</strong> Name, badge number, rank, assignment, department.</li>
+  <li><strong>Date, time, and location</strong> of the incident.</li>
+  <li><strong>Subject identification:</strong> Name, DOB, physical description, State ID if available.</li>
+  <li><strong>Reason for initial contact:</strong> What brought the officer into contact with the subject.</li>
+  <li><strong>Subject's behavior:</strong> Detailed description of the subject's actions that necessitated force. Identify the resistance level (passive, active, aggressive, lethal threat).</li>
+  <li><strong>De-escalation attempts:</strong> What de-escalation techniques were employed before force was used, or why de-escalation was not feasible.</li>
+  <li><strong>Force used:</strong> Detailed description of each type of force applied, in chronological order. For weapons: number of deployments, target areas, distance.</li>
+  <li><strong>Effectiveness:</strong> Whether the force achieved its intended purpose (compliance, control, stop of threat).</li>
+  <li><strong>Injuries:</strong> Description of all injuries to the subject, officer, and any bystanders.</li>
+  <li><strong>Medical care provided:</strong> What medical care was offered and rendered (see Section 12).</li>
+  <li><strong>Witness information:</strong> Names and contact information of all witnesses (officers, civilians).</li>
+  <li><strong>Body camera status:</strong> Was body camera active? If not, explain why.</li>
+  <li><strong>Evidence collected:</strong> Taser cartridges, AFIDs, photographs, clothing, weapons.</li>
+</ol>
+
+<h2>13.3 Supervisor Notification Timeline</h2>
+<table>
+  <tr>
+    <th>Force Level</th>
+    <th>Supervisor Notification</th>
+    <th>UOF Report Due</th>
+    <th>Supervisor Review Due</th>
+  </tr>
+  <tr>
+    <td>Soft Hand Control</td>
+    <td>Before end of shift</td>
+    <td>Before end of shift</td>
+    <td>Within 72 hours</td>
+  </tr>
+  <tr>
+    <td>Hard Hand Control</td>
+    <td>Within 1 hour</td>
+    <td>Before end of shift</td>
+    <td>Within 48 hours</td>
+  </tr>
+  <tr>
+    <td>Less-Lethal Weapon</td>
+    <td><strong>Immediately (radio or phone)</strong></td>
+    <td>Before end of shift</td>
+    <td>Within 24 hours</td>
+  </tr>
+  <tr>
+    <td>Lethal Force</td>
+    <td><strong>Immediately (radio or phone)</strong></td>
+    <td>Within 24 hours (after attorney consultation if invoked)</td>
+    <td><strong>Immediate on-scene response. Written within 24 hours.</strong></td>
+  </tr>
+  <tr>
+    <td>Subject Injury (any level)</td>
+    <td><strong>Immediately</strong></td>
+    <td>Before end of shift</td>
+    <td>Within 24 hours</td>
+  </tr>
+  <tr>
+    <td>Officer Injury (any level)</td>
+    <td><strong>Immediately</strong></td>
+    <td>Before end of shift</td>
+    <td>Within 24 hours</td>
+  </tr>
+</table>
+
+<h2>13.4 Chain of Command Review</h2>
+<p>All Use of Force Reports shall be reviewed through the chain of command:</p>
+<ol>
+  <li><strong>Immediate Supervisor:</strong> Reviews the report for completeness, accuracy, and initial assessment of whether the force was within policy. Conducts follow-up investigation if needed (interviews, scene visit, evidence review).</li>
+  <li><strong>Division Commander / Lieutenant:</strong> Reviews the supervisor's findings. May request additional investigation. Makes preliminary finding recommendation.</li>
+  <li><strong>Deputy Chief / Undersheriff / Major:</strong> Reviews all Level 5 (less-lethal weapon) and Level 6 (lethal force) reports. Approves or modifies findings.</li>
+  <li><strong>Chief / Sheriff / Colonel:</strong> Reviews all lethal force incidents and any use of force resulting in serious injury. Final authority on findings and discipline.</li>
+</ol>
+
+<h2>13.5 Internal Affairs Threshold</h2>
+<p>The following use of force incidents shall be automatically referred to Internal Affairs for investigation:</p>
+<ul>
+  <li>Any lethal force incident (firearm discharge at a person)</li>
+  <li>Any use of force resulting in <strong>serious bodily injury</strong> or death</li>
+  <li>Any use of force involving a <strong>prohibited technique</strong></li>
+  <li>Any use of force where a <strong>complaint is filed</strong> by the subject, witness, or fellow officer</li>
+  <li>Any use of force where the <strong>supervisor determines the force may have been excessive</strong></li>
+  <li>Any incident where an officer <strong>failed to intervene</strong> in observed excessive force</li>
+  <li>Multiple use of force incidents by the same officer within a 90-day period (pattern review)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 14: INVESTIGATION & REVIEW PROCESS                             -->
+<!-- ====================================================================== -->
+<h1 id="investigation">14. Investigation &amp; Review Process</h1>
+
+<h2>14.1 Supervisor Investigation</h2>
+<p>For all use of force incidents at Level 4 (Hard Hand Control) and above, the responding supervisor shall conduct an on-scene investigation that includes:</p>
+<ul>
+  <li><strong>Respond to the scene</strong> and take command of the use of force investigation.</li>
+  <li><strong>Ensure medical care</strong> has been provided to all injured parties.</li>
+  <li><strong>Separate involved officers</strong> (lethal force incidents only).</li>
+  <li><strong>Interview the subject</strong> (if medically able and willing) and document their account.</li>
+  <li><strong>Interview witnesses</strong> (officer and civilian) separately.</li>
+  <li><strong>Photograph the scene</strong>, including the subject's injuries, officer's injuries, weapon(s), and environmental conditions.</li>
+  <li><strong>Review body camera footage</strong> from all involved and witness officers.</li>
+  <li><strong>Collect and preserve evidence:</strong> Taser data, weapons, ammunition, OC canisters, cartridges, AFIDs, clothing.</li>
+  <li><strong>Document the scene:</strong> Location, lighting, weather, terrain, distances, number of bystanders.</li>
+  <li><strong>Complete the Supervisor Use of Force Review</strong> form with initial findings.</li>
+</ul>
+
+<h2>14.2 Use of Force Review Board (UFRB)</h2>
+<p>The UFRB is a standing board that reviews significant use of force incidents. The board convenes for:</p>
+<ul>
+  <li>All lethal force incidents</li>
+  <li>All use of force incidents resulting in hospitalization or death</li>
+  <li>Any use of force referred by the Chief/Sheriff/Colonel</li>
+  <li>Any use of force where Internal Affairs investigation finds potential policy violation</li>
+  <li>Pattern reviews (officer with 3+ use of force incidents in 6 months)</li>
+</ul>
+
+<h3>14.2.1 Board Composition</h3>
+<table>
+  <tr>
+    <th>Position</th>
+    <th>Role</th>
+  </tr>
+  <tr>
+    <td>Deputy Chief / Undersheriff / Lt. Colonel</td>
+    <td>Board Chair</td>
+  </tr>
+  <tr>
+    <td>Training Division Commander</td>
+    <td>Evaluates whether force was consistent with training</td>
+  </tr>
+  <tr>
+    <td>Internal Affairs Representative</td>
+    <td>Presents investigation findings</td>
+  </tr>
+  <tr>
+    <td>Patrol Division Commander</td>
+    <td>Evaluates tactical decisions</td>
+  </tr>
+  <tr>
+    <td>Peer Officer Representative</td>
+    <td>Provides frontline perspective</td>
+  </tr>
+</table>
+
+<h2>14.3 Findings Categories</h2>
+<table>
+  <tr>
+    <th>Finding</th>
+    <th>Definition</th>
+    <th>Consequence</th>
+  </tr>
+  <tr>
+    <td><strong>Justified &amp; Within Policy</strong></td>
+    <td>The force used was objectively reasonable, proportional to the threat, and in compliance with all departmental policies and training.</td>
+    <td>No disciplinary action. Report filed for records. Officer returns to full duty if on administrative leave.</td>
+  </tr>
+  <tr>
+    <td><strong>Justified but Policy Deviation</strong></td>
+    <td>The force used was objectively reasonable given the circumstances, but the officer deviated from specific procedural requirements (reporting timeline, warning requirements, technique selection).</td>
+    <td>Counseling, retraining, or minor corrective action. No criminal referral. Officer may be temporarily reassigned for retraining.</td>
+  </tr>
+  <tr>
+    <td><strong>Not Justified &mdash; Excessive Force</strong></td>
+    <td>The force used exceeded what was objectively reasonable under the circumstances. The level of force was disproportionate to the threat.</td>
+    <td>Formal disciplinary action (written reprimand to termination depending on severity). Mandatory retraining. Possible criminal referral to the District Attorney.</td>
+  </tr>
+  <tr>
+    <td><strong>Policy Violation &mdash; Prohibited Action</strong></td>
+    <td>The officer employed a specifically prohibited technique or used force in a specifically prohibited manner (punishment, retaliation, against restrained subject).</td>
+    <td>Suspension or termination. Automatic criminal referral to the District Attorney. Permanent notation in personnel file.</td>
+  </tr>
+  <tr>
+    <td><strong>Inconclusive</strong></td>
+    <td>Insufficient evidence to determine whether the force was justified or unjustified. No body camera footage, conflicting accounts, no witnesses.</td>
+    <td>No formal discipline. However, the officer shall receive mandatory retraining on the relevant force area. Incident is flagged for pattern tracking.</td>
+  </tr>
+</table>
+
+<h2>14.4 Appeal Process</h2>
+<p>Officers who receive an adverse finding may appeal through the following process:</p>
+<ol>
+  <li><strong>Written appeal</strong> to the department head within 10 calendar days of receiving the finding.</li>
+  <li>The department head shall <strong>convene an appeal review</strong> within 14 calendar days.</li>
+  <li>The officer may present <strong>additional evidence or testimony</strong> not considered during the initial review.</li>
+  <li>The officer may be <strong>represented by counsel</strong> or a union representative during the appeal hearing.</li>
+  <li>The department head's appeal decision is <strong>final</strong> for administrative purposes.</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 15: TRAINING REQUIREMENTS                                      -->
+<!-- ====================================================================== -->
+<h1 id="training">15. Training Requirements</h1>
+
+<h2>15.1 Mandatory Training</h2>
+<p>All sworn personnel shall maintain current certifications in the following areas. Failure to complete mandatory training by the required date will result in the officer being removed from field duty until the training is completed.</p>
+
+<table>
+  <tr>
+    <th>Training Area</th>
+    <th>Initial Certification</th>
+    <th>Recertification Frequency</th>
+    <th>Minimum Hours (Annual)</th>
+    <th>Certification Authority</th>
+  </tr>
+  <tr>
+    <td><strong>Firearms Qualification</strong></td>
+    <td>Academy (40 hours)</td>
+    <td>Semi-annual (every 6 months)</td>
+    <td>24 hours</td>
+    <td>Range Master / Training Division</td>
+  </tr>
+  <tr>
+    <td><strong>Defensive Tactics</strong></td>
+    <td>Academy (60 hours)</td>
+    <td>Annual</td>
+    <td>16 hours</td>
+    <td>Defensive Tactics Instructor</td>
+  </tr>
+  <tr>
+    <td><strong>Taser Certification</strong></td>
+    <td>8-hour course + live deployment</td>
+    <td>Annual</td>
+    <td>4 hours</td>
+    <td>Certified Taser Instructor</td>
+  </tr>
+  <tr>
+    <td><strong>OC Spray Certification</strong></td>
+    <td>4-hour course + live exposure</td>
+    <td>Annual</td>
+    <td>2 hours</td>
+    <td>Defensive Tactics Instructor</td>
+  </tr>
+  <tr>
+    <td><strong>Less-Lethal Munitions</strong></td>
+    <td>8-hour course + qualification</td>
+    <td>Annual</td>
+    <td>4 hours</td>
+    <td>Armorer / Range Master</td>
+  </tr>
+  <tr>
+    <td><strong>De-Escalation &amp; Verbal Judo</strong></td>
+    <td>Academy (24 hours)</td>
+    <td>Annual</td>
+    <td>8 hours</td>
+    <td>Training Division</td>
+  </tr>
+  <tr>
+    <td><strong>Crisis Intervention (CIT)</strong></td>
+    <td>40-hour specialized course</td>
+    <td>Biennial (every 2 years)</td>
+    <td>8 hours (in CIT years)</td>
+    <td>CIT Program Coordinator</td>
+  </tr>
+  <tr>
+    <td><strong>Use of Force Policy Review</strong></td>
+    <td>Academy</td>
+    <td>Annual</td>
+    <td>4 hours</td>
+    <td>Training Division / Legal Advisor</td>
+  </tr>
+  <tr>
+    <td><strong>First Aid / CPR / AED</strong></td>
+    <td>16-hour course</td>
+    <td>Biennial</td>
+    <td>4 hours (in cert years)</td>
+    <td>American Red Cross / EMS Division</td>
+  </tr>
+  <tr>
+    <td><strong>Scenario-Based Training</strong></td>
+    <td>Academy (ongoing)</td>
+    <td>Quarterly</td>
+    <td>16 hours</td>
+    <td>Training Division</td>
+  </tr>
+</table>
+
+<h2>15.2 Training Documentation</h2>
+<ul>
+  <li>All training hours shall be <strong>documented</strong> in the officer's personnel file and the department training management system.</li>
+  <li>Officers are responsible for ensuring their training records are current and accurate.</li>
+  <li><strong>Expired certifications</strong> result in immediate removal from the authorized use of that weapon/technique until recertification is completed.</li>
+  <li>Officers who fail a qualification attempt shall be given <strong>one remedial session</strong> within 30 days. Failure to qualify on the second attempt results in removal from field duty and mandatory remedial training plan.</li>
+</ul>
+
+<h2>15.3 Scenario-Based Training Requirements</h2>
+<p>Scenario-based training shall be conducted quarterly and shall include the following elements:</p>
+<ul>
+  <li><strong>Force decision-making:</strong> Scenarios requiring the officer to select the appropriate level of force based on the subject's behavior.</li>
+  <li><strong>De-escalation scenarios:</strong> Situations that can be resolved without force through communication and tactical techniques.</li>
+  <li><strong>Escalation/de-escalation transitions:</strong> Scenarios where the subject's behavior changes, requiring the officer to adjust their response dynamically.</li>
+  <li><strong>Shoot/don't shoot:</strong> Lethal force decision scenarios with ambiguous threat presentations.</li>
+  <li><strong>Multiple officer coordination:</strong> Scenarios requiring team tactics, cross-cover, and coordinated approaches.</li>
+  <li><strong>Duty to intervene:</strong> Scenarios where the trainee must recognize and intervene in excessive force by another officer.</li>
+  <li><strong>Special populations:</strong> Scenarios involving mentally ill subjects, juveniles, elderly, and disabled individuals.</li>
+  <li><strong>After-action review:</strong> Every scenario shall be followed by a detailed debrief and after-action review.</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>TRAINING PHILOSOPHY:</strong> Training shall emphasize decision-making, not just technique. An officer who can deliver a perfect takedown but cannot recognize when a takedown is inappropriate is a liability, not an asset. All training shall integrate policy review, ethical considerations, and situational awareness alongside physical skills.
+</div>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 16: SPECIAL POPULATIONS                                        -->
+<!-- ====================================================================== -->
+<h1 id="special">16. Special Populations</h1>
+
+<h2>16.1 General Principle</h2>
+<p>Certain populations require additional considerations when force decisions are being made. Officers shall take into account the unique vulnerabilities of these populations and shall, when feasible, adjust their approach to minimize the need for force. This does <strong>not</strong> mean that force is prohibited against these populations &mdash; only that additional care, documentation, and justification are required.</p>
+
+<h2>16.2 Persons in Mental Health Crisis</h2>
+<div class="callout callout-warning">
+  <strong>REMEMBER:</strong> A person in a mental health crisis may not be able to understand or comply with commands. Non-compliance in these situations is not necessarily defiance &mdash; it may be an inability to process information. Adjust your expectations and approach accordingly.
+</div>
+
+<ul>
+  <li><strong>Request CIT-trained officer</strong> when time and circumstances permit.</li>
+  <li><strong>Increase time and distance</strong> significantly. Do not rush to a resolution.</li>
+  <li><strong>Avoid multiple officers shouting commands</strong> simultaneously. Designate one officer to communicate.</li>
+  <li><strong>Consider that weapons</strong> (especially knives or sharp objects) may be related to self-harm, not an intent to harm officers.</li>
+  <li><strong>Less-lethal options</strong> should be exhausted before lethal force unless an imminent lethal threat exists.</li>
+  <li><strong>Coordinate with EMS</strong> for medical/psychiatric evaluation and transport.</li>
+  <li><strong>Document the mental health indicators</strong> observed in the Use of Force Report.</li>
+  <li>Consider <strong>voluntary transport for evaluation</strong> as an alternative to arrest when the underlying conduct is not a serious crime.</li>
+</ul>
+
+<h2>16.3 Juveniles (Under 18)</h2>
+<table>
+  <tr>
+    <th>Age Group</th>
+    <th>Additional Considerations</th>
+    <th>Force Restrictions</th>
+  </tr>
+  <tr>
+    <td><strong>Under 12</strong></td>
+    <td>Extreme care required. Physical control should be minimal. Communication and de-escalation are paramount. Parent/guardian contact is a priority.</td>
+    <td>Taser prohibited except to prevent imminent death. OC spray prohibited. Soft hand control only unless lethal threat exists. No prone restraint.</td>
+  </tr>
+  <tr>
+    <td><strong>12-15</strong></td>
+    <td>Increased vulnerability to injury. Psychological impact of force is magnified. Use the minimum force necessary. Request juvenile-trained officer when possible.</td>
+    <td>Taser restricted to aggressive resistance or higher. OC spray restricted to aggressive resistance. Hard hand control should be minimized. Document justification in detail.</td>
+  </tr>
+  <tr>
+    <td><strong>16-17</strong></td>
+    <td>Standard use of force continuum applies, but officers should be aware of the juvenile's age when selecting force options. Document age awareness.</td>
+    <td>Full continuum applies. Document that the juvenile's age was considered in force decisions.</td>
+  </tr>
+</table>
+
+<h2>16.4 Pregnant Persons</h2>
+<ul>
+  <li>Officers shall <strong>avoid</strong> force to the abdominal area of a visibly pregnant person.</li>
+  <li>Taser deployment against a visibly pregnant person is <strong>prohibited</strong> except when lethal force would otherwise be authorized.</li>
+  <li>OC spray may be used but with awareness of the increased respiratory risk.</li>
+  <li>If force is used against a pregnant person, <strong>EMS must be called immediately</strong> regardless of apparent injury.</li>
+  <li>Handcuffing shall be done with hands in front whenever possible.</li>
+  <li>Prone positioning is <strong>prohibited</strong> for visibly pregnant persons.</li>
+</ul>
+
+<h2>16.5 Elderly Persons (65+)</h2>
+<ul>
+  <li>Elderly persons are at <strong>increased risk of fractures, falls, and cardiac events</strong> during physical altercations.</li>
+  <li>Officers shall increase reliance on <strong>verbal de-escalation and time</strong>.</li>
+  <li>Hard hand control techniques should be used with awareness of <strong>osteoporosis risk</strong>.</li>
+  <li>Taser deployment is authorized but with awareness of <strong>increased cardiac risk</strong>. Medical assessment is especially critical.</li>
+  <li>Takedowns should be <strong>controlled</strong> with particular attention to preventing head impact.</li>
+  <li>If an elderly person falls or is taken to the ground during a use of force, <strong>EMS shall be requested immediately</strong>.</li>
+</ul>
+
+<h2>16.6 Persons with Disabilities</h2>
+<ul>
+  <li><strong>Deaf/Hard of Hearing:</strong> The subject may not hear verbal commands. Use visual signals, written commands, or gestures. Non-compliance may be due to inability to hear, not defiance. Do not interpret sign language movements as aggressive gestures.</li>
+  <li><strong>Blind/Visually Impaired:</strong> The subject may not see officers or their positioning. Announce your presence verbally. Explain what you are doing before making physical contact.</li>
+  <li><strong>Mobility Impaired / Wheelchair Users:</strong> The subject may be unable to comply with commands to get on the ground or raise hands if arms are needed for wheelchair operation. Adjust commands. Do not remove or damage mobility aids unless absolutely necessary for safety.</li>
+  <li><strong>Intellectual/Developmental Disabilities:</strong> The subject may not understand complex commands. Use simple, clear, one-step instructions. Allow extra time for processing. Non-compliance may be cognitive, not intentional.</li>
+  <li><strong>Autism Spectrum:</strong> The subject may engage in self-stimulatory behavior (rocking, hand-flapping) that is not threatening. Unexpected touch may cause extreme distress. Loud commands may escalate behavior. Minimize sensory overload.</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>DOCUMENTATION:</strong> When force is used against any special population member, the Use of Force Report <strong>must</strong> include a section documenting: (1) how the officer identified the special population status, (2) what accommodations were attempted, (3) why force was still necessary, and (4) what additional medical or welfare considerations were addressed.
+</div>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 17: CROWD CONTROL & CIVIL DISTURBANCE                          -->
+<!-- ====================================================================== -->
+<h1 id="crowd">17. Crowd Control &amp; Civil Disturbance</h1>
+
+<h2>17.1 General Principles</h2>
+<p>The right of the people to peaceably assemble and petition their government is constitutionally protected. Law enforcement's role during protests, demonstrations, and public gatherings is to <strong>facilitate the exercise of these rights</strong> while maintaining public safety and order. Force during crowd control events shall be used as a <strong>last resort</strong> and shall be directed at specific individuals engaged in criminal conduct, not at the crowd as a whole.</p>
+
+<div class="callout callout-warning">
+  <strong>CRITICAL DISTINCTION:</strong> A <strong>protest</strong> (lawful assembly, chanting, sign-holding, marching) requires <strong>no police intervention</strong> beyond traffic management and scene security. A <strong>riot</strong> (property destruction, assault, arson, looting) authorizes escalating law enforcement response. The transition from protest to riot must be documented and declared before force deployment.
+</div>
+
+<h2>17.2 Command Authority</h2>
+<table>
+  <tr>
+    <th>Action</th>
+    <th>Authorization Required</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Individual arrest within a crowd</td>
+    <td>On-scene officer (standard probable cause)</td>
+    <td>Extract the individual. Do not engage the crowd.</td>
+  </tr>
+  <tr>
+    <td>Dispersal order</td>
+    <td><strong>Incident Commander (Lieutenant+)</strong></td>
+    <td>Must be audible to entire crowd. Must provide a clear exit route. Must allow reasonable time to comply.</td>
+  </tr>
+  <tr>
+    <td>Less-lethal munitions (bean bag, foam)</td>
+    <td><strong>Incident Commander (Captain+)</strong></td>
+    <td>Directed at specific individuals only. Not into the general crowd.</td>
+  </tr>
+  <tr>
+    <td>OC spray (individual deployment)</td>
+    <td>On-scene officer</td>
+    <td>Standard use of force criteria. Against specific assaultive individuals.</td>
+  </tr>
+  <tr>
+    <td>Chemical agents (CS gas / tear gas)</td>
+    <td><strong>Chief / Sheriff / Colonel ONLY</strong></td>
+    <td>Last resort. Only after dispersal order has been given and reasonable time to comply has elapsed. Requires documented justification.</td>
+  </tr>
+  <tr>
+    <td>Mass arrest / kettling</td>
+    <td><strong>Chief / Sheriff / Colonel ONLY</strong></td>
+    <td>Must have probable cause for each individual arrested. Kettling without intent to arrest is prohibited.</td>
+  </tr>
+  <tr>
+    <td>Lethal force</td>
+    <td>Individual officer (standard deadly force criteria)</td>
+    <td>Standard criteria apply. Extreme backdrop awareness required in crowd settings.</td>
+  </tr>
+</table>
+
+<h2>17.3 Dispersal Order Requirements</h2>
+<p>Before any crowd-control force is deployed (other than against specific individuals committing crimes), a formal dispersal order must be issued:</p>
+<ol>
+  <li>The order must be given by an <strong>Incident Commander of Lieutenant rank or above</strong>.</li>
+  <li>The order must be <strong>audible to the entire crowd</strong> (use LRAD, bullhorn, or PA system).</li>
+  <li>The order must <strong>identify the law enforcement agency</strong>: "This is the [LSPD/BCSO/SASP]."</li>
+  <li>The order must <strong>declare the assembly unlawful</strong> and state the reason: "This assembly has been declared unlawful due to [acts of violence / property destruction / blocking a public roadway]."</li>
+  <li>The order must <strong>provide a clear exit route</strong>: "You must disperse by moving [direction]. The exit route is [street/direction]."</li>
+  <li>The order must <strong>state the consequences</strong>: "If you do not disperse, you may be arrested and chemical agents may be deployed."</li>
+  <li>The order must be <strong>repeated at least three (3) times</strong> with at least <strong>two (2) minutes</strong> between each repetition.</li>
+  <li>A <strong>minimum of five (5) minutes</strong> shall be allowed after the final repetition before force deployment begins.</li>
+</ol>
+
+<h2>17.4 Chemical Agents Deployment</h2>
+<div class="callout callout-critical">
+  <strong>CHEMICAL AGENTS (CS GAS / TEAR GAS):</strong> Chemical agents shall only be deployed with the express authorization of the Chief of Police, Sheriff, or Colonel. Chemical agents are an area-effect weapon and affect all persons in the deployment zone, including peaceful protestors, bystanders, children, elderly, and persons with respiratory conditions. Their use is a <strong>last resort</strong> when all other methods have failed and continued inaction would result in significant property destruction, injury, or loss of life.
+</div>
+
+<ul>
+  <li>Chemical agents shall <strong>not</strong> be deployed into enclosed spaces (buildings, tunnels, vehicles with occupants) due to the risk of death from concentrated exposure.</li>
+  <li>Wind direction and speed must be assessed before deployment to prevent drift into unintended areas (hospitals, schools, residences).</li>
+  <li>Officers shall ensure that the designated exit routes are <strong>not</strong> in the chemical agent drift path.</li>
+  <li>EMS must be staged and ready before chemical agent deployment.</li>
+  <li>After deployment, officers shall provide decontamination assistance (water, fresh air) to any person affected who requests it.</li>
+</ul>
+
+<h2>17.5 Less-Lethal Deployment in Crowd Settings</h2>
+<ul>
+  <li>Less-lethal munitions (bean bag, foam rounds) during crowd control events shall be <strong>directed at specific individuals</strong> who are engaged in violent criminal conduct (throwing objects at officers, setting fires, assaulting persons).</li>
+  <li><strong>Firing into a crowd</strong> indiscriminately with less-lethal munitions is <strong>prohibited</strong>.</li>
+  <li>Officers deploying less-lethal munitions must <strong>identify their specific target</strong> and be able to articulate why that individual was targeted.</li>
+  <li>Shots to the <strong>head and neck are prohibited</strong>. Aim for lower body (legs, buttocks, lower abdomen).</li>
+  <li>Each less-lethal deployment must be <strong>individually documented</strong> in a Use of Force Report.</li>
+</ul>
+
+<h2>17.6 Prohibited Crowd Control Tactics</h2>
+<ul>
+  <li><strong>Rubber bullets / wooden baton rounds:</strong> Not authorized. Only approved bean bag and foam rounds.</li>
+  <li><strong>Firing less-lethal munitions at the head:</strong> Prohibited under all circumstances during crowd control.</li>
+  <li><strong>Using vehicles to disperse crowds:</strong> Prohibited. Vehicles shall not be driven into or through a crowd.</li>
+  <li><strong>Targeting journalists and legal observers:</strong> Prohibited. Credentialed media and legal observers shall not be arrested, sprayed, or targeted with munitions while performing their function, unless they are engaged in criminal conduct independent of their observation role.</li>
+  <li><strong>Confiscating recording devices:</strong> Prohibited. Officers shall not seize cameras, phones, or recording equipment from any person without a warrant.</li>
+  <li><strong>Indiscriminate arrests:</strong> Prohibited. Each arrest must be based on individualized probable cause. "Being present at a riot" is not sufficient probable cause for arrest.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ====================================================================== -->
+<!-- SECTION 18: REVISION HISTORY & AMENDMENTS                              -->
+<!-- ====================================================================== -->
+<h1 id="revisions">18. Revision History &amp; Amendments</h1>
+
+<h2>18.1 Document Control</h2>
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Date</th>
+    <th>Author</th>
+    <th>Changes</th>
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td>February 2026</td>
+    <td>ZO Syndicate RP Command Staff</td>
+    <td>Initial publication. Comprehensive Use of Force Policy for all LEO departments (LSPD, BCSO, SASP).</td>
+  </tr>
+</table>
+
+<h2>18.2 Amendment Process</h2>
+<p>Amendments to this policy may be proposed by any sworn officer of any rank through the following process:</p>
+<ol>
+  <li><strong>Proposal:</strong> Submit a written amendment proposal to the Training Division Commander outlining the proposed change, rationale, and any supporting research or incident data.</li>
+  <li><strong>Review:</strong> The Training Division Commander shall review the proposal and consult with the Legal Advisor, Internal Affairs, and affected division commanders.</li>
+  <li><strong>Recommendation:</strong> The Training Division Commander shall forward the proposal with a recommendation (approve, modify, reject) to the department head.</li>
+  <li><strong>Approval:</strong> The Chief of Police, Sheriff, or Colonel shall approve or reject the amendment. Major amendments affecting lethal force or prohibited techniques require concurrence from all three department heads.</li>
+  <li><strong>Publication:</strong> Approved amendments shall be published to all personnel with a minimum 30-day notice before the effective date, except for emergency amendments necessitated by court orders or critical safety concerns.</li>
+  <li><strong>Training:</strong> All personnel shall complete training on any policy amendment before the effective date.</li>
+</ol>
+
+<h2>18.3 Annual Review</h2>
+<p>This policy shall be reviewed in its entirety at least once per calendar year by the Training Division in consultation with Internal Affairs and the Legal Advisor. The annual review shall consider:</p>
+<ul>
+  <li>All use of force incidents from the preceding year (trends, patterns, outcomes)</li>
+  <li>Changes in applicable law or court decisions</li>
+  <li>Advances in less-lethal technology</li>
+  <li>Best practices from other law enforcement agencies</li>
+  <li>Community feedback and concerns</li>
+  <li>Training effectiveness data</li>
+  <li>Officer injury data related to use of force encounters</li>
+</ul>
+
+<h2>18.4 Acknowledgment</h2>
+<p>All sworn personnel shall sign an acknowledgment form confirming they have read, understand, and agree to comply with this Use of Force Policy. The signed acknowledgment shall be maintained in the officer's personnel file. Acknowledgment shall be renewed annually or whenever a significant amendment is published.</p>
+
+<div class="callout callout-info">
+  <strong>QUESTIONS:</strong> Any questions regarding the interpretation or application of this policy should be directed to the officer's immediate supervisor, the Training Division, or the department Legal Advisor. When in doubt, use the minimum force necessary and document your reasoning.
+</div>
+
+<blockquote>
+  "The measure of a department is not how much force its officers are capable of using, but how rarely they need to use it."<br>
+  &mdash; ZO Syndicate RP Command Philosophy
+</blockquote>
+
+</div><!-- end .content -->
+
+<!-- ============================== FOOTER ============================== -->
+<div class="footer">
+  <div class="org">PROZILLI ENTERTAINMENT</div>
+  ZO Syndicate RP &mdash; Use of Force Policy v1.0<br>
+  Classification: RESTRICTED &mdash; LAW ENFORCEMENT ONLY<br>
+  <a href="lspd.html">LSPD SOP</a> &bull;
+  <a href="bcso.html">BCSO SOP</a> &bull;
+  <a href="sasp.html">SASP SOP</a> &bull;
+  <a href="ems.html">EMS SOP</a> &bull;
+  <a href="doj.html">DOJ SOP</a> &bull;
+  <a href="criminal-code.html">Criminal Code</a><br>
+  &copy; 2026 Prozilli Entertainment. All rights reserved.<br>
+  This document is the property of Prozilli Entertainment and is intended for authorized ZO Syndicate RP personnel only.
+</div>
+
+</body>
+</html>

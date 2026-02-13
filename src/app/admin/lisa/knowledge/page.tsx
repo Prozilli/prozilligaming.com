@@ -135,7 +135,7 @@ export default function LisaKnowledgePage() {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 rounded-lg bg-brand-red px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90"
+          className="flex items-center gap-2 rounded-lg bg-red px-4 py-2.5 text-sm font-medium text-white hover:bg-red/90"
         >
           <svg
             className="h-4 w-4"
@@ -156,21 +156,21 @@ export default function LisaKnowledgePage() {
 
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-4">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-4">
           <p className="text-2xl font-bold text-white">{knowledge.length}</p>
           <p className="text-xs text-gray-500">Total Items</p>
         </div>
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-4">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-4">
           <p className="text-2xl font-bold text-green-400">
             {knowledge.filter((k) => k.enabled).length}
           </p>
           <p className="text-xs text-gray-500">Active</p>
         </div>
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-4">
-          <p className="text-2xl font-bold text-brand-gold">{CATEGORIES.length}</p>
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-4">
+          <p className="text-2xl font-bold text-gold">{CATEGORIES.length}</p>
           <p className="text-xs text-gray-500">Categories</p>
         </div>
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-4">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-4">
           <p className="text-2xl font-bold text-white">
             {Math.round(
               knowledge.reduce((sum, k) => sum + k.answer.length, 0) / 1000
@@ -187,8 +187,8 @@ export default function LisaKnowledgePage() {
             onClick={() => setSelectedCategory(null)}
             className={`w-full flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors ${
               !selectedCategory
-                ? "bg-brand-red/10 text-brand-red"
-                : "text-gray-400 hover:bg-white/5 hover:text-white"
+                ? "bg-red/10 text-red"
+                : "text-gray-400 hover:bg-surface hover:text-white"
             }`}
           >
             <span>All Items</span>
@@ -200,8 +200,8 @@ export default function LisaKnowledgePage() {
               onClick={() => setSelectedCategory(cat)}
               className={`w-full flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors ${
                 selectedCategory === cat
-                  ? "bg-brand-red/10 text-brand-red"
-                  : "text-gray-400 hover:bg-white/5 hover:text-white"
+                  ? "bg-red/10 text-red"
+                  : "text-gray-400 hover:bg-surface hover:text-white"
               }`}
             >
               <span>{cat}</span>
@@ -232,7 +232,7 @@ export default function LisaKnowledgePage() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search knowledge base..."
-              className="w-full rounded-lg border border-white/10 bg-[#161b22] py-3 pl-12 pr-4 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface py-3 pl-12 pr-4 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
             />
           </div>
 
@@ -243,14 +243,14 @@ export default function LisaKnowledgePage() {
               .map((item) => (
                 <div
                   key={item.id}
-                  className={`rounded-xl border border-white/5 bg-[#161b22] p-4 ${
+                  className={`rounded-xl border border-[var(--color-border)] bg-surface p-4 ${
                     !item.enabled ? "opacity-50" : ""
                   }`}
                 >
                   <div className="flex items-start justify-between gap-4">
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-2">
-                        <span className="rounded bg-brand-red/20 px-1.5 py-0.5 text-[10px] font-medium text-brand-red">
+                        <span className="rounded bg-red/20 px-1.5 py-0.5 text-[10px] font-medium text-red">
                           {item.category}
                         </span>
                         <span className="text-[10px] text-gray-500">
@@ -266,7 +266,7 @@ export default function LisaKnowledgePage() {
                       <button
                         onClick={() => toggleItem(item.id)}
                         className={`relative h-5 w-9 rounded-full transition-colors ${
-                          item.enabled ? "bg-green-500" : "bg-white/10"
+                          item.enabled ? "bg-green-500" : "bg-raised"
                         }`}
                       >
                         <span
@@ -275,7 +275,7 @@ export default function LisaKnowledgePage() {
                           }`}
                         />
                       </button>
-                      <button className="rounded p-1.5 text-gray-400 hover:bg-white/5 hover:text-white">
+                      <button className="rounded p-1.5 text-gray-400 hover:bg-surface hover:text-white">
                         <svg
                           className="h-4 w-4"
                           fill="none"
@@ -314,7 +314,7 @@ export default function LisaKnowledgePage() {
               ))}
 
             {filteredKnowledge.length === 0 && (
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-12 text-center">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-12 text-center">
                 <span className="text-4xl">📚</span>
                 <h3 className="mt-4 text-lg font-medium text-white">
                   No knowledge found
@@ -333,7 +333,7 @@ export default function LisaKnowledgePage() {
       {/* Add Modal */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="w-full max-w-lg rounded-xl border border-white/10 bg-[#161b22] p-6">
+          <div className="w-full max-w-lg rounded-xl border border-[var(--color-border)] bg-surface p-6">
             <h2 className="text-lg font-bold text-white mb-4">Add Knowledge</h2>
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -346,7 +346,7 @@ export default function LisaKnowledgePage() {
                     onChange={(e) =>
                       setNewItem({ ...newItem, category: e.target.value })
                     }
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   >
                     {CATEGORIES.map((cat) => (
                       <option key={cat} value={cat}>
@@ -370,7 +370,7 @@ export default function LisaKnowledgePage() {
                     }
                     min={1}
                     max={10}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   />
                 </div>
               </div>
@@ -385,7 +385,7 @@ export default function LisaKnowledgePage() {
                     setNewItem({ ...newItem, question: e.target.value })
                   }
                   placeholder="What question or topic does this answer?"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
                 />
               </div>
               <div>
@@ -399,14 +399,14 @@ export default function LisaKnowledgePage() {
                   }
                   rows={4}
                   placeholder="The information LISA should know..."
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
                 />
               </div>
             </div>
             <div className="mt-6 flex justify-end gap-3">
               <button
                 onClick={() => setShowAddModal(false)}
-                className="rounded-lg bg-white/5 px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-white/10 hover:text-white"
+                className="rounded-lg bg-surface px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-raised hover:text-white"
               >
                 Cancel
               </button>
@@ -430,7 +430,7 @@ export default function LisaKnowledgePage() {
                     setShowAddModal(false);
                   }
                 }}
-                className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90"
+                className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90"
               >
                 Add Knowledge
               </button>

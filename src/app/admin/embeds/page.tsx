@@ -127,10 +127,10 @@ export default function EmbedsPage() {
         {/* Editor Column */}
         <div className="space-y-6">
           {/* Channel Select */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Target Channel</h3>
             {channelsLoading ? (
-              <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+              <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                 Loading channels...
               </div>
             ) : channelsError ? (
@@ -141,7 +141,7 @@ export default function EmbedsPage() {
               <select
                 value={channelId}
                 onChange={(e) => setChannelId(e.target.value)}
-                className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+                className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
               >
                 <option value="">Select a channel</option>
                 {channels.map((channel) => (
@@ -154,7 +154,7 @@ export default function EmbedsPage() {
           </div>
 
           {/* Embed Content */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Embed Content</h3>
             <div className="space-y-4">
               <div>
@@ -164,7 +164,7 @@ export default function EmbedsPage() {
                   value={embed.title}
                   onChange={(e) => updateEmbed("title", e.target.value)}
                   placeholder="Embed title"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 />
               </div>
               <div>
@@ -174,7 +174,7 @@ export default function EmbedsPage() {
                   onChange={(e) => updateEmbed("description", e.target.value)}
                   rows={4}
                   placeholder="Embed description (supports Discord markdown)"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none resize-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none resize-none"
                 />
               </div>
               <div>
@@ -190,7 +190,7 @@ export default function EmbedsPage() {
                     type="text"
                     value={embed.color}
                     onChange={(e) => updateEmbed("color", e.target.value)}
-                    className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   />
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default function EmbedsPage() {
           </div>
 
           {/* Fields */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-sm font-semibold text-white">Fields</h3>
@@ -207,7 +207,7 @@ export default function EmbedsPage() {
               <button
                 onClick={addField}
                 disabled={embed.fields.length >= 5}
-                className="flex items-center gap-1.5 rounded-lg bg-white/5 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-white/10 disabled:opacity-50"
+                className="flex items-center gap-1.5 rounded-lg bg-surface px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-raised disabled:opacity-50"
               >
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -221,7 +221,7 @@ export default function EmbedsPage() {
             ) : (
               <div className="space-y-4">
                 {embed.fields.map((field, index) => (
-                  <div key={index} className="rounded-lg bg-white/5 p-3 space-y-3">
+                  <div key={index} className="rounded-lg bg-surface p-3 space-y-3">
                     <div className="flex items-center justify-between">
                       <span className="text-xs font-medium text-gray-400">Field {index + 1}</span>
                       <button
@@ -238,21 +238,21 @@ export default function EmbedsPage() {
                       value={field.name}
                       onChange={(e) => updateField(index, "name", e.target.value)}
                       placeholder="Field name"
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                     />
                     <input
                       type="text"
                       value={field.value}
                       onChange={(e) => updateField(index, "value", e.target.value)}
                       placeholder="Field value"
-                      className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                      className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                     />
                     <label className="flex items-center gap-2 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={field.inline}
                         onChange={(e) => updateField(index, "inline", e.target.checked)}
-                        className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-red focus:ring-brand-red"
+                        className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red"
                       />
                       <span className="text-xs text-gray-400">Inline</span>
                     </label>
@@ -263,7 +263,7 @@ export default function EmbedsPage() {
           </div>
 
           {/* Images & Footer */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Images & Footer</h3>
             <div className="space-y-4">
               <div>
@@ -273,7 +273,7 @@ export default function EmbedsPage() {
                   value={embed.image}
                   onChange={(e) => updateEmbed("image", e.target.value)}
                   placeholder="https://example.com/image.png"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 />
               </div>
               <div>
@@ -283,7 +283,7 @@ export default function EmbedsPage() {
                   value={embed.thumbnail}
                   onChange={(e) => updateEmbed("thumbnail", e.target.value)}
                   placeholder="https://example.com/thumbnail.png"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 />
               </div>
               <div>
@@ -293,7 +293,7 @@ export default function EmbedsPage() {
                   value={embed.footer}
                   onChange={(e) => updateEmbed("footer", e.target.value)}
                   placeholder="Footer text"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 />
               </div>
             </div>
@@ -310,7 +310,7 @@ export default function EmbedsPage() {
             <button
               onClick={handleSend}
               disabled={sending}
-              className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+              className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
             >
               {sending ? "Sending..." : "Send Embed"}
             </button>
@@ -320,7 +320,7 @@ export default function EmbedsPage() {
         {/* Preview Column */}
         <div className="space-y-4">
           <h3 className="text-sm font-semibold text-white">Preview</h3>
-          <div className="rounded-xl border border-white/5 bg-[#36393f] p-4">
+          <div className="rounded-xl border border-[var(--color-border)] bg-[#36393f] p-4">
             <div className="flex gap-4">
               <div className="h-10 w-10 rounded-full bg-[#5865F2] flex items-center justify-center text-white font-bold text-sm shrink-0">
                 P

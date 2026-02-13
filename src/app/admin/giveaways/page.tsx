@@ -138,7 +138,7 @@ export default function GiveawaysPage() {
         </div>
         <button
           onClick={() => setActiveTab("create")}
-          className="flex items-center gap-2 rounded-lg bg-brand-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-red/90"
+          className="flex items-center gap-2 rounded-lg bg-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red/90"
         >
           <svg
             className="h-4 w-4"
@@ -158,7 +158,7 @@ export default function GiveawaysPage() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1 rounded-lg bg-white/5 p-1">
+      <div className="flex gap-1 rounded-lg bg-surface p-1">
         {[
           { id: "active", label: "Active", count: activeGiveaways.length },
           { id: "create", label: "Create" },
@@ -169,8 +169,8 @@ export default function GiveawaysPage() {
             onClick={() => setActiveTab(tab.id as TabType)}
             className={`flex-1 flex items-center justify-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
               activeTab === tab.id
-                ? "bg-brand-red text-white"
-                : "text-gray-400 hover:text-white hover:bg-white/5"
+                ? "bg-red text-white"
+                : "text-gray-400 hover:text-white hover:bg-surface"
             }`}
           >
             {tab.label}
@@ -179,7 +179,7 @@ export default function GiveawaysPage() {
                 className={`rounded-full px-2 py-0.5 text-xs ${
                   activeTab === tab.id
                     ? "bg-white/20"
-                    : "bg-white/10"
+                    : "bg-raised"
                 }`}
               >
                 {tab.count}
@@ -193,10 +193,10 @@ export default function GiveawaysPage() {
       {activeTab === "active" && (
         <div className="space-y-4">
           {activeGiveaways.length === 0 ? (
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-12 text-center">
-              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-brand-red/10">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-12 text-center">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red/10">
                 <svg
-                  className="h-8 w-8 text-brand-red"
+                  className="h-8 w-8 text-red"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
@@ -217,7 +217,7 @@ export default function GiveawaysPage() {
               </p>
               <button
                 onClick={() => setActiveTab("create")}
-                className="mt-4 rounded-lg bg-brand-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-red/90"
+                className="mt-4 rounded-lg bg-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red/90"
               >
                 Create Giveaway
               </button>
@@ -226,11 +226,11 @@ export default function GiveawaysPage() {
             activeGiveaways.map((giveaway) => (
               <div
                 key={giveaway.id}
-                className="rounded-xl border border-white/5 bg-[#161b22] p-5"
+                className="rounded-xl border border-[var(--color-border)] bg-surface p-5"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-brand-red/20 text-brand-red">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-red/20 text-red">
                       <svg
                         className="h-6 w-6"
                         fill="none"
@@ -264,19 +264,19 @@ export default function GiveawaysPage() {
                 </div>
 
                 <div className="mt-4 grid gap-4 sm:grid-cols-3">
-                  <div className="rounded-lg bg-white/5 p-3 text-center">
+                  <div className="rounded-lg bg-surface p-3 text-center">
                     <p className="text-2xl font-bold text-white">
                       {giveaway.entries}
                     </p>
                     <p className="text-xs text-gray-500">Entries</p>
                   </div>
-                  <div className="rounded-lg bg-white/5 p-3 text-center">
-                    <p className="text-2xl font-bold text-brand-gold">
+                  <div className="rounded-lg bg-surface p-3 text-center">
+                    <p className="text-2xl font-bold text-gold">
                       {giveaway.endsAt}
                     </p>
                     <p className="text-xs text-gray-500">Time Left</p>
                   </div>
-                  <div className="rounded-lg bg-white/5 p-3 text-center">
+                  <div className="rounded-lg bg-surface p-3 text-center">
                     <p className="text-2xl font-bold text-white">
                       {giveaway.hostedBy}
                     </p>
@@ -285,13 +285,13 @@ export default function GiveawaysPage() {
                 </div>
 
                 <div className="mt-4 flex gap-2">
-                  <button className="flex-1 rounded-lg bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10">
+                  <button className="flex-1 rounded-lg bg-surface px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-raised">
                     View Entries
                   </button>
                   <button
                     onClick={() => handleEndEarly(giveaway.id)}
                     disabled={saving}
-                    className="flex-1 rounded-lg bg-brand-gold/10 px-4 py-2 text-sm font-medium text-brand-gold transition-colors hover:bg-brand-gold/20 disabled:opacity-50"
+                    className="flex-1 rounded-lg bg-brand-gold/10 px-4 py-2 text-sm font-medium text-gold transition-colors hover:bg-brand-gold/20 disabled:opacity-50"
                   >
                     {saving ? "Saving..." : "End Early"}
                   </button>
@@ -312,7 +312,7 @@ export default function GiveawaysPage() {
       {/* Create Giveaway */}
       {activeTab === "create" && (
         <div className="space-y-6">
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">
               Giveaway Details
             </h3>
@@ -328,7 +328,7 @@ export default function GiveawaysPage() {
                     setNewGiveaway({ ...newGiveaway, prize: e.target.value })
                   }
                   placeholder="What are you giving away?"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
                 />
               </div>
 
@@ -347,7 +347,7 @@ export default function GiveawaysPage() {
                         winners: parseInt(e.target.value) || 1,
                       })
                     }
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   />
                 </div>
                 <div>
@@ -359,7 +359,7 @@ export default function GiveawaysPage() {
                     onChange={(e) =>
                       setNewGiveaway({ ...newGiveaway, duration: e.target.value })
                     }
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   >
                     <option value="1h">1 Hour</option>
                     <option value="6h">6 Hours</option>
@@ -380,7 +380,7 @@ export default function GiveawaysPage() {
                   onChange={(e) =>
                     setNewGiveaway({ ...newGiveaway, channel: e.target.value })
                   }
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 >
                   <option value="">
                     {channelsLoading ? "Loading channels..." : "Select a channel..."}
@@ -395,7 +395,7 @@ export default function GiveawaysPage() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">
               Entry Requirements
             </h3>
@@ -418,7 +418,7 @@ export default function GiveawaysPage() {
                     })
                   }
                   placeholder="0 for no requirement"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 />
               </div>
               <div>
@@ -439,7 +439,7 @@ export default function GiveawaysPage() {
                     })
                   }
                   placeholder="0 for no requirement"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 />
               </div>
             </div>
@@ -448,14 +448,14 @@ export default function GiveawaysPage() {
           <div className="flex justify-end gap-3">
             <button
               onClick={() => setActiveTab("active")}
-              className="rounded-lg bg-white/5 px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
+              className="rounded-lg bg-surface px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-raised"
             >
               Cancel
             </button>
             <button
               onClick={handleStartGiveaway}
               disabled={saving || !newGiveaway.prize || !newGiveaway.channel}
-              className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-red/90 disabled:opacity-50"
+              className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50"
             >
               {saving ? "Starting..." : "Start Giveaway"}
             </button>
@@ -467,7 +467,7 @@ export default function GiveawaysPage() {
       {activeTab === "history" && (
         <div className="space-y-4">
           {pastGiveaways.length === 0 ? (
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-12 text-center">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-12 text-center">
               <h3 className="text-lg font-semibold text-white">
                 No Past Giveaways
               </h3>
@@ -479,7 +479,7 @@ export default function GiveawaysPage() {
             pastGiveaways.map((giveaway) => (
               <div
                 key={giveaway.id}
-                className="rounded-xl border border-white/5 bg-[#161b22] p-5 opacity-75"
+                className="rounded-xl border border-[var(--color-border)] bg-surface p-5 opacity-75"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-4">
@@ -519,10 +519,10 @@ export default function GiveawaysPage() {
                   </span>
                 </div>
                 <div className="mt-4 flex gap-2">
-                  <button className="flex-1 rounded-lg bg-white/5 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-white/10">
+                  <button className="flex-1 rounded-lg bg-surface px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-raised">
                     View Winners
                   </button>
-                  <button className="rounded-lg bg-brand-red/10 px-4 py-2 text-sm font-medium text-brand-red transition-colors hover:bg-brand-red/20">
+                  <button className="rounded-lg bg-red/10 px-4 py-2 text-sm font-medium text-red transition-colors hover:bg-red/20">
                     Reroll
                   </button>
                 </div>

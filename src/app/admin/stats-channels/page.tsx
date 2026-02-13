@@ -127,7 +127,7 @@ export default function StatsChannelsPage() {
       </div>
 
       {/* Enable Toggle */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-semibold text-white">Enable Stats Channels</h3>
@@ -138,7 +138,7 @@ export default function StatsChannelsPage() {
           <button
             onClick={() => setConfig({ ...config, enabled: !config.enabled })}
             className={`relative h-6 w-11 rounded-full transition-colors ${
-              config.enabled ? "bg-brand-red" : "bg-white/10"
+              config.enabled ? "bg-red" : "bg-raised"
             }`}
           >
             <span
@@ -153,17 +153,17 @@ export default function StatsChannelsPage() {
       {config.enabled && (
         <>
           {/* Channel List */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h3 className="text-sm font-semibold text-white">Stat Channels</h3>
                 <p className="text-xs text-gray-500 mt-1">
-                  Map voice channels to server statistics. Use <code className="text-brand-gold">{"{count}"}</code> in the format template.
+                  Map voice channels to server statistics. Use <code className="text-gold">{"{count}"}</code> in the format template.
                 </p>
               </div>
               <button
                 onClick={addChannel}
-                className="flex items-center gap-1.5 rounded-lg bg-brand-red/10 px-3 py-1.5 text-xs font-medium text-brand-red transition-colors hover:bg-brand-red/20"
+                className="flex items-center gap-1.5 rounded-lg bg-red/10 px-3 py-1.5 text-xs font-medium text-red transition-colors hover:bg-red/20"
               >
                 <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -173,14 +173,14 @@ export default function StatsChannelsPage() {
             </div>
 
             {config.channels.length === 0 ? (
-              <div className="rounded-lg border border-dashed border-white/10 p-8 text-center">
+              <div className="rounded-lg border border-dashed border-[var(--color-border)] p-8 text-center">
                 <svg className="mx-auto h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
                 </svg>
                 <p className="mt-2 text-sm text-gray-500">No stat channels configured</p>
                 <button
                   onClick={addChannel}
-                  className="mt-3 text-xs font-medium text-brand-red hover:text-brand-red/80 transition-colors"
+                  className="mt-3 text-xs font-medium text-red hover:text-red/80 transition-colors"
                 >
                   Add your first stat channel
                 </button>
@@ -198,7 +198,7 @@ export default function StatsChannelsPage() {
                 {config.channels.map((channel, index) => (
                   <div
                     key={index}
-                    className="grid gap-3 sm:grid-cols-[1fr_140px_1fr_40px] rounded-lg border border-white/5 bg-white/[0.02] p-3"
+                    className="grid gap-3 sm:grid-cols-[1fr_140px_1fr_40px] rounded-lg border border-[var(--color-border)] bg-white/[0.02] p-3"
                   >
                     {/* Voice Channel Select */}
                     <div>
@@ -206,7 +206,7 @@ export default function StatsChannelsPage() {
                         Voice Channel
                       </label>
                       {channelsLoading ? (
-                        <div className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-gray-500">
+                        <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-xs text-gray-500">
                           Loading...
                         </div>
                       ) : channelsError ? (
@@ -217,7 +217,7 @@ export default function StatsChannelsPage() {
                         <select
                           value={channel.channelId}
                           onChange={(e) => updateChannel(index, { channelId: e.target.value })}
-                          className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                          className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                         >
                           <option value="">Select channel</option>
                           {voiceChannels.map((vc) => (
@@ -237,7 +237,7 @@ export default function StatsChannelsPage() {
                       <select
                         value={channel.statType}
                         onChange={(e) => updateChannel(index, { statType: e.target.value })}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                       >
                         {STAT_TYPES.map((st) => (
                           <option key={st.value} value={st.value}>
@@ -257,7 +257,7 @@ export default function StatsChannelsPage() {
                         value={channel.format}
                         onChange={(e) => updateChannel(index, { format: e.target.value })}
                         placeholder="Members: {count}"
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
                       />
                     </div>
 
@@ -279,7 +279,7 @@ export default function StatsChannelsPage() {
           </div>
 
           {/* Preview */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-3">Preview</h3>
             <p className="text-xs text-gray-500 mb-3">
               This is how your stat channels will appear in Discord:
@@ -292,7 +292,7 @@ export default function StatsChannelsPage() {
                   const previewName = ch.format.replace("{count}", "3,248");
                   const channelName = voiceChannels.find((vc) => vc.id === ch.channelId)?.name;
                   return (
-                    <div key={i} className="flex items-center gap-2 text-sm text-gray-400 px-2 py-1 rounded hover:bg-white/5">
+                    <div key={i} className="flex items-center gap-2 text-sm text-gray-400 px-2 py-1 rounded hover:bg-surface">
                       <svg className="h-4 w-4 text-gray-500 shrink-0" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
                       </svg>
@@ -317,7 +317,7 @@ export default function StatsChannelsPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

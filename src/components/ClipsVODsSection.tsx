@@ -24,7 +24,7 @@ function ClipCard({ clip }: ClipCardProps) {
       href={clip.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="glass group overflow-hidden rounded-lg transition-all hover:scale-[1.02] hover:border-brand-red/30"
+      className="panel group overflow-hidden rounded-lg transition-all hover:scale-[1.02] hover:border-red/30"
     >
       <div className="relative aspect-video overflow-hidden">
         <img
@@ -39,7 +39,7 @@ function ClipCard({ clip }: ClipCardProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
       </div>
       <div className="p-4">
-        <h3 className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-brand-red">
+        <h3 className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-red">
           {clip.title}
         </h3>
         <div className="mt-2 flex items-center gap-3 text-xs text-muted">
@@ -69,7 +69,7 @@ function VODCard({ vod }: VODCardProps) {
       href={vod.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="glass group overflow-hidden rounded-lg transition-all hover:scale-[1.02] hover:border-brand-red/30"
+      className="panel group overflow-hidden rounded-lg transition-all hover:scale-[1.02] hover:border-red/30"
     >
       <div className="relative aspect-video overflow-hidden">
         <img
@@ -81,13 +81,13 @@ function VODCard({ vod }: VODCardProps) {
         <div className="absolute bottom-2 right-2 rounded bg-black/80 px-1.5 py-0.5 text-xs font-medium text-white">
           {formatDuration(durationSecs)}
         </div>
-        <div className="absolute left-2 top-2 rounded bg-brand-red/90 px-1.5 py-0.5 text-xs font-semibold uppercase text-white">
+        <div className="absolute left-2 top-2 rounded bg-red/90 px-1.5 py-0.5 text-xs font-semibold uppercase text-white">
           {vod.type === "archive" ? "VOD" : vod.type}
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
       </div>
       <div className="p-4">
-        <h3 className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-brand-red">
+        <h3 className="line-clamp-2 text-sm font-medium text-white transition-colors group-hover:text-red">
           {vod.title}
         </h3>
         <div className="mt-2 flex items-center gap-3 text-xs text-muted">
@@ -104,7 +104,7 @@ function LoadingSkeleton() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {[1, 2, 3, 4, 5, 6].map((i) => (
-        <div key={i} className="glass animate-pulse rounded-lg">
+        <div key={i} className="panel animate-pulse rounded-lg">
           <div className="aspect-video bg-white/5" />
           <div className="p-4">
             <div className="h-4 w-3/4 rounded bg-white/5" />
@@ -118,8 +118,8 @@ function LoadingSkeleton() {
 
 function EmptyState({ type }: { type: TabType }) {
   return (
-    <div className="rounded-lg border border-white/5 bg-white/[0.02] px-8 py-16 text-center">
-      <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-white/5 flex items-center justify-center">
+    <div className="rounded-lg border border-[var(--color-border)] bg-white/[0.02] px-8 py-16 text-center">
+      <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-surface flex items-center justify-center">
         <svg
           className="h-8 w-8 text-muted"
           fill="none"
@@ -148,10 +148,10 @@ function EmptyState({ type }: { type: TabType }) {
 
 function ErrorState({ message, onRetry }: { message: string; onRetry: () => void }) {
   return (
-    <div className="rounded-lg border border-brand-red/20 bg-brand-red/5 px-8 py-16 text-center">
-      <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-brand-red/10 flex items-center justify-center">
+    <div className="rounded-lg border border-red/20 bg-red/5 px-8 py-16 text-center">
+      <div className="mx-auto mb-4 h-16 w-16 rounded-full bg-red/10 flex items-center justify-center">
         <svg
-          className="h-8 w-8 text-brand-red"
+          className="h-8 w-8 text-red"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -168,7 +168,7 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
       <p className="mt-2 text-sm text-muted">{message}</p>
       <button
         onClick={onRetry}
-        className="mt-4 rounded-lg bg-brand-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-brand-red-glow"
+        className="mt-4 rounded-lg bg-red px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red/80"
       >
         Try Again
       </button>
@@ -225,12 +225,12 @@ export default function ClipsVODsSection() {
   const hasContent = currentItems.length > 0;
 
   return (
-    <section className="border-t border-white/5 bg-brand-darker">
+    <section className="border-t border-[var(--color-border)] bg-raised">
       <div className="mx-auto max-w-7xl px-6 py-16">
         {/* Header */}
         <div className="mb-8 flex flex-col items-center text-center sm:flex-row sm:items-end sm:justify-between sm:text-left">
           <div>
-            <span className="mb-2 inline-block rounded-full border border-brand-gold/20 bg-brand-gold/5 px-4 py-1 text-xs font-medium tracking-wider text-brand-gold">
+            <span className="mb-2 inline-block rounded-full border border-gold/20 bg-gold/5 px-4 py-1 text-xs font-medium tracking-wider text-gold">
               TWITCH CONTENT
             </span>
             <h2 className="mt-2 text-2xl font-bold tracking-tight text-white md:text-3xl">
@@ -247,8 +247,8 @@ export default function ClipsVODsSection() {
               onClick={() => setActiveTab("clips")}
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
                 activeTab === "clips"
-                  ? "bg-brand-red text-white"
-                  : "bg-white/5 text-muted hover:bg-white/10 hover:text-white"
+                  ? "bg-red text-white"
+                  : "bg-surface text-muted hover:bg-white/10 hover:text-white"
               }`}
             >
               Clips
@@ -262,8 +262,8 @@ export default function ClipsVODsSection() {
               onClick={() => setActiveTab("vods")}
               className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
                 activeTab === "vods"
-                  ? "bg-brand-red text-white"
-                  : "bg-white/5 text-muted hover:bg-white/10 hover:text-white"
+                  ? "bg-red text-white"
+                  : "bg-surface text-muted hover:bg-white/10 hover:text-white"
               }`}
             >
               VODs
@@ -298,7 +298,7 @@ export default function ClipsVODsSection() {
               href={`https://twitch.tv/prozilligaming/${activeTab === "clips" ? "clips" : "videos"}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm text-brand-gold transition-colors hover:text-white"
+              className="inline-flex items-center gap-2 text-sm text-gold transition-colors hover:text-white"
             >
               View all on Twitch
               <svg

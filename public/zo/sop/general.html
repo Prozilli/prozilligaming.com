@@ -1,0 +1,2285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>General Procedures SOP v1.0 - ZO Syndicate RP</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* --- HEADER BANNER --- */
+  .header-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+    border-bottom: 3px solid #a30000;
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(163,0,0,0.03) 2px,
+      rgba(163,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #c4a265;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .header-server {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 16px;
+    color: #a30000;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #777;
+  }
+  .header-meta span { white-space: nowrap; }
+  .header-meta strong { color: #999; }
+  .badge-classified {
+    display: inline-block;
+    background: #a30000;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #c44;
+  }
+
+  /* --- MAIN CONTENT --- */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+  }
+
+  /* --- TABLE OF CONTENTS --- */
+  .toc {
+    background: #111;
+    border: 1px solid #222;
+    border-left: 4px solid #a30000;
+    padding: 24px 28px;
+    margin: 0 0 40px;
+  }
+  .toc h2 {
+    color: #a30000;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    margin-bottom: 5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #a30000; }
+
+  /* --- HEADINGS --- */
+  h1 {
+    color: #a30000;
+    border-bottom: 2px solid #a30000;
+    padding-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-top: 50px;
+  }
+  h2 {
+    color: #c44;
+    margin-top: 35px;
+    font-size: 18px;
+    border-bottom: 1px solid #1f1f1f;
+    padding-bottom: 6px;
+  }
+  h3 {
+    color: #ddd;
+    font-size: 15px;
+    margin-top: 22px;
+  }
+  h4 {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 16px;
+    font-weight: 600;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #222;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  th {
+    background: #141414;
+    color: #a30000;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  td { background: #0f0f0f; }
+  tr:hover td { background: #151010; }
+
+  /* --- CALLOUT BOXES --- */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .callout-critical {
+    background: #1f0a0a;
+    border: 1px solid #331111;
+    border-left: 4px solid #a30000;
+  }
+  .callout-warning {
+    background: #1f1a0a;
+    border: 1px solid #33290e;
+    border-left: 4px solid #c4a265;
+  }
+  .callout-info {
+    background: #0a0f1f;
+    border: 1px solid #0e1a33;
+    border-left: 4px solid #3366aa;
+  }
+  .callout-success {
+    background: #0a1f0a;
+    border: 1px solid #0e330e;
+    border-left: 4px solid #2a8a2a;
+  }
+  .callout-critical strong { color: #e44; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #6699cc; }
+  .callout-success strong { color: #4a4; }
+
+  /* --- MISC --- */
+  code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    border: 1px solid #222;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  blockquote {
+    border-left: 3px solid #a30000;
+    margin: 16px 0;
+    padding: 10px 18px;
+    background: #111;
+    color: #aaa;
+    font-style: italic;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 40px 0;
+  }
+  strong { color: #eee; }
+  a { color: #a30000; text-decoration: none; }
+  a:hover { color: #c44; text-decoration: underline; }
+
+  /* --- FOOTER --- */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 2px solid #a30000;
+    margin-top: 60px;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer .org { color: #c4a265; font-weight: 600; letter-spacing: 2px; }
+  .footer a { color: #666; }
+  .footer a:hover { color: #a30000; }
+
+  /* --- HERO SECTION --- */
+  .hero-section {
+    position: relative;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(163,0,0,0.4) 0%, rgba(13,13,13,0.9) 50%, rgba(163,0,0,0.4) 100%);
+    opacity: 0.85;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+  }
+  .hero-title {
+    font-size: 56px;
+    font-weight: 700;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #fff;
+    text-shadow: 0 4px 16px rgba(0,0,0,0.8);
+    margin-bottom: 12px;
+  }
+  .hero-subtitle {
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: #c4a265;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 700px) {
+    .hero-section { height: 200px; }
+    .hero-title { font-size: 32px; letter-spacing: 4px; }
+    .hero-subtitle { font-size: 14px; }
+    .content { padding: 20px 16px 40px; }
+    .header-banner { padding: 28px 16px 22px; }
+    .header-dept { font-size: 22px; }
+    .toc ol { columns: 1; }
+    .header-meta { flex-direction: column; gap: 4px; align-items: center; }
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HEADER BANNER                                                 -->
+<!-- ============================================================ -->
+<div class="header-banner">
+  <div class="header-org">Prozilli Entertainment</div>
+  <div class="header-server">ZO Syndicate RP</div>
+  <div class="header-dept">General Procedures</div>
+  <div class="header-subtitle">Standard Operating Procedures</div>
+  <div class="badge-classified">All Departments</div>
+  <div class="header-meta">
+    <span><strong>Document:</strong> ZSR-SOP-GEN-2026-001</span>
+    <span><strong>Version:</strong> 1.0</span>
+    <span><strong>Effective:</strong> February 2026</span>
+    <span><strong>Classification:</strong> OFFICIAL</span>
+    <span><strong>Authority:</strong> Chief of Staff</span>
+  </div>
+</div>
+
+<!-- Hero Image Section -->
+<div class="hero-section" style="background: radial-gradient(circle at center, rgba(163,0,0,0.3) 0%, transparent 70%), url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 1920 600%22%3E%3Cdefs%3E%3ClinearGradient id=%22bg%22 x1=%220%25%22 y1=%220%25%22 x2=%220%25%22 y2=%22100%25%22%3E%3Cstop offset=%220%25%22 stop-color=%22%231a0a0a%22/%3E%3Cstop offset=%22100%25%22 stop-color=%22%230a0a0a%22/%3E%3C/linearGradient%3E%3ClinearGradient id=%22glow%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%220%25%22%3E%3Cstop offset=%220%25%22 stop-color=%22%23a30000%22 stop-opacity=%220.3%22/%3E%3Cstop offset=%2250%25%22 stop-color=%22%23c4a265%22 stop-opacity=%220.4%22/%3E%3Cstop offset=%22100%25%22 stop-color=%22%23a30000%22 stop-opacity=%220.3%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill=%22url(%23bg)%22 width=%221920%22 height=%22600%22/%3E%3Cg opacity=%220.12%22 fill=%22%23333%22%3E%3Crect x=%2250%22 y=%22300%22 width=%22100%22 height=%22300%22/%3E%3Crect x=%22180%22 y=%22250%22 width=%22120%22 height=%22350%22/%3E%3Crect x=%22330%22 y=%22280%22 width=%2290%22 height=%22320%22/%3E%3Crect x=%22450%22 y=%22200%22 width=%22150%22 height=%22400%22/%3E%3Crect x=%22630%22 y=%22240%22 width=%22110%22 height=%22360%22/%3E%3Crect x=%22770%22 y=%22260%22 width=%22130%22 height=%22340%22/%3E%3Crect x=%22930%22 y=%22220%22 width=%22160%22 height=%22380%22/%3E%3Crect x=%221120%22 y=%22280%22 width=%22100%22 height=%22320%22/%3E%3Crect x=%221250%22 y=%22240%22 width=%22140%22 height=%22360%22/%3E%3Crect x=%221420%22 y=%22260%22 width=%22120%22 height=%22340%22/%3E%3Crect x=%221570%22 y=%22300%22 width=%22100%22 height=%22300%22/%3E%3Crect x=%221700%22 y=%22270%22 width=%22130%22 height=%22330%22/%3E%3C/g%3E%3Crect fill=%22url(%23glow)%22 opacity=%220.25%22 y=%22280%22 width=%221920%22 height=%2220%22/%3E%3Cg transform=%22translate(860, 180)%22 opacity=%220.2%22%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%2290%22 fill=%22none%22 stroke=%22%23c4a265%22 stroke-width=%224%22/%3E%3Ctext x=%22100%22 y=%22105%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2220%22 font-weight=%22bold%22 fill=%22%23c4a265%22%3EZSR%3C/text%3E%3Ctext x=%22100%22 y=%22130%22 text-anchor=%22middle%22 font-family=%22Arial%22 font-size=%2212%22 fill=%22%23c4a265%22%3EGENERAL%3C/text%3E%3C/g%3E%3C/svg%3E') #0d0d0d;">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">General Procedures</h1>
+    <div class="hero-subtitle">All-Department Standard Operating Procedures</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- MAIN CONTENT                                                  -->
+<!-- ============================================================ -->
+<div class="content">
+
+<div class="callout callout-critical">
+  <strong>MANDATORY COMPLIANCE:</strong> This document supersedes all department-specific SOPs in matters of general conduct, ethics, and inter-agency procedure. All sworn and civilian personnel across LSPD, BCSO, SASP, EMS, Fire Department, and DOJ are bound by these standards. Violations may result in disciplinary action up to and including termination.
+</div>
+
+<!-- ============================================================ -->
+<!-- TABLE OF CONTENTS                                             -->
+<!-- ============================================================ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#purpose">Purpose &amp; Scope</a></li>
+    <li><a href="#conduct">Code of Conduct &amp; Ethics</a></li>
+    <li><a href="#duty">Duty Status &amp; Clock-In/Out Procedures</a></li>
+    <li><a href="#radio">Radio Communications Protocol</a></li>
+    <li><a href="#chain">Chain of Command</a></li>
+    <li><a href="#reports">Report Writing Standards</a></li>
+    <li><a href="#mdt">MDT Usage &amp; Digital Procedures</a></li>
+    <li><a href="#interagency">Inter-Agency Cooperation</a></li>
+    <li><a href="#evidence">Evidence Handling &amp; Chain of Custody</a></li>
+    <li><a href="#witness">Witness &amp; Victim Interaction</a></li>
+    <li><a href="#scene">Scene Safety &amp; Management</a></li>
+    <li><a href="#vehicles">Vehicle Operation Standards</a></li>
+    <li><a href="#equipment">Equipment &amp; Uniform Standards</a></li>
+    <li><a href="#discipline">Disciplinary Procedures</a></li>
+    <li><a href="#training">Training Requirements</a></li>
+    <li><a href="#resources">Use of Government Resources</a></li>
+    <li><a href="#offduty">Off-Duty Conduct</a></li>
+    <li><a href="#confidentiality">Confidentiality &amp; Information Security</a></li>
+    <li><a href="#emergency">Emergency Protocols</a></li>
+    <li><a href="#leave">Leave &amp; Absence Procedures</a></li>
+    <li><a href="#changelog">Document Changelog</a></li>
+  </ol>
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 1: PURPOSE & SCOPE                                    -->
+<!-- ============================================================ -->
+<h1 id="purpose">1. Purpose &amp; Scope</h1>
+
+<h2>1.1 Purpose</h2>
+<p>This document establishes universal standards of conduct, procedure, and protocol that apply to <strong>all departments</strong> within the ZO Syndicate RP government framework. It serves as the foundational policy document from which all department-specific SOPs derive their authority and operational baseline.</p>
+
+<p>The General Procedures SOP exists to:</p>
+<ul>
+  <li>Ensure consistent standards across all government departments</li>
+  <li>Establish clear expectations for professional conduct</li>
+  <li>Define inter-agency communication and cooperation protocols</li>
+  <li>Provide a unified reference for training and accountability</li>
+  <li>Protect the rights and safety of both personnel and civilians</li>
+</ul>
+
+<h2>1.2 Scope</h2>
+<p>This document applies to all sworn and civilian personnel in the following departments:</p>
+
+<table>
+  <tr>
+    <th>Department</th>
+    <th>Abbreviation</th>
+    <th>Jurisdiction</th>
+  </tr>
+  <tr>
+    <td>Los Santos Police Department</td>
+    <td>LSPD</td>
+    <td>City of Los Santos</td>
+  </tr>
+  <tr>
+    <td>Blaine County Sheriff's Office</td>
+    <td>BCSO</td>
+    <td>Blaine County</td>
+  </tr>
+  <tr>
+    <td>San Andreas State Police</td>
+    <td>SASP</td>
+    <td>State of San Andreas (statewide)</td>
+  </tr>
+  <tr>
+    <td>Emergency Medical Services</td>
+    <td>EMS</td>
+    <td>All of San Andreas</td>
+  </tr>
+  <tr>
+    <td>San Andreas Fire Department</td>
+    <td>SAFD</td>
+    <td>All of San Andreas</td>
+  </tr>
+  <tr>
+    <td>Department of Justice</td>
+    <td>DOJ</td>
+    <td>All of San Andreas (judicial authority)</td>
+  </tr>
+</table>
+
+<h2>1.3 Authority &amp; Precedence</h2>
+<p>This SOP is issued under the authority of the <strong>Chief of Staff</strong> of ZO Syndicate RP. In the event of conflict between this document and a department-specific SOP:</p>
+<ul>
+  <li><strong>This document takes precedence</strong> on matters of general conduct, ethics, radio protocol, inter-agency cooperation, disciplinary standards, and confidentiality.</li>
+  <li><strong>Department-specific SOPs take precedence</strong> on matters of tactical procedure, specialized equipment, departmental rank structure, and operational methodology unique to that department.</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>REFERENCE:</strong> Department-specific SOPs are maintained separately: <a href="lspd.html">LSPD SOP</a>, <a href="bcso.html">BCSO SOP</a>, <a href="sasp.html">SASP SOP</a>, <a href="ems.html">EMS SOP</a>, <a href="doj.html">DOJ SOP</a>. Personnel are required to be familiar with both this General SOP and their department-specific SOP.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 2: CODE OF CONDUCT & ETHICS                           -->
+<!-- ============================================================ -->
+<h1 id="conduct">2. Code of Conduct &amp; Ethics</h1>
+
+<h2>2.1 Core Values</h2>
+<p>All ZSR government personnel shall uphold the following core values in every interaction, both on-duty and off-duty:</p>
+<ul>
+  <li><strong>Integrity</strong> &mdash; Act honestly, transparently, and ethically at all times. Never falsify reports, plant evidence, or misrepresent facts.</li>
+  <li><strong>Professionalism</strong> &mdash; Maintain composure, courtesy, and a professional demeanor in all interactions with the public and colleagues.</li>
+  <li><strong>Accountability</strong> &mdash; Accept responsibility for your actions and decisions. Report mistakes immediately to a supervisor.</li>
+  <li><strong>Respect</strong> &mdash; Treat all persons with dignity regardless of race, gender, economic status, or criminal history.</li>
+  <li><strong>Service</strong> &mdash; Prioritize the safety and well-being of the community above personal interest.</li>
+  <li><strong>Courage</strong> &mdash; Act decisively in the face of danger, report misconduct regardless of rank, and stand by ethical decisions under pressure.</li>
+</ul>
+
+<h2>2.2 Prohibited Conduct</h2>
+<p>The following actions constitute violations of the Code of Conduct and are subject to immediate disciplinary action:</p>
+
+<table>
+  <tr>
+    <th>Violation</th>
+    <th>Category</th>
+    <th>Minimum Consequence</th>
+  </tr>
+  <tr>
+    <td>Corruption (accepting bribes, abuse of power for personal gain)</td>
+    <td>Critical</td>
+    <td>Immediate termination + DOJ referral</td>
+  </tr>
+  <tr>
+    <td>Evidence tampering, planting evidence, falsifying reports</td>
+    <td>Critical</td>
+    <td>Immediate termination + DOJ referral</td>
+  </tr>
+  <tr>
+    <td>Excessive or unauthorized use of force</td>
+    <td>Critical</td>
+    <td>Suspension pending IA investigation</td>
+  </tr>
+  <tr>
+    <td>Discrimination or harassment of any kind</td>
+    <td>Critical</td>
+    <td>Suspension pending IA investigation</td>
+  </tr>
+  <tr>
+    <td>Unauthorized disclosure of confidential information</td>
+    <td>Major</td>
+    <td>Written reprimand + retraining</td>
+  </tr>
+  <tr>
+    <td>Insubordination (refusal of lawful orders)</td>
+    <td>Major</td>
+    <td>Written reprimand</td>
+  </tr>
+  <tr>
+    <td>Unauthorized absence or abandoning duty post</td>
+    <td>Major</td>
+    <td>Written reprimand</td>
+  </tr>
+  <tr>
+    <td>Unprofessional conduct toward civilians</td>
+    <td>Moderate</td>
+    <td>Verbal warning + documentation</td>
+  </tr>
+  <tr>
+    <td>Failure to file required reports on time</td>
+    <td>Minor</td>
+    <td>Verbal warning</td>
+  </tr>
+  <tr>
+    <td>Improper uniform or equipment maintenance</td>
+    <td>Minor</td>
+    <td>Verbal warning</td>
+  </tr>
+</table>
+
+<h2>2.3 Conflict of Interest</h2>
+<p>Personnel shall not participate in any investigation, enforcement action, or judicial proceeding where they have a personal relationship, financial interest, or emotional bias that could compromise objectivity. Any potential conflict must be reported to a supervisor immediately for reassignment.</p>
+
+<h2>2.4 Duty to Report Misconduct</h2>
+<p>All personnel have an <strong>affirmative obligation</strong> to report witnessed misconduct by any government employee, regardless of rank or department. Reports may be made to:</p>
+<ul>
+  <li>Immediate supervisor (if not involved)</li>
+  <li>Department Internal Affairs</li>
+  <li>Chief of Staff's office</li>
+  <li>Department of Justice</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>ZERO TOLERANCE:</strong> Retaliation against any employee who reports misconduct in good faith is strictly prohibited. Retaliation is itself a terminable offense.
+</div>
+
+<h2>2.5 Social Media &amp; Public Statements</h2>
+<ul>
+  <li>Personnel shall not post content that could discredit the department or compromise ongoing investigations.</li>
+  <li>No photographs of crime scenes, evidence, or booking areas shall be posted publicly.</li>
+  <li>Official statements to media must be approved by department leadership or the Public Information Officer.</li>
+  <li>Personal social media accounts must clearly state that views expressed are personal and do not represent the department.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 3: DUTY STATUS & CLOCK-IN/OUT                        -->
+<!-- ============================================================ -->
+<h1 id="duty">3. Duty Status &amp; Clock-In/Out Procedures</h1>
+
+<h2>3.1 Duty Status Codes</h2>
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Status</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><code>10-41</code></td>
+    <td>On Duty / Beginning Tour</td>
+    <td>Officer has clocked in via MDT and is available for dispatch</td>
+  </tr>
+  <tr>
+    <td><code>10-42</code></td>
+    <td>Off Duty / Ending Tour</td>
+    <td>Officer has clocked out via MDT and is no longer available</td>
+  </tr>
+  <tr>
+    <td><code>10-7</code></td>
+    <td>Out of Service</td>
+    <td>Temporarily unavailable (break, personal, non-emergency)</td>
+  </tr>
+  <tr>
+    <td><code>10-8</code></td>
+    <td>In Service</td>
+    <td>Available for calls and dispatch</td>
+  </tr>
+  <tr>
+    <td><code>10-6</code></td>
+    <td>Busy</td>
+    <td>Engaged on a call or task but not requesting backup</td>
+  </tr>
+  <tr>
+    <td><code>10-19</code></td>
+    <td>Returning to Station</td>
+    <td>En route to department headquarters</td>
+  </tr>
+</table>
+
+<h2>3.2 Clock-In Procedure</h2>
+<ol>
+  <li>Arrive at your assigned station or designated start location.</li>
+  <li>Open the MDT and select <strong>"Clock In"</strong> to register your shift.</li>
+  <li>Verify your callsign, badge number, and assigned unit are correct in the MDT.</li>
+  <li>Announce on the primary radio channel: <code>"[Callsign] 10-41, [location]"</code></li>
+  <li>Check the active BOLO list and review any outstanding warrants or alerts.</li>
+  <li>Perform equipment check (see Section 13).</li>
+  <li>Begin patrol or report to assigned post.</li>
+</ol>
+
+<h2>3.3 Clock-Out Procedure</h2>
+<ol>
+  <li>Ensure all active calls are resolved or properly transferred to another unit.</li>
+  <li>Complete and submit all pending reports via the MDT.</li>
+  <li>Return all issued equipment to proper storage.</li>
+  <li>Return your assigned vehicle to the station lot or designated parking area.</li>
+  <li>Open the MDT and select <strong>"Clock Out"</strong> to end your shift.</li>
+  <li>Announce on the primary radio channel: <code>"[Callsign] 10-42, [location]"</code></li>
+</ol>
+
+<h2>3.4 Shift Requirements</h2>
+<ul>
+  <li><strong>Minimum shift duration:</strong> 30 minutes of active duty.</li>
+  <li><strong>Maximum consecutive duty:</strong> 8 hours. Personnel must take a mandatory 15-minute break after 4 consecutive hours.</li>
+  <li>Personnel going <code>10-7</code> for breaks must notify dispatch. Breaks exceeding 15 minutes require supervisor approval.</li>
+  <li>If you must leave mid-shift for an emergency, notify dispatch and your supervisor immediately. Log out via MDT when able.</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>IMPORTANT:</strong> Forgetting to clock out creates inaccurate payroll records and may flag your account. If you forget, contact a supervisor to correct your timesheet in the MDT as soon as possible.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 4: RADIO COMMUNICATIONS PROTOCOL                      -->
+<!-- ============================================================ -->
+<h1 id="radio">4. Radio Communications Protocol</h1>
+
+<h2>4.1 General Radio Etiquette</h2>
+<ul>
+  <li><strong>Keep transmissions brief and professional.</strong> Plan what you will say before keying the mic.</li>
+  <li>Always identify yourself with your callsign before speaking.</li>
+  <li>Wait 2 seconds after keying the mic before speaking to avoid clipping.</li>
+  <li>Do not interrupt active transmissions unless it is an emergency.</li>
+  <li>Use plain language when 10-codes may cause confusion in multi-agency situations.</li>
+  <li>Never use profanity, slang, or personal conversation on duty radio channels.</li>
+  <li>Acknowledge all dispatched calls with your callsign and ETA.</li>
+</ul>
+
+<h2>4.2 Standard 10-Codes</h2>
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Meaning</th>
+    <th>Code</th>
+    <th>Meaning</th>
+  </tr>
+  <tr>
+    <td><code>10-1</code></td>
+    <td>Poor reception / Signal weak</td>
+    <td><code>10-27</code></td>
+    <td>Driver's license check</td>
+  </tr>
+  <tr>
+    <td><code>10-2</code></td>
+    <td>Signal good / Loud and clear</td>
+    <td><code>10-28</code></td>
+    <td>Vehicle registration check</td>
+  </tr>
+  <tr>
+    <td><code>10-4</code></td>
+    <td>Affirmative / Acknowledged</td>
+    <td><code>10-29</code></td>
+    <td>Warrant check</td>
+  </tr>
+  <tr>
+    <td><code>10-6</code></td>
+    <td>Busy / Standby</td>
+    <td><code>10-31</code></td>
+    <td>Crime in progress</td>
+  </tr>
+  <tr>
+    <td><code>10-7</code></td>
+    <td>Out of service</td>
+    <td><code>10-32</code></td>
+    <td>Person with gun</td>
+  </tr>
+  <tr>
+    <td><code>10-8</code></td>
+    <td>In service / Available</td>
+    <td><code>10-34</code></td>
+    <td>Riot / civil disturbance</td>
+  </tr>
+  <tr>
+    <td><code>10-9</code></td>
+    <td>Repeat last transmission</td>
+    <td><code>10-35</code></td>
+    <td>Major crime alert</td>
+  </tr>
+  <tr>
+    <td><code>10-10</code></td>
+    <td>Negative / Fight in progress</td>
+    <td><code>10-41</code></td>
+    <td>Beginning tour / On duty</td>
+  </tr>
+  <tr>
+    <td><code>10-11</code></td>
+    <td>Dog case / Animal complaint</td>
+    <td><code>10-42</code></td>
+    <td>Ending tour / Off duty</td>
+  </tr>
+  <tr>
+    <td><code>10-12</code></td>
+    <td>Standby / Stand by</td>
+    <td><code>10-50</code></td>
+    <td>Traffic accident</td>
+  </tr>
+  <tr>
+    <td><code>10-13</code></td>
+    <td>Weather/road conditions report</td>
+    <td><code>10-51</code></td>
+    <td>Wrecker needed</td>
+  </tr>
+  <tr>
+    <td><code>10-14</code></td>
+    <td>Suspicious person / Prowler</td>
+    <td><code>10-52</code></td>
+    <td>Ambulance needed</td>
+  </tr>
+  <tr>
+    <td><code>10-15</code></td>
+    <td>Subject in custody</td>
+    <td><code>10-55</code></td>
+    <td>Intoxicated driver</td>
+  </tr>
+  <tr>
+    <td><code>10-17</code></td>
+    <td>En route to scene</td>
+    <td><code>10-66</code></td>
+    <td>Suspicious person</td>
+  </tr>
+  <tr>
+    <td><code>10-18</code></td>
+    <td>Urgent / Complete assignment quickly</td>
+    <td><code>10-70</code></td>
+    <td>Fire alarm</td>
+  </tr>
+  <tr>
+    <td><code>10-19</code></td>
+    <td>Returning to station</td>
+    <td><code>10-78</code></td>
+    <td>Request mutual aid</td>
+  </tr>
+  <tr>
+    <td><code>10-20</code></td>
+    <td>Location / What is your position?</td>
+    <td><code>10-80</code></td>
+    <td>Chase in progress</td>
+  </tr>
+  <tr>
+    <td><code>10-22</code></td>
+    <td>Disregard last transmission</td>
+    <td><code>10-99</code></td>
+    <td>Officer in distress / Emergency</td>
+  </tr>
+  <tr>
+    <td><code>10-23</code></td>
+    <td>Arrived on scene</td>
+    <td><code>Code 4</code></td>
+    <td>No further assistance needed</td>
+  </tr>
+  <tr>
+    <td><code>10-25</code></td>
+    <td>Report to / Meet at</td>
+    <td><code>Code 5</code></td>
+    <td>Stakeout / Undercover operation</td>
+  </tr>
+</table>
+
+<h2>4.3 Priority Codes</h2>
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Priority</th>
+    <th>Description</th>
+    <th>Response</th>
+  </tr>
+  <tr>
+    <td><code>Code 1</code></td>
+    <td>Low</td>
+    <td>Non-urgent response, handle when available</td>
+    <td>Normal driving, no lights/sirens</td>
+  </tr>
+  <tr>
+    <td><code>Code 2</code></td>
+    <td>Medium</td>
+    <td>Urgent but non-emergency response</td>
+    <td>Expedited driving, lights only (no siren)</td>
+  </tr>
+  <tr>
+    <td><code>Code 3</code></td>
+    <td>High</td>
+    <td>Emergency response, imminent danger</td>
+    <td>Lights and sirens, expedited response</td>
+  </tr>
+  <tr>
+    <td><code>Code 4</code></td>
+    <td>Clear</td>
+    <td>Scene secure, no further assistance needed</td>
+    <td>Resume normal duties</td>
+  </tr>
+  <tr>
+    <td><code>Code 5</code></td>
+    <td>Covert</td>
+    <td>Stakeout or undercover operation in progress</td>
+    <td>No marked units to respond to area</td>
+  </tr>
+</table>
+
+<h2>4.4 Signal 100 (Emergency Traffic Only)</h2>
+<div class="callout callout-critical">
+  <strong>SIGNAL 100:</strong> When "Signal 100" is declared, <strong>ALL non-emergency radio traffic must cease immediately</strong>. Only units directly involved in the emergency situation may transmit. Signal 100 is declared during:
+  <ul>
+    <li>Active shooter situations</li>
+    <li>Officer down / 10-99 situations</li>
+    <li>Mass casualty incidents</li>
+    <li>High-risk pursuit operations</li>
+    <li>Hostage/barricade situations</li>
+  </ul>
+  Signal 100 is lifted only by the Incident Commander or highest-ranking officer on scene by announcing: <code>"Signal 100 is lifted. Resume normal traffic."</code>
+</div>
+
+<h2>4.5 NATO Phonetic Alphabet</h2>
+<table>
+  <tr>
+    <th>Letter</th>
+    <th>Word</th>
+    <th>Letter</th>
+    <th>Word</th>
+    <th>Letter</th>
+    <th>Word</th>
+  </tr>
+  <tr>
+    <td>A</td><td>Alpha</td>
+    <td>J</td><td>Juliet</td>
+    <td>S</td><td>Sierra</td>
+  </tr>
+  <tr>
+    <td>B</td><td>Bravo</td>
+    <td>K</td><td>Kilo</td>
+    <td>T</td><td>Tango</td>
+  </tr>
+  <tr>
+    <td>C</td><td>Charlie</td>
+    <td>L</td><td>Lima</td>
+    <td>U</td><td>Uniform</td>
+  </tr>
+  <tr>
+    <td>D</td><td>Delta</td>
+    <td>M</td><td>Mike</td>
+    <td>V</td><td>Victor</td>
+  </tr>
+  <tr>
+    <td>E</td><td>Echo</td>
+    <td>N</td><td>November</td>
+    <td>W</td><td>Whiskey</td>
+  </tr>
+  <tr>
+    <td>F</td><td>Foxtrot</td>
+    <td>O</td><td>Oscar</td>
+    <td>X</td><td>X-ray</td>
+  </tr>
+  <tr>
+    <td>G</td><td>Golf</td>
+    <td>P</td><td>Papa</td>
+    <td>Y</td><td>Yankee</td>
+  </tr>
+  <tr>
+    <td>H</td><td>Hotel</td>
+    <td>Q</td><td>Quebec</td>
+    <td>Z</td><td>Zulu</td>
+  </tr>
+  <tr>
+    <td>I</td><td>India</td>
+    <td>R</td><td>Romeo</td>
+    <td colspan="2">&mdash;</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>USAGE:</strong> Use the phonetic alphabet when spelling out names, license plates, addresses, or any information where clarity is critical. Example: Plate "ABC 123" is transmitted as "Alpha Bravo Charlie, One Two Three."
+</div>
+
+<h2>4.6 Radio Channel Assignments</h2>
+<table>
+  <tr>
+    <th>Channel</th>
+    <th>Department</th>
+    <th>Usage</th>
+  </tr>
+  <tr>
+    <td>Channel 1</td>
+    <td>Dispatch / All Units</td>
+    <td>Primary dispatch channel, all departments monitor</td>
+  </tr>
+  <tr>
+    <td>Channel 2</td>
+    <td>LSPD</td>
+    <td>LSPD internal communications</td>
+  </tr>
+  <tr>
+    <td>Channel 3</td>
+    <td>BCSO</td>
+    <td>BCSO internal communications</td>
+  </tr>
+  <tr>
+    <td>Channel 4</td>
+    <td>SASP</td>
+    <td>SASP internal communications</td>
+  </tr>
+  <tr>
+    <td>Channel 5</td>
+    <td>EMS / Fire</td>
+    <td>Medical and fire department communications</td>
+  </tr>
+  <tr>
+    <td>Channel 6</td>
+    <td>TAC 1</td>
+    <td>Tactical channel for joint operations</td>
+  </tr>
+  <tr>
+    <td>Channel 7</td>
+    <td>TAC 2</td>
+    <td>Secondary tactical channel / Undercover</td>
+  </tr>
+  <tr>
+    <td>Channel 8</td>
+    <td>Command</td>
+    <td>Command staff only, incident management</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 5: CHAIN OF COMMAND                                   -->
+<!-- ============================================================ -->
+<h1 id="chain">5. Chain of Command</h1>
+
+<h2>5.1 General Hierarchy</h2>
+<p>All departments operate under a structured chain of command. Personnel must follow directives from superiors within their department and respect the authority of equivalent or higher ranks in other departments during joint operations.</p>
+
+<table>
+  <tr>
+    <th>Tier</th>
+    <th>LEO Equivalent</th>
+    <th>EMS/Fire Equivalent</th>
+    <th>DOJ Equivalent</th>
+  </tr>
+  <tr>
+    <td>Tier 1 &mdash; Executive</td>
+    <td>Chief / Sheriff / Colonel</td>
+    <td>EMS Director / Fire Chief</td>
+    <td>Chief Justice</td>
+  </tr>
+  <tr>
+    <td>Tier 2 &mdash; Senior Command</td>
+    <td>Assistant Chief / Undersheriff / Lt. Colonel</td>
+    <td>Deputy Director / Deputy Chief</td>
+    <td>Associate Justice</td>
+  </tr>
+  <tr>
+    <td>Tier 3 &mdash; Command</td>
+    <td>Captain / Commander</td>
+    <td>Captain / Battalion Chief</td>
+    <td>District Attorney</td>
+  </tr>
+  <tr>
+    <td>Tier 4 &mdash; Supervisory</td>
+    <td>Lieutenant / Sergeant</td>
+    <td>Lieutenant / Supervisor</td>
+    <td>Assistant DA / Public Defender</td>
+  </tr>
+  <tr>
+    <td>Tier 5 &mdash; Senior Personnel</td>
+    <td>Corporal / Senior Officer / Detective</td>
+    <td>Senior Paramedic / Senior FF</td>
+    <td>Senior Attorney</td>
+  </tr>
+  <tr>
+    <td>Tier 6 &mdash; Standard Personnel</td>
+    <td>Officer / Deputy / Trooper</td>
+    <td>Paramedic / Firefighter</td>
+    <td>Attorney / Clerk</td>
+  </tr>
+  <tr>
+    <td>Tier 7 &mdash; Probationary</td>
+    <td>Cadet / Recruit</td>
+    <td>Trainee / Probie</td>
+    <td>Intern</td>
+  </tr>
+</table>
+
+<h2>5.2 Inter-Department Authority</h2>
+<ul>
+  <li><strong>Within your department:</strong> Follow orders from any superior in your chain of command. If you disagree with a lawful order, comply first and report your concerns afterward.</li>
+  <li><strong>Cross-department:</strong> During joint operations, the designated Incident Commander holds authority regardless of department. In the absence of an IC, the highest-ranking LEO officer on scene commands the law enforcement response.</li>
+  <li><strong>EMS authority:</strong> EMS personnel have <strong>absolute medical authority</strong> on scene. When EMS declares a medical emergency or orders a patient transported, all other personnel shall comply. LEO may not delay or prevent medical treatment.</li>
+  <li><strong>DOJ authority:</strong> Judges may issue binding orders (warrants, injunctions, court orders) that supersede department directives. All departments must comply with lawful court orders.</li>
+</ul>
+
+<h2>5.3 Escalation Procedures</h2>
+<p>When a situation exceeds your authority or capability, escalate through the following process:</p>
+<ol>
+  <li><strong>Notify your immediate supervisor</strong> via radio or MDT.</li>
+  <li>If your supervisor is unavailable, contact the next person in your chain of command.</li>
+  <li>If no one in your department is available, contact <strong>dispatch</strong> for assistance locating a supervisor.</li>
+  <li>In life-threatening emergencies, act to preserve life first and report afterward.</li>
+  <li>Document the escalation, including who you contacted and when, in your incident report.</li>
+</ol>
+
+<div class="callout callout-warning">
+  <strong>REMEMBER:</strong> Skipping the chain of command for non-emergency matters (going directly to command staff without consulting your sergeant) is considered a breach of protocol. Use the chain. If the chain fails you, document it and use the next available link.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 6: REPORT WRITING STANDARDS                           -->
+<!-- ============================================================ -->
+<h1 id="reports">6. Report Writing Standards</h1>
+
+<h2>6.1 General Requirements</h2>
+<p>Reports are the official record of government actions. Every enforcement action, investigation, and significant incident <strong>must</strong> be documented. Reports must be:</p>
+<ul>
+  <li><strong>Accurate</strong> &mdash; Based on facts, observations, and evidence. Never speculate or assume.</li>
+  <li><strong>Complete</strong> &mdash; Include all relevant details: who, what, when, where, why, and how.</li>
+  <li><strong>Objective</strong> &mdash; Write in third person. Avoid personal opinions, emotional language, or biased descriptions.</li>
+  <li><strong>Timely</strong> &mdash; Submitted before end of shift whenever possible. Never later than 24 hours after the incident.</li>
+  <li><strong>Professional</strong> &mdash; Use proper grammar, spelling, and departmental terminology. Avoid slang.</li>
+</ul>
+
+<h2>6.2 Report Types</h2>
+<table>
+  <tr>
+    <th>Report Type</th>
+    <th>When Required</th>
+    <th>Deadline</th>
+    <th>Approver</th>
+  </tr>
+  <tr>
+    <td>Incident Report</td>
+    <td>Any call for service, crime, or notable event</td>
+    <td>End of shift</td>
+    <td>Sergeant or above</td>
+  </tr>
+  <tr>
+    <td>Arrest Report</td>
+    <td>Any custodial arrest</td>
+    <td>Before booking is complete</td>
+    <td>Sergeant or above</td>
+  </tr>
+  <tr>
+    <td>Supplemental Report</td>
+    <td>Follow-up investigation, additional evidence, witness statements</td>
+    <td>24 hours</td>
+    <td>Lead investigator</td>
+  </tr>
+  <tr>
+    <td>Use of Force Report</td>
+    <td>Any use of force beyond verbal commands</td>
+    <td>2 hours after incident</td>
+    <td>Lieutenant or above</td>
+  </tr>
+  <tr>
+    <td>Vehicle Pursuit Report</td>
+    <td>Any pursuit initiated</td>
+    <td>End of shift</td>
+    <td>Sergeant or above</td>
+  </tr>
+  <tr>
+    <td>Property/Evidence Report</td>
+    <td>Any evidence collected or property seized</td>
+    <td>Before end of shift</td>
+    <td>Evidence custodian</td>
+  </tr>
+  <tr>
+    <td>Medical Report (EMS)</td>
+    <td>Every patient contact</td>
+    <td>End of shift</td>
+    <td>EMS Supervisor</td>
+  </tr>
+  <tr>
+    <td>Internal Affairs Report</td>
+    <td>Misconduct allegations or complaints</td>
+    <td>48 hours</td>
+    <td>IA Commander</td>
+  </tr>
+</table>
+
+<h2>6.3 Required Fields (All Reports)</h2>
+<p>Every report, regardless of type, must contain the following information:</p>
+<ul>
+  <li><strong>Report Number</strong> &mdash; Auto-generated by the MDT system.</li>
+  <li><strong>Date &amp; Time</strong> &mdash; Date and time of the incident (not the report writing time).</li>
+  <li><strong>Location</strong> &mdash; Specific address or intersection. Include nearest landmark if no address exists.</li>
+  <li><strong>Reporting Officer</strong> &mdash; Full name, badge number, department, and callsign.</li>
+  <li><strong>Involved Parties</strong> &mdash; Names, DOBs, descriptions, and roles (suspect, victim, witness) of all persons involved.</li>
+  <li><strong>Narrative</strong> &mdash; Chronological account of events from the officer's perspective.</li>
+  <li><strong>Evidence</strong> &mdash; List of all evidence collected, including evidence tag numbers.</li>
+  <li><strong>Charges</strong> &mdash; Applicable penal codes and charge descriptions (if arrest report).</li>
+  <li><strong>Disposition</strong> &mdash; How the incident was resolved (arrest, citation, warning, referral, etc.).</li>
+</ul>
+
+<h2>6.4 Narrative Writing Guidelines</h2>
+<ul>
+  <li>Write in <strong>first person, past tense</strong>: "I observed the suspect..." not "The officer observes..."</li>
+  <li>Be specific with descriptions: "a red 4-door sedan" not "a car."</li>
+  <li>Include exact quotes when possible, using quotation marks.</li>
+  <li>Document the time of each significant action within the narrative.</li>
+  <li>Explain your reasoning for actions taken (e.g., why you conducted a search, basis for probable cause).</li>
+  <li>If using force, articulate the specific threat that justified the level of force used.</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>PRO TIP:</strong> Write your report as if the reader has zero prior knowledge of the incident. A detective, prosecutor, or judge reading your report six months later should be able to fully understand what happened from your narrative alone.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 7: MDT USAGE & DIGITAL PROCEDURES                    -->
+<!-- ============================================================ -->
+<h1 id="mdt">7. MDT Usage &amp; Digital Procedures</h1>
+
+<h2>7.1 MDT Login &amp; Authentication</h2>
+<ul>
+  <li>Access the MDT at the beginning of each shift using your assigned credentials.</li>
+  <li><strong>Never share your MDT credentials</strong> with any other person, including colleagues.</li>
+  <li>If you suspect unauthorized access to your account, notify IT and your supervisor immediately.</li>
+  <li>Always log out of the MDT when ending your shift or leaving the vehicle unattended.</li>
+  <li>All MDT queries are logged and auditable. Unauthorized searches are a terminable offense.</li>
+</ul>
+
+<h2>7.2 Person &amp; Vehicle Searches</h2>
+<p>The MDT provides access to databases for person lookups, vehicle registration, warrant checks, and criminal history. Use these tools responsibly:</p>
+<ul>
+  <li><strong>Person Search:</strong> Returns name, DOB, physical description, known addresses, criminal history, and active warrants. Use for field contacts, traffic stops, and investigations.</li>
+  <li><strong>Vehicle Search (10-28):</strong> Returns registered owner, vehicle description, registration status, insurance, and any flags (stolen, BOLO). Use during traffic stops and parking enforcement.</li>
+  <li><strong>Warrant Check (10-29):</strong> Returns active warrants, conditions of release, and restraining orders. <strong>Always run a warrant check before releasing a subject from a traffic stop or field contact.</strong></li>
+  <li><strong>License Check (10-27):</strong> Returns driver's license status (valid, suspended, revoked, expired), class, restrictions, and endorsements.</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>PRIVACY MANDATE:</strong> Database queries may ONLY be conducted for legitimate law enforcement, medical, or judicial purposes. Running personal searches (looking up friends, family, romantic interests, celebrities) is a <strong>federal privacy violation</strong> and grounds for immediate termination.
+</div>
+
+<h2>7.3 BOLO Entries</h2>
+<p>Be On the Lookout (BOLO) entries alert all departments to wanted persons, vehicles, or situations. Any officer may create a BOLO, but it must contain:</p>
+<ul>
+  <li>Subject or vehicle description (as detailed as possible)</li>
+  <li>Reason for the BOLO (wanted for questioning, suspect in crime, missing person, stolen vehicle)</li>
+  <li>Threat level (armed and dangerous, approach with caution, information only)</li>
+  <li>Contact information (originating officer's callsign and department)</li>
+  <li>Expiration time (BOLOs expire after 48 hours unless renewed by a supervisor)</li>
+</ul>
+
+<h2>7.4 Warrant Management</h2>
+<ul>
+  <li>Warrants may be requested through the MDT by officers of Corporal rank or above.</li>
+  <li>All warrant requests require: probable cause statement, suspect information, specific items/areas to be searched (for search warrants), and the authorizing judge.</li>
+  <li>Approved warrants appear in the MDT system and are accessible to all departments.</li>
+  <li>Once executed, the warrant must be marked as served in the MDT with details of the execution.</li>
+  <li><strong>Expired warrants</strong> must not be executed. If you encounter a subject with an expired warrant, contact dispatch to verify status.</li>
+</ul>
+
+<h2>7.5 Dispatch Integration</h2>
+<p>The MDT integrates with the dispatch system. Officers should:</p>
+<ul>
+  <li>Accept or decline dispatched calls through the MDT interface.</li>
+  <li>Update their status (en route, on scene, Code 4) through the MDT.</li>
+  <li>Attach notes and updates to active calls for other responding units to see.</li>
+  <li>Use the MDT messaging system for non-urgent communications to reduce radio congestion.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 8: INTER-AGENCY COOPERATION                           -->
+<!-- ============================================================ -->
+<h1 id="interagency">8. Inter-Agency Cooperation</h1>
+
+<h2>8.1 Principles of Cooperation</h2>
+<p>ZO Syndicate RP operates as a unified government. Although departments have separate jurisdictions and specialties, <strong>cooperation between agencies is mandatory, not optional</strong>. All personnel shall:</p>
+<ul>
+  <li>Respond to mutual aid requests promptly and professionally.</li>
+  <li>Share relevant intelligence and information between departments.</li>
+  <li>Respect the jurisdiction and authority of other agencies.</li>
+  <li>Defer to the department with primary jurisdiction unless specifically requested to take lead.</li>
+  <li>Never refuse to assist another agency during an emergency.</li>
+</ul>
+
+<h2>8.2 Mutual Aid Protocol</h2>
+<p>When a department requires assistance beyond its own resources:</p>
+<ol>
+  <li>The requesting officer broadcasts <code>10-78</code> (Request Mutual Aid) on Channel 1 (Dispatch).</li>
+  <li>Dispatch notifies available units from other departments.</li>
+  <li>Responding units switch to the designated tactical channel (Channel 6 or 7).</li>
+  <li>The requesting department retains command of the scene unless a higher authority assumes Incident Command.</li>
+  <li>After the incident, all participating agencies submit reports to their respective departments.</li>
+</ol>
+
+<h2>8.3 Joint Operations</h2>
+<p>Planned joint operations (multi-agency raids, checkpoints, special events) require:</p>
+<ul>
+  <li>A written operations plan approved by supervisors from each participating department.</li>
+  <li>A designated Incident Commander (typically the highest-ranking officer from the lead agency).</li>
+  <li>A dedicated tactical radio channel for the operation.</li>
+  <li>A pre-operation briefing for all participating personnel.</li>
+  <li>Clear rules of engagement and use-of-force parameters.</li>
+  <li>A designated EMS unit on standby for the duration of the operation.</li>
+</ul>
+
+<h2>8.4 Inter-Agency Communication Standards</h2>
+<ul>
+  <li>When communicating with another department, always identify your department and rank.</li>
+  <li>Use <strong>plain language</strong> instead of department-specific jargon during inter-agency communications.</li>
+  <li>Requests for information or assistance should go through proper channels (dispatch or supervisor) unless urgent.</li>
+  <li>Intelligence sharing between departments must be documented and approved by a supervisor of Lieutenant rank or above.</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>JURISDICTION NOTE:</strong> If you are operating outside your primary jurisdiction (e.g., LSPD officer in Blaine County), notify the local agency (BCSO) of your presence and reason. Do not conduct enforcement actions outside your jurisdiction without mutual aid authorization, except in emergencies where life is at immediate risk.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 9: EVIDENCE HANDLING & CHAIN OF CUSTODY               -->
+<!-- ============================================================ -->
+<h1 id="evidence">9. Evidence Handling &amp; Chain of Custody</h1>
+
+<h2>9.1 Evidence Collection Principles</h2>
+<p>Proper evidence handling is critical to successful prosecution and justice. Contaminated, mishandled, or improperly documented evidence may be inadmissible in court and can result in case dismissal. All personnel who handle evidence must follow these principles:</p>
+<ul>
+  <li><strong>Minimize handling.</strong> The fewer people who touch evidence, the stronger the chain of custody.</li>
+  <li><strong>Photograph first.</strong> Document evidence in situ (in its original position) before moving or collecting.</li>
+  <li><strong>Wear gloves.</strong> Always use disposable gloves when handling physical evidence to prevent contamination.</li>
+  <li><strong>Use proper containers.</strong> Place evidence in the appropriate container (paper bag for biological, plastic for non-biological, sharps container for needles/blades).</li>
+  <li><strong>Label immediately.</strong> Every evidence item must be labeled with: date, time, location found, description, collecting officer's name and badge number, and case number.</li>
+</ul>
+
+<h2>9.2 Chain of Custody Log</h2>
+<p>The chain of custody is a documented record of every person who handles a piece of evidence from collection to court presentation. Every transfer must be logged:</p>
+
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td>Evidence Tag #</td>
+    <td>Unique identifier assigned at collection</td>
+    <td>EVD-2026-00147</td>
+  </tr>
+  <tr>
+    <td>Description</td>
+    <td>What the item is</td>
+    <td>Black Glock 19 pistol, S/N: GHK-4492</td>
+  </tr>
+  <tr>
+    <td>Collected By</td>
+    <td>Officer name, badge, department</td>
+    <td>Ofc. Martinez #4421, LSPD</td>
+  </tr>
+  <tr>
+    <td>Date/Time Collected</td>
+    <td>When evidence was collected</td>
+    <td>02/14/2026 14:32</td>
+  </tr>
+  <tr>
+    <td>Location Found</td>
+    <td>Exact location of recovery</td>
+    <td>123 Grove St, under driver seat</td>
+  </tr>
+  <tr>
+    <td>Transferred To</td>
+    <td>Name and badge of receiving person</td>
+    <td>Det. Chen #5510, LSPD</td>
+  </tr>
+  <tr>
+    <td>Date/Time Transferred</td>
+    <td>When transfer occurred</td>
+    <td>02/14/2026 16:10</td>
+  </tr>
+  <tr>
+    <td>Reason for Transfer</td>
+    <td>Why the evidence changed hands</td>
+    <td>Submitted to evidence locker for storage</td>
+  </tr>
+  <tr>
+    <td>Storage Location</td>
+    <td>Where evidence is kept</td>
+    <td>LSPD Evidence Locker, Bin #47</td>
+  </tr>
+</table>
+
+<h2>9.3 Evidence Storage</h2>
+<ul>
+  <li>All evidence must be stored in the department's designated evidence locker or secure storage facility.</li>
+  <li>Evidence lockers are accessible only to authorized evidence custodians and command staff.</li>
+  <li>Biological evidence (blood, DNA) must be stored in temperature-controlled environments.</li>
+  <li>Firearms must be rendered safe (unloaded, chamber cleared) before storage. Ammunition is stored separately.</li>
+  <li>Narcotics must be weighed and sealed in tamper-evident packaging before storage.</li>
+  <li>High-value evidence (cash, jewelry, electronics) requires dual-custody sign-out (two authorized personnel).</li>
+</ul>
+
+<h2>9.4 Evidence for Court</h2>
+<ul>
+  <li>When evidence is needed for court proceedings, the prosecuting attorney submits a request through the MDT.</li>
+  <li>The evidence custodian retrieves the item, logs the transfer, and delivers it to the courthouse.</li>
+  <li>After court proceedings, evidence is returned to storage with a new chain of custody entry.</li>
+  <li>If evidence is released to the owner (e.g., recovered stolen property), obtain a signed release form and log it.</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>CRITICAL:</strong> A break in the chain of custody &mdash; any period where evidence is unaccounted for or a transfer is undocumented &mdash; can render evidence inadmissible. Every handoff must be logged. No exceptions.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 10: WITNESS & VICTIM INTERACTION                      -->
+<!-- ============================================================ -->
+<h1 id="witness">10. Witness &amp; Victim Interaction</h1>
+
+<h2>10.1 General Guidelines</h2>
+<ul>
+  <li>Treat all witnesses and victims with empathy, patience, and respect.</li>
+  <li>Never blame, judge, or question the behavior of victims.</li>
+  <li>Explain the process: what you are doing, why, and what happens next.</li>
+  <li>Provide victims with available resources (victim advocate, crisis hotline, shelter information).</li>
+  <li>Separate witnesses from each other before taking statements to prevent cross-contamination of testimony.</li>
+</ul>
+
+<h2>10.2 Witness Interview Procedures</h2>
+<ol>
+  <li>Identify yourself: name, department, badge number.</li>
+  <li>Explain why you need to speak with them.</li>
+  <li>Ask open-ended questions: "Tell me what you saw" rather than leading questions like "Did you see him run east?"</li>
+  <li>Allow the witness to tell their story without interruption, then ask follow-up questions.</li>
+  <li>Document the statement verbatim where possible. Use quotation marks for exact words.</li>
+  <li>Record the witness's full name, DOB, address, and phone number for follow-up.</li>
+  <li>Ask if they know of any other witnesses or have any additional information.</li>
+  <li>Thank them for their cooperation and provide your contact information for follow-up.</li>
+</ol>
+
+<h2>10.3 Victim Support</h2>
+<ul>
+  <li>Ensure the victim's immediate safety before proceeding with investigation.</li>
+  <li>If medical attention is needed, EMS takes priority over statement-taking.</li>
+  <li>For violent crimes, offer to contact a victim advocate or counselor.</li>
+  <li>Provide a case number so the victim can follow up on their case.</li>
+  <li>For domestic violence cases, provide information about protective orders and safe shelters.</li>
+  <li>For property crimes, provide documentation needed for insurance claims.</li>
+</ul>
+
+<h2>10.4 Miranda Rights</h2>
+<p>Miranda rights must be read to any person who is <strong>both</strong> in custody <strong>and</strong> being interrogated. The exact text is:</p>
+
+<blockquote>
+  "You have the right to remain silent. Anything you say can and will be used against you in a court of law. You have the right to an attorney. If you cannot afford an attorney, one will be appointed for you. Do you understand these rights as I have read them to you? With these rights in mind, do you wish to speak with me?"
+</blockquote>
+
+<div class="callout callout-critical">
+  <strong>MIRANDA REQUIREMENTS:</strong>
+  <ul>
+    <li>Miranda is required BEFORE custodial interrogation begins.</li>
+    <li>The suspect must <strong>verbally acknowledge</strong> they understand their rights.</li>
+    <li>If the suspect invokes their right to silence, <strong>all questioning must stop immediately</strong>.</li>
+    <li>If the suspect requests an attorney, <strong>all questioning must stop</strong> until the attorney is present.</li>
+    <li>Voluntary statements made without interrogation (spontaneous utterances) are admissible even without Miranda.</li>
+    <li>Miranda is NOT required for routine booking questions (name, address, DOB).</li>
+    <li>Document the exact time Miranda was read and the suspect's response in your report.</li>
+  </ul>
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 11: SCENE SAFETY & MANAGEMENT                         -->
+<!-- ============================================================ -->
+<h1 id="scene">11. Scene Safety &amp; Management</h1>
+
+<h2>11.1 Scene Approach</h2>
+<p>Officer safety is the <strong>first priority</strong> at any scene. Before exiting your vehicle:</p>
+<ul>
+  <li>Assess the scene visually from your vehicle. Look for weapons, hostile subjects, hazards.</li>
+  <li>Park your vehicle in a tactically advantageous position (offset from the scene, engine block toward threat if applicable).</li>
+  <li>Notify dispatch that you are on scene: <code>"[Callsign] 10-23, [location]"</code></li>
+  <li>If the scene appears dangerous, wait for backup before approaching.</li>
+  <li>Approach from a position of cover when possible.</li>
+</ul>
+
+<h2>11.2 Securing the Scene</h2>
+<ol>
+  <li><strong>Neutralize immediate threats.</strong> Address active violence, armed subjects, or ongoing crimes first.</li>
+  <li><strong>Render aid.</strong> Once threats are neutralized, check for and treat injured persons. Request EMS if needed.</li>
+  <li><strong>Establish a perimeter.</strong> Use caution tape, traffic cones, or vehicles to establish inner and outer perimeters.</li>
+  <li><strong>Control access.</strong> Only authorized personnel enter the inner perimeter. Log all persons entering and exiting.</li>
+  <li><strong>Preserve evidence.</strong> Do not allow foot traffic, vehicle movement, or cleanup within the perimeter until evidence is collected.</li>
+  <li><strong>Identify witnesses.</strong> Separate and hold witnesses for statements before they leave the area.</li>
+</ol>
+
+<h2>11.3 Perimeter Types</h2>
+<table>
+  <tr>
+    <th>Perimeter</th>
+    <th>Who May Enter</th>
+    <th>Purpose</th>
+  </tr>
+  <tr>
+    <td>Inner (Hot Zone)</td>
+    <td>Lead investigators, evidence techs, medical examiner</td>
+    <td>Immediate crime scene / evidence area</td>
+  </tr>
+  <tr>
+    <td>Outer (Warm Zone)</td>
+    <td>Responding officers, EMS, supervisors</td>
+    <td>Staging area, witness holding, command post</td>
+  </tr>
+  <tr>
+    <td>Public (Cold Zone)</td>
+    <td>Media, public (behind perimeter tape)</td>
+    <td>Public observation area, media staging</td>
+  </tr>
+</table>
+
+<h2>11.4 Hazardous Materials</h2>
+<ul>
+  <li>If you encounter suspected hazardous materials (chemical spills, unknown substances, meth labs), <strong>do not approach</strong>.</li>
+  <li>Establish a perimeter of at least 300 feet and evacuate civilians.</li>
+  <li>Notify dispatch and request HAZMAT-certified personnel.</li>
+  <li>Note wind direction and move upwind from the contamination.</li>
+  <li>Do not attempt to identify, handle, or clean up hazardous materials without proper training and equipment.</li>
+</ul>
+
+<h2>11.5 Crowd Control</h2>
+<ul>
+  <li>Maintain a calm and professional demeanor. Crowds mirror the energy of law enforcement.</li>
+  <li>Use clear verbal commands: "Please step back behind the tape."</li>
+  <li>If crowds become hostile, request additional units and consider establishing a wider perimeter.</li>
+  <li>Do not engage in arguments with bystanders. If a person is actively interfering, issue a warning, then arrest for obstruction if they persist.</li>
+  <li>Body cameras must be activated for all crowd management situations.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 12: VEHICLE OPERATION STANDARDS                       -->
+<!-- ============================================================ -->
+<h1 id="vehicles">12. Vehicle Operation Standards</h1>
+
+<h2>12.1 Authorized Vehicles by Rank</h2>
+<table>
+  <tr>
+    <th>Rank Tier</th>
+    <th>Authorized Vehicles</th>
+    <th>Take-Home Privilege</th>
+  </tr>
+  <tr>
+    <td>Cadet / Recruit / Trainee</td>
+    <td>Standard patrol vehicles only (must ride with FTO)</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>Officer / Deputy / Trooper / Paramedic</td>
+    <td>Standard patrol vehicles, marked SUVs</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>Corporal / Senior Officer</td>
+    <td>Standard patrol, marked SUVs, slicktop vehicles</td>
+    <td>Supervisor approval</td>
+  </tr>
+  <tr>
+    <td>Sergeant / Lieutenant</td>
+    <td>All patrol vehicles, unmarked vehicles</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Captain and above</td>
+    <td>All department vehicles including command vehicles</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Detectives / Investigators</td>
+    <td>Unmarked vehicles (assigned by unit)</td>
+    <td>Yes (with approval)</td>
+  </tr>
+</table>
+
+<h2>12.2 General Driving Standards</h2>
+<ul>
+  <li>Obey all traffic laws when not responding to emergencies (Code 1 driving).</li>
+  <li>Always wear your seatbelt.</li>
+  <li>Do not use personal mobile devices while operating a vehicle. Use the MDT or radio for communications.</li>
+  <li>Maintain a safe following distance and adjust speed for road and weather conditions.</li>
+  <li>Perform a vehicle inspection at the start of each shift: lights, sirens, tires, fuel, interior condition.</li>
+  <li>Report any vehicle damage or mechanical issues to your supervisor immediately.</li>
+</ul>
+
+<h2>12.3 Code 3 (Emergency) Driving</h2>
+<p>Code 3 driving (lights and sirens) is authorized only when responding to imminent threats to life or when pursuing a fleeing suspect with supervisor approval. During Code 3 driving:</p>
+<ul>
+  <li>Activate both lights and siren. Lights only is <strong>not</strong> Code 3.</li>
+  <li>Proceed through intersections with caution, slowing to verify cross-traffic has yielded.</li>
+  <li>Do not exceed 20 mph over the speed limit except on open highway.</li>
+  <li>Reduce speed in residential areas, school zones, and areas with heavy pedestrian traffic.</li>
+  <li>If another emergency vehicle approaches from behind, pull to the right and allow them to pass.</li>
+  <li>Terminate Code 3 driving when the emergency no longer requires it.</li>
+</ul>
+
+<h2>12.4 Pursuit Authorization</h2>
+<div class="callout callout-critical">
+  <strong>PURSUIT POLICY:</strong> Vehicle pursuits carry extreme risk to officers, suspects, and the public. All pursuits require:
+  <ul>
+    <li><strong>Probable cause</strong> that the suspect committed a felony, OR the suspect poses an <strong>immediate threat</strong> to public safety.</li>
+    <li><strong>Supervisor authorization</strong> must be obtained as soon as possible. If a supervisor is not available, the officer must use their best judgment and be prepared to justify the decision.</li>
+    <li><strong>Continuous risk assessment:</strong> If the danger of the pursuit outweighs the need to apprehend, <strong>terminate the pursuit</strong>.</li>
+    <li><strong>Speed limits:</strong> Pursuits should not exceed 100 mph unless authorized by a Lieutenant or above.</li>
+    <li>Pursuits shall be terminated if they enter school zones during school hours, construction zones with workers present, or areas with extreme pedestrian density.</li>
+    <li>The pursuing officer must broadcast: suspect description, vehicle description, direction of travel, speed, and reason for pursuit.</li>
+    <li>A maximum of <strong>3 pursuit units</strong> unless a supervisor authorizes additional.</li>
+  </ul>
+</div>
+
+<h2>12.5 Vehicle Maintenance &amp; Damage Reporting</h2>
+<ul>
+  <li>All vehicle damage, regardless of severity, must be reported via MDT and to your supervisor before end of shift.</li>
+  <li>Vehicles with safety-critical damage (brake failure, tire blowout, broken lights) must be taken out of service immediately.</li>
+  <li>Personal use of government vehicles is strictly prohibited (see Section 16).</li>
+  <li>Fuel vehicles when the tank drops below one-quarter. Do not leave an empty vehicle for the next shift.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 13: EQUIPMENT & UNIFORM STANDARDS                     -->
+<!-- ============================================================ -->
+<h1 id="equipment">13. Equipment &amp; Uniform Standards</h1>
+
+<h2>13.1 Required Equipment (LEO)</h2>
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Required</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Department-issued firearm</td>
+    <td>Always on duty</td>
+    <td>Must be loaded, holstered, safety on when applicable</td>
+  </tr>
+  <tr>
+    <td>Spare magazine</td>
+    <td>Always on duty</td>
+    <td>Minimum 1 spare, fully loaded</td>
+  </tr>
+  <tr>
+    <td>Handcuffs (x2 pair)</td>
+    <td>Always on duty</td>
+    <td>Must be functional and accessible</td>
+  </tr>
+  <tr>
+    <td>Taser / Less-lethal</td>
+    <td>Always on duty</td>
+    <td>Carried on support side (opposite firearm)</td>
+  </tr>
+  <tr>
+    <td>Radio</td>
+    <td>Always on duty</td>
+    <td>Charged and tuned to department channel</td>
+  </tr>
+  <tr>
+    <td>Body camera</td>
+    <td>Always on duty</td>
+    <td>Activated during all enforcement contacts</td>
+  </tr>
+  <tr>
+    <td>Flashlight</td>
+    <td>Always on duty</td>
+    <td>Fully charged</td>
+  </tr>
+  <tr>
+    <td>Ballistic vest</td>
+    <td>Always on duty</td>
+    <td>Must be worn under or over uniform</td>
+  </tr>
+  <tr>
+    <td>Notebook &amp; pen</td>
+    <td>Always on duty</td>
+    <td>For field notes and quick documentation</td>
+  </tr>
+  <tr>
+    <td>First aid kit</td>
+    <td>In vehicle</td>
+    <td>Basic trauma kit (tourniquet, gauze, gloves)</td>
+  </tr>
+</table>
+
+<h2>13.2 Required Equipment (EMS/Fire)</h2>
+<table>
+  <tr>
+    <th>Item</th>
+    <th>Required</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Radio</td>
+    <td>Always on duty</td>
+    <td>Charged, tuned to EMS/Fire channel</td>
+  </tr>
+  <tr>
+    <td>Medical bag / Jump kit</td>
+    <td>Always in unit</td>
+    <td>Stocked and inventoried at start of shift</td>
+  </tr>
+  <tr>
+    <td>Stethoscope</td>
+    <td>Always on person (EMS)</td>
+    <td>Functional</td>
+  </tr>
+  <tr>
+    <td>Gloves (multiple pairs)</td>
+    <td>Always on person</td>
+    <td>Nitrile, various sizes</td>
+  </tr>
+  <tr>
+    <td>Flashlight</td>
+    <td>Always on duty</td>
+    <td>Fully charged</td>
+  </tr>
+  <tr>
+    <td>Pen light</td>
+    <td>Always on person (EMS)</td>
+    <td>For pupil checks</td>
+  </tr>
+  <tr>
+    <td>Turnout gear (Fire)</td>
+    <td>In vehicle</td>
+    <td>Full set, inspected monthly</td>
+  </tr>
+  <tr>
+    <td>SCBA (Fire)</td>
+    <td>In vehicle</td>
+    <td>Self-Contained Breathing Apparatus, tank full</td>
+  </tr>
+</table>
+
+<h2>13.3 Uniform Standards</h2>
+<ul>
+  <li>All personnel must wear their department's designated uniform while on duty.</li>
+  <li>Uniforms must be clean, pressed, and free of damage or excessive wear.</li>
+  <li>Name tag and badge must be visible at all times.</li>
+  <li>Department patches must be affixed to both shoulders.</li>
+  <li>Footwear must be black, polished, and appropriate for duty (tactical boots or dress shoes).</li>
+  <li>Plainclothes personnel (detectives, undercover) must carry their badge and department ID at all times.</li>
+  <li>No unauthorized modifications to uniforms (pins, patches, accessories) without command approval.</li>
+</ul>
+
+<h2>13.4 Equipment Maintenance</h2>
+<ul>
+  <li>All equipment must be inspected at the <strong>beginning of each shift</strong>.</li>
+  <li>Firearms must be cleaned and function-tested monthly. Range qualifications are required quarterly.</li>
+  <li>Body camera batteries must be charged before each shift. Footage is uploaded at end of shift.</li>
+  <li>Damaged or malfunctioning equipment must be reported immediately and taken out of service.</li>
+  <li>Lost equipment must be reported to your supervisor within 1 hour. An incident report is required for any lost firearm, badge, or radio.</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>BODY CAMERAS:</strong> Body cameras must be activated during all enforcement contacts, traffic stops, arrests, uses of force, searches, and witness/victim interviews. Failure to activate your body camera during a critical incident is a serious policy violation. If your camera malfunctions, notify your supervisor immediately and document the malfunction in your report.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 14: DISCIPLINARY PROCEDURES                           -->
+<!-- ============================================================ -->
+<h1 id="discipline">14. Disciplinary Procedures</h1>
+
+<h2>14.1 Progressive Discipline Scale</h2>
+<p>ZO Syndicate RP uses a progressive discipline system. Penalties escalate with repeated offenses unless the severity of the initial violation warrants a higher-level response.</p>
+
+<table>
+  <tr>
+    <th>Level</th>
+    <th>Action</th>
+    <th>Issued By</th>
+    <th>Documented</th>
+    <th>Typical Offenses</th>
+  </tr>
+  <tr>
+    <td>Level 1</td>
+    <td>Verbal Counseling</td>
+    <td>Any supervisor</td>
+    <td>Supervisor log only</td>
+    <td>Minor uniform violations, tardiness, forgotten reports</td>
+  </tr>
+  <tr>
+    <td>Level 2</td>
+    <td>Written Warning</td>
+    <td>Sergeant or above</td>
+    <td>Personnel file</td>
+    <td>Repeated minor offenses, unprofessional conduct, missed training</td>
+  </tr>
+  <tr>
+    <td>Level 3</td>
+    <td>Formal Reprimand</td>
+    <td>Lieutenant or above</td>
+    <td>Personnel file + IA log</td>
+    <td>Insubordination, unauthorized absence, policy violations</td>
+  </tr>
+  <tr>
+    <td>Level 4</td>
+    <td>Suspension (1-14 days)</td>
+    <td>Captain or above</td>
+    <td>Personnel file + IA case</td>
+    <td>Serious misconduct, negligent use of force, DUI</td>
+  </tr>
+  <tr>
+    <td>Level 5</td>
+    <td>Demotion</td>
+    <td>Department Head</td>
+    <td>Personnel file + IA case</td>
+    <td>Repeated serious misconduct, leadership failure</td>
+  </tr>
+  <tr>
+    <td>Level 6</td>
+    <td>Termination</td>
+    <td>Department Head + Chief of Staff</td>
+    <td>Personnel file + IA case + DOJ</td>
+    <td>Corruption, evidence tampering, criminal conduct, excessive force</td>
+  </tr>
+</table>
+
+<h2>14.2 Formal Complaint Process</h2>
+<p>Complaints may be filed by civilians, other personnel, or supervisors. The complaint process is:</p>
+<ol>
+  <li><strong>Complaint received:</strong> May be filed in person, via MDT, or through a supervisor. All complaints must be documented in writing.</li>
+  <li><strong>Initial review:</strong> The accused's supervisor reviews the complaint within 24 hours to determine if it warrants a formal investigation.</li>
+  <li><strong>Investigation assignment:</strong> If warranted, the complaint is forwarded to Internal Affairs (or the department equivalent) for investigation.</li>
+  <li><strong>Investigation:</strong> IA conducts interviews, reviews evidence (body camera, MDT logs, radio recordings, witness statements), and compiles a findings report.</li>
+  <li><strong>Findings:</strong> The investigation concludes with one of four findings:
+    <ul>
+      <li><strong>Sustained</strong> &mdash; The allegation is supported by evidence.</li>
+      <li><strong>Not Sustained</strong> &mdash; Insufficient evidence to prove or disprove.</li>
+      <li><strong>Exonerated</strong> &mdash; The action occurred but was justified and proper.</li>
+      <li><strong>Unfounded</strong> &mdash; The allegation is false or did not occur.</li>
+    </ul>
+  </li>
+  <li><strong>Disposition:</strong> The department head reviews the findings and issues discipline if the complaint is sustained.</li>
+  <li><strong>Appeal:</strong> The accused may appeal the decision to the Chief of Staff within 7 days.</li>
+</ol>
+
+<h2>14.3 Internal Affairs Investigations</h2>
+<ul>
+  <li>IA investigations are confidential. Personnel involved shall not discuss active investigations with anyone outside the investigation.</li>
+  <li>All personnel must cooperate fully with IA investigations. Refusal to cooperate is grounds for termination.</li>
+  <li>Personnel under investigation may be placed on administrative leave (with pay) pending the outcome.</li>
+  <li>IA investigations should be completed within 30 days unless the complexity requires an extension approved by the department head.</li>
+  <li>False or malicious complaints are themselves policy violations and may result in disciplinary action against the complainant.</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>RIGHTS OF THE ACCUSED:</strong> Personnel under investigation have the right to: know the nature of the allegations, have a union representative present during IA interviews, review evidence presented against them, and appeal findings through the chain of command.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 15: TRAINING REQUIREMENTS                             -->
+<!-- ============================================================ -->
+<h1 id="training">15. Training Requirements</h1>
+
+<h2>15.1 Academy Training</h2>
+<p>All new hires must complete their department's academy before being assigned to field duty:</p>
+
+<table>
+  <tr>
+    <th>Department</th>
+    <th>Academy Duration</th>
+    <th>Key Modules</th>
+  </tr>
+  <tr>
+    <td>LSPD / BCSO / SASP</td>
+    <td>2 weeks (in-game equivalent)</td>
+    <td>Penal code, traffic law, patrol procedures, firearms, defensive tactics, pursuit policy, report writing, radio protocol, Miranda rights, use of force</td>
+  </tr>
+  <tr>
+    <td>EMS</td>
+    <td>1 week (in-game equivalent)</td>
+    <td>Medical protocols, triage, patient assessment, drug administration, trauma care, scene safety, radio protocol, report writing</td>
+  </tr>
+  <tr>
+    <td>Fire</td>
+    <td>1 week (in-game equivalent)</td>
+    <td>Fire suppression, hazmat awareness, rescue operations, apparatus operation, scene safety, radio protocol</td>
+  </tr>
+  <tr>
+    <td>DOJ</td>
+    <td>1 week (in-game equivalent)</td>
+    <td>Criminal code, constitutional law, courtroom procedure, evidence rules, sentencing guidelines, warrant procedures</td>
+  </tr>
+</table>
+
+<h2>15.2 Field Training Officer (FTO) Program</h2>
+<p>After academy graduation, all personnel enter the FTO program where they are paired with an experienced officer for supervised field duty.</p>
+<ul>
+  <li><strong>FTO Duration:</strong> Minimum 1 week (LEO) or 3 days (EMS/Fire/DOJ).</li>
+  <li><strong>FTO Requirements:</strong> FTOs must be Corporal/Senior rank or above, have at least 30 days of active service, and complete the FTO certification course.</li>
+  <li><strong>Evaluation:</strong> FTOs submit daily observation reports on the trainee covering: knowledge, decision-making, communication, officer safety, and professionalism.</li>
+  <li><strong>Completion:</strong> The trainee must receive a "satisfactory" or above rating from their FTO and pass a final assessment to be released for solo duty.</li>
+  <li><strong>Extension:</strong> If a trainee is not meeting standards, the FTO period may be extended by up to 1 additional week. If still unsatisfactory, the trainee may be recommended for termination.</li>
+</ul>
+
+<h2>15.3 Mandatory Continuing Education</h2>
+<table>
+  <tr>
+    <th>Training</th>
+    <th>Frequency</th>
+    <th>Applies To</th>
+    <th>Passing Standard</th>
+  </tr>
+  <tr>
+    <td>Firearms Qualification</td>
+    <td>Quarterly</td>
+    <td>All LEO</td>
+    <td>80% accuracy or higher</td>
+  </tr>
+  <tr>
+    <td>Use of Force Review</td>
+    <td>Semi-annually</td>
+    <td>All LEO</td>
+    <td>Scenario-based assessment</td>
+  </tr>
+  <tr>
+    <td>De-Escalation Training</td>
+    <td>Annually</td>
+    <td>All personnel</td>
+    <td>Completion + assessment</td>
+  </tr>
+  <tr>
+    <td>Legal Updates (Penal Code)</td>
+    <td>As issued</td>
+    <td>All LEO + DOJ</td>
+    <td>Acknowledgment + quiz</td>
+  </tr>
+  <tr>
+    <td>CPR / First Aid Recertification</td>
+    <td>Annually</td>
+    <td>All personnel</td>
+    <td>Certification renewal</td>
+  </tr>
+  <tr>
+    <td>Defensive Driving</td>
+    <td>Annually</td>
+    <td>All personnel with driving privileges</td>
+    <td>Practical assessment</td>
+  </tr>
+  <tr>
+    <td>Emergency Vehicle Operations (EVOC)</td>
+    <td>Annually</td>
+    <td>All LEO + Fire</td>
+    <td>Practical assessment</td>
+  </tr>
+  <tr>
+    <td>Advanced Medical Protocols</td>
+    <td>Quarterly</td>
+    <td>All EMS</td>
+    <td>Written + practical exam</td>
+  </tr>
+  <tr>
+    <td>Ethics &amp; Conduct Review</td>
+    <td>Annually</td>
+    <td>All personnel</td>
+    <td>Completion + acknowledgment</td>
+  </tr>
+  <tr>
+    <td>Active Shooter / Crisis Response</td>
+    <td>Semi-annually</td>
+    <td>All LEO + EMS</td>
+    <td>Scenario-based assessment</td>
+  </tr>
+</table>
+
+<h2>15.4 Specialty Certifications</h2>
+<p>The following specialty certifications are available for personnel who meet the prerequisites:</p>
+<ul>
+  <li><strong>SWAT / Tactical Operations</strong> &mdash; Requires Corporal+ rank, 60 days active, physical fitness test, tactical assessment.</li>
+  <li><strong>K-9 Handler</strong> &mdash; Requires Officer+ rank, 45 days active, K-9 training course completion.</li>
+  <li><strong>Detective / Investigator</strong> &mdash; Requires Corporal+ rank, 30 days active, investigative assessment.</li>
+  <li><strong>Field Training Officer (FTO)</strong> &mdash; Requires Corporal+ rank, 30 days active, FTO course completion.</li>
+  <li><strong>HAZMAT Technician</strong> &mdash; Requires Fire/EMS, 14 days active, HAZMAT course completion.</li>
+  <li><strong>Crisis Negotiator</strong> &mdash; Requires Sergeant+ rank, 45 days active, negotiation course completion.</li>
+  <li><strong>Air Support / Helicopter Pilot</strong> &mdash; Requires Lieutenant+ rank, 60 days active, flight certification.</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>FAILURE TO MAINTAIN CERTIFICATIONS:</strong> If a mandatory certification expires, the employee is placed on restricted duty (desk/administrative) until the certification is renewed. If not renewed within 14 days, the employee may face disciplinary action up to and including demotion.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 16: USE OF GOVERNMENT RESOURCES                       -->
+<!-- ============================================================ -->
+<h1 id="resources">16. Use of Government Resources</h1>
+
+<h2>16.1 General Policy</h2>
+<p>Government resources &mdash; including vehicles, equipment, technology systems, and facilities &mdash; are provided <strong>exclusively for official duties</strong>. Personal use of government resources is strictly prohibited.</p>
+
+<h2>16.2 Prohibited Uses</h2>
+<ul>
+  <li><strong>Vehicles:</strong> No personal errands, transporting non-duty passengers, off-duty joyrides, or unauthorized take-home use.</li>
+  <li><strong>MDT/Databases:</strong> No personal searches, looking up friends/family, checking on personal matters, or accessing records without a law enforcement purpose.</li>
+  <li><strong>Firearms/Equipment:</strong> No lending to non-authorized persons, using for personal protection while off-duty (unless authorized), or selling/trading department equipment.</li>
+  <li><strong>Facilities:</strong> No using department buildings for personal gatherings, storage of personal property beyond personal lockers, or conducting personal business.</li>
+  <li><strong>Radio:</strong> No personal conversations, non-official transmissions, or use of the radio for entertainment.</li>
+</ul>
+
+<h2>16.3 Technology &amp; Communications</h2>
+<ul>
+  <li>Department-issued devices (MDT, radio, phone) may be monitored and are subject to audit.</li>
+  <li>No expectation of privacy exists when using government technology or communications systems.</li>
+  <li>All MDT queries, radio transmissions, and body camera footage are logged and retained for audit purposes.</li>
+  <li>Attempting to delete, alter, or tamper with government records or footage is a criminal offense.</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>MISUSE CONSEQUENCES:</strong> Misuse of government resources is a minimum Level 3 (Formal Reprimand) offense. Misuse of databases (unauthorized personal searches) is a minimum Level 5 (Demotion) offense and may result in termination and DOJ referral.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 17: OFF-DUTY CONDUCT                                  -->
+<!-- ============================================================ -->
+<h1 id="offduty">17. Off-Duty Conduct</h1>
+
+<h2>17.1 Standards of Behavior</h2>
+<p>Government employees represent their department and ZO Syndicate RP at all times, including when off duty. Personnel are expected to:</p>
+<ul>
+  <li>Conduct themselves lawfully and ethically at all times.</li>
+  <li>Avoid situations that could discredit themselves or their department.</li>
+  <li>Refrain from excessive alcohol consumption in public settings where they may be recognized.</li>
+  <li>Not use their position or badge to gain personal advantages (discounts, access, intimidation).</li>
+  <li>Report any arrest, citation, or criminal charge received while off duty to their supervisor within 12 hours.</li>
+</ul>
+
+<h2>17.2 Off-Duty Carry (LEO)</h2>
+<ul>
+  <li>Off-duty LEO personnel <strong>may</strong> carry a concealed weapon, provided they carry their department ID and badge at all times while armed.</li>
+  <li>Off-duty carry firearms must be registered with the department and must meet department specifications.</li>
+  <li>If an off-duty LEO takes law enforcement action, they must identify themselves with their badge and department before acting.</li>
+  <li>Off-duty LEO should only intervene in situations involving imminent threat to life. For other situations, call 911 and be a good witness.</li>
+</ul>
+
+<h2>17.3 Off-Duty Identification</h2>
+<ul>
+  <li>When not in uniform, personnel should carry their department-issued ID and badge.</li>
+  <li>If asked by on-duty personnel, off-duty employees must identify themselves and present their credentials.</li>
+  <li>Off-duty personnel shall not identify themselves as law enforcement or government employees to gain privileges unless it is necessary for safety.</li>
+</ul>
+
+<h2>17.4 Off-Duty Employment</h2>
+<ul>
+  <li>Secondary employment (off-duty jobs) must be approved in writing by your department head.</li>
+  <li>Secondary employment must not conflict with duty schedules, departmental duties, or create a conflict of interest.</li>
+  <li>Security guard and private investigation work requires additional departmental approval and may have restrictions.</li>
+  <li>Off-duty employment that involves the sale of alcohol, gambling, or adult entertainment is prohibited.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 18: CONFIDENTIALITY & INFORMATION SECURITY            -->
+<!-- ============================================================ -->
+<h1 id="confidentiality">18. Confidentiality &amp; Information Security</h1>
+
+<h2>18.1 Classification Levels</h2>
+<table>
+  <tr>
+    <th>Level</th>
+    <th>Access</th>
+    <th>Examples</th>
+  </tr>
+  <tr>
+    <td>OFFICIAL</td>
+    <td>All government personnel</td>
+    <td>General SOPs, public policies, department bulletins</td>
+  </tr>
+  <tr>
+    <td>RESTRICTED</td>
+    <td>Relevant department personnel only</td>
+    <td>Department-specific SOPs, tactical plans, internal communications</td>
+  </tr>
+  <tr>
+    <td>CONFIDENTIAL</td>
+    <td>Need-to-know basis, supervisor approval</td>
+    <td>Active investigation details, witness identities, informant information</td>
+  </tr>
+  <tr>
+    <td>TOP SECRET</td>
+    <td>Command staff + designated personnel only</td>
+    <td>Undercover officer identities, sensitive intelligence, IA investigations</td>
+  </tr>
+</table>
+
+<h2>18.2 Case Information</h2>
+<ul>
+  <li>Details of active investigations must not be shared with anyone outside the investigation team without supervisor approval.</li>
+  <li>Suspect names, victim names, and witness names from active cases must not be disclosed to unauthorized persons or the media.</li>
+  <li>Officers shall not discuss case details with family members, friends, or on social media.</li>
+  <li>Leaked case information that compromises an investigation will result in a minimum Level 4 (Suspension) disciplinary action.</li>
+</ul>
+
+<h2>18.3 Personnel Records</h2>
+<ul>
+  <li>Personnel records (employment history, disciplinary records, personal information) are confidential.</li>
+  <li>Access to personnel records requires authorization from the department head or Human Resources.</li>
+  <li>Personnel shall not access their own records through the MDT. Requests for personal records go through HR.</li>
+  <li>Sharing another employee's personnel information without authorization is a disciplinary offense.</li>
+</ul>
+
+<h2>18.4 HIPAA Compliance (EMS/Medical)</h2>
+<div class="callout callout-critical">
+  <strong>EMS PERSONNEL &mdash; HIPAA MANDATE:</strong> All patient medical information is protected under health privacy standards. EMS personnel shall:
+  <ul>
+    <li><strong>Never disclose</strong> patient medical information to non-medical personnel unless required for law enforcement purposes (e.g., cause of death, nature of injuries for assault charges).</li>
+    <li><strong>Never discuss</strong> patient cases by name in public areas.</li>
+    <li><strong>Limit disclosure</strong> to the minimum information necessary for the receiving party's purpose.</li>
+    <li><strong>Secure all patient records</strong> &mdash; paper charts locked, digital records password-protected.</li>
+    <li>Report any suspected HIPAA violation to the EMS Director immediately.</li>
+  </ul>
+  HIPAA violations carry both administrative penalties (termination) and potential criminal liability.
+</div>
+
+<h2>18.5 Information Security Best Practices</h2>
+<ul>
+  <li>Never share passwords, access codes, or MDT credentials with anyone.</li>
+  <li>Lock your MDT when stepping away from your vehicle.</li>
+  <li>Use secure communications (encrypted radio channels, MDT messaging) for sensitive information.</li>
+  <li>Shred or securely dispose of physical documents containing sensitive information.</li>
+  <li>Report any suspected data breach, unauthorized access, or lost credentials immediately to your supervisor and IT.</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 19: EMERGENCY PROTOCOLS                               -->
+<!-- ============================================================ -->
+<h1 id="emergency">19. Emergency Protocols</h1>
+
+<h2>19.1 Active Shooter / Active Threat</h2>
+<div class="callout callout-critical">
+  <strong>ACTIVE THREAT RESPONSE:</strong> When an active shooter or active threat is reported:
+  <ul>
+    <li>Dispatch declares <strong>Signal 100</strong> on all channels.</li>
+    <li>ALL available LEO units respond Code 3.</li>
+    <li>EMS stages at a safe distance (minimum 2 blocks) until scene is Code 4.</li>
+    <li>First arriving officers form a <strong>contact team</strong> (minimum 2 officers) and move toward the threat immediately. Do NOT wait for SWAT.</li>
+    <li>The objective is to <strong>stop the killing</strong>. Bypass injured persons initially &mdash; rescue teams will follow.</li>
+    <li>Once the threat is neutralized, establish perimeters and begin triage.</li>
+    <li>Incident Command is established by the highest-ranking officer on scene.</li>
+  </ul>
+</div>
+
+<h2>19.2 Officer Down / 10-99</h2>
+<ol>
+  <li>The distressed officer (or a nearby unit) broadcasts: <code>"10-99, [location], [nature of emergency]"</code></li>
+  <li>Dispatch immediately declares <strong>Signal 100</strong> and dispatches all available units.</li>
+  <li>EMS is dispatched Code 3 and stages until the scene is safe.</li>
+  <li>Nearest units respond Code 3. The first arriving unit's priority is officer rescue and threat neutralization.</li>
+  <li>Once the officer is secured, provide immediate medical aid and expedite EMS transport.</li>
+  <li>A supervisor assumes Incident Command and manages the scene.</li>
+  <li>Internal Affairs is notified for automatic investigation.</li>
+  <li>Critical incident debriefing is mandatory for all involved personnel within 24 hours.</li>
+</ol>
+
+<h2>19.3 Mass Casualty Incident (MCI)</h2>
+<p>An MCI is any incident resulting in more casualties than available resources can handle with normal procedures. MCI protocol:</p>
+<ul>
+  <li>First arriving unit declares MCI and establishes Incident Command.</li>
+  <li>All available EMS and Fire units respond.</li>
+  <li>Implement <strong>START Triage</strong> (Simple Triage and Rapid Treatment):
+    <ul>
+      <li><strong>GREEN (Minor)</strong> &mdash; Walking wounded, can wait for treatment.</li>
+      <li><strong>YELLOW (Delayed)</strong> &mdash; Serious injuries but stable, can wait 1+ hours.</li>
+      <li><strong>RED (Immediate)</strong> &mdash; Life-threatening injuries, requires immediate treatment.</li>
+      <li><strong>BLACK (Deceased/Expectant)</strong> &mdash; Dead or injuries incompatible with survival.</li>
+    </ul>
+  </li>
+  <li>LEO secures the scene perimeter and manages traffic/crowd control.</li>
+  <li>A designated staging area is established for additional incoming resources.</li>
+  <li>A public information officer coordinates media communication.</li>
+</ul>
+
+<h2>19.4 Natural Disaster / Severe Weather</h2>
+<ul>
+  <li>When severe weather is forecasted or a natural disaster occurs, all departments enter emergency operations mode.</li>
+  <li>All available personnel may be recalled to duty regardless of schedule.</li>
+  <li>Priority is life safety: evacuations, welfare checks, and rescue operations.</li>
+  <li>LEO establishes roadblocks and manages evacuation routes.</li>
+  <li>EMS pre-positions units at hospitals and shelters.</li>
+  <li>Fire Department handles structural collapse, flooding, and fire hazards.</li>
+  <li>Non-essential calls for service may be suspended until the emergency passes.</li>
+</ul>
+
+<h2>19.5 Hostage / Barricade Situation</h2>
+<ul>
+  <li>First arriving units <strong>contain and isolate</strong>. Do not attempt entry without authorization.</li>
+  <li>Establish inner and outer perimeters. Evacuate nearby civilians.</li>
+  <li>Request SWAT/Tactical and Crisis Negotiator response.</li>
+  <li>Incident Commander assumes control. All actions require IC authorization.</li>
+  <li>Maintain communication with the subject if possible. Time is on our side &mdash; patience saves lives.</li>
+  <li>EMS stages nearby with trauma capabilities.</li>
+  <li>If there is an imminent threat to life (active harm to hostages), the IC may authorize emergency tactical entry.</li>
+</ul>
+
+<h2>19.6 Bomb Threat / Suspicious Package</h2>
+<ul>
+  <li>If a bomb threat is received, evacuate the building or area to a minimum 500-foot perimeter.</li>
+  <li>Do NOT use radios or cell phones within 300 feet of a suspected device (RF detonation risk).</li>
+  <li>Do NOT touch, move, or attempt to disarm any suspicious package.</li>
+  <li>Request EOD (Explosive Ordnance Disposal) through dispatch.</li>
+  <li>Document the exact threat (who called, what was said, what number they called from).</li>
+  <li>Search teams should look for secondary devices positioned to harm first responders.</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>CRITICAL INCIDENT STRESS:</strong> After any critical incident (officer-involved shooting, death of a colleague, mass casualty event, child death), all involved personnel are strongly encouraged to utilize the department's mental health resources. A critical incident debriefing will be scheduled within 72 hours. There is no stigma in seeking help.
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 20: LEAVE & ABSENCE PROCEDURES                        -->
+<!-- ============================================================ -->
+<h1 id="leave">20. Leave &amp; Absence Procedures</h1>
+
+<h2>20.1 Types of Leave</h2>
+<table>
+  <tr>
+    <th>Leave Type</th>
+    <th>Duration</th>
+    <th>Approval Required</th>
+    <th>Notice Required</th>
+  </tr>
+  <tr>
+    <td>Personal Time Off (PTO)</td>
+    <td>1-7 days</td>
+    <td>Supervisor (Sergeant+)</td>
+    <td>48 hours in advance</td>
+  </tr>
+  <tr>
+    <td>Leave of Absence (LOA)</td>
+    <td>8-30 days</td>
+    <td>Department Head</td>
+    <td>7 days in advance</td>
+  </tr>
+  <tr>
+    <td>Extended Leave of Absence</td>
+    <td>31-90 days</td>
+    <td>Department Head + Chief of Staff</td>
+    <td>14 days in advance</td>
+  </tr>
+  <tr>
+    <td>Emergency Leave</td>
+    <td>Up to 7 days</td>
+    <td>Any supervisor (retroactive approval OK)</td>
+    <td>ASAP</td>
+  </tr>
+  <tr>
+    <td>Medical Leave</td>
+    <td>As needed</td>
+    <td>Department Head</td>
+    <td>Documentation required</td>
+  </tr>
+  <tr>
+    <td>Administrative Leave (involuntary)</td>
+    <td>As determined</td>
+    <td>Department Head</td>
+    <td>N/A (assigned)</td>
+  </tr>
+</table>
+
+<h2>20.2 Requesting Leave</h2>
+<ol>
+  <li>Submit a leave request through the MDT or in writing to your supervisor.</li>
+  <li>Include: dates of absence, type of leave, reason (general category, not detailed personal information), and contact information during leave.</li>
+  <li>Wait for written approval before considering the leave granted. Verbal approval should be followed up in writing.</li>
+  <li>Ensure your duties are covered during your absence. Coordinate with your team and supervisor.</li>
+</ol>
+
+<h2>20.3 Leave of Absence (LOA) Requirements</h2>
+<ul>
+  <li>LOA requests of 8+ days require a formal written request to the department head.</li>
+  <li>During an LOA, you remain subject to recall for emergencies (natural disasters, critical incidents).</li>
+  <li>LOA exceeding 30 days without extension approval results in automatic separation from the department.</li>
+  <li>Upon return from LOA, you must report to your supervisor for a return-to-duty briefing.</li>
+  <li>Extended LOA (31-90 days) may require retraining or re-certification depending on duration and department policy.</li>
+</ul>
+
+<h2>20.4 Return to Duty</h2>
+<ul>
+  <li>After any leave exceeding 7 days, you must complete a return-to-duty check-in with your supervisor.</li>
+  <li>After medical leave, you must provide a fitness-for-duty clearance from a medical professional.</li>
+  <li>After administrative leave (IA investigation), return-to-duty is contingent on the investigation outcome.</li>
+  <li>After LOA of 14+ days, a refresher briefing covering any policy changes, new BOLOs, and current operations is mandatory.</li>
+</ul>
+
+<h2>20.5 Unauthorized Absence</h2>
+<div class="callout callout-critical">
+  <strong>AWOL POLICY:</strong> Failure to report for a scheduled shift without prior notification is considered Absent Without Leave (AWOL).
+  <ul>
+    <li><strong>First offense:</strong> Written warning (Level 2) + mandatory counseling session.</li>
+    <li><strong>Second offense:</strong> Formal reprimand (Level 3) + 3-day suspension.</li>
+    <li><strong>Third offense:</strong> 7-day suspension (Level 4) + demotion review.</li>
+    <li><strong>3+ consecutive days AWOL with no contact:</strong> Presumed voluntary resignation. Your position may be filled.</li>
+  </ul>
+</div>
+
+<hr class="section-divider">
+
+<!-- ============================================================ -->
+<!-- SECTION 21: DOCUMENT CHANGELOG                                -->
+<!-- ============================================================ -->
+<h1 id="changelog">21. Document Changelog</h1>
+
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Date</th>
+    <th>Author</th>
+    <th>Changes</th>
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td>February 2026</td>
+    <td>Chief of Staff / ZSR Administration</td>
+    <td>Initial release. Comprehensive all-department standard operating procedures covering 20 major sections: Purpose &amp; Scope, Code of Conduct &amp; Ethics, Duty Status &amp; Clock-In/Out, Radio Communications Protocol (full 10-code table, phonetic alphabet, priority codes, channel assignments), Chain of Command, Report Writing Standards, MDT Usage &amp; Digital Procedures, Inter-Agency Cooperation, Evidence Handling &amp; Chain of Custody, Witness &amp; Victim Interaction (Miranda rights), Scene Safety &amp; Management, Vehicle Operation Standards (pursuit policy), Equipment &amp; Uniform Standards, Disciplinary Procedures (progressive discipline, formal complaint process, IA investigations), Training Requirements (academy, FTO, continuing education, specialty certifications), Use of Government Resources, Off-Duty Conduct, Confidentiality &amp; Information Security (HIPAA), Emergency Protocols (active shooter, officer down, MCI, natural disaster, hostage, bomb threat), Leave &amp; Absence Procedures.</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>POLICY AMENDMENTS:</strong> Proposed amendments to this document should be submitted in writing to the Chief of Staff through the chain of command. Emergency policy changes may be enacted immediately by the Chief of Staff and documented retroactively. All departments will be notified of changes via inter-agency bulletin and shift briefings. Department heads are responsible for ensuring their personnel acknowledge and comply with all updates.
+</div>
+
+</div><!-- end .content -->
+
+<!-- ============================================================ -->
+<!-- FOOTER                                                        -->
+<!-- ============================================================ -->
+<div class="footer">
+  <span class="org">ZO SYNDICATE RP</span> | General Procedures &mdash; All Departments<br>
+  Standard Operating Procedures v1.0<br>
+  <strong>OFFICIAL</strong> &mdash; All Government Personnel<br><br>
+  &copy; 2026 Prozilli Entertainment &mdash; All Rights Reserved<br>
+  <a href="https://prozilligaming.com/zo">prozilligaming.com/zo</a> &nbsp;|&nbsp; <a href="https://discord.gg/HjpsGpC4R6">discord.gg/HjpsGpC4R6</a>
+</div>
+
+</body>
+</html>

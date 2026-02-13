@@ -142,7 +142,7 @@ export default function RedditAlertsPage() {
             className={`relative rounded-xl border p-4 text-left transition-all ${
               activeAlertType === type.id
                 ? "border-[#FF4500] bg-[#FF4500]/10"
-                : "border-white/5 bg-[#161b22] hover:border-white/10"
+                : "border-[var(--color-border)] bg-surface hover:border-[var(--color-border)]"
             }`}
           >
             <span className="text-2xl">{type.icon}</span>
@@ -161,7 +161,7 @@ export default function RedditAlertsPage() {
         {/* Settings */}
         <div className="space-y-6">
           {/* Enable Toggle */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <div className="flex items-center justify-between">
               <div>
                 <h3 className="text-sm font-semibold text-white">
@@ -174,7 +174,7 @@ export default function RedditAlertsPage() {
               <button
                 onClick={() => updateAlert("enabled", !currentAlert.enabled)}
                 className={`relative h-6 w-11 rounded-full transition-colors ${
-                  currentAlert.enabled ? "bg-[#FF4500]" : "bg-white/10"
+                  currentAlert.enabled ? "bg-[#FF4500]" : "bg-raised"
                 }`}
               >
                 <span
@@ -189,7 +189,7 @@ export default function RedditAlertsPage() {
           {currentAlert.enabled && (
             <>
               {/* Subreddit Input */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <h3 className="text-sm font-semibold text-white mb-4">
                   Subreddit
                 </h3>
@@ -204,7 +204,7 @@ export default function RedditAlertsPage() {
                       value={currentAlert.subreddit}
                       onChange={(e) => updateAlert("subreddit", e.target.value)}
                       placeholder="e.g. prozilli"
-                      className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:border-[#FF4500] focus:outline-none"
+                      className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-600 focus:border-[#FF4500] focus:outline-none"
                     />
                   </div>
                   <p className="mt-2 text-[10px] text-gray-500">
@@ -214,7 +214,7 @@ export default function RedditAlertsPage() {
               </div>
 
               {/* Channel & Role */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <h3 className="text-sm font-semibold text-white mb-4">
                   Destination
                 </h3>
@@ -224,14 +224,14 @@ export default function RedditAlertsPage() {
                       Channel
                     </label>
                     {channelsLoading ? (
-                      <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                      <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                         Loading channels...
                       </div>
                     ) : (
                       <select
                         value={currentAlert.channelId}
                         onChange={(e) => updateAlert("channelId", e.target.value)}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none"
                       >
                         <option value="">Select a channel</option>
                         {channels.map((channel) => (
@@ -247,7 +247,7 @@ export default function RedditAlertsPage() {
                       Mention Role (Optional)
                     </label>
                     {rolesLoading ? (
-                      <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                      <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                         Loading roles...
                       </div>
                     ) : (
@@ -256,7 +256,7 @@ export default function RedditAlertsPage() {
                         onChange={(e) =>
                           updateAlert("mentionRoleId", e.target.value)
                         }
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none"
                       >
                         <option value="">No mention</option>
                         <option value="everyone">@everyone</option>
@@ -273,7 +273,7 @@ export default function RedditAlertsPage() {
               </div>
 
               {/* Message Settings */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-sm font-semibold text-white">
                     Embed Message
@@ -283,7 +283,7 @@ export default function RedditAlertsPage() {
                       updateAlert("embedEnabled", !currentAlert.embedEnabled)
                     }
                     className={`relative h-6 w-11 rounded-full transition-colors ${
-                      currentAlert.embedEnabled ? "bg-[#FF4500]" : "bg-white/10"
+                      currentAlert.embedEnabled ? "bg-[#FF4500]" : "bg-raised"
                     }`}
                   >
                     <span
@@ -315,7 +315,7 @@ export default function RedditAlertsPage() {
                           onChange={(e) =>
                             updateAlert("embedColor", e.target.value)
                           }
-                          className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none"
+                          className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none"
                         />
                       </div>
                     </div>
@@ -327,7 +327,7 @@ export default function RedditAlertsPage() {
                         type="text"
                         value={currentAlert.title}
                         onChange={(e) => updateAlert("title", e.target.value)}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none"
                       />
                     </div>
                     <div>
@@ -340,7 +340,7 @@ export default function RedditAlertsPage() {
                           updateAlert("description", e.target.value)
                         }
                         rows={4}
-                        className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none resize-none"
+                        className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-[#FF4500] focus:outline-none resize-none"
                       />
                     </div>
                     <div className="flex flex-wrap gap-4">
@@ -351,7 +351,7 @@ export default function RedditAlertsPage() {
                           onChange={(e) =>
                             updateAlert("showThumbnail", e.target.checked)
                           }
-                          className="h-4 w-4 rounded border-white/20 bg-white/5 text-[#FF4500] focus:ring-[#FF4500]"
+                          className="h-4 w-4 rounded border-white/20 bg-surface text-[#FF4500] focus:ring-[#FF4500]"
                         />
                         <span className="text-sm text-gray-400">
                           Show Thumbnail
@@ -363,7 +363,7 @@ export default function RedditAlertsPage() {
               </div>
 
               {/* Variables */}
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
                 <h3 className="text-sm font-semibold text-white mb-3">
                   Available Variables
                 </h3>
@@ -413,7 +413,7 @@ export default function RedditAlertsPage() {
         {/* Preview */}
         <div className="space-y-4">
           <h3 className="text-sm font-semibold text-white">Preview</h3>
-          <div className="rounded-xl border border-white/5 bg-[#36393f] p-4">
+          <div className="rounded-xl border border-[var(--color-border)] bg-[#36393f] p-4">
             <div className="flex gap-4">
               <div className="h-10 w-10 rounded-full bg-[#5865F2] flex items-center justify-center text-white font-bold text-sm shrink-0">
                 P

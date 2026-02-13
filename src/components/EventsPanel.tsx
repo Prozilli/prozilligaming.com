@@ -57,13 +57,13 @@ const PLATFORM_MAP: Record<string, { icon: IconComponent; color: string; name: s
 };
 
 const EVENT_STYLES: Record<string, { icon: string; label: string; color: string }> = {
-  follow: { icon: "\u2764\uFE0F", label: "Followed", color: "text-brand-red" },
+  follow: { icon: "\u2764\uFE0F", label: "Followed", color: "text-red" },
   subscribe: { icon: "\u2B50", label: "Subscribed", color: "text-purple-400" },
   gift: { icon: "\uD83C\uDF81", label: "Gifted", color: "text-pink-400" },
-  donate: { icon: "\uD83D\uDC8E", label: "Donated", color: "text-brand-gold" },
+  donate: { icon: "\uD83D\uDC8E", label: "Donated", color: "text-gold" },
   raid: { icon: "\uD83D\uDE80", label: "Raided", color: "text-blue-400" },
   bits: { icon: "\uD83D\uDC9C", label: "Cheered", color: "text-purple-300" },
-  tip: { icon: "\uD83D\uDCB0", label: "Tipped", color: "text-brand-gold" },
+  tip: { icon: "\uD83D\uDCB0", label: "Tipped", color: "text-gold" },
   join: { icon: "\uD83D\uDC4B", label: "Joined", color: "text-green-400" },
 };
 
@@ -152,13 +152,13 @@ export default function EventsPanel() {
   const hasEvents = events.length > 0;
 
   return (
-    <div className="glass-strong glow-border rounded-xl p-3">
+    <div className="panel p-3">
       <div className="flex items-center justify-between mb-2">
-        <h3 className="text-[10px] font-semibold uppercase tracking-wider text-brand-gold">
+        <h3 className="text-[10px] font-semibold uppercase tracking-wider text-gold">
           Recent Events
         </h3>
         <div className="flex items-center gap-1.5">
-          <span className="h-1.5 w-1.5 rounded-full bg-brand-gold animate-pulse" />
+          <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
           <span className="text-[10px] text-muted">PRISMAI</span>
         </div>
       </div>
@@ -168,16 +168,16 @@ export default function EventsPanel() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="flex items-center gap-2 rounded-md bg-white/5 px-2 py-1.5 animate-pulse"
+              className="flex items-center gap-2 rounded-md bg-surface px-2 py-1.5 animate-pulse"
             >
-              <div className="w-5 h-5 rounded-full bg-white/10" />
-              <div className="h-3 w-24 rounded bg-white/10" />
-              <div className="ml-auto h-3 w-12 rounded bg-white/10" />
+              <div className="w-5 h-5 rounded-full bg-raised" />
+              <div className="h-3 w-24 rounded bg-raised" />
+              <div className="ml-auto h-3 w-12 rounded bg-raised" />
             </div>
           ))}
         </div>
       ) : !hasEvents ? (
-        <div className="rounded-md bg-white/[0.03] px-4 py-6 text-center">
+        <div className="rounded-md bg-surface px-4 py-6 text-center">
           <p className="text-xs text-muted">
             No recent events. Follows, subs, donations, and raids will appear here during live streams.
           </p>
@@ -192,10 +192,10 @@ export default function EventsPanel() {
             return (
               <div
                 key={event.id}
-                className="flex items-center gap-2 rounded-md bg-white/5 px-2 py-1.5 transition-colors hover:bg-white/[0.08]"
+                className="flex items-center gap-2 rounded-md bg-surface px-2 py-1.5 transition-colors hover:bg-raised"
               >
                 <div className="flex items-center gap-2 flex-1 min-w-0">
-                  <div className="w-5 h-5 rounded-full bg-white/10 flex items-center justify-center text-[10px] text-white shrink-0">
+                  <div className="w-5 h-5 rounded-full bg-raised flex items-center justify-center text-[10px] text-white shrink-0">
                     {event.user.charAt(0).toUpperCase()}
                   </div>
                   <span className="text-xs text-white truncate">
@@ -215,7 +215,7 @@ export default function EventsPanel() {
                     {style.label}
                   </span>
                   {event.amount && (
-                    <span className="text-[10px] font-bold text-brand-gold">
+                    <span className="text-[10px] font-bold text-gold">
                       {event.amount}
                     </span>
                   )}

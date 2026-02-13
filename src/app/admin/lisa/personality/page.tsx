@@ -220,7 +220,7 @@ export default function LisaPersonalityPage() {
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Identity */}
         <div className="space-y-6">
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Identity</h3>
             <div className="space-y-4">
               <div>
@@ -231,7 +231,7 @@ export default function LisaPersonalityPage() {
                   type="text"
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 />
               </div>
               <div>
@@ -241,7 +241,7 @@ export default function LisaPersonalityPage() {
                 <select
                   value={pronouns}
                   onChange={(e) => setPronouns(e.target.value)}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 >
                   <option value="she/her">she/her</option>
                   <option value="he/him">he/him</option>
@@ -260,8 +260,8 @@ export default function LisaPersonalityPage() {
                       onClick={() => setAvatar(style)}
                       className={`rounded-lg p-3 text-center transition-colors ${
                         avatar === style
-                          ? "bg-brand-red/10 border border-brand-red"
-                          : "bg-white/5 border border-transparent hover:bg-white/10"
+                          ? "bg-red/10 border border-brand-red"
+                          : "bg-surface border border-transparent hover:bg-raised"
                       }`}
                     >
                       <div
@@ -292,7 +292,7 @@ export default function LisaPersonalityPage() {
 
         {/* Traits */}
         <div className="space-y-6">
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">
               Personality Traits
             </h3>
@@ -303,7 +303,7 @@ export default function LisaPersonalityPage() {
                     <label className="text-xs font-medium text-gray-400">
                       {trait.name}
                     </label>
-                    <span className="text-xs text-brand-gold">{trait.value}%</span>
+                    <span className="text-xs text-gold">{trait.value}%</span>
                   </div>
                   <input
                     type="range"
@@ -313,7 +313,7 @@ export default function LisaPersonalityPage() {
                     onChange={(e) =>
                       updateTrait(trait.id, parseInt(e.target.value))
                     }
-                    className="w-full h-2 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-brand-red"
+                    className="w-full h-2 bg-raised rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-red"
                   />
                   <p className="mt-1 text-[10px] text-gray-500">
                     {trait.description}
@@ -326,21 +326,21 @@ export default function LisaPersonalityPage() {
 
         {/* Preview */}
         <div className="space-y-6">
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">
               Preview Response
             </h3>
             <div className="space-y-4">
-              <div className="rounded-lg bg-white/5 p-3">
+              <div className="rounded-lg bg-surface p-3">
                 <p className="text-xs text-gray-500 mb-1">User says:</p>
                 <p className="text-sm text-white">&quot;Hey LISA, when&apos;s the next stream?&quot;</p>
               </div>
-              <div className="rounded-lg bg-brand-red/10 border border-brand-red/20 p-3">
+              <div className="rounded-lg bg-red/10 border border-brand-red/20 p-3">
                 <div className="flex items-center gap-2 mb-2">
                   <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-brand-red to-brand-gold text-white text-xs font-bold">
                     L
                   </div>
-                  <span className="text-xs font-medium text-brand-red">
+                  <span className="text-xs font-medium text-red">
                     {nickname}
                   </span>
                 </div>
@@ -362,7 +362,7 @@ export default function LisaPersonalityPage() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">
               Active Platforms
             </h3>
@@ -393,7 +393,7 @@ export default function LisaPersonalityPage() {
       </div>
 
       {/* Base Prompt */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-4">
           System Prompt
         </h3>
@@ -401,7 +401,7 @@ export default function LisaPersonalityPage() {
           value={basePrompt}
           onChange={(e) => setBasePrompt(e.target.value)}
           rows={12}
-          className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-sm text-white font-mono focus:border-brand-red focus:outline-none resize-none"
+          className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-3 text-sm text-white font-mono focus:border-brand-red focus:outline-none resize-none"
         />
         <p className="mt-2 text-xs text-gray-500">
           This is the base instruction that shapes LISA&apos;s behavior. Be careful when
@@ -419,14 +419,14 @@ export default function LisaPersonalityPage() {
         <button
           onClick={handleReset}
           disabled={saving}
-          className="rounded-lg bg-white/5 px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-white/10 hover:text-white disabled:opacity-50"
+          className="rounded-lg bg-surface px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-raised hover:text-white disabled:opacity-50"
         >
           Reset to Default
         </button>
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

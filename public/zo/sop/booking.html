@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Booking Procedures SOP v1.0 - ZO Syndicate RP</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* --- HEADER BANNER --- */
+  .header-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+    border-bottom: 3px solid #a30000;
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(163,0,0,0.03) 2px,
+      rgba(163,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #c4a265;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .header-server {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 16px;
+    color: #a30000;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #777;
+  }
+  .header-meta span { white-space: nowrap; }
+  .header-meta strong { color: #999; }
+  .badge-classified {
+    display: inline-block;
+    background: #a30000;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #c44;
+  }
+
+  /* --- MAIN CONTENT --- */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+  }
+
+  /* --- TABLE OF CONTENTS --- */
+  .toc {
+    background: #111;
+    border: 1px solid #222;
+    border-left: 4px solid #a30000;
+    padding: 24px 28px;
+    margin: 0 0 40px;
+  }
+  .toc h2 {
+    color: #a30000;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    margin-bottom: 5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #a30000; }
+
+  /* --- HEADINGS --- */
+  h1 {
+    color: #a30000;
+    border-bottom: 2px solid #a30000;
+    padding-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-top: 50px;
+  }
+  h2 {
+    color: #c44;
+    margin-top: 35px;
+    font-size: 18px;
+    border-bottom: 1px solid #1f1f1f;
+    padding-bottom: 6px;
+  }
+  h3 {
+    color: #ddd;
+    font-size: 15px;
+    margin-top: 22px;
+  }
+  h4 {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 16px;
+    font-weight: 600;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #222;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  th {
+    background: #141414;
+    color: #a30000;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  td { background: #0f0f0f; }
+  tr:hover td { background: #151010; }
+
+  /* --- CALLOUT BOXES --- */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .callout-critical {
+    background: #1f0a0a;
+    border: 1px solid #331111;
+    border-left: 4px solid #a30000;
+  }
+  .callout-warning {
+    background: #1f1a0a;
+    border: 1px solid #33290e;
+    border-left: 4px solid #c4a265;
+  }
+  .callout-info {
+    background: #0a0f1f;
+    border: 1px solid #0e1a33;
+    border-left: 4px solid #3366aa;
+  }
+  .callout-critical strong { color: #e44; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #6699cc; }
+
+  /* --- MISC --- */
+  code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    border: 1px solid #222;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  blockquote {
+    border-left: 3px solid #a30000;
+    margin: 16px 0;
+    padding: 10px 18px;
+    background: #111;
+    color: #aaa;
+    font-style: italic;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 40px 0;
+  }
+  strong { color: #eee; }
+  a { color: #a30000; text-decoration: none; }
+  a:hover { color: #c44; text-decoration: underline; }
+
+  /* --- FOOTER --- */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 2px solid #a30000;
+    margin-top: 60px;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer .org { color: #c4a265; font-weight: 600; letter-spacing: 2px; }
+  .footer a { color: #666; }
+  .footer a:hover { color: #a30000; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 700px) {
+    .header-dept { font-size: 22px; letter-spacing: 1px; }
+    .header-meta { flex-direction: column; align-items: center; gap: 6px; }
+    .toc ol { columns: 1; }
+    .content { padding: 20px 16px 40px; }
+    h1 { font-size: 18px; }
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER BANNER ========== -->
+<div class="header-banner">
+  <div class="header-org">PROZILLI ENTERTAINMENT</div>
+  <div class="header-server">ZO SYNDICATE RP</div>
+  <div class="header-dept">BOOKING PROCEDURES</div>
+  <div class="header-subtitle">STANDARD OPERATING PROCEDURES</div>
+  <div class="badge-classified">LAW ENFORCEMENT</div>
+  <div class="header-meta">
+    <span><strong>Version:</strong> 1.0</span>
+    <span><strong>Effective:</strong> February 2026</span>
+    <span><strong>Classification:</strong> RESTRICTED - LEO ONLY</span>
+    <span><strong>Authority:</strong> Booking Sergeant</span>
+  </div>
+</div>
+
+<!-- ========== CONTENT ========== -->
+<div class="content">
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#s1">Purpose &amp; Scope</a></li>
+    <li><a href="#s2">Definitions</a></li>
+    <li><a href="#s3">Arrest Documentation Requirements</a></li>
+    <li><a href="#s4">Transport to Booking Facility</a></li>
+    <li><a href="#s5">Intake Procedures</a></li>
+    <li><a href="#s6">Personal Property Processing</a></li>
+    <li><a href="#s7">Search Procedures</a></li>
+    <li><a href="#s8">Medical Screening</a></li>
+    <li><a href="#s9">Charge Entry &amp; Processing</a></li>
+    <li><a href="#s10">Bail &amp; Bond Procedures</a></li>
+    <li><a href="#s11">Prisoner Rights &amp; Notifications</a></li>
+    <li><a href="#s12">Holding Cell Management</a></li>
+    <li><a href="#s13">Juvenile Booking Procedures</a></li>
+    <li><a href="#s14">Release Procedures</a></li>
+    <li><a href="#s15">Records Management</a></li>
+    <li><a href="#s16">Inter-Agency Transfers</a></li>
+    <li><a href="#s17">Special Circumstances</a></li>
+    <li><a href="#s18">Revision History &amp; Amendments</a></li>
+  </ol>
+</div>
+
+<!-- ================================================================== -->
+<!-- SECTION 1: PURPOSE & SCOPE -->
+<!-- ================================================================== -->
+<h1 id="s1">1. Purpose &amp; Scope</h1>
+
+<h2>1.1 Purpose</h2>
+<p>This Standard Operating Procedure establishes a <strong>uniform, standardized booking process</strong> for all law enforcement departments operating within the jurisdiction of San Andreas under the ZO Syndicate RP framework. The intent is to ensure that every individual taken into custody is processed consistently, lawfully, and with full respect for their constitutional rights, regardless of the arresting department or facility location.</p>
+
+<p>Proper booking procedures serve multiple critical functions: they protect the civil liberties of the accused, establish an unimpeachable chain of custody for evidence, create comprehensive records for prosecution, and shield officers and departments from liability arising from procedural failures.</p>
+
+<h2>1.2 Scope</h2>
+<p>This SOP applies to <strong>all sworn personnel</strong> across the following departments:</p>
+<ul>
+  <li><strong>Los Santos Police Department (LSPD)</strong> &mdash; All divisions and units</li>
+  <li><strong>Blaine County Sheriff's Office (BCSO)</strong> &mdash; All divisions and units</li>
+  <li><strong>San Andreas State Police (SASP)</strong> &mdash; All divisions and units</li>
+</ul>
+
+<p>This SOP governs the booking process from the moment of arrest through final release or transfer. All personnel involved in the arrest, transport, processing, or custody of any individual must adhere to these procedures without exception.</p>
+
+<h2>1.3 Authority</h2>
+<p>This document is issued under the authority of the <strong>Booking Sergeant</strong> in coordination with the Chiefs of Police (LSPD), the Sheriff (BCSO), and the Commissioner (SASP). Amendments require joint approval from at least two of the three department heads.</p>
+
+<div class="callout callout-critical">
+  <strong>MANDATORY COMPLIANCE:</strong> Failure to follow booking procedures may result in dismissal of charges, civil liability against the department, and disciplinary action up to and including termination. All officers must complete booking certification training before processing any arrestee independently.
+</div>
+
+<h2>1.4 Supersession</h2>
+<p>This SOP supersedes all previous booking directives, memoranda, and informal procedures across all three LEO departments. In the event of conflict between this document and department-specific SOPs, this document takes precedence for all booking-related procedures.</p>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 2: DEFINITIONS -->
+<!-- ================================================================== -->
+<h1 id="s2">2. Definitions</h1>
+
+<h2>2.1 Core Terminology</h2>
+<table>
+  <tr>
+    <th>Term</th>
+    <th>Definition</th>
+  </tr>
+  <tr>
+    <td><strong>Booking</strong></td>
+    <td>The administrative process of recording an arrest, including identification verification, photographing, fingerprinting, cataloging personal property, and entering charges into the MDT system.</td>
+  </tr>
+  <tr>
+    <td><strong>Processing</strong></td>
+    <td>The complete sequence of steps from arrival at the booking facility through charge entry, including intake screening, medical evaluation, and property inventory.</td>
+  </tr>
+  <tr>
+    <td><strong>Arraignment</strong></td>
+    <td>The initial court appearance where the accused is formally informed of charges, enters a plea, and bail is set or modified by a judge.</td>
+  </tr>
+  <tr>
+    <td><strong>Bail</strong></td>
+    <td>A monetary amount set by the court or bail schedule that the accused pays to secure release from custody pending trial. Bail is refunded upon completion of all court appearances.</td>
+  </tr>
+  <tr>
+    <td><strong>Bond</strong></td>
+    <td>A surety provided by a licensed bail bondsman on behalf of the accused, typically requiring a non-refundable premium (usually 10% of bail amount). The bondsman guarantees the full bail amount.</td>
+  </tr>
+  <tr>
+    <td><strong>Personal Recognizance (OR)</strong></td>
+    <td>Release from custody based solely on the accused's written promise to appear at all scheduled court dates, without monetary bail. Typically granted for low-level offenses with no flight risk.</td>
+  </tr>
+  <tr>
+    <td><strong>Remand</strong></td>
+    <td>A court order holding the accused in custody without bail, typically reserved for capital offenses, extreme flight risks, or individuals who pose an imminent danger to the community.</td>
+  </tr>
+</table>
+
+<h2>2.2 Additional Terminology</h2>
+<table>
+  <tr>
+    <th>Term</th>
+    <th>Definition</th>
+  </tr>
+  <tr>
+    <td><strong>Probable Cause</strong></td>
+    <td>Facts and circumstances sufficient to warrant a reasonable person to believe that a crime has been, is being, or will be committed, and that the person to be arrested committed the crime.</td>
+  </tr>
+  <tr>
+    <td><strong>Chain of Custody</strong></td>
+    <td>The chronological documentation of the seizure, custody, control, transfer, analysis, and disposition of physical or electronic evidence.</td>
+  </tr>
+  <tr>
+    <td><strong>Booking Number</strong></td>
+    <td>A unique alphanumeric identifier assigned to each booking event, generated automatically by the MDT system. Format: <code>BK-YYMMDD-####</code>.</td>
+  </tr>
+  <tr>
+    <td><strong>Holding Cell</strong></td>
+    <td>A secure, monitored cell within the booking facility used for temporary detention of individuals awaiting processing, arraignment, or transfer.</td>
+  </tr>
+  <tr>
+    <td><strong>Time Served</strong></td>
+    <td>Credit applied to a sentence for time spent in custody prior to sentencing, calculated from the moment of booking.</td>
+  </tr>
+  <tr>
+    <td><strong>Expungement</strong></td>
+    <td>A court-ordered process that seals or destroys criminal records so they are no longer accessible through standard background checks.</td>
+  </tr>
+  <tr>
+    <td><strong>MDT</strong></td>
+    <td>Mobile Data Terminal &mdash; the in-vehicle and station-based computer system used by LEO to access criminal databases, run background checks, enter charges, and manage booking records.</td>
+  </tr>
+  <tr>
+    <td><strong>Detainer</strong></td>
+    <td>A request filed by an agency asking the holding facility to maintain custody of a prisoner beyond their scheduled release, typically for transfer to another jurisdiction.</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 3: ARREST DOCUMENTATION REQUIREMENTS -->
+<!-- ================================================================== -->
+<h1 id="s3">3. Arrest Documentation Requirements</h1>
+
+<h2>3.1 Arrest Report</h2>
+<p>Every arrest <strong>must</strong> be accompanied by a complete arrest report entered into the MDT before or during the booking process. No individual may be held in custody beyond the initial processing window without a completed arrest report on file.</p>
+
+<h3>3.1.1 Required Arrest Report Fields</h3>
+<ul>
+  <li><strong>Arrestee Information:</strong> Full legal name, date of birth, known aliases, physical description (height, weight, hair color, eye color, distinguishing marks/tattoos), current address</li>
+  <li><strong>Arresting Officer:</strong> Name, badge number, department, division/unit</li>
+  <li><strong>Date, Time, and Location of Arrest:</strong> Precise address or GPS coordinates, including city/county jurisdiction</li>
+  <li><strong>Narrative of Events:</strong> Detailed, chronological account of the circumstances leading to the arrest, written in first person by the arresting officer</li>
+  <li><strong>Charges:</strong> Specific penal code sections, charge descriptions, and classification (infraction, misdemeanor, felony)</li>
+  <li><strong>Witnesses:</strong> Names, contact information, and brief statements from any civilian or officer witnesses</li>
+  <li><strong>Miranda Notification:</strong> Confirmation that Miranda rights were read, time administered, and whether the suspect invoked or waived rights</li>
+</ul>
+
+<h2>3.2 Probable Cause Statement</h2>
+<p>A standalone <strong>probable cause affidavit</strong> must be filed for every felony arrest and is recommended for misdemeanor arrests. This document must articulate the specific facts, observations, and evidence that established probable cause for the arrest.</p>
+
+<div class="callout callout-warning">
+  <strong>48-HOUR RULE:</strong> A probable cause determination must be made by a judicial officer within 48 hours of a warrantless arrest. Failure to obtain a probable cause finding within this window mandates the immediate release of the suspect.
+</div>
+
+<h3>3.2.1 Probable Cause Statement Contents</h3>
+<ul>
+  <li>Specific criminal conduct observed by the officer</li>
+  <li>Statements from victims or witnesses with reasonable indicia of reliability</li>
+  <li>Physical evidence recovered at the scene</li>
+  <li>Results of field tests (breathalyzer, drug field test kits)</li>
+  <li>Surveillance footage or body camera evidence (reference only &mdash; do not attach media files to MDT reports)</li>
+  <li>Prior criminal history relevant to current charges (e.g., habitual offender status)</li>
+</ul>
+
+<h2>3.3 Evidence Log</h2>
+<p>All evidence seized during or incident to the arrest must be documented in the MDT evidence log with the following information:</p>
+
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Description</th>
+    <th>Example</th>
+  </tr>
+  <tr>
+    <td><strong>Evidence ID</strong></td>
+    <td>Auto-generated unique identifier</td>
+    <td><code>EV-260212-0041</code></td>
+  </tr>
+  <tr>
+    <td><strong>Description</strong></td>
+    <td>Detailed description of the item</td>
+    <td>Black Glock 19, serial #GKN-44281</td>
+  </tr>
+  <tr>
+    <td><strong>Location Recovered</strong></td>
+    <td>Exact location where item was found</td>
+    <td>Suspect's waistband, right hip</td>
+  </tr>
+  <tr>
+    <td><strong>Recovering Officer</strong></td>
+    <td>Name and badge number</td>
+    <td>Ofc. Rodriguez #4412</td>
+  </tr>
+  <tr>
+    <td><strong>Date/Time Recovered</strong></td>
+    <td>Precise timestamp</td>
+    <td>02/12/2026 14:32</td>
+  </tr>
+  <tr>
+    <td><strong>Storage Location</strong></td>
+    <td>Evidence locker assignment</td>
+    <td>MRPD Evidence Room, Locker B-14</td>
+  </tr>
+  <tr>
+    <td><strong>Photographs</strong></td>
+    <td>Number of photos taken, reference IDs</td>
+    <td>3 photos (IMG-0041A through 0041C)</td>
+  </tr>
+</table>
+
+<h2>3.4 Required Forms Checklist</h2>
+
+<div class="callout callout-info">
+  <strong>DOCUMENTATION TIP:</strong> Officers should use the MDT's booking workflow wizard to ensure all required forms are generated automatically. Manual form creation is only necessary when the MDT system is offline.
+</div>
+
+<table>
+  <tr>
+    <th>Form</th>
+    <th>Required For</th>
+    <th>Filed By</th>
+    <th>Deadline</th>
+  </tr>
+  <tr>
+    <td>Arrest Report (ZSR-101)</td>
+    <td>All arrests</td>
+    <td>Arresting Officer</td>
+    <td>Before end of shift</td>
+  </tr>
+  <tr>
+    <td>Probable Cause Affidavit (ZSR-102)</td>
+    <td>All felony arrests; recommended for misdemeanors</td>
+    <td>Arresting Officer</td>
+    <td>Within 4 hours of arrest</td>
+  </tr>
+  <tr>
+    <td>Evidence Inventory (ZSR-103)</td>
+    <td>All arrests involving seized property/evidence</td>
+    <td>Arresting/Processing Officer</td>
+    <td>During booking</td>
+  </tr>
+  <tr>
+    <td>Miranda Waiver/Invocation (ZSR-104)</td>
+    <td>All custodial interrogations</td>
+    <td>Interrogating Officer</td>
+    <td>Before interrogation</td>
+  </tr>
+  <tr>
+    <td>Property Inventory Receipt (ZSR-105)</td>
+    <td>All bookings</td>
+    <td>Booking Officer</td>
+    <td>During intake</td>
+  </tr>
+  <tr>
+    <td>Medical Screening Form (ZSR-106)</td>
+    <td>All bookings</td>
+    <td>Booking Officer / Medical</td>
+    <td>During intake</td>
+  </tr>
+  <tr>
+    <td>Vehicle Impound Report (ZSR-107)</td>
+    <td>When suspect's vehicle is impounded</td>
+    <td>Arresting/Tow Officer</td>
+    <td>Before end of shift</td>
+  </tr>
+  <tr>
+    <td>Juvenile Custody Form (ZSR-108)</td>
+    <td>All juvenile arrests</td>
+    <td>Arresting Officer</td>
+    <td>Immediately upon booking</td>
+  </tr>
+  <tr>
+    <td>Inter-Agency Transfer Form (ZSR-109)</td>
+    <td>Transfers between jurisdictions</td>
+    <td>Transfer Officer</td>
+    <td>Before transfer</td>
+  </tr>
+  <tr>
+    <td>Release Authorization (ZSR-110)</td>
+    <td>All releases</td>
+    <td>Booking Sergeant</td>
+    <td>Upon release</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 4: TRANSPORT TO BOOKING FACILITY -->
+<!-- ================================================================== -->
+<h1 id="s4">4. Transport to Booking Facility</h1>
+
+<h2>4.1 Vehicle Security</h2>
+<p>Prior to transporting any arrestee, the transporting officer <strong>must</strong> conduct a thorough search of the transport vehicle's rear compartment. This search serves to:</p>
+<ul>
+  <li>Ensure no weapons, contraband, or hazardous materials are present from previous transports</li>
+  <li>Verify the integrity of the prisoner partition/cage</li>
+  <li>Confirm that rear door child locks are engaged and cannot be defeated</li>
+  <li>Check that the rear seat area is clear of any items that could be used as weapons</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>MANDATORY:</strong> The transporting officer must search the transport vehicle BEFORE and AFTER every prisoner transport. Any items found during the post-transport search must be logged as found property and investigated to determine if they belong to the transported individual.
+</div>
+
+<h2>4.2 Seatbelt Requirement</h2>
+<p>All arrestees <strong>must</strong> be secured with a seatbelt during transport, regardless of the distance traveled. The transporting officer is responsible for buckling the arrestee, as handcuffed individuals cannot do so themselves. Failure to seatbelt a prisoner constitutes a policy violation and creates significant liability.</p>
+
+<h2>4.3 Communication Requirements</h2>
+<p>The transporting officer must notify dispatch of the following via radio:</p>
+<ul>
+  <li><strong>Start of Transport:</strong> Badge number, starting location, destination facility, number of prisoners, estimated arrival time</li>
+  <li><strong>Arrival:</strong> Confirmation of safe arrival at the booking facility</li>
+  <li><strong>Detour/Delay:</strong> Any deviation from the direct route must be reported with reason</li>
+  <li><strong>Emergency:</strong> Any medical emergency, escape attempt, or assault during transport requires an immediate Code 3 broadcast</li>
+</ul>
+
+<h3>4.3.1 Radio Format</h3>
+<p>Standard transport radio call format:</p>
+<blockquote>
+  "[Badge Number], 10-15 en route from [Location] to [Facility] with [Number] in custody. ETA [Minutes] minutes. [Any special conditions]."
+</blockquote>
+
+<h2>4.4 Route Requirements</h2>
+<ul>
+  <li>Officers must take the <strong>most direct, practical route</strong> to the booking facility</li>
+  <li>Unnecessary stops are prohibited during prisoner transport</li>
+  <li>If a stop is required (fuel, medical emergency), the officer must notify dispatch and document the reason</li>
+  <li>Officers shall avoid known high-crime areas when alternate routes of similar length are available</li>
+</ul>
+
+<h2>4.5 Medical Needs During Transport</h2>
+<p>If an arrestee exhibits signs of medical distress during transport, the transporting officer shall:</p>
+<ol>
+  <li>Immediately notify dispatch and request EMS to the nearest safe location</li>
+  <li>Pull over at the nearest safe location and assess the situation</li>
+  <li>Administer basic first aid if trained and if it is safe to do so</li>
+  <li>Maintain custody of the arrestee at all times &mdash; do not remove restraints unless directed by EMS and a second officer is present</li>
+  <li>Document the medical event in the arrest report and booking notes</li>
+</ol>
+
+<h2>4.6 Multiple Prisoner Transport</h2>
+<p>When transporting multiple prisoners:</p>
+<ul>
+  <li>Co-defendants should be transported in <strong>separate vehicles</strong> whenever possible</li>
+  <li>Male and female prisoners must <strong>never</strong> be transported in the same vehicle</li>
+  <li>Juvenile and adult prisoners must <strong>never</strong> be transported together</li>
+  <li>Gang-affiliated prisoners from rival gangs must be separated</li>
+  <li>A maximum of <strong>two (2) prisoners</strong> per standard patrol vehicle</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 5: INTAKE PROCEDURES -->
+<!-- ================================================================== -->
+<h1 id="s5">5. Intake Procedures</h1>
+
+<h2>5.1 Identification Verification</h2>
+<p>Upon arrival at the booking facility, the booking officer shall verify the arrestee's identity using all available methods:</p>
+
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Priority</th>
+    <th>Procedure</th>
+  </tr>
+  <tr>
+    <td>Government-Issued ID</td>
+    <td>Primary</td>
+    <td>Check driver's license, state ID, passport, or military ID. Verify photo match and check for signs of forgery.</td>
+  </tr>
+  <tr>
+    <td>MDT Database Lookup</td>
+    <td>Primary</td>
+    <td>Search by name and DOB in the MDT. Cross-reference physical description, known aliases, and prior booking photos.</td>
+  </tr>
+  <tr>
+    <td>Fingerprint Comparison</td>
+    <td>Secondary</td>
+    <td>Compare booking fingerprints against existing records in the database. Used when identity is disputed or ID is unavailable.</td>
+  </tr>
+  <tr>
+    <td>Verbal Confirmation</td>
+    <td>Tertiary</td>
+    <td>Ask the arrestee to state their full legal name, DOB, and address. Document any refusal to identify.</td>
+  </tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>IDENTITY DISPUTES:</strong> If the arrestee's identity cannot be positively confirmed, the booking officer shall note "Identity Unverified" in the MDT and assign a John/Jane Doe booking number. Additional investigative steps (tattoo databases, known associate inquiries) should be initiated immediately.
+</div>
+
+<h2>5.2 MDT Criminal History Check</h2>
+<p>A comprehensive criminal history check must be conducted for every arrestee. The following databases shall be queried:</p>
+<ul>
+  <li><strong>Local MDT Records:</strong> Prior arrests, convictions, pending charges, and outstanding warrants within San Andreas</li>
+  <li><strong>Warrant Database:</strong> Active warrants from all jurisdictions (local, state, federal)</li>
+  <li><strong>Protection Order Database:</strong> Active restraining orders or protective orders</li>
+  <li><strong>Gang Database:</strong> Known gang affiliations, documented associates, and territory assignments</li>
+  <li><strong>Sex Offender Registry:</strong> Registration status and compliance check</li>
+  <li><strong>Parole/Probation Status:</strong> Current supervision conditions and officer contact information</li>
+</ul>
+
+<h3>5.2.1 Hit Notification Protocol</h3>
+<p>When a database check reveals a positive hit (active warrant, protection order violation, parole hold, etc.), the booking officer shall:</p>
+<ol>
+  <li>Immediately notify the shift supervisor</li>
+  <li>Place a hold on the arrestee, preventing release regardless of bail eligibility on the original charge</li>
+  <li>Contact the issuing agency or jurisdiction to confirm the hit and obtain disposition instructions</li>
+  <li>Document the hit and all follow-up actions in the booking record</li>
+</ol>
+
+<h2>5.3 Warrant Check</h2>
+<p>All active warrants discovered during booking must be addressed before the arrestee can be processed for release on the original charge. Warrant types and handling:</p>
+
+<table>
+  <tr>
+    <th>Warrant Type</th>
+    <th>Action Required</th>
+    <th>Authority Needed</th>
+  </tr>
+  <tr>
+    <td>Local Arrest Warrant</td>
+    <td>Add charges to current booking; process concurrently</td>
+    <td>Booking Officer</td>
+  </tr>
+  <tr>
+    <td>Local Bench Warrant</td>
+    <td>Add to booking; notify issuing court for new hearing date</td>
+    <td>Booking Officer</td>
+  </tr>
+  <tr>
+    <td>Out-of-County Warrant</td>
+    <td>Place hold; contact issuing county for pickup/extradition</td>
+    <td>Booking Sergeant</td>
+  </tr>
+  <tr>
+    <td>State Warrant</td>
+    <td>Place hold; contact SASP coordination center</td>
+    <td>Booking Sergeant</td>
+  </tr>
+  <tr>
+    <td>Federal Warrant</td>
+    <td>Place hold; contact FIB or US Marshals</td>
+    <td>Watch Commander</td>
+  </tr>
+  <tr>
+    <td>Parole/Probation Hold</td>
+    <td>Place hold; contact P&amp;P officer of record</td>
+    <td>Booking Sergeant</td>
+  </tr>
+</table>
+
+<h2>5.4 Fingerprinting</h2>
+<p>All individuals booked on <strong>misdemeanor or felony charges</strong> must be fingerprinted using the facility's electronic fingerprint scanner. Fingerprints are automatically uploaded to the MDT database and cross-referenced against unsolved case evidence.</p>
+
+<h3>5.4.1 Fingerprinting Procedure</h3>
+<ol>
+  <li>Remove handcuffs from one hand at a time (maintain the other hand restrained)</li>
+  <li>Clean the arrestee's fingers with an alcohol wipe to ensure clear prints</li>
+  <li>Roll each finger on the scanner following the on-screen prompts</li>
+  <li>Capture flat impressions of all ten fingers simultaneously</li>
+  <li>Verify print quality &mdash; re-capture any prints below the quality threshold</li>
+  <li>Photograph the arrestee (front-facing and right profile) for the booking record</li>
+</ol>
+
+<h2>5.5 Processing Time Limits</h2>
+
+<table>
+  <tr>
+    <th>Stage</th>
+    <th>Time Limit</th>
+    <th>Measured From</th>
+  </tr>
+  <tr>
+    <td>Initial identification &amp; screening</td>
+    <td>30 minutes</td>
+    <td>Arrival at facility</td>
+  </tr>
+  <tr>
+    <td>Complete booking (ID through charge entry)</td>
+    <td>2 hours</td>
+    <td>Arrival at facility</td>
+  </tr>
+  <tr>
+    <td>Medical screening</td>
+    <td>1 hour</td>
+    <td>Arrival at facility</td>
+  </tr>
+  <tr>
+    <td>Phone call access</td>
+    <td>3 hours</td>
+    <td>Completion of booking</td>
+  </tr>
+  <tr>
+    <td>Probable cause determination (warrantless)</td>
+    <td>48 hours</td>
+    <td>Time of arrest</td>
+  </tr>
+  <tr>
+    <td>Arraignment</td>
+    <td>72 hours (court days)</td>
+    <td>Time of booking</td>
+  </tr>
+  <tr>
+    <td>Bail processing after posting</td>
+    <td>4 hours</td>
+    <td>Bail confirmation</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 6: PERSONAL PROPERTY PROCESSING -->
+<!-- ================================================================== -->
+<h1 id="s6">6. Personal Property Processing</h1>
+
+<h2>6.1 Inventory Procedure</h2>
+<p>All personal property in the arrestee's possession at the time of booking must be inventoried, documented, and securely stored. The booking officer shall conduct the property inventory in the presence of the arrestee whenever possible.</p>
+
+<h3>6.1.1 Inventory Steps</h3>
+<ol>
+  <li>Remove all items from the arrestee's person and pockets</li>
+  <li>Describe each item in detail on the Property Inventory Receipt (ZSR-105)</li>
+  <li>Count all currency in the presence of the arrestee and record the exact amount</li>
+  <li>Photograph high-value items (jewelry, electronics) for documentation</li>
+  <li>Seal all property in a labeled property bag with the booking number</li>
+  <li>Have the arrestee sign the property receipt acknowledging the inventory is accurate</li>
+  <li>If the arrestee refuses to sign, note "Refused to Sign" with a witness officer's signature</li>
+  <li>Place the sealed property bag in the designated storage locker</li>
+</ol>
+
+<h2>6.2 Property Categories</h2>
+
+<table>
+  <tr>
+    <th>Category</th>
+    <th>Examples</th>
+    <th>Handling</th>
+  </tr>
+  <tr>
+    <td><strong>Standard Personal Items</strong></td>
+    <td>Wallet, keys, phone, belt, shoelaces, jewelry</td>
+    <td>Stored in property bag; returned upon release</td>
+  </tr>
+  <tr>
+    <td><strong>Currency</strong></td>
+    <td>Cash, checks, gift cards</td>
+    <td>Counted twice, recorded, stored separately in secure envelope</td>
+  </tr>
+  <tr>
+    <td><strong>Valuables</strong></td>
+    <td>Jewelry over $500, electronics, designer items</td>
+    <td>Photographed, described in detail, stored in valuables safe</td>
+  </tr>
+  <tr>
+    <td><strong>Medications</strong></td>
+    <td>Prescription drugs, insulin, inhalers</td>
+    <td>Verified with pharmacy if possible; stored separately; accessible for medical needs</td>
+  </tr>
+  <tr>
+    <td><strong>Prohibited Items</strong></td>
+    <td>Weapons, drugs, drug paraphernalia, lockpicks</td>
+    <td>Logged as evidence, NOT stored with personal property; transferred to evidence room</td>
+  </tr>
+  <tr>
+    <td><strong>Vehicles</strong></td>
+    <td>Personal vehicle at arrest scene</td>
+    <td>Impounded per ZSR-107; inventory search conducted; stored at impound lot</td>
+  </tr>
+</table>
+
+<h2>6.3 Chain of Custody</h2>
+<p>The chain of custody for personal property must be maintained from the moment of seizure through return to the owner. Each transfer of property must be documented with:</p>
+<ul>
+  <li>Name and badge number of the receiving officer</li>
+  <li>Date and time of transfer</li>
+  <li>Reason for transfer</li>
+  <li>Condition of the property and seal integrity</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>EVIDENCE vs. PROPERTY:</strong> Items that constitute evidence of a crime must be processed through the evidence system (ZSR-103), NOT the personal property system. Evidence is subject to different retention, storage, and chain-of-custody requirements. When in doubt, consult with the shift supervisor.
+</div>
+
+<h2>6.4 Property Receipts</h2>
+<p>The arrestee shall receive a copy of the Property Inventory Receipt (ZSR-105) containing:</p>
+<ul>
+  <li>Complete itemized list of all property taken</li>
+  <li>Booking number for reference</li>
+  <li>Instructions for property retrieval upon release</li>
+  <li>Phone number for property inquiries</li>
+  <li>Signatures of the booking officer and the arrestee (or "Refused" notation)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 7: SEARCH PROCEDURES -->
+<!-- ================================================================== -->
+<h1 id="s7">7. Search Procedures</h1>
+
+<h2>7.1 Booking Search Standards</h2>
+<p>A thorough <strong>booking search</strong> is conducted on every individual admitted to the booking facility, regardless of whether a search was conducted at the time of arrest. The booking search is more comprehensive than a field pat-down and is justified by the institutional security needs of the detention facility.</p>
+
+<h3>7.1.1 Standard Booking Search</h3>
+<p>The standard booking search includes:</p>
+<ul>
+  <li>Complete pat-down of all outer clothing</li>
+  <li>Removal and inspection of all outerwear (jacket, hoodie, hat)</li>
+  <li>Removal and inspection of shoes, socks, and belt</li>
+  <li>Inspection of waistband, collar, cuffs, and seams of clothing</li>
+  <li>Running fingers through the arrestee's hair</li>
+  <li>Inspection of the mouth (visual only &mdash; do not insert fingers)</li>
+  <li>Wanding with a handheld metal detector</li>
+  <li>Removal of all jewelry, piercings (if removable), and hair accessories</li>
+</ul>
+
+<h2>7.2 Enhanced Search Authorization</h2>
+<p>An enhanced search (strip search) requires <strong>specific authorization</strong> and is not routine. Strip searches are permitted only under the following conditions:</p>
+
+<table>
+  <tr>
+    <th>Condition</th>
+    <th>Authorization Level</th>
+    <th>Documentation</th>
+  </tr>
+  <tr>
+    <td>Felony drug charge (possession with intent, trafficking)</td>
+    <td>Booking Sergeant</td>
+    <td>Written authorization in MDT</td>
+  </tr>
+  <tr>
+    <td>Reasonable suspicion of concealed weapons/contraband</td>
+    <td>Booking Sergeant + articulable facts</td>
+    <td>Written justification + authorization</td>
+  </tr>
+  <tr>
+    <td>Prior history of concealing contraband</td>
+    <td>Booking Sergeant</td>
+    <td>MDT flag reference + authorization</td>
+  </tr>
+  <tr>
+    <td>Transfer to general population (long-term hold)</td>
+    <td>Watch Commander</td>
+    <td>Transfer order + authorization</td>
+  </tr>
+</table>
+
+<div class="callout callout-critical">
+  <strong>STRIP SEARCH REQUIREMENTS:</strong> All strip searches must be conducted in a private area, out of view of other inmates and non-essential personnel. No physical contact with body cavities is permitted without a court order and medical professional present. Every strip search must be documented in writing within one hour of completion.
+</div>
+
+<h2>7.3 Same-Gender Search Requirement</h2>
+<p>All booking searches, whether standard or enhanced, <strong>must be conducted by an officer of the same gender</strong> as the arrestee. This is a non-negotiable requirement.</p>
+
+<h3>7.3.1 When Same-Gender Officer Is Unavailable</h3>
+<ul>
+  <li>Request a same-gender officer from another shift, unit, or department</li>
+  <li>If no same-gender officer is available within a reasonable time, a standard pat-down may be conducted by an opposite-gender officer <strong>only</strong> if there is an immediate safety concern</li>
+  <li>Enhanced searches must <strong>always</strong> be conducted by a same-gender officer &mdash; no exceptions</li>
+  <li>Document the circumstances and any delay in the booking record</li>
+</ul>
+
+<h3>7.3.2 Transgender/Non-Binary Individuals</h3>
+<p>Individuals who identify as transgender or non-binary shall be searched by an officer of their <strong>stated gender preference</strong>. The booking officer shall ask the individual which gender officer they prefer to conduct the search. This preference must be documented and honored.</p>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 8: MEDICAL SCREENING -->
+<!-- ================================================================== -->
+<h1 id="s8">8. Medical Screening</h1>
+
+<h2>8.1 Mandatory Health Assessment</h2>
+<p>Every individual booked into custody <strong>must</strong> undergo a medical screening within <strong>one (1) hour</strong> of arrival at the booking facility. The medical screening is conducted by the booking officer using the Medical Screening Form (ZSR-106) and, when available, by on-site medical personnel.</p>
+
+<div class="callout callout-critical">
+  <strong>LIABILITY WARNING:</strong> Failure to conduct a medical screening or failure to act on known medical conditions constitutes a potential violation of the arrestee's constitutional rights and exposes the department to significant civil liability. Medical screenings are NEVER optional.
+</div>
+
+<h2>8.2 Screening Components</h2>
+
+<h3>8.2.1 Physical Health Assessment</h3>
+<ul>
+  <li><strong>Visible Injuries:</strong> Document all visible injuries, bruises, lacerations, swelling. Note pre-existing vs. injuries sustained during arrest.</li>
+  <li><strong>Current Medical Conditions:</strong> Diabetes, epilepsy, heart conditions, asthma, HIV/AIDS, hepatitis, pregnancy</li>
+  <li><strong>Medications:</strong> Current prescriptions, dosage, last dose taken, pharmacy name. Verify medications are in original prescription bottles when possible.</li>
+  <li><strong>Allergies:</strong> Drug allergies, food allergies, environmental allergies</li>
+  <li><strong>Recent Hospitalizations:</strong> Any hospitalizations or surgeries within the past 6 months</li>
+  <li><strong>Communicable Diseases:</strong> Tuberculosis screening, COVID-19 symptoms, active infections</li>
+</ul>
+
+<h3>8.2.2 Substance Use Assessment</h3>
+<ul>
+  <li>Signs of current intoxication (alcohol, drugs)</li>
+  <li>History of substance abuse or addiction</li>
+  <li>Risk of withdrawal symptoms (alcohol, opioids, benzodiazepines)</li>
+  <li>Last use of alcohol or drugs (type and approximate time)</li>
+  <li>History of withdrawal-related seizures or delirium tremens</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>WITHDRAWAL DANGER:</strong> Alcohol and benzodiazepine withdrawal can be life-threatening. Any arrestee reporting daily alcohol use or benzodiazepine use must be flagged for enhanced medical monitoring. If symptoms of withdrawal are observed, EMS must be called immediately.
+</div>
+
+<h3>8.2.3 Mental Health Assessment</h3>
+<ul>
+  <li>Current mental health diagnosis or treatment</li>
+  <li>Current psychiatric medications</li>
+  <li>History of self-harm or suicide attempts</li>
+  <li>Current suicidal or homicidal ideation</li>
+  <li>Signs of psychosis, mania, or severe depression</li>
+  <li>History of involuntary psychiatric holds (5150)</li>
+</ul>
+
+<h2>8.3 Suicide Risk Screening</h2>
+<p>A suicide risk assessment must be completed as part of every medical screening. Risk factors include:</p>
+
+<table>
+  <tr>
+    <th>Risk Factor</th>
+    <th>Risk Level</th>
+    <th>Action Required</th>
+  </tr>
+  <tr>
+    <td>Prior suicide attempt(s)</td>
+    <td>HIGH</td>
+    <td>Immediate suicide watch; mental health referral</td>
+  </tr>
+  <tr>
+    <td>Current suicidal ideation with plan</td>
+    <td>CRITICAL</td>
+    <td>Constant observation; remove all ligature risks; mental health emergency</td>
+  </tr>
+  <tr>
+    <td>Current suicidal ideation without plan</td>
+    <td>HIGH</td>
+    <td>Enhanced monitoring (15-min checks); mental health referral</td>
+  </tr>
+  <tr>
+    <td>First-time incarceration + violent charge</td>
+    <td>MODERATE</td>
+    <td>Enhanced monitoring (30-min checks)</td>
+  </tr>
+  <tr>
+    <td>Intoxication + depression</td>
+    <td>MODERATE</td>
+    <td>Enhanced monitoring until sober; reassess</td>
+  </tr>
+  <tr>
+    <td>Recent significant life event (death, divorce)</td>
+    <td>LOW-MODERATE</td>
+    <td>Standard monitoring; document and flag for reassessment</td>
+  </tr>
+  <tr>
+    <td>No risk factors identified</td>
+    <td>LOW</td>
+    <td>Standard monitoring per holding cell procedures</td>
+  </tr>
+</table>
+
+<h2>8.4 Medical Emergencies</h2>
+<p>If at any point during booking a medical emergency is identified:</p>
+<ol>
+  <li>Call EMS immediately (Code 3)</li>
+  <li>Begin first aid / CPR if trained and appropriate</li>
+  <li>Do not remove restraints unless necessary for life-saving treatment and a second officer is present</li>
+  <li>The arrestee's medical needs take priority over the booking process</li>
+  <li>Document everything: time of onset, symptoms, actions taken, EMS arrival time</li>
+  <li>If the arrestee is transported to the hospital, an officer must accompany and maintain custody</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 9: CHARGE ENTRY & PROCESSING -->
+<!-- ================================================================== -->
+<h1 id="s9">9. Charge Entry &amp; Processing</h1>
+
+<h2>9.1 MDT Charge Input</h2>
+<p>All charges must be entered into the MDT booking module by the booking officer. Charges are input using the San Andreas Penal Code and must include:</p>
+<ul>
+  <li><strong>Penal Code Section:</strong> The specific statute violated (e.g., PC 187 &mdash; Murder)</li>
+  <li><strong>Charge Description:</strong> Plain-language description of the offense</li>
+  <li><strong>Classification:</strong> Infraction, Misdemeanor, or Felony</li>
+  <li><strong>Degree:</strong> If applicable (1st degree, 2nd degree, etc.)</li>
+  <li><strong>Count:</strong> Number of counts for each charge</li>
+  <li><strong>Enhancement:</strong> Any applicable sentencing enhancements (gang enhancement, firearm enhancement, prior strike, etc.)</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>CHARGE ACCURACY:</strong> The booking officer is responsible for ensuring charges match the probable cause statement and arrest report. If there is a discrepancy, the booking officer must consult with the arresting officer and/or the district attorney's office before entering the charge.
+</div>
+
+<h2>9.2 Fine Calculation</h2>
+<p>Fines are calculated automatically by the MDT based on the entered charges and the current fine schedule. The booking officer must verify the calculated amount against the schedule:</p>
+
+<table>
+  <tr>
+    <th>Charge Classification</th>
+    <th>Base Fine Range</th>
+    <th>Additional Assessments</th>
+  </tr>
+  <tr>
+    <td>Infraction</td>
+    <td>$50 - $500</td>
+    <td>Court fees ($50), Processing fee ($25)</td>
+  </tr>
+  <tr>
+    <td>Misdemeanor</td>
+    <td>$250 - $5,000</td>
+    <td>Court fees ($150), Processing fee ($75), Victim fund ($50)</td>
+  </tr>
+  <tr>
+    <td>Felony</td>
+    <td>$1,000 - $50,000</td>
+    <td>Court fees ($300), Processing fee ($150), Victim fund ($200), State assessment ($100)</td>
+  </tr>
+  <tr>
+    <td>Capital Felony</td>
+    <td>Set by court</td>
+    <td>All standard assessments + special assessment per court order</td>
+  </tr>
+</table>
+
+<h2>9.3 Jail Time Calculation</h2>
+<p>Jail time is calculated based on the charge classification, sentencing guidelines, and any applicable enhancements or reductions:</p>
+
+<table>
+  <tr>
+    <th>Charge Classification</th>
+    <th>Standard Sentence Range</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Infraction</td>
+    <td>No jail time (fine only)</td>
+    <td>Cite and release; no booking required for standalone infractions</td>
+  </tr>
+  <tr>
+    <td>Misdemeanor (Minor)</td>
+    <td>0 - 30 months</td>
+    <td>County jail; eligible for time served credit</td>
+  </tr>
+  <tr>
+    <td>Misdemeanor (Serious)</td>
+    <td>30 - 60 months</td>
+    <td>County jail; some eligible for community service alternative</td>
+  </tr>
+  <tr>
+    <td>Felony (3rd Degree)</td>
+    <td>60 - 120 months</td>
+    <td>State prison; parole eligibility varies</td>
+  </tr>
+  <tr>
+    <td>Felony (2nd Degree)</td>
+    <td>120 - 240 months</td>
+    <td>State prison; parole board review required</td>
+  </tr>
+  <tr>
+    <td>Felony (1st Degree)</td>
+    <td>240 - 600 months</td>
+    <td>State prison; limited parole eligibility</td>
+  </tr>
+  <tr>
+    <td>Capital Felony</td>
+    <td>Life / Life without parole</td>
+    <td>Mandatory state prison; no early release</td>
+  </tr>
+</table>
+
+<h2>9.4 Charge Stacking Rules</h2>
+<p>When an arrestee faces multiple charges, the following stacking rules apply:</p>
+
+<h3>9.4.1 Concurrent vs. Consecutive Sentencing</h3>
+<ul>
+  <li><strong>Default:</strong> Multiple charges arising from the same criminal episode are served <strong>concurrently</strong> (simultaneously)</li>
+  <li><strong>Consecutive:</strong> Charges from separate criminal episodes, or charges involving violence against different victims, may be served <strong>consecutively</strong> (one after another) at the court's discretion</li>
+  <li><strong>Mandatory Consecutive:</strong> Certain offenses require mandatory consecutive sentencing (e.g., assault on a peace officer added to the underlying charge)</li>
+</ul>
+
+<h3>9.4.2 Enhancement Stacking</h3>
+<ul>
+  <li>Gang enhancement: adds 50% to the base sentence for the qualifying charge</li>
+  <li>Firearm enhancement: adds a fixed term based on firearm type and use (possession vs. discharge)</li>
+  <li>Prior strike enhancement: doubles the sentence for a second strike; 25-to-life for a third strike</li>
+  <li>Enhancements are calculated <strong>after</strong> the base sentence for each charge</li>
+  <li>Multiple enhancements on the same charge stack additively unless prohibited by statute</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>DA CONSULTATION:</strong> For complex charge stacking scenarios involving three or more felony charges, multiple enhancements, or potential three-strikes applicability, the booking officer should request a charging consultation with the District Attorney's office before finalizing charges in the MDT.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 10: BAIL & BOND PROCEDURES -->
+<!-- ================================================================== -->
+<h1 id="s10">10. Bail &amp; Bond Procedures</h1>
+
+<h2>10.1 Bail Schedule</h2>
+<p>The following bail schedule applies to standard charges. Bail is set automatically by the MDT based on the most serious charge. Judges may modify bail at arraignment.</p>
+
+<table>
+  <tr>
+    <th>Charge Class</th>
+    <th>Bail Amount</th>
+    <th>OR Eligible</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Infraction</td>
+    <td>No bail (cite &amp; release)</td>
+    <td>N/A</td>
+    <td>Not booked; cited in the field</td>
+  </tr>
+  <tr>
+    <td>Misdemeanor (Minor)</td>
+    <td>$2,500</td>
+    <td>Yes</td>
+    <td>Trespassing, petty theft, disorderly conduct, minor traffic</td>
+  </tr>
+  <tr>
+    <td>Misdemeanor (Standard)</td>
+    <td>$5,000</td>
+    <td>Conditional</td>
+    <td>DUI (first offense), simple assault, vandalism, shoplifting</td>
+  </tr>
+  <tr>
+    <td>Misdemeanor (Serious)</td>
+    <td>$10,000</td>
+    <td>Conditional</td>
+    <td>DUI (repeat), domestic battery, resisting arrest, stalking</td>
+  </tr>
+  <tr>
+    <td>Felony (3rd Degree)</td>
+    <td>$25,000</td>
+    <td>No</td>
+    <td>Grand theft, burglary, drug possession with intent</td>
+  </tr>
+  <tr>
+    <td>Felony (2nd Degree)</td>
+    <td>$50,000</td>
+    <td>No</td>
+    <td>Robbery, aggravated assault, drug trafficking</td>
+  </tr>
+  <tr>
+    <td>Felony (1st Degree)</td>
+    <td>$100,000</td>
+    <td>No</td>
+    <td>Manslaughter, kidnapping, arson (occupied structure)</td>
+  </tr>
+  <tr>
+    <td>Felony (Capital)</td>
+    <td>$250,000 - $1,000,000</td>
+    <td>No</td>
+    <td>Murder, attempted murder, terrorism, RICO charges</td>
+  </tr>
+  <tr>
+    <td>Special Hold</td>
+    <td>No bail (remand)</td>
+    <td>No</td>
+    <td>Capital murder, 3rd strike, extreme flight risk, judge's order</td>
+  </tr>
+</table>
+
+<h2>10.2 Bail Modifiers</h2>
+<p>The following factors may increase or decrease the scheduled bail amount:</p>
+
+<table>
+  <tr>
+    <th>Modifier</th>
+    <th>Effect</th>
+    <th>Authority</th>
+  </tr>
+  <tr>
+    <td>Gang enhancement</td>
+    <td>+50% to bail amount</td>
+    <td>Automatic (MDT)</td>
+  </tr>
+  <tr>
+    <td>Firearm used in offense</td>
+    <td>+$25,000</td>
+    <td>Automatic (MDT)</td>
+  </tr>
+  <tr>
+    <td>Prior failure to appear</td>
+    <td>+100% to bail amount</td>
+    <td>Automatic (MDT)</td>
+  </tr>
+  <tr>
+    <td>Victim is a minor</td>
+    <td>+$25,000</td>
+    <td>Automatic (MDT)</td>
+  </tr>
+  <tr>
+    <td>Victim is a peace officer</td>
+    <td>+$50,000</td>
+    <td>Automatic (MDT)</td>
+  </tr>
+  <tr>
+    <td>Multiple charges (3+)</td>
+    <td>Bail set on highest charge + 25% of each additional</td>
+    <td>Automatic (MDT)</td>
+  </tr>
+  <tr>
+    <td>Community ties / employment</td>
+    <td>Potential reduction at arraignment</td>
+    <td>Judge only</td>
+  </tr>
+  <tr>
+    <td>Indigent defendant</td>
+    <td>Potential reduction at arraignment</td>
+    <td>Judge only</td>
+  </tr>
+</table>
+
+<h2>10.3 Bail Reduction Hearings</h2>
+<p>An arrestee or their attorney may request a bail reduction hearing at arraignment. The judge will consider:</p>
+<ul>
+  <li>Severity of the charges and potential sentence</li>
+  <li>The defendant's criminal history and prior failures to appear</li>
+  <li>Community ties (family, employment, length of residence)</li>
+  <li>Financial resources of the defendant</li>
+  <li>Risk to public safety if released</li>
+  <li>Likelihood of flight</li>
+</ul>
+
+<h2>10.4 Own Recognizance (OR) Release Criteria</h2>
+<p>OR release may be granted for eligible charges when the following conditions are met:</p>
+<ul>
+  <li>The charge is OR-eligible per the bail schedule</li>
+  <li>The arrestee has <strong>no</strong> outstanding warrants</li>
+  <li>The arrestee has <strong>no</strong> prior failures to appear</li>
+  <li>The arrestee is a resident of San Andreas with verifiable address</li>
+  <li>The arrestee has <strong>no</strong> history of violence</li>
+  <li>The shift supervisor or booking sergeant approves the OR release</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>OR RELEASE PROCESS:</strong> The arrestee must sign an OR Release Agreement (form ZSR-110-OR) acknowledging their obligation to appear at all scheduled court dates. Failure to appear after OR release results in an automatic bench warrant and bail forfeiture equivalent to the scheduled bail amount.
+</div>
+
+<h2>10.5 Bail Posting Process</h2>
+<ol>
+  <li>Bail amount is set by the MDT based on charges and modifiers</li>
+  <li>The arrestee or a third party pays the full bail amount at the booking window (cash or certified check only)</li>
+  <li>Alternatively, a licensed bail bondsman may post a surety bond (10% non-refundable premium paid to bondsman)</li>
+  <li>The booking officer verifies the payment and enters the bail transaction into the MDT</li>
+  <li>The booking sergeant reviews and authorizes the release</li>
+  <li>Release procedures are initiated (Section 14)</li>
+  <li>Bail receipt is issued to the payer with the booking number and court date</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 11: PRISONER RIGHTS & NOTIFICATIONS -->
+<!-- ================================================================== -->
+<h1 id="s11">11. Prisoner Rights &amp; Notifications</h1>
+
+<div class="callout callout-critical">
+  <strong>CONSTITUTIONAL OBLIGATION:</strong> Every individual in custody retains fundamental constitutional rights. Violation of these rights can result in dismissal of charges, civil rights lawsuits, federal investigations, and criminal liability for the offending officer. These rights are NON-NEGOTIABLE.
+</div>
+
+<h2>11.1 Right to Attorney</h2>
+<ul>
+  <li>Every arrestee has the right to consult with an attorney <strong>before</strong> and <strong>during</strong> any custodial interrogation</li>
+  <li>If the arrestee cannot afford an attorney, a public defender will be appointed at arraignment</li>
+  <li>The arrestee must be allowed to make a <strong>confidential</strong> phone call to their attorney</li>
+  <li>Attorney visits must be accommodated during reasonable hours without undue delay</li>
+  <li>Attorney-client communications are <strong>privileged</strong> &mdash; officers may not listen to, record, or interfere with these communications</li>
+</ul>
+
+<h2>11.2 Phone Call</h2>
+<p>Every arrestee is entitled to make at least <strong>three (3) completed local phone calls</strong> within <strong>three (3) hours</strong> of being booked. These calls are provided at no cost to the arrestee.</p>
+<ul>
+  <li>Calls to attorneys are unlimited and do not count toward the three-call limit</li>
+  <li>Calls may be monitored and recorded <strong>except</strong> calls to attorneys</li>
+  <li>The booking officer must inform the arrestee that non-attorney calls are subject to monitoring</li>
+  <li>If an arrestee speaks a language other than English, reasonable accommodation must be made (interpreter phone line)</li>
+</ul>
+
+<h2>11.3 Miranda Reminder</h2>
+<p>Although Miranda warnings are administered at the time of arrest, the booking officer shall remind the arrestee of their rights during the booking process:</p>
+<blockquote>
+  "You have previously been advised of your rights. As a reminder: You have the right to remain silent. Anything you say can and will be used against you in a court of law. You have the right to an attorney. If you cannot afford an attorney, one will be appointed for you. Do you understand these rights as I have stated them?"
+</blockquote>
+<p>The arrestee's response must be documented on the booking form.</p>
+
+<h2>11.4 Consulate Notification (Foreign Nationals)</h2>
+<p>Under the <strong>Vienna Convention on Consular Relations</strong>, foreign nationals must be informed of their right to have their consulate notified of their arrest. This is a mandatory federal obligation.</p>
+
+<h3>11.4.1 Procedure</h3>
+<ol>
+  <li>Ask the arrestee if they are a citizen of a country other than the United States</li>
+  <li>If yes, inform them of their right to have their consulate notified</li>
+  <li>If the arrestee requests notification, contact the appropriate consulate without delay</li>
+  <li>For <strong>mandatory notification countries</strong> (see list maintained in MDT), notification must be made regardless of the arrestee's wishes</li>
+  <li>Document the notification (or the arrestee's waiver of notification) in the booking record</li>
+</ol>
+
+<div class="callout callout-warning">
+  <strong>MANDATORY NOTIFICATION COUNTRIES:</strong> Some countries have bilateral agreements requiring automatic consulate notification upon arrest of their nationals, regardless of the arrestee's wishes. The current list is maintained in the MDT database. When in doubt, notify the consulate.
+</div>
+
+<h2>11.5 Additional Rights</h2>
+<ul>
+  <li><strong>Right to Know Charges:</strong> The arrestee must be informed of the specific charges against them at the time of booking</li>
+  <li><strong>Right to Bail:</strong> The arrestee must be informed of the bail amount and the process for posting bail</li>
+  <li><strong>Right to Medical Care:</strong> The arrestee has the right to receive necessary medical treatment while in custody</li>
+  <li><strong>Right to Be Free from Excessive Force:</strong> Only the minimum force necessary to maintain safety and security may be used</li>
+  <li><strong>Right to Religious Observance:</strong> Reasonable accommodation for religious practices must be provided</li>
+  <li><strong>Right to Refuse Searches:</strong> While standard booking searches are permitted, the arrestee may refuse consent to enhanced searches (though a warrant may override refusal)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 12: HOLDING CELL MANAGEMENT -->
+<!-- ================================================================== -->
+<h1 id="s12">12. Holding Cell Management</h1>
+
+<h2>12.1 Cell Assignment</h2>
+<p>Arrestees must be assigned to appropriate holding cells based on the following classification criteria:</p>
+
+<table>
+  <tr>
+    <th>Classification</th>
+    <th>Cell Assignment</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Adult Male (General)</td>
+    <td>General holding cells A1-A4</td>
+    <td>Maximum 4 per cell</td>
+  </tr>
+  <tr>
+    <td>Adult Female (General)</td>
+    <td>Female holding cells B1-B2</td>
+    <td>Maximum 4 per cell; separate from males at all times</td>
+  </tr>
+  <tr>
+    <td>Juvenile Male</td>
+    <td>Juvenile cell C1</td>
+    <td>Sight and sound separation from adults; maximum 2 per cell</td>
+  </tr>
+  <tr>
+    <td>Juvenile Female</td>
+    <td>Juvenile cell C2</td>
+    <td>Sight and sound separation from adults; maximum 2 per cell</td>
+  </tr>
+  <tr>
+    <td>Medical / Mental Health</td>
+    <td>Medical observation cell D1</td>
+    <td>Single occupancy; enhanced monitoring; near medical station</td>
+  </tr>
+  <tr>
+    <td>Violent / High Risk</td>
+    <td>Isolation cells E1-E2</td>
+    <td>Single occupancy; additional restraints if authorized</td>
+  </tr>
+  <tr>
+    <td>Protective Custody</td>
+    <td>Protective cell F1</td>
+    <td>Single occupancy; for at-risk individuals (informants, former LEO, etc.)</td>
+  </tr>
+  <tr>
+    <td>Intoxicated (Detox)</td>
+    <td>Detox cell G1</td>
+    <td>Single occupancy; padded; enhanced monitoring every 15 minutes</td>
+  </tr>
+</table>
+
+<h3>12.1.1 Separation Requirements</h3>
+<ul>
+  <li><strong>Males and females</strong> must be held in separate areas at all times</li>
+  <li><strong>Juveniles and adults</strong> must have complete sight and sound separation</li>
+  <li><strong>Co-defendants</strong> should be separated to prevent coordination of statements</li>
+  <li><strong>Rival gang members</strong> must be held in separate cells and, when possible, separate cell blocks</li>
+  <li><strong>Known enemies</strong> (per MDT records) must be separated</li>
+  <li><strong>Transgender individuals</strong> shall be housed according to their gender identity unless a specific safety concern is documented by the booking sergeant</li>
+</ul>
+
+<h2>12.2 Monitoring Schedule</h2>
+
+<table>
+  <tr>
+    <th>Cell Classification</th>
+    <th>Check Frequency</th>
+    <th>Check Type</th>
+  </tr>
+  <tr>
+    <td>General Population</td>
+    <td>Every 30 minutes</td>
+    <td>Visual welfare check; documented in log</td>
+  </tr>
+  <tr>
+    <td>Medical / Mental Health</td>
+    <td>Every 15 minutes</td>
+    <td>Visual + verbal welfare check; documented in log</td>
+  </tr>
+  <tr>
+    <td>Suicide Watch</td>
+    <td>Constant / Every 5 minutes</td>
+    <td>Direct observation; documented in log</td>
+  </tr>
+  <tr>
+    <td>Intoxicated (Detox)</td>
+    <td>Every 15 minutes</td>
+    <td>Visual + responsiveness check; documented in log</td>
+  </tr>
+  <tr>
+    <td>Violent / High Risk</td>
+    <td>Every 15 minutes</td>
+    <td>Visual check from secure vantage point; documented in log</td>
+  </tr>
+</table>
+
+<div class="callout callout-critical">
+  <strong>MONITORING IS MANDATORY:</strong> Welfare checks must be completed at the scheduled intervals without exception. Each check must be logged with the officer's name, time, and observation notes. Missed checks constitute a serious policy violation and must be reported to the shift supervisor immediately.
+</div>
+
+<h2>12.3 Meal Provision</h2>
+<ul>
+  <li>Arrestees held for more than <strong>4 hours</strong> must be offered a meal</li>
+  <li>Meals must be provided at least <strong>three (3) times per day</strong> for extended holds, with no more than 14 hours between meals</li>
+  <li>Special dietary needs (medical, religious, allergies) must be accommodated when possible</li>
+  <li>Water must be available at all times (functioning sink or provided water bottle)</li>
+  <li>Meal provision must be documented in the holding cell log</li>
+</ul>
+
+<h2>12.4 Hygiene Items</h2>
+<p>Arrestees held for more than <strong>12 hours</strong> must be provided with basic hygiene items:</p>
+<ul>
+  <li>Toilet paper (available in all cells at all times)</li>
+  <li>Soap and water access</li>
+  <li>Toothbrush and toothpaste (upon request, for holds exceeding 12 hours)</li>
+  <li>Blanket and mattress pad (for holds exceeding 8 hours)</li>
+  <li>Feminine hygiene products (upon request, without delay)</li>
+  <li>Clean clothing or jumpsuit (if the arrestee's clothing is taken as evidence)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 13: JUVENILE BOOKING PROCEDURES -->
+<!-- ================================================================== -->
+<h1 id="s13">13. Juvenile Booking Procedures</h1>
+
+<div class="callout callout-critical">
+  <strong>SPECIAL PROTECTIONS:</strong> Juveniles (individuals under 18 years of age) are afforded heightened protections under state and federal law. Failure to comply with juvenile booking procedures can result in automatic case dismissal, federal civil rights investigations, and departmental sanctions.
+</div>
+
+<h2>13.1 Separate Procedures</h2>
+<p>Juvenile booking differs from adult booking in several critical respects:</p>
+<ul>
+  <li>Juveniles are <strong>detained</strong>, not arrested, in most circumstances</li>
+  <li>Juvenile proceedings are <strong>sealed</strong> and not accessible to the public</li>
+  <li>Juveniles have the right to have a <strong>parent or guardian present</strong> during all questioning</li>
+  <li>Miranda waiver by a juvenile requires the <strong>presence and consent</strong> of a parent, guardian, or attorney</li>
+  <li>Booking photographs and fingerprints of juveniles are maintained in a <strong>separate, restricted database</strong></li>
+</ul>
+
+<h2>13.2 Guardian Notification</h2>
+<p>Upon taking a juvenile into custody, the arresting or booking officer <strong>must</strong> make immediate and continuous efforts to notify the juvenile's parent or legal guardian. Notification requirements:</p>
+
+<table>
+  <tr>
+    <th>Requirement</th>
+    <th>Standard</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Initial contact attempt</td>
+    <td>Within 30 minutes of custody</td>
+    <td>Phone call to all known contact numbers</td>
+  </tr>
+  <tr>
+    <td>Continued attempts</td>
+    <td>Every 30 minutes until contact is made</td>
+    <td>Document each attempt (time, number called, result)</td>
+  </tr>
+  <tr>
+    <td>Alternative contacts</td>
+    <td>If parents unreachable after 2 hours</td>
+    <td>Contact other listed guardians, emergency contacts, or school officials</td>
+  </tr>
+  <tr>
+    <td>Child Protective Services</td>
+    <td>If no guardian reachable after 4 hours</td>
+    <td>Mandatory CPS notification for placement assistance</td>
+  </tr>
+  <tr>
+    <td>Notification content</td>
+    <td>All contacts</td>
+    <td>Juvenile's name, location, charges, right to visit/attorney</td>
+  </tr>
+</table>
+
+<h2>13.3 Detention Time Limits</h2>
+<ul>
+  <li><strong>6 hours maximum</strong> in a secure detention facility for a juvenile charged with a status offense (truancy, curfew violation, runaway)</li>
+  <li><strong>24 hours maximum</strong> before a detention hearing must be held for juveniles charged with delinquent acts (criminal offenses)</li>
+  <li><strong>72 hours maximum</strong> (court days) before a jurisdictional hearing (equivalent to arraignment) must be conducted</li>
+  <li>Sight and sound separation from adult inmates must be maintained at <strong>all times</strong></li>
+</ul>
+
+<h2>13.4 Diversion Programs</h2>
+<p>Officers are encouraged to use diversion programs as alternatives to formal booking for eligible juveniles:</p>
+
+<table>
+  <tr>
+    <th>Program</th>
+    <th>Eligibility</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>Cite &amp; Release to Parent</td>
+    <td>First-time, non-violent misdemeanor</td>
+    <td>Juvenile released to parent with a court date; no formal booking</td>
+  </tr>
+  <tr>
+    <td>Station Adjustment</td>
+    <td>First/second-time minor offense</td>
+    <td>Counseling session at station with parent present; documented but no charges filed</td>
+  </tr>
+  <tr>
+    <td>Community Service Referral</td>
+    <td>Non-violent misdemeanor, under 16</td>
+    <td>Referral to community service program in lieu of prosecution</td>
+  </tr>
+  <tr>
+    <td>Teen Court</td>
+    <td>First-time misdemeanor, age 13-17</td>
+    <td>Peer jury determines consequences; successful completion results in no record</td>
+  </tr>
+  <tr>
+    <td>Formal Booking</td>
+    <td>Felony, repeat offender, violent offense</td>
+    <td>Full booking process with juvenile-specific protections applied</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>DIVERSION PREFERENCE:</strong> Department policy favors diversion over formal booking for juvenile offenders when the offense is non-violent and the juvenile has minimal prior contacts with law enforcement. The arresting officer should consult with the shift supervisor to determine the appropriate disposition.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 14: RELEASE PROCEDURES -->
+<!-- ================================================================== -->
+<h1 id="s14">14. Release Procedures</h1>
+
+<h2>14.1 Release Types</h2>
+
+<table>
+  <tr>
+    <th>Release Type</th>
+    <th>Authorization</th>
+    <th>Requirements</th>
+  </tr>
+  <tr>
+    <td><strong>Bail Posted (Cash)</strong></td>
+    <td>Booking Sergeant</td>
+    <td>Full bail amount paid; receipt issued; court date assigned</td>
+  </tr>
+  <tr>
+    <td><strong>Bail Posted (Bond)</strong></td>
+    <td>Booking Sergeant</td>
+    <td>Licensed bondsman posts surety; bond paperwork verified</td>
+  </tr>
+  <tr>
+    <td><strong>Own Recognizance (OR)</strong></td>
+    <td>Booking Sergeant / Judge</td>
+    <td>OR agreement signed; eligibility criteria met (Section 10.4)</td>
+  </tr>
+  <tr>
+    <td><strong>Time Served</strong></td>
+    <td>Booking Sergeant</td>
+    <td>Sentence complete; confirmed by MDT calculation; no holds</td>
+  </tr>
+  <tr>
+    <td><strong>Charges Dropped/Dismissed</strong></td>
+    <td>Watch Commander</td>
+    <td>DA notification or court order; documented in MDT</td>
+  </tr>
+  <tr>
+    <td><strong>Court-Ordered Release</strong></td>
+    <td>Watch Commander</td>
+    <td>Signed court order received and verified</td>
+  </tr>
+  <tr>
+    <td><strong>Cite &amp; Release</strong></td>
+    <td>Booking Officer</td>
+    <td>For eligible misdemeanors; citation issued with court date</td>
+  </tr>
+  <tr>
+    <td><strong>Transfer to Another Agency</strong></td>
+    <td>Watch Commander</td>
+    <td>Transfer paperwork complete (Section 16); receiving agency confirmed</td>
+  </tr>
+</table>
+
+<h2>14.2 Release Checklist</h2>
+<p>Before releasing any individual from custody, the booking officer must complete the following checklist:</p>
+
+<ol>
+  <li><strong>Verify release authorization</strong> &mdash; Confirm the release type is properly authorized and documented</li>
+  <li><strong>Check for holds</strong> &mdash; Query the MDT for any outstanding holds, warrants, or detainers that would prevent release</li>
+  <li><strong>Confirm identity</strong> &mdash; Verify the person being released is the correct individual (compare booking photo, fingerprints)</li>
+  <li><strong>Return personal property</strong> &mdash; Return all property per the original inventory receipt; have the individual sign acknowledging receipt</li>
+  <li><strong>Issue court date</strong> &mdash; Provide written notice of all upcoming court dates, times, and locations</li>
+  <li><strong>Provide release documentation</strong> &mdash; Issue the Release Authorization (ZSR-110) with a copy to the individual</li>
+  <li><strong>Notify arresting officer</strong> &mdash; If the arresting officer requested notification upon release, comply</li>
+  <li><strong>Notify victims</strong> &mdash; If applicable (domestic violence, stalking), notify the victim that the suspect has been released per Marsy's Law</li>
+  <li><strong>Remove from holding cell log</strong> &mdash; Update the holding cell log to reflect the release time and type</li>
+  <li><strong>Escort to exit</strong> &mdash; Escort the individual to the facility exit and confirm they have departed</li>
+</ol>
+
+<h2>14.3 Property Return</h2>
+<p>All personal property must be returned to the individual upon release, with the following exceptions:</p>
+<ul>
+  <li><strong>Evidence:</strong> Items seized as evidence will be retained and are subject to the evidence retention schedule</li>
+  <li><strong>Contraband:</strong> Illegal items (drugs, unregistered weapons, stolen property) will not be returned and are subject to seizure/forfeiture</li>
+  <li><strong>Court-Ordered Forfeitures:</strong> Items subject to a court forfeiture order will not be returned</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>PROPERTY DISCREPANCIES:</strong> If any item listed on the original property receipt cannot be located, the booking sergeant must be notified immediately. A property loss report must be filed, and the individual must be informed of the claims process. Missing property constitutes a serious policy violation.
+</div>
+
+<h2>14.4 Release Documentation</h2>
+<p>The following documents must be provided to the individual upon release:</p>
+<ul>
+  <li>Release Authorization form (ZSR-110) with release type and conditions</li>
+  <li>Court date notice with date, time, location, and department</li>
+  <li>Property receipt (signed copy acknowledging all property returned)</li>
+  <li>Bail receipt (if applicable) with refund instructions</li>
+  <li>Conditions of release document (if applicable &mdash; protective orders, stay-away orders, travel restrictions)</li>
+  <li>Information sheet on public defender services (if the individual does not have private counsel)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 15: RECORDS MANAGEMENT -->
+<!-- ================================================================== -->
+<h1 id="s15">15. Records Management</h1>
+
+<h2>15.1 Booking Records Retention</h2>
+<p>All booking records are maintained in the MDT database and are subject to the following retention schedule:</p>
+
+<table>
+  <tr>
+    <th>Record Type</th>
+    <th>Retention Period</th>
+    <th>Storage</th>
+  </tr>
+  <tr>
+    <td>Felony booking records</td>
+    <td>Permanent</td>
+    <td>MDT database + archived backup</td>
+  </tr>
+  <tr>
+    <td>Misdemeanor booking records</td>
+    <td>10 years from disposition</td>
+    <td>MDT database</td>
+  </tr>
+  <tr>
+    <td>Infraction records</td>
+    <td>5 years from disposition</td>
+    <td>MDT database</td>
+  </tr>
+  <tr>
+    <td>Juvenile booking records</td>
+    <td>Sealed upon turning 18 (or per court order)</td>
+    <td>Restricted MDT database</td>
+  </tr>
+  <tr>
+    <td>Booking photographs</td>
+    <td>Same as corresponding booking record</td>
+    <td>MDT media storage</td>
+  </tr>
+  <tr>
+    <td>Fingerprint records</td>
+    <td>Same as corresponding booking record</td>
+    <td>Fingerprint database</td>
+  </tr>
+  <tr>
+    <td>Property receipts</td>
+    <td>5 years after property returned or disposed</td>
+    <td>MDT document storage</td>
+  </tr>
+  <tr>
+    <td>Medical screening forms</td>
+    <td>10 years</td>
+    <td>Confidential MDT storage</td>
+  </tr>
+  <tr>
+    <td>Holding cell logs</td>
+    <td>5 years</td>
+    <td>MDT database</td>
+  </tr>
+  <tr>
+    <td>Video surveillance (booking area)</td>
+    <td>90 days (unless flagged for retention)</td>
+    <td>Digital video storage</td>
+  </tr>
+</table>
+
+<h2>15.2 Expungement</h2>
+<p>Expungement is the court-ordered destruction or sealing of criminal records. When a valid expungement order is received:</p>
+<ol>
+  <li>The Records Division verifies the court order's authenticity</li>
+  <li>All MDT records associated with the specified booking number are flagged for expungement</li>
+  <li>Booking photographs and fingerprints are deleted from active databases</li>
+  <li>The booking record is sealed &mdash; accessible only by court order</li>
+  <li>All physical files (if any) are destroyed by shredding</li>
+  <li>Confirmation of expungement is sent to the court and the individual's attorney</li>
+  <li>The expungement action is logged in the restricted audit trail</li>
+</ol>
+
+<h2>15.3 Record Sealing</h2>
+<p>Sealed records differ from expunged records in that the records continue to exist but are not accessible through standard queries:</p>
+<ul>
+  <li><strong>Automatic Sealing:</strong> Juvenile records are automatically sealed when the individual turns 18, unless the case involved a violent felony tried in adult court</li>
+  <li><strong>Court-Ordered Sealing:</strong> A judge may order records sealed for dismissed cases, deferred adjudications, or as part of a plea agreement</li>
+  <li><strong>Access to Sealed Records:</strong> Only by court order, for purposes of sentencing on a new offense, or by the individual themselves</li>
+</ul>
+
+<h2>15.4 Digital Records in MDT</h2>
+<p>All booking records are maintained digitally in the ps-mdt system. Standards for digital records:</p>
+<ul>
+  <li>All entries must include the officer's name, badge number, and timestamp</li>
+  <li>Records cannot be deleted &mdash; only amended with a clear notation of the change, reason, and authorizing officer</li>
+  <li>Access to booking records is logged and auditable</li>
+  <li>Records are backed up daily to the secondary database</li>
+  <li>Sensitive records (juvenile, medical) are access-restricted to authorized personnel only</li>
+  <li>All MDT record queries are logged with the querying officer's credentials and purpose</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>RECORD INTEGRITY:</strong> Tampering with, altering, or unauthorized deletion of booking records is a felony offense under state law and will result in immediate termination, criminal prosecution, and decertification as a peace officer.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 16: INTER-AGENCY TRANSFERS -->
+<!-- ================================================================== -->
+<h1 id="s16">16. Inter-Agency Transfers</h1>
+
+<h2>16.1 Federal Holds</h2>
+<p>When a federal agency (FIB, DEA, ATF, US Marshals) places a federal hold on an arrestee:</p>
+<ul>
+  <li>The federal detainer is entered into the MDT with the requesting agency's information</li>
+  <li>The arrestee <strong>cannot</strong> be released on local charges while the federal hold is active, regardless of bail status</li>
+  <li>The federal agency must take custody within <strong>48 hours</strong> of notification, or the hold may be released at the Watch Commander's discretion</li>
+  <li>Transfer paperwork (ZSR-109) must be completed in full before the prisoner is released to federal custody</li>
+  <li>The receiving federal agent must sign for custody on the transfer form</li>
+</ul>
+
+<h2>16.2 State Transfers</h2>
+<p>Transfers between state agencies (LSPD to BCSO, BCSO to SASP, etc.) follow a streamlined process:</p>
+
+<table>
+  <tr>
+    <th>Step</th>
+    <th>Action</th>
+    <th>Responsible Party</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Receiving agency requests transfer with justification</td>
+    <td>Receiving agency supervisor</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Holding agency verifies request and prepares prisoner</td>
+    <td>Booking Sergeant</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Complete Inter-Agency Transfer Form (ZSR-109)</td>
+    <td>Booking Officer</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Transfer all booking records, medical info, and property</td>
+    <td>Booking Officer</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Receiving officer signs for custody and property</td>
+    <td>Receiving Officer</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Transport prisoner using standard transport procedures (Section 4)</td>
+    <td>Receiving or Holding agency</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Update MDT records to reflect new holding facility</td>
+    <td>Both agencies</td>
+  </tr>
+</table>
+
+<h2>16.3 Extradition</h2>
+<p>When an arrestee is wanted in another state or country:</p>
+<ul>
+  <li>A <strong>Governor's Warrant</strong> or <strong>court order</strong> is required before extradition can proceed</li>
+  <li>The arrestee has the right to a <strong>hearing</strong> to challenge extradition</li>
+  <li>If the arrestee waives the extradition hearing, transfer can proceed immediately upon receipt of proper documentation</li>
+  <li>The requesting jurisdiction must arrange and fund transportation</li>
+  <li>Complete medical screening and property inventory before transfer</li>
+  <li>All local charges must be resolved or held in abeyance before extradition</li>
+</ul>
+
+<h2>16.4 Paperwork Requirements</h2>
+<p>All inter-agency transfers require the following documentation package:</p>
+
+<table>
+  <tr>
+    <th>Document</th>
+    <th>Copies Required</th>
+    <th>Distribution</th>
+  </tr>
+  <tr>
+    <td>Inter-Agency Transfer Form (ZSR-109)</td>
+    <td>3</td>
+    <td>Holding agency, receiving agency, prisoner file</td>
+  </tr>
+  <tr>
+    <td>Complete booking record printout</td>
+    <td>2</td>
+    <td>Receiving agency, prisoner file</td>
+  </tr>
+  <tr>
+    <td>Medical screening form (ZSR-106)</td>
+    <td>2</td>
+    <td>Receiving agency, prisoner file</td>
+  </tr>
+  <tr>
+    <td>Property inventory receipt (ZSR-105)</td>
+    <td>3</td>
+    <td>Holding agency, receiving agency, prisoner</td>
+  </tr>
+  <tr>
+    <td>Warrant/detainer documentation</td>
+    <td>2</td>
+    <td>Receiving agency, prisoner file</td>
+  </tr>
+  <tr>
+    <td>Special conditions memo (if applicable)</td>
+    <td>2</td>
+    <td>Receiving agency, prisoner file</td>
+  </tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>TRANSFER LIABILITY:</strong> Custody and liability transfer to the receiving agency at the moment the receiving officer signs the transfer form. Until that signature is obtained, the holding agency retains full responsibility for the prisoner's welfare and security.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 17: SPECIAL CIRCUMSTANCES -->
+<!-- ================================================================== -->
+<h1 id="s17">17. Special Circumstances</h1>
+
+<h2>17.1 Intoxicated Subjects</h2>
+<p>Booking intoxicated individuals requires additional precautions due to the heightened risk of medical emergencies, aspiration, and suicide:</p>
+
+<h3>17.1.1 Alcohol Intoxication</h3>
+<ul>
+  <li>Conduct a field sobriety assessment and breathalyzer (if applicable to charges)</li>
+  <li>Assign to the <strong>detox cell (G1)</strong> with 15-minute welfare checks</li>
+  <li>Place the individual in the <strong>recovery position</strong> if they cannot sit upright</li>
+  <li>Do not allow the individual to sleep face-down</li>
+  <li>Monitor for signs of alcohol poisoning: slow/irregular breathing, hypothermia, seizures, unconsciousness</li>
+  <li>If BAC exceeds 0.30 or signs of severe intoxication are present, call EMS immediately</li>
+  <li>The full booking process may be delayed until the individual is coherent enough to participate, but identification and medical screening must occur immediately</li>
+</ul>
+
+<h3>17.1.2 Drug Intoxication</h3>
+<ul>
+  <li>Identify the suspected substance if possible (stimulant, depressant, hallucinogen, opioid)</li>
+  <li>For suspected opioid overdose: administer Narcan if trained and available, call EMS immediately</li>
+  <li>For stimulant intoxication: monitor for cardiac distress, agitation, hyperthermia</li>
+  <li>For hallucinogen intoxication: maintain a calm environment, minimize stimulation, monitor for self-harm</li>
+  <li>All drug-intoxicated individuals must be evaluated by EMS before being accepted into the booking facility</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>MEDICAL PRIORITY:</strong> If there is ANY question about an intoxicated individual's medical stability, call EMS first and book later. A delayed booking is always preferable to a medical emergency or death in custody.
+</div>
+
+<h2>17.2 Medical Emergencies</h2>
+<p>When a medical emergency occurs during the booking process or while the individual is in custody:</p>
+<ol>
+  <li><strong>Call EMS immediately</strong> (Code 3) &mdash; do not wait to consult a supervisor</li>
+  <li>Begin CPR/first aid if trained and the situation warrants</li>
+  <li>Clear the area of other prisoners and non-essential personnel</li>
+  <li>Assign an officer to maintain custody of the patient at all times</li>
+  <li>If transport to the hospital is necessary, an officer must accompany the patient</li>
+  <li>Notify the Watch Commander immediately</li>
+  <li>Document the incident in detail: timeline, symptoms, actions taken, personnel involved, EMS response</li>
+  <li>Preserve the scene (cell, booking area) for investigation if the incident is serious</li>
+  <li>Complete a Use of Force report if restraints were applied or removed during the medical event</li>
+</ol>
+
+<h2>17.3 High-Profile Arrests</h2>
+<p>High-profile arrests (public officials, celebrities, media figures, cases with intense public/media interest) require additional protocols:</p>
+<ul>
+  <li>Notify the <strong>Watch Commander</strong> and <strong>Public Information Officer</strong> immediately</li>
+  <li>Process the individual through the standard booking procedure without special treatment (positive or negative)</li>
+  <li>Do not disclose booking information to media or unauthorized personnel &mdash; all media inquiries go through PIO</li>
+  <li>Consider housing the individual in protective custody if there is a safety concern</li>
+  <li>Do not allow photographs by unauthorized personnel</li>
+  <li>Document any unusual requests, incidents, or interactions in the booking notes</li>
+  <li>Ensure all officers involved sign confidentiality acknowledgments if required by the Watch Commander</li>
+</ul>
+
+<h2>17.4 Gang Members</h2>
+<p>When booking a known or suspected gang member:</p>
+
+<table>
+  <tr>
+    <th>Procedure</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td><strong>Gang Affiliation Check</strong></td>
+    <td>Query MDT gang database; document all known affiliations, rank, and territory</td>
+  </tr>
+  <tr>
+    <td><strong>Tattoo Documentation</strong></td>
+    <td>Photograph all visible tattoos; note gang-related imagery and location on body</td>
+  </tr>
+  <tr>
+    <td><strong>Cell Assignment</strong></td>
+    <td>Separate from rival gang members; consult gang intelligence officer for classification</td>
+  </tr>
+  <tr>
+    <td><strong>Property Inspection</strong></td>
+    <td>Enhanced inspection for gang paraphernalia, coded communications, concealed weapons</td>
+  </tr>
+  <tr>
+    <td><strong>Communication Monitoring</strong></td>
+    <td>Non-attorney phone calls may be monitored for gang-related activity (inform the individual)</td>
+  </tr>
+  <tr>
+    <td><strong>Gang Enhancement</strong></td>
+    <td>If the offense is gang-related, add gang enhancement to charges per PC guidelines</td>
+  </tr>
+  <tr>
+    <td><strong>Intelligence Notification</strong></td>
+    <td>Notify the Gang Intelligence Unit of the booking for database updates</td>
+  </tr>
+</table>
+
+<h2>17.5 Diplomatic Immunity</h2>
+<p>Individuals claiming diplomatic immunity require special handling:</p>
+<ul>
+  <li>Verify credentials by contacting the State Department verification line</li>
+  <li>Full diplomatic agents (A-1 visa holders) <strong>cannot</strong> be arrested, detained, or booked</li>
+  <li>Consular officers (A-2 visa holders) have limited immunity &mdash; may be detained for serious felonies</li>
+  <li>Document the interaction thoroughly, including the claim of immunity and verification results</li>
+  <li>Notify the Watch Commander and the State Department liaison immediately</li>
+  <li>If immunity is confirmed, release the individual and forward the case to the State Department</li>
+</ul>
+
+<h2>17.6 Pregnant Individuals</h2>
+<ul>
+  <li>Medical screening must include pregnancy status and estimated due date</li>
+  <li>Restraints must be <strong>minimized</strong> &mdash; no restraints on the abdomen; leg restraints prohibited during transport</li>
+  <li>Assign to a <strong>single-occupancy medical observation cell</strong></li>
+  <li>Provide immediate access to prenatal medications</li>
+  <li>Enhanced medical monitoring: check every 15 minutes</li>
+  <li>If contractions or labor signs are observed, call EMS immediately and do not attempt to delay transport</li>
+  <li>Under <strong>no circumstances</strong> shall a pregnant individual be restrained during labor, delivery, or postpartum recovery</li>
+</ul>
+
+<h2>17.7 Individuals with Disabilities</h2>
+<ul>
+  <li>ADA accommodations must be provided throughout the booking process</li>
+  <li>Mobility aids (wheelchair, cane, prosthetics) should not be confiscated unless they pose a genuine security risk</li>
+  <li>Hearing-impaired individuals must be provided a sign language interpreter for all rights notifications</li>
+  <li>Visually impaired individuals must have all documents read to them</li>
+  <li>Individuals with intellectual disabilities may require a simplified rights explanation and/or a guardian or advocate present</li>
+  <li>Accessible cells must be assigned when available</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<!-- SECTION 18: REVISION HISTORY & AMENDMENTS -->
+<!-- ================================================================== -->
+<h1 id="s18">18. Revision History &amp; Amendments</h1>
+
+<h2>18.1 Document History</h2>
+
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Date</th>
+    <th>Author</th>
+    <th>Description of Changes</th>
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td>February 2026</td>
+    <td>Booking Sergeant / Joint LEO Command</td>
+    <td>Initial release. Comprehensive booking procedures for LSPD, BCSO, and SASP. Covers all 18 sections from intake through release, including bail schedules, juvenile procedures, and special circumstances.</td>
+  </tr>
+</table>
+
+<h2>18.2 Amendment Procedure</h2>
+<p>Amendments to this SOP follow a structured review and approval process:</p>
+<ol>
+  <li><strong>Proposal:</strong> Any sworn officer may propose an amendment by submitting a written request to their department's booking supervisor, detailing the proposed change and justification</li>
+  <li><strong>Review:</strong> The booking supervisors from all three departments (LSPD, BCSO, SASP) review the proposal and provide written feedback within 14 days</li>
+  <li><strong>Approval:</strong> Amendments require approval from at least two of the three department heads (Chief of Police, Sheriff, Commissioner)</li>
+  <li><strong>Legal Review:</strong> All substantive amendments must be reviewed by the City Attorney's office for legal compliance</li>
+  <li><strong>Distribution:</strong> Approved amendments are distributed to all personnel with at least 7 days' notice before taking effect</li>
+  <li><strong>Training:</strong> If the amendment changes a procedure, refresher training must be provided to all affected personnel</li>
+  <li><strong>Documentation:</strong> All amendments are recorded in the revision history table above</li>
+</ol>
+
+<h2>18.3 Annual Review</h2>
+<p>This SOP is subject to a mandatory annual review. The review shall be conducted by a joint committee composed of:</p>
+<ul>
+  <li>One booking supervisor from each department (LSPD, BCSO, SASP)</li>
+  <li>A representative from the City Attorney's office</li>
+  <li>A representative from Internal Affairs</li>
+  <li>A civilian oversight board member (if applicable)</li>
+</ul>
+<p>The annual review shall assess the SOP's effectiveness, identify any legal or procedural updates needed, and incorporate lessons learned from internal investigations or civil litigation.</p>
+
+<h2>18.4 Emergency Amendments</h2>
+<p>In the event that an immediate change is required due to a court ruling, legislative change, or critical safety issue:</p>
+<ul>
+  <li>The Watch Commander may issue a <strong>temporary directive</strong> effective immediately</li>
+  <li>The temporary directive must be ratified or rescinded by the department heads within <strong>72 hours</strong></li>
+  <li>All temporary directives must be incorporated into the SOP at the next formal amendment cycle</li>
+</ul>
+
+<h2>18.5 Acknowledgment</h2>
+<p>All sworn personnel assigned to booking duties must sign an acknowledgment form confirming they have read, understood, and agree to comply with this SOP. The acknowledgment form is maintained in the officer's personnel file and must be renewed annually or upon any substantive amendment.</p>
+
+<div class="callout callout-info">
+  <strong>TRAINING REQUIREMENT:</strong> New officers must complete a minimum of 8 hours of booking procedures training before being assigned to booking duties. Annual refresher training of 4 hours is mandatory for all booking-assigned personnel.
+</div>
+
+</div>
+<!-- END CONTENT -->
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">
+  <span class="org">PROZILLI ENTERTAINMENT</span><br>
+  ZO Syndicate RP &mdash; Booking Procedures SOP v1.0<br>
+  RESTRICTED &mdash; LAW ENFORCEMENT USE ONLY<br>
+  <a href="/zo/sop/lspd.html">LSPD SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/bcso.html">BCSO SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/sasp.html">SASP SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/ems.html">EMS SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/doj.html">DOJ SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/criminal-code.html">Criminal Code</a><br>
+  &copy; 2026 Prozilli Entertainment. All rights reserved.
+</div>
+
+</body>
+</html>

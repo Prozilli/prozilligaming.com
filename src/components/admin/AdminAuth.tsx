@@ -59,15 +59,15 @@ export default function AdminAuth({ children }: { children: React.ReactNode }) {
 
   if (checking) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0d1117]">
-        <div className="h-6 w-6 animate-spin rounded-full border-2 border-brand-gold/30 border-t-brand-gold" />
+      <div className="flex min-h-screen items-center justify-center bg-base">
+        <div className="h-6 w-6 animate-spin rounded-full border-2 border-gold/30 border-t-gold" />
       </div>
     );
   }
 
   if (!ADMIN_PASSWORD) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0d1117] px-6">
+      <div className="flex min-h-screen items-center justify-center bg-base px-6">
         <div className="w-full max-w-lg text-center">
           <h1 className="text-xl font-bold text-red-400">Admin Not Configured</h1>
           <p className="mt-4 text-sm text-muted">
@@ -83,7 +83,7 @@ export default function AdminAuth({ children }: { children: React.ReactNode }) {
 
   if (!authed) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#0d1117] px-6">
+      <div className="flex min-h-screen items-center justify-center bg-base px-6">
         <div className="w-full max-w-sm">
           <div className="mb-8 text-center">
             <h1 className="text-xl font-bold text-white">Admin Access</h1>
@@ -99,14 +99,14 @@ export default function AdminAuth({ children }: { children: React.ReactNode }) {
               }}
               placeholder="Password"
               autoFocus
-              className="w-full rounded-md border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder-muted outline-none focus:border-brand-gold/40"
+              className="w-full rounded-md border border-[var(--color-border)] bg-surface px-4 py-3 text-sm text-white placeholder-muted outline-none focus:border-gold/40"
             />
             {error && (
               <p className="text-xs text-red-400">Invalid password.</p>
             )}
             <button
               type="submit"
-              className="w-full rounded-md bg-brand-red px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-brand-red/80"
+              className="w-full rounded-md bg-red px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-red/80"
             >
               Sign In
             </button>

@@ -115,7 +115,7 @@ export default function EconomyPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setConfig(c => ({ ...c, enabled: !c.enabled }))} className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-green-500" : "bg-white/10"}`}>
+          <button onClick={() => setConfig(c => ({ ...c, enabled: !c.enabled }))} className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-green-500" : "bg-raised"}`}>
             <span className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${config.enabled ? "left-6" : "left-1"}`} />
           </button>
           <span className="text-sm text-gray-400">{config.enabled ? "Enabled" : "Disabled"}</span>
@@ -123,7 +123,7 @@ export default function EconomyPage() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1 rounded-lg bg-white/5 p-1">
+      <div className="flex gap-1 rounded-lg bg-surface p-1">
         {[
           { id: "overview", label: "Overview" },
           { id: "shop", label: "Shop" },
@@ -135,7 +135,7 @@ export default function EconomyPage() {
             className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
               activeTab === tab.id
                 ? "bg-brand-gold text-black"
-                : "text-gray-400 hover:text-white hover:bg-white/5"
+                : "text-gray-400 hover:text-white hover:bg-surface"
             }`}
           >
             {tab.label}
@@ -148,7 +148,7 @@ export default function EconomyPage() {
         <div className="space-y-6">
           {/* Quick Stats */}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="rounded-xl border border-brand-gold/20 bg-[#161b22] p-5 relative overflow-hidden">
+            <div className="rounded-xl border border-brand-gold/20 bg-surface p-5 relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-brand-gold to-transparent" />
               <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Currency</p>
               <div className="mt-2 flex items-center gap-2">
@@ -158,7 +158,7 @@ export default function EconomyPage() {
                 <p className="text-lg font-bold text-white">{config.currencyName}</p>
               </div>
             </div>
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Shop Items</p>
               <div className="mt-2 flex items-center gap-2">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#949d9f" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
@@ -169,7 +169,7 @@ export default function EconomyPage() {
                 <p className="text-2xl font-bold text-white">{loading ? "..." : shopItems.length}</p>
               </div>
             </div>
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Daily Reward</p>
               <div className="mt-2 flex items-center gap-2">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
@@ -180,7 +180,7 @@ export default function EconomyPage() {
                 <p className="text-2xl font-bold text-white">{config.currencyIcon} {formatNumber(config.dailyAmount)}</p>
               </div>
             </div>
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <p className="text-xs font-medium uppercase tracking-wider text-gray-500">Richest User</p>
               <div className="mt-2 flex items-center gap-2">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="#c4a265" stroke="none">
@@ -194,14 +194,14 @@ export default function EconomyPage() {
 
           {/* Section Divider */}
           <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-surface" />
             <span className="text-xs font-medium uppercase tracking-wider text-gray-600">Details</span>
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-surface" />
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Leaderboard */}
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c4a265" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">
@@ -214,7 +214,7 @@ export default function EconomyPage() {
                   </svg>
                   <h3 className="text-sm font-semibold text-white">Top Earners</h3>
                 </div>
-                <button onClick={loadData} className="text-xs text-brand-gold hover:text-white transition-colors">Refresh</button>
+                <button onClick={loadData} className="text-xs text-gold hover:text-white transition-colors">Refresh</button>
               </div>
               {leaderboard.length === 0 ? (
                 <p className="text-center text-gray-400 py-6">No economy data yet</p>
@@ -227,12 +227,12 @@ export default function EconomyPage() {
                         i === 0 ? "bg-brand-gold/10 border border-brand-gold/20" :
                         i === 1 ? "bg-gray-400/5 border border-gray-400/10" :
                         i === 2 ? "bg-amber-700/10 border border-amber-700/15" :
-                        "bg-white/5 border border-transparent"
+                        "bg-surface border border-transparent"
                       }`}
                     >
                       {/* Rank Badge */}
                       <div className="relative flex-shrink-0">
-                        <span className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${i === 0 ? "bg-brand-gold text-black" : i === 1 ? "bg-gray-400 text-black" : i === 2 ? "bg-amber-700 text-white" : "bg-white/10 text-gray-400"}`}>
+                        <span className={`flex h-7 w-7 items-center justify-center rounded-full text-xs font-bold ${i === 0 ? "bg-brand-gold text-black" : i === 1 ? "bg-gray-400 text-black" : i === 2 ? "bg-amber-700 text-white" : "bg-raised text-gray-400"}`}>
                           {i + 1}
                         </span>
                         {i < 3 && (
@@ -242,13 +242,13 @@ export default function EconomyPage() {
                         )}
                       </div>
                       {/* Avatar */}
-                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-red/20 text-brand-red text-sm font-medium flex-shrink-0">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-red/20 text-red text-sm font-medium flex-shrink-0">
                         {user.username.charAt(0).toUpperCase()}
                       </div>
                       {/* Name */}
                       <span className="flex-1 text-sm font-medium text-white truncate min-w-0">{user.username}</span>
                       {/* Balance */}
-                      <span className={`text-sm font-bold flex-shrink-0 ${i === 0 ? "text-brand-gold" : "text-brand-gold/80"}`}>{config.currencyIcon} {formatNumber(user.coins)}</span>
+                      <span className={`text-sm font-bold flex-shrink-0 ${i === 0 ? "text-gold" : "text-gold/80"}`}>{config.currencyIcon} {formatNumber(user.coins)}</span>
                     </div>
                   ))}
                 </div>
@@ -256,7 +256,7 @@ export default function EconomyPage() {
             </div>
 
             {/* Quick Info */}
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <h3 className="text-sm font-semibold text-white mb-4">Economy Commands</h3>
               <div className="space-y-3">
                 {[
@@ -269,8 +269,8 @@ export default function EconomyPage() {
                   { cmd: "!flip <amount>", desc: "Coin flip — double or nothing" },
                   { cmd: "!dice <amount>", desc: "Roll dice — beat the dealer" },
                 ].map((c) => (
-                  <div key={c.cmd} className="flex items-center gap-3 rounded-lg bg-white/5 p-3">
-                    <code className="text-xs font-mono text-brand-gold">{c.cmd}</code>
+                  <div key={c.cmd} className="flex items-center gap-3 rounded-lg bg-surface p-3">
+                    <code className="text-xs font-mono text-gold">{c.cmd}</code>
                     <span className="text-xs text-gray-400">{c.desc}</span>
                   </div>
                 ))}
@@ -284,20 +284,20 @@ export default function EconomyPage() {
       {activeTab === "shop" && (
         <div className="space-y-6">
           {/* Add Item Form */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-3">Add Shop Item</h3>
             <div className="flex gap-3 items-end">
               <div className="flex-1">
                 <label className="block text-xs font-medium text-gray-400 mb-1">Name</label>
-                <input type="text" value={newItemName} onChange={(e) => setNewItemName(e.target.value)} placeholder="Item name" className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                <input type="text" value={newItemName} onChange={(e) => setNewItemName(e.target.value)} placeholder="Item name" className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
               </div>
               <div className="w-28">
                 <label className="block text-xs font-medium text-gray-400 mb-1">Price</label>
-                <input type="number" value={newItemPrice} onChange={(e) => setNewItemPrice(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
+                <input type="number" value={newItemPrice} onChange={(e) => setNewItemPrice(parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none" />
               </div>
               <div className="w-28">
                 <label className="block text-xs font-medium text-gray-400 mb-1">Type</label>
-                <select value={newItemType} onChange={(e) => setNewItemType(e.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none">
+                <select value={newItemType} onChange={(e) => setNewItemType(e.target.value)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-gold focus:outline-none">
                   <option value="role">Role</option>
                   <option value="perk">Perk</option>
                   <option value="reward">Reward</option>
@@ -316,7 +316,7 @@ export default function EconomyPage() {
             {shopItems.map((item) => (
               <div
                 key={item.id}
-                className="rounded-xl border border-white/5 bg-[#161b22] p-5 transition-colors hover:border-white/10"
+                className="rounded-xl border border-[var(--color-border)] bg-surface p-5 transition-colors hover:border-[var(--color-border)]"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className={`flex h-10 w-10 items-center justify-center rounded-lg ${
@@ -357,7 +357,7 @@ export default function EconomyPage() {
                 </div>
                 <h4 className="text-base font-semibold text-white">{item.name}</h4>
                 <div className="mt-3 flex items-center justify-between">
-                  <p className="text-lg font-bold text-brand-gold">
+                  <p className="text-lg font-bold text-gold">
                     {config.currencyIcon} {formatNumber(item.price)}
                   </p>
                   <p className="text-xs text-gray-400">
@@ -379,10 +379,10 @@ export default function EconomyPage() {
       {/* Settings Tab */}
       {activeTab === "settings" && (
         <div className="space-y-6">
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Currency Settings</h3>
             {/* Currency Preview */}
-            <div className="mb-5 flex items-center gap-4 rounded-lg bg-white/5 p-4">
+            <div className="mb-5 flex items-center gap-4 rounded-lg bg-surface p-4">
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-brand-gold/15 text-3xl" style={{ boxShadow: "0 0 20px rgba(196, 162, 101, 0.15)" }}>
                 {config.currencyIcon}
               </div>
@@ -391,14 +391,14 @@ export default function EconomyPage() {
                 <p className="text-xs text-gray-500">Your server&apos;s virtual currency</p>
               </div>
               <div className="ml-auto rounded-lg bg-brand-gold/10 px-3 py-1.5">
-                <p className="text-sm font-bold text-brand-gold">{config.currencyIcon} 1,000</p>
+                <p className="text-sm font-bold text-gold">{config.currencyIcon} 1,000</p>
                 <p className="text-[10px] text-gray-500 text-right">sample</p>
               </div>
             </div>
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-2">Currency Name</label>
-                <input type="text" value={config.currencyName} onChange={(e) => setConfig(c => ({ ...c, currencyName: e.target.value }))} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
+                <input type="text" value={config.currencyName} onChange={(e) => setConfig(c => ({ ...c, currencyName: e.target.value }))} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-2">Currency Icon</label>
@@ -406,27 +406,27 @@ export default function EconomyPage() {
                   <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-brand-gold/15 text-xl flex-shrink-0">
                     {config.currencyIcon}
                   </span>
-                  <input type="text" value={config.currencyIcon} onChange={(e) => setConfig(c => ({ ...c, currencyIcon: e.target.value }))} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
+                  <input type="text" value={config.currencyIcon} onChange={(e) => setConfig(c => ({ ...c, currencyIcon: e.target.value }))} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
                 </div>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-medium text-gray-400 mb-2">Daily Reward Amount</label>
-                  <input type="number" value={config.dailyAmount} onChange={(e) => setConfig(c => ({ ...c, dailyAmount: parseInt(e.target.value) || 0 }))} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
+                  <input type="number" value={config.dailyAmount} onChange={(e) => setConfig(c => ({ ...c, dailyAmount: parseInt(e.target.value) || 0 }))} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-400 mb-2">Game Cooldown (seconds)</label>
-                  <input type="number" value={Math.round(config.gameCooldownMs / 1000)} onChange={(e) => setConfig(c => ({ ...c, gameCooldownMs: (parseInt(e.target.value) || 0) * 1000 }))} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
+                  <input type="number" value={Math.round(config.gameCooldownMs / 1000)} onChange={(e) => setConfig(c => ({ ...c, gameCooldownMs: (parseInt(e.target.value) || 0) * 1000 }))} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
                 </div>
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-medium text-gray-400 mb-2">Starting Balance</label>
-                  <input type="number" value={config.startingBalance} onChange={(e) => setConfig(c => ({ ...c, startingBalance: parseInt(e.target.value) || 0 }))} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
+                  <input type="number" value={config.startingBalance} onChange={(e) => setConfig(c => ({ ...c, startingBalance: parseInt(e.target.value) || 0 }))} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-400 mb-2">Max Balance</label>
-                  <input type="number" value={config.maxBalance} onChange={(e) => setConfig(c => ({ ...c, maxBalance: parseInt(e.target.value) || 0 }))} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
+                  <input type="number" value={config.maxBalance} onChange={(e) => setConfig(c => ({ ...c, maxBalance: parseInt(e.target.value) || 0 }))} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold" />
                 </div>
               </div>
             </div>

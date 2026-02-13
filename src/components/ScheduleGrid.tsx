@@ -96,15 +96,15 @@ function getCategoryIcon(category: string): string {
 function getCategoryColors(category: string): { accent: string; bg: string; border: string } {
   const lower = category.toLowerCase();
   if (lower.includes("gaming") || lower.includes("game")) {
-    return { accent: "text-brand-red", bg: "bg-brand-red/10", border: "border-brand-red/20" };
+    return { accent: "text-red", bg: "bg-brand-red/10", border: "border-red/20" };
   }
   if (lower.includes("creative") || lower.includes("chat")) {
     return { accent: "text-purple-400", bg: "bg-purple-500/10", border: "border-purple-500/20" };
   }
   if (lower.includes("special") || lower.includes("event")) {
-    return { accent: "text-brand-gold", bg: "bg-brand-gold/10", border: "border-brand-gold/20" };
+    return { accent: "text-gold", bg: "bg-brand-gold/10", border: "border-brand-gold/20" };
   }
-  return { accent: "text-muted", bg: "bg-white/5", border: "border-white/5" };
+  return { accent: "text-muted", bg: "bg-surface", border: "border-[var(--color-border)]" };
 }
 
 export default function ScheduleGrid() {
@@ -167,18 +167,18 @@ export default function ScheduleGrid() {
     <section className="mx-auto max-w-5xl px-4 sm:px-6 py-8 sm:py-12">
       {/* Live Now Banner */}
       {twitchData?.isLive && twitchData.liveData && (
-        <div className="mb-8 rounded-xl border border-brand-red/30 bg-gradient-to-r from-brand-red/15 to-brand-red/5 p-5 sm:p-6">
+        <div className="mb-8 rounded-xl border border-red/30 bg-gradient-to-r from-brand-red/15 to-brand-red/5 p-5 sm:p-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-4">
               <div className="relative">
                 <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-brand-red/20">
-                  <span className="h-3 w-3 rounded-full bg-brand-red animate-live-pulse" />
+                  <span className="h-3 w-3 rounded-full bg-red animate-live-pulse" />
                 </span>
-                <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-brand-red animate-ping" />
+                <span className="absolute -top-1 -right-1 h-3 w-3 rounded-full bg-red animate-ping" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-bold uppercase tracking-wider text-brand-red">
+                  <span className="text-sm font-bold uppercase tracking-wider text-red">
                     Live Now
                   </span>
                   <span className="text-xs text-muted">
@@ -189,7 +189,7 @@ export default function ScheduleGrid() {
                   {twitchData.liveData.title}
                 </p>
                 {twitchData.liveData.gameName && (
-                  <p className="text-xs text-brand-gold mt-0.5">
+                  <p className="text-xs text-gold mt-0.5">
                     Playing: {twitchData.liveData.gameName}
                   </p>
                 )}
@@ -197,7 +197,7 @@ export default function ScheduleGrid() {
             </div>
             <Link
               href="/watch"
-              className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-red-glow whitespace-nowrap"
+              className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/80 whitespace-nowrap"
             >
               Watch Now
             </Link>
@@ -214,7 +214,7 @@ export default function ScheduleGrid() {
                 \u23F0
               </span>
               <div>
-                <span className="text-sm font-bold uppercase tracking-wider text-brand-gold">
+                <span className="text-sm font-bold uppercase tracking-wider text-gold">
                   Next Stream
                 </span>
                 <p className="text-base font-medium text-white mt-1 line-clamp-1">
@@ -261,7 +261,7 @@ export default function ScheduleGrid() {
             href={p.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center justify-center gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2.5 transition-all hover:bg-white/[0.06] hover:border-white/10"
+            className="group flex items-center justify-center gap-2 rounded-lg border border-[var(--color-border)] bg-white/[0.02] px-3 py-2.5 transition-all hover:bg-white/[0.06] hover:border-white/10"
           >
             <span
               className="h-2 w-2 rounded-full shrink-0"
@@ -287,9 +287,9 @@ export default function ScheduleGrid() {
               key={slot.day}
               className={`group relative rounded-xl border transition-all overflow-hidden ${
                 today
-                  ? `${colors.border} ${colors.bg} ring-1 ring-brand-red/40`
+                  ? `${colors.border} ${colors.bg} ring-1 ring-red/40`
                   : slot.active
-                  ? "border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10"
+                  ? "border-[var(--color-border)] bg-white/[0.02] hover:bg-white/[0.04] hover:border-white/10"
                   : "border-white/[0.02] bg-white/[0.01] opacity-40"
               }`}
             >
@@ -326,12 +326,12 @@ export default function ScheduleGrid() {
                             {slot.day}
                           </h3>
                           {today && (
-                            <span className="rounded bg-brand-red px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white leading-none">
+                            <span className="rounded bg-red px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-white leading-none">
                               Today
                             </span>
                           )}
                           {tomorrow && !today && (
-                            <span className="rounded bg-white/10 px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-muted leading-none">
+                            <span className="rounded bg-raised px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wider text-muted leading-none">
                               Tomorrow
                             </span>
                           )}
@@ -343,7 +343,7 @@ export default function ScheduleGrid() {
                     </div>
 
                     {/* Separator (desktop only) */}
-                    <div className="hidden sm:block w-px h-8 bg-white/10 shrink-0" />
+                    <div className="hidden sm:block w-px h-8 bg-raised shrink-0" />
 
                     {/* Category + Description */}
                     <div className="flex-1 min-w-0">
@@ -362,9 +362,9 @@ export default function ScheduleGrid() {
                       <div className="shrink-0">
                         <Link
                           href="/watch"
-                          className="inline-flex items-center gap-1.5 rounded-lg bg-brand-red/20 px-3 py-2 text-xs font-medium text-brand-red transition-colors hover:bg-brand-red/30"
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-brand-red/20 px-3 py-2 text-xs font-medium text-red transition-colors hover:bg-brand-red/30"
                         >
-                          <span className="h-1.5 w-1.5 rounded-full bg-brand-red animate-pulse" />
+                          <span className="h-1.5 w-1.5 rounded-full bg-red animate-pulse" />
                           Watch
                         </Link>
                       </div>
@@ -380,7 +380,7 @@ export default function ScheduleGrid() {
       {/* Legend */}
       <div className="mt-8 flex flex-wrap justify-center gap-6 text-xs text-muted">
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-brand-red" />
+          <span className="h-2 w-2 rounded-full bg-red" />
           <span>Gaming</span>
         </div>
         <div className="flex items-center gap-2">
@@ -388,7 +388,7 @@ export default function ScheduleGrid() {
           <span>Creative</span>
         </div>
         <div className="flex items-center gap-2">
-          <span className="h-2 w-2 rounded-full bg-brand-gold" />
+          <span className="h-2 w-2 rounded-full bg-gold" />
           <span>Special Events</span>
         </div>
       </div>

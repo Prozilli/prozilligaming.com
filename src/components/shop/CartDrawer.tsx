@@ -49,12 +49,12 @@ export default function CartDrawer() {
 
       {/* Drawer */}
       <div
-        className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-brand-darker border-l border-white/10 shadow-2xl transition-transform ${
+        className={`fixed inset-y-0 right-0 z-50 flex w-full max-w-md flex-col bg-raised border-l border-[var(--color-border)] shadow-2xl transition-transform ${
           isOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between border-b border-white/10 px-6 py-4">
+        <div className="flex items-center justify-between border-b border-[var(--color-border)] px-6 py-4">
           <h2 className="text-lg font-semibold tracking-wide text-white">
             Cart
             {itemCount > 0 && (
@@ -78,7 +78,7 @@ export default function CartDrawer() {
         <div className="flex-1 overflow-y-auto p-6">
           {items.length === 0 ? (
             <div className="flex h-full flex-col items-center justify-center text-center">
-              <div className="mb-4 rounded-full bg-white/5 p-6">
+              <div className="mb-4 rounded-full bg-surface p-6">
                 <svg
                   className="h-12 w-12 text-muted"
                   fill="none"
@@ -99,7 +99,7 @@ export default function CartDrawer() {
               </p>
               <button
                 onClick={closeCart}
-                className="mt-6 rounded-sm bg-brand-red px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-brand-red/80"
+                className="mt-6 rounded-lg bg-red px-6 py-3 text-sm font-medium tracking-wide text-white transition-colors hover:bg-red/80"
               >
                 Continue Shopping
               </button>
@@ -109,10 +109,10 @@ export default function CartDrawer() {
               {items.map((item) => (
                 <li
                   key={item.variantId}
-                  className="flex gap-4 rounded-lg border border-white/5 bg-white/5 p-4"
+                  className="flex gap-4 rounded-lg border border-[var(--color-border)] bg-surface p-4"
                 >
                   {/* Product Image */}
-                  <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-white/5">
+                  <div className="relative h-20 w-20 flex-shrink-0 overflow-hidden rounded-md bg-surface">
                     {item.image ? (
                       <Image
                         src={item.image}
@@ -141,7 +141,7 @@ export default function CartDrawer() {
                       </div>
                       <button
                         onClick={() => removeItem(item.variantId)}
-                        className="ml-2 rounded p-1 text-muted transition-colors hover:bg-white/10 hover:text-brand-red"
+                        className="ml-2 rounded p-1 text-muted transition-colors hover:bg-white/10 hover:text-red"
                         aria-label="Remove item"
                       >
                         <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -156,7 +156,7 @@ export default function CartDrawer() {
                         <button
                           onClick={() => updateQuantity(item.variantId, item.quantity - 1)}
                           disabled={item.quantity <= 1}
-                          className="flex h-7 w-7 items-center justify-center rounded border border-white/20 text-white transition-colors hover:border-white/40 disabled:cursor-not-allowed disabled:opacity-30"
+                          className="flex h-7 w-7 items-center justify-center rounded border border-[var(--color-border)] text-white transition-colors hover:border-white/40 disabled:cursor-not-allowed disabled:opacity-30"
                         >
                           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
@@ -167,7 +167,7 @@ export default function CartDrawer() {
                         </span>
                         <button
                           onClick={() => updateQuantity(item.variantId, item.quantity + 1)}
-                          className="flex h-7 w-7 items-center justify-center rounded border border-white/20 text-white transition-colors hover:border-white/40"
+                          className="flex h-7 w-7 items-center justify-center rounded border border-[var(--color-border)] text-white transition-colors hover:border-white/40"
                           disabled={item.quantity >= 10}
                         >
                           <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -177,7 +177,7 @@ export default function CartDrawer() {
                       </div>
 
                       {/* Price */}
-                      <span className="text-sm font-semibold text-brand-gold">
+                      <span className="text-sm font-semibold text-gold">
                         {new Intl.NumberFormat("en-US", { style: "currency", currency: item.currency || "USD" }).format(item.price * item.quantity)}
                       </span>
                     </div>
@@ -190,7 +190,7 @@ export default function CartDrawer() {
 
         {/* Footer */}
         {items.length > 0 && (
-          <div className="border-t border-white/10 p-6">
+          <div className="border-t border-[var(--color-border)] p-6">
             {/* Subtotal */}
             <div className="mb-4 flex items-center justify-between">
               <span className="text-sm text-muted">Subtotal</span>
@@ -207,7 +207,7 @@ export default function CartDrawer() {
             <button
               onClick={checkout}
               disabled={isCheckingOut}
-              className="flex w-full items-center justify-center gap-2 rounded-sm bg-brand-red px-6 py-4 text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-brand-red/80 disabled:cursor-not-allowed disabled:opacity-50"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-red px-6 py-4 text-sm font-semibold uppercase tracking-wider text-white transition-all hover:bg-red/80 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isCheckingOut ? (
                 <>

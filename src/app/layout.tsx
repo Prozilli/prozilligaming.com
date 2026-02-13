@@ -94,7 +94,6 @@ export const metadata: Metadata = {
   category: "entertainment",
 };
 
-// JSON-LD for WebSite
 const websiteJsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -117,7 +116,6 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
-        <link rel="preload" as="image" href="/images/heroes/hero-home.webp" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
@@ -130,7 +128,9 @@ export default function RootLayout({
           </a>
           <Navbar />
           <ErrorBoundary>
-            <main id="main-content" role="main" className="min-h-screen pt-16">{children}</main>
+            <main id="main-content" role="main" className="min-h-screen pt-14 sm:pt-16">
+              {children}
+            </main>
           </ErrorBoundary>
           <Footer />
           <CartDrawer />

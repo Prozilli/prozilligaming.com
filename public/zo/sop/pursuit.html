@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vehicle Pursuit Policy v1.0 - ZO Syndicate RP</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* --- HEADER BANNER --- */
+  .header-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+    border-bottom: 3px solid #a30000;
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(163,0,0,0.03) 2px,
+      rgba(163,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #c4a265;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .header-server {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 16px;
+    color: #a30000;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #777;
+  }
+  .header-meta span { white-space: nowrap; }
+  .header-meta strong { color: #999; }
+  .badge-classified {
+    display: inline-block;
+    background: #a30000;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #c44;
+  }
+
+  /* --- MAIN CONTENT --- */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+  }
+
+  /* --- TABLE OF CONTENTS --- */
+  .toc {
+    background: #111;
+    border: 1px solid #222;
+    border-left: 4px solid #a30000;
+    padding: 24px 28px;
+    margin: 0 0 40px;
+  }
+  .toc h2 {
+    color: #a30000;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    margin-bottom: 5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #a30000; }
+
+  /* --- HEADINGS --- */
+  h1 {
+    color: #a30000;
+    border-bottom: 2px solid #a30000;
+    padding-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-top: 50px;
+  }
+  h2 {
+    color: #c44;
+    margin-top: 35px;
+    font-size: 18px;
+    border-bottom: 1px solid #1f1f1f;
+    padding-bottom: 6px;
+  }
+  h3 {
+    color: #ddd;
+    font-size: 15px;
+    margin-top: 22px;
+  }
+  h4 {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 16px;
+    font-weight: 600;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #222;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  th {
+    background: #141414;
+    color: #a30000;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  td { background: #0f0f0f; }
+  tr:hover td { background: #151010; }
+
+  /* --- CALLOUT BOXES --- */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .callout-critical {
+    background: #1f0a0a;
+    border: 1px solid #331111;
+    border-left: 4px solid #a30000;
+  }
+  .callout-warning {
+    background: #1f1a0a;
+    border: 1px solid #33290e;
+    border-left: 4px solid #c4a265;
+  }
+  .callout-info {
+    background: #0a0f1f;
+    border: 1px solid #0e1a33;
+    border-left: 4px solid #3366aa;
+  }
+  .callout-success {
+    background: #0a1f0a;
+    border: 1px solid #0e330e;
+    border-left: 4px solid #2a8a2a;
+  }
+  .callout-critical strong { color: #e44; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #6699cc; }
+  .callout-success strong { color: #4a4; }
+
+  /* --- MISC --- */
+  code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    border: 1px solid #222;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  blockquote {
+    border-left: 3px solid #a30000;
+    margin: 16px 0;
+    padding: 10px 18px;
+    background: #111;
+    color: #aaa;
+    font-style: italic;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 40px 0;
+  }
+  strong { color: #eee; }
+  a { color: #a30000; text-decoration: none; }
+  a:hover { color: #c44; text-decoration: underline; }
+
+  /* --- FOOTER --- */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 2px solid #a30000;
+    margin-top: 60px;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer .org { color: #c4a265; font-weight: 600; letter-spacing: 2px; }
+  .footer a { color: #666; }
+  .footer a:hover { color: #a30000; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 700px) {
+    .header-dept { font-size: 22px; }
+    .header-meta { flex-direction: column; gap: 6px; }
+    .toc ol { columns: 1; }
+    .content { padding: 20px 16px 40px; }
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<div class="header-banner">
+  <div class="header-org">PROZILLI ENTERTAINMENT</div>
+  <div class="header-server">ZO SYNDICATE RP</div>
+  <div class="badge-classified">LAW ENFORCEMENT</div>
+  <div class="header-dept">VEHICLE PURSUIT POLICY</div>
+  <div class="header-subtitle">STANDARD OPERATING PROCEDURES</div>
+  <div class="header-meta">
+    <span><strong>Version:</strong> 1.0</span>
+    <span><strong>Effective:</strong> February 2026</span>
+    <span><strong>Classification:</strong> RESTRICTED - LEO ONLY</span>
+    <span><strong>Authority:</strong> Chief of Police / Sheriff / Colonel</span>
+  </div>
+</div>
+
+<!-- ========== CONTENT ========== -->
+<div class="content">
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#purpose">Purpose &amp; Policy Statement</a></li>
+    <li><a href="#definitions">Definitions</a></li>
+    <li><a href="#initiation">Pursuit Initiation Criteria</a></li>
+    <li><a href="#not-authorized">When Pursuit is NOT Authorized</a></li>
+    <li><a href="#roles">Roles &amp; Responsibilities</a></li>
+    <li><a href="#comms">Pursuit Communication Protocol</a></li>
+    <li><a href="#driving">Pursuit Driving Standards</a></li>
+    <li><a href="#interventions">Tactical Interventions</a></li>
+    <li><a href="#air-support">Air Support Operations</a></li>
+    <li><a href="#inter-jurisdictional">Inter-Jurisdictional Pursuits</a></li>
+    <li><a href="#termination">Pursuit Termination</a></li>
+    <li><a href="#post-pursuit">Post-Pursuit Procedures</a></li>
+    <li><a href="#review">Pursuit Review &amp; Accountability</a></li>
+    <li><a href="#civilian-safety">Civilian Safety Considerations</a></li>
+    <li><a href="#training">Training Requirements</a></li>
+    <li><a href="#revisions">Revision History &amp; Amendments</a></li>
+  </ol>
+</div>
+
+<div class="callout callout-critical">
+  <strong>MANDATORY READING:</strong> All sworn law enforcement officers within the ZO Syndicate RP jurisdiction are required to read, understand, and acknowledge this Vehicle Pursuit Policy before engaging in any vehicular pursuit. Failure to comply with this policy may result in disciplinary action up to and including termination and criminal charges. This policy supersedes all prior pursuit directives, memoranda, and informal guidelines.
+</div>
+
+
+<!-- ============================================================ -->
+<!-- SECTION 1: PURPOSE & POLICY STATEMENT -->
+<!-- ============================================================ -->
+<h1 id="purpose">1. Purpose &amp; Policy Statement</h1>
+
+<h2>1.1 Purpose</h2>
+<p>The purpose of this policy is to establish clear, uniform guidelines governing the initiation, conduct, and termination of vehicle pursuits by all law enforcement personnel operating within the ZO Syndicate RP jurisdiction. This policy exists to balance the law enforcement duty to apprehend fleeing suspects against the paramount obligation to protect the lives and safety of officers, suspects, and the general public.</p>
+
+<p>Vehicle pursuits are among the most dangerous activities law enforcement officers undertake. Nationally, pursuits result in hundreds of fatalities annually, with a significant percentage of those killed being uninvolved civilians. This policy acknowledges that reality and establishes a framework where pursuits are authorized only when the danger posed by the fleeing suspect clearly outweighs the risks inherent in the pursuit itself.</p>
+
+<h2>1.2 Policy Statement</h2>
+<p>It is the policy of all ZO Syndicate RP law enforcement departments (LSPD, BCSO, SASP) that:</p>
+<ul>
+  <li><strong>Public safety is the highest priority.</strong> No pursuit is worth the life of an uninvolved civilian. Officers must continuously evaluate whether the pursuit endangers the public more than the suspect's escape would.</li>
+  <li><strong>Zero tolerance for reckless pursuits.</strong> Officers who initiate or continue pursuits in violation of this policy will face immediate disciplinary action, up to and including termination and referral for criminal prosecution.</li>
+  <li><strong>Pursuits are a last resort.</strong> Officers shall first attempt to identify the suspect for later apprehension through investigative means whenever practical and when public safety is not in immediate jeopardy.</li>
+  <li><strong>Every pursuit requires justification.</strong> The mere act of fleeing does not, by itself, justify a pursuit. Officers must articulate specific facts supporting the decision to pursue.</li>
+  <li><strong>Supervisory oversight is mandatory.</strong> A supervisor must be notified immediately upon pursuit initiation and has the authority and responsibility to order termination at any time.</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>ZERO TOLERANCE POLICY:</strong> Any officer who initiates or continues a vehicle pursuit solely because a suspect refused to stop for a traffic violation, or who engages in pursuit tactics that demonstrate reckless disregard for public safety, will be subject to immediate suspension pending Internal Affairs investigation. The department will not tolerate "catch at all costs" mentality.
+</div>
+
+<h2>1.3 Scope</h2>
+<p>This policy applies to all sworn personnel of the following departments:</p>
+<ul>
+  <li><strong>LSPD</strong> &mdash; Los Santos Police Department</li>
+  <li><strong>BCSO</strong> &mdash; Blaine County Sheriff's Office</li>
+  <li><strong>SASP</strong> &mdash; San Andreas State Police</li>
+</ul>
+<p>This policy applies regardless of whether the officer is on-duty, off-duty operating in a law enforcement capacity, or operating in an undercover capacity. It applies to all department vehicles, including marked units, unmarked units, specialty vehicles, and motorcycles.</p>
+
+<h2>1.4 Legal Authority</h2>
+<p>This policy is enacted under the authority of the ZO Syndicate RP Criminal Code, Section 4.8 (Law Enforcement Use of Force), Section 6.2 (Emergency Vehicle Operations), and the ZO Syndicate RP Administrative Code, Section 12.1 (Department Standard Operating Procedures). All officers are required to comply with both this policy and applicable law.</p>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 2: DEFINITIONS -->
+<!-- ============================================================ -->
+<h1 id="definitions">2. Definitions</h1>
+
+<p>The following definitions apply throughout this policy:</p>
+
+<table>
+  <tr>
+    <th>Term</th>
+    <th>Definition</th>
+  </tr>
+  <tr>
+    <td><strong>Vehicle Pursuit</strong></td>
+    <td>An active attempt by a law enforcement officer, operating an authorized emergency vehicle with lights and sirens activated, to apprehend one or more occupants of a moving vehicle when the driver of the suspect vehicle is aware of the officer's attempt to stop them and is willfully fleeing by increasing speed, driving recklessly, or refusing to yield.</td>
+  </tr>
+  <tr>
+    <td><strong>Evasion / Fleeing</strong></td>
+    <td>The deliberate act of a vehicle operator to elude law enforcement after the operator has been given a visible or audible signal to stop by a law enforcement officer. This includes accelerating away, making evasive turns, driving against traffic, or any other action intended to avoid apprehension.</td>
+  </tr>
+  <tr>
+    <td><strong>Primary Unit</strong></td>
+    <td>The first law enforcement vehicle that initiates the pursuit and maintains the closest proximity to the suspect vehicle. The primary unit is responsible for radio communications during the pursuit and controls pursuit pacing.</td>
+  </tr>
+  <tr>
+    <td><strong>Secondary Unit</strong></td>
+    <td>The second law enforcement vehicle directly involved in the pursuit, maintaining a safe following distance behind the primary unit. The secondary unit provides backup, assists with radio communications if the primary unit is unable, and is prepared to assume primary if needed.</td>
+  </tr>
+  <tr>
+    <td><strong>Tertiary / Additional Units</strong></td>
+    <td>Any law enforcement vehicle beyond the primary and secondary units. These units shall not actively follow in the pursuit but may parallel the pursuit on adjacent roadways, set up ahead of the pursuit path, or deploy tire deflation devices as directed by the supervisor.</td>
+  </tr>
+  <tr>
+    <td><strong>Pursuit Supervisor</strong></td>
+    <td>The on-duty supervisor (Sergeant or above) responsible for overseeing the pursuit. The pursuit supervisor monitors the pursuit, assesses risk in real time, authorizes or denies tactical interventions, and has the absolute authority to order pursuit termination.</td>
+  </tr>
+  <tr>
+    <td><strong>Watch Commander</strong></td>
+    <td>The highest-ranking on-duty officer (typically Lieutenant or above) who maintains overall command authority over all patrol operations, including active pursuits. The Watch Commander may override any pursuit decision.</td>
+  </tr>
+  <tr>
+    <td><strong>Dispatch / Communications</strong></td>
+    <td>The law enforcement communications center responsible for coordinating radio traffic, notifying supervisors, alerting adjacent jurisdictions, and maintaining a pursuit log with timestamps and updates.</td>
+  </tr>
+  <tr>
+    <td><strong>Air Support / Air-1</strong></td>
+    <td>Law enforcement helicopter unit(s) providing aerial observation, suspect tracking, and tactical coordination during vehicle pursuits. When Air-1 has visual on the suspect vehicle, ground units may be directed to reduce speed or disengage.</td>
+  </tr>
+  <tr>
+    <td><strong>Tactical Intervention</strong></td>
+    <td>Any deliberate law enforcement technique employed to bring a pursuit to a controlled end. Includes PIT maneuvers, tire deflation devices (spike strips), boxing techniques, and rolling roadblocks. All tactical interventions require supervisory authorization.</td>
+  </tr>
+  <tr>
+    <td><strong>PIT Maneuver</strong></td>
+    <td>Precision Immobilization Technique. A controlled maneuver in which a pursuing vehicle makes deliberate contact with the fleeing vehicle's rear quarter panel to cause a controlled spin and loss of steering, bringing the vehicle to a stop.</td>
+  </tr>
+  <tr>
+    <td><strong>Tire Deflation Device (TDD)</strong></td>
+    <td>A mechanical device (commonly referred to as "spike strips") deployed across a roadway to puncture one or more tires of a fleeing vehicle, causing gradual deflation and eventual loss of the ability to continue at speed. Also referred to as "stop sticks."</td>
+  </tr>
+  <tr>
+    <td><strong>Pursuit Termination</strong></td>
+    <td>The deliberate decision to discontinue a vehicle pursuit. Termination requires the pursuing officer to deactivate emergency lights and sirens, reduce to the posted speed limit, and discontinue following the suspect vehicle. Termination may be voluntary (officer-initiated), mandatory (policy-required), or ordered (supervisor-directed).</td>
+  </tr>
+  <tr>
+    <td><strong>Code 3</strong></td>
+    <td>Emergency response with lights and sirens activated. All vehicle pursuits are conducted under Code 3 conditions. Officers operating Code 3 must still exercise due regard for the safety of all persons.</td>
+  </tr>
+  <tr>
+    <td><strong>BOLO</strong></td>
+    <td>Be On the Lookout. A broadcast alert to law enforcement personnel regarding a suspect, vehicle, or person of interest. Relevant to pursuit authorization when a BOLO has been issued for a dangerous suspect or vehicle involved in a violent crime.</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 3: PURSUIT INITIATION CRITERIA -->
+<!-- ============================================================ -->
+<h1 id="initiation">3. Pursuit Initiation Criteria</h1>
+
+<h2>3.1 General Authorization Standard</h2>
+<p>A vehicle pursuit may be initiated <strong>only</strong> when the officer has a reasonable belief, based on articulable facts, that the fleeing suspect has committed, is committing, or is about to commit a <strong>serious felony offense</strong> and that the danger to the public created by the pursuit is <strong>less than</strong> the danger posed by allowing the suspect to escape.</p>
+
+<p>The following conditions must <strong>all</strong> be met before initiating a pursuit:</p>
+<ol>
+  <li>The suspect has been given a clear signal to stop (lights, siren, PA system, or hand signal at close range).</li>
+  <li>The suspect is willfully fleeing and refuses to yield.</li>
+  <li>The officer can articulate a specific serious criminal offense justifying the pursuit.</li>
+  <li>Road, traffic, and weather conditions permit reasonably safe pursuit.</li>
+  <li>The officer's vehicle is equipped with functioning emergency lights and siren.</li>
+  <li>The officer has notified dispatch and requested a supervisor.</li>
+</ol>
+
+<h2>3.2 Authorized Pursuit Offenses</h2>
+<p>Pursuits are authorized for the following offense categories:</p>
+
+<table>
+  <tr>
+    <th>Offense Category</th>
+    <th>Examples</th>
+    <th>Authorization Level</th>
+  </tr>
+  <tr>
+    <td><strong>Violent Felony (In Progress)</strong></td>
+    <td>Murder, attempted murder, armed robbery, assault with deadly weapon, kidnapping, carjacking, active shooter</td>
+    <td>Officer-initiated; notify supervisor immediately</td>
+  </tr>
+  <tr>
+    <td><strong>Violent Felony (Just Occurred)</strong></td>
+    <td>Fleeing scene of homicide, shooting, armed robbery within last 30 minutes where suspect/vehicle positively identified</td>
+    <td>Officer-initiated; notify supervisor immediately</td>
+  </tr>
+  <tr>
+    <td><strong>Felony with Weapons</strong></td>
+    <td>Stolen vehicle with confirmed weapons inside, suspect confirmed armed during traffic stop, felony warrant with weapons flag</td>
+    <td>Officer-initiated; supervisor approval required within 60 seconds</td>
+  </tr>
+  <tr>
+    <td><strong>BOLO (Dangerous Suspect)</strong></td>
+    <td>Active BOLO for suspect wanted for violent crime, confirmed dangerous to public, suspect vehicle involved in drive-by shooting</td>
+    <td>Supervisor pre-authorization or approval within 60 seconds</td>
+  </tr>
+  <tr>
+    <td><strong>DUI with Imminent Danger</strong></td>
+    <td>Suspect actively striking vehicles/objects, driving on sidewalks, driving wrong way on highway, extreme reckless endangerment</td>
+    <td>Supervisor approval required before or within 60 seconds of initiation</td>
+  </tr>
+  <tr>
+    <td><strong>Stolen Vehicle (Confirmed Felony Warrant)</strong></td>
+    <td>Confirmed stolen vehicle where the occupant(s) are wanted on felony warrants (not just the vehicle being stolen)</td>
+    <td>Supervisor approval required before initiation</td>
+  </tr>
+</table>
+
+<div class="callout callout-warning">
+  <strong>NOTE:</strong> The mere fact that a vehicle is stolen does NOT automatically authorize a pursuit. A stolen vehicle alone is a property crime. Pursuit of a stolen vehicle is only authorized when there is an additional articulable violent felony element (weapons present, felony warrants on occupants, vehicle used in commission of a violent crime).
+</div>
+
+<h2>3.3 Risk Assessment Before Initiation</h2>
+<p>Before initiating a pursuit, officers must conduct a rapid risk assessment considering:</p>
+<ul>
+  <li><strong>Severity of the offense:</strong> Is this a violent crime posing an ongoing threat to public safety?</li>
+  <li><strong>Traffic density:</strong> How many other vehicles and pedestrians are in the area?</li>
+  <li><strong>Road conditions:</strong> Is the roadway wet, icy, unpaved, or under construction?</li>
+  <li><strong>Time of day:</strong> Is it during peak traffic hours, school hours, or nighttime with reduced visibility?</li>
+  <li><strong>Area type:</strong> Is this a residential neighborhood, school zone, commercial district, or open highway?</li>
+  <li><strong>Suspect vehicle type:</strong> Is the suspect in a high-performance vehicle, motorcycle, or commercial truck?</li>
+  <li><strong>Number of occupants:</strong> Are there passengers, children, or hostages in the suspect vehicle?</li>
+  <li><strong>Officer vehicle capability:</strong> Is the officer in a pursuit-rated vehicle or an administrative/detective car?</li>
+  <li><strong>Suspect identity known:</strong> Can the suspect be identified and apprehended later through investigation?</li>
+</ul>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 4: WHEN PURSUIT IS NOT AUTHORIZED -->
+<!-- ============================================================ -->
+<h1 id="not-authorized">4. When Pursuit is NOT Authorized</h1>
+
+<div class="callout callout-critical">
+  <strong>CRITICAL - ABSOLUTE PROHIBITIONS:</strong> The following situations represent absolute prohibitions on vehicle pursuit. No officer, regardless of rank, may initiate or continue a pursuit under these circumstances. There are NO exceptions. Violation of these prohibitions will result in immediate suspension and Internal Affairs investigation.
+</div>
+
+<h2>4.1 Absolute Prohibitions</h2>
+<p>Vehicle pursuit is <strong>strictly prohibited</strong> under the following circumstances:</p>
+
+<table>
+  <tr>
+    <th>Prohibition</th>
+    <th>Rationale</th>
+  </tr>
+  <tr>
+    <td><strong>Traffic violations only</strong></td>
+    <td>Running a red light, speeding, expired registration, equipment violations, or any infraction/misdemeanor traffic offense does not justify the risks of a pursuit. Document and issue a warrant.</td>
+  </tr>
+  <tr>
+    <td><strong>Property crimes only</strong></td>
+    <td>Shoplifting, vandalism, burglary of an unoccupied structure, theft under $5,000, or any non-violent property crime. The risk to human life outweighs recovery of property.</td>
+  </tr>
+  <tr>
+    <td><strong>Known identity / can locate later</strong></td>
+    <td>If the officer has positively identified the suspect (driver's license confirmed, personally known, clear surveillance footage), obtain a warrant and arrest later unless there is an imminent threat to public safety.</td>
+  </tr>
+  <tr>
+    <td><strong>School zones (active hours)</strong></td>
+    <td>Between 0700-0900 and 1400-1600 on school days, no pursuit may be initiated or continued through any designated school zone. If already in pursuit and the route enters a school zone, the pursuit must be terminated immediately.</td>
+  </tr>
+  <tr>
+    <td><strong>Hospital / emergency facility zones</strong></td>
+    <td>Pursuit may not continue through hospital complexes, fire station driveways, or active emergency scenes where emergency personnel are operating in the roadway.</td>
+  </tr>
+  <tr>
+    <td><strong>Wrong-way on highway / freeway</strong></td>
+    <td>If the suspect drives the wrong way on a divided highway or freeway, all ground units must immediately terminate pursuit. Air support may continue to track. Ground units may parallel on adjacent roads only.</td>
+  </tr>
+  <tr>
+    <td><strong>Hazardous weather / road conditions</strong></td>
+    <td>Heavy rain, fog with visibility under 100 meters, ice, snow, or flooded roadways. Conditions that make emergency vehicle operation inherently unsafe prohibit pursuit.</td>
+  </tr>
+  <tr>
+    <td><strong>Unmarked / non-pursuit-rated vehicle</strong></td>
+    <td>Officers in unmarked vehicles, detective cars, administrative vehicles, or any non-pursuit-rated vehicle may not initiate or participate in a pursuit. They may assist with parallel positioning or roadblock deployment only.</td>
+  </tr>
+  <tr>
+    <td><strong>Motorcycle pursuits</strong></td>
+    <td>Officers on motorcycles may NOT pursue fleeing vehicles. The risk to the motorcycle officer is extreme. Motorcycle units may initiate a pursuit notification and follow at a safe distance until a marked patrol unit assumes primary, then must disengage from active pursuit.</td>
+  </tr>
+  <tr>
+    <td><strong>Civilian passengers in police vehicle</strong></td>
+    <td>Any officer with a civilian ride-along, prisoner, or other non-law-enforcement passenger may not engage in pursuit. The safety of the passenger is paramount.</td>
+  </tr>
+  <tr>
+    <td><strong>Number of units exceeded</strong></td>
+    <td>No more than three (3) units may actively participate in a pursuit (primary, secondary, supervisor). Additional units responding without supervisor authorization is prohibited.</td>
+  </tr>
+  <tr>
+    <td><strong>Off-road pursuit</strong></td>
+    <td>Pursuit of vehicles that leave paved roadways and enter open terrain, fields, parks, or beaches is prohibited unless the pursuing vehicle is a designated off-road capable unit and supervisor approval is obtained.</td>
+  </tr>
+</table>
+
+<h2>4.2 Conditional Prohibitions</h2>
+<p>The following situations require the pursuit to be terminated unless the Watch Commander specifically authorizes continuation:</p>
+<ul>
+  <li>Pursuit duration exceeds <strong>10 minutes</strong> without successful tactical intervention or imminent stop.</li>
+  <li>Pursuit speed exceeds <strong>120 mph</strong> for any sustained period (more than 15 seconds).</li>
+  <li>Pursuit enters a densely populated area (downtown core, major event venue, public gathering).</li>
+  <li>Suspect vehicle has visible occupants who appear to be children or elderly.</li>
+  <li>More than one (1) civilian vehicle has been struck or forced off the road during the pursuit.</li>
+  <li>The primary unit has lost visual contact for more than <strong>30 seconds</strong> and Air-1 is not overhead.</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>REMEMBER:</strong> When in doubt, terminate. No officer has ever been disciplined for terminating a pursuit in the interest of public safety. Officers HAVE been disciplined, terminated, and criminally charged for continuing pursuits that resulted in civilian injury or death.
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 5: ROLES & RESPONSIBILITIES -->
+<!-- ============================================================ -->
+<h1 id="roles">5. Roles &amp; Responsibilities</h1>
+
+<h2>5.1 Role Assignments</h2>
+
+<table>
+  <tr>
+    <th>Role</th>
+    <th>Personnel</th>
+    <th>Responsibilities</th>
+    <th>Max Units</th>
+  </tr>
+  <tr>
+    <td><strong>Primary Unit</strong></td>
+    <td>Initiating officer (or officer assuming lead)</td>
+    <td>Maintain visual on suspect; provide continuous radio updates (location, speed, direction, suspect behavior); control pursuit pacing; do NOT attempt tactical interventions while acting as primary</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><strong>Secondary Unit</strong></td>
+    <td>First backup officer to join pursuit</td>
+    <td>Maintain safe following distance behind primary (minimum 3-4 car lengths at speed); prepared to assume primary if needed; assist with radio traffic if primary is unable; monitor primary unit for signs of fatigue or tunnel vision</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><strong>Pursuit Supervisor</strong></td>
+    <td>On-duty Sergeant or above</td>
+    <td>Monitor pursuit and continuously assess risk; authorize or deny all tactical interventions; order termination when criteria are met; ensure unit count does not exceed limit; coordinate with adjacent jurisdictions; ensure post-pursuit review is conducted</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><strong>Dispatch</strong></td>
+    <td>Communications center personnel</td>
+    <td>Notify supervisor immediately; clear radio channel for pursuit traffic; broadcast pursuit updates to all units; notify adjacent jurisdictions; maintain pursuit log with timestamps; notify EMS/Fire if pursuit involves collision or injury; provide traffic camera feeds if available</td>
+    <td>N/A</td>
+  </tr>
+  <tr>
+    <td><strong>Air Support (Air-1)</strong></td>
+    <td>Helicopter crew (pilot + tactical observer)</td>
+    <td>Assume visual tracking of suspect vehicle; provide overhead direction/speed/location updates; coordinate ground unit positioning; recommend ground unit disengagement when safe; identify deployment opportunities for TDD</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><strong>Tactical Units</strong></td>
+    <td>Officers positioned ahead of pursuit path</td>
+    <td>Deploy tire deflation devices as authorized; set up roadblock positions if authorized; do NOT join active pursuit formation; remain stationary or parallel on adjacent roads only</td>
+    <td>As needed (not in pursuit formation)</td>
+  </tr>
+  <tr>
+    <td><strong>Watch Commander</strong></td>
+    <td>On-duty Lieutenant or above</td>
+    <td>Ultimate authority over pursuit continuation or termination; may override any supervisor decision; coordinates inter-agency response; authorizes lethal force (roadblock/ramming) only in extreme circumstances; handles media and command notifications</td>
+    <td>1</td>
+  </tr>
+</table>
+
+<h2>5.2 Primary Unit Duties in Detail</h2>
+<ul>
+  <li>Activate emergency lights and siren before commencing pursuit.</li>
+  <li>Immediately notify dispatch of pursuit initiation with: unit number, location, direction of travel, reason for pursuit, suspect vehicle description (make, model, color, plate if known), number of occupants, current speed.</li>
+  <li>Provide continuous location updates at every major intersection or every 15-30 seconds.</li>
+  <li>Report any changes in suspect behavior (weapons displayed, items thrown from vehicle, vehicle damage, occupants bailing out).</li>
+  <li>Do NOT attempt to pass the suspect vehicle or pull alongside unless executing a supervisor-authorized tactical intervention.</li>
+  <li>If the primary officer determines pursuit should be terminated, they shall announce <code>10-22</code> (cancel/disregard) and immediately comply with termination procedures.</li>
+  <li>Maintain composure and avoid "tunnel vision" &mdash; continuously assess changing conditions.</li>
+</ul>
+
+<h2>5.3 Secondary Unit Duties in Detail</h2>
+<ul>
+  <li>Monitor the primary unit's driving behavior for signs of fatigue, frustration, or reckless driving.</li>
+  <li>Maintain sufficient distance to avoid a chain-reaction collision if the primary or suspect vehicle stops suddenly.</li>
+  <li>Be prepared to provide radio updates if the primary unit is too focused on driving.</li>
+  <li>Assume the role of primary unit if the original primary has a mechanical failure, collision, or is directed to disengage.</li>
+  <li>Record suspect vehicle plate number and description independently as a backup.</li>
+</ul>
+
+<h2>5.4 Supervisor Responsibilities in Detail</h2>
+<ul>
+  <li>Immediately assess the justification for the pursuit based on the initiating officer's radio traffic.</li>
+  <li>If the justification does not meet pursuit initiation criteria, order immediate termination.</li>
+  <li>Continuously evaluate the balance between the need to apprehend and risk to public safety.</li>
+  <li>Issue clear, direct orders. Officers shall acknowledge all supervisor directives with their unit number.</li>
+  <li>Ensure no more than 3 units are actively involved in the pursuit (primary, secondary, supervisor).</li>
+  <li>Order all uninvolved units to clear the pursuit channel and stand down unless assigned a specific role.</li>
+  <li>Request Air-1 if available and not already en route.</li>
+  <li>Authorize or deny PIT maneuvers, TDD deployment, and roadblocks based on the authorization matrix.</li>
+  <li>Notify the Watch Commander if the pursuit exceeds 5 minutes, crosses jurisdictions, or involves a collision.</li>
+  <li>Order termination when mandatory termination criteria are met (see Section 11).</li>
+</ul>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 6: PURSUIT COMMUNICATION PROTOCOL -->
+<!-- ============================================================ -->
+<h1 id="comms">6. Pursuit Communication Protocol</h1>
+
+<h2>6.1 Pursuit Initiation Call</h2>
+<p>Upon initiating a pursuit, the primary unit must broadcast the following information immediately:</p>
+
+<table>
+  <tr>
+    <th>Information</th>
+    <th>Example</th>
+    <th>Priority</th>
+  </tr>
+  <tr>
+    <td>Unit identifier</td>
+    <td>"Lincoln-12"</td>
+    <td>Required</td>
+  </tr>
+  <tr>
+    <td>Nature of pursuit / reason</td>
+    <td>"In pursuit, armed robbery suspect"</td>
+    <td>Required</td>
+  </tr>
+  <tr>
+    <td>Location</td>
+    <td>"Northbound Vinewood Boulevard at Alta Street"</td>
+    <td>Required</td>
+  </tr>
+  <tr>
+    <td>Direction of travel</td>
+    <td>"Northbound, turning eastbound on Boulevard Del Perro"</td>
+    <td>Required</td>
+  </tr>
+  <tr>
+    <td>Suspect vehicle description</td>
+    <td>"Black 4-door sedan, Benefactor Schafter, partial plate Alpha-Bravo-7"</td>
+    <td>Required</td>
+  </tr>
+  <tr>
+    <td>Number of occupants</td>
+    <td>"Two occupants visible"</td>
+    <td>Required</td>
+  </tr>
+  <tr>
+    <td>Current speed</td>
+    <td>"Speeds approximately 80 miles per hour"</td>
+    <td>Required</td>
+  </tr>
+  <tr>
+    <td>Weapons observed</td>
+    <td>"Passenger displayed firearm during initial stop"</td>
+    <td>Required (if applicable)</td>
+  </tr>
+  <tr>
+    <td>Traffic / road conditions</td>
+    <td>"Moderate traffic, dry road"</td>
+    <td>Required</td>
+  </tr>
+  <tr>
+    <td>Requesting supervisor / backup</td>
+    <td>"Requesting supervisor and secondary unit"</td>
+    <td>Required</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>EXAMPLE INITIATION CALL:</strong> "Dispatch, Lincoln-12, I am in pursuit of a black Benefactor Schafter, 4-door, partial plate Alpha-Bravo-7, two occupants, northbound Vinewood Boulevard at Alta Street. Suspect is wanted for armed robbery, speeds approximately 80 mph. Moderate traffic, dry road. Requesting supervisor and backup."
+</div>
+
+<h2>6.2 Ongoing Pursuit Updates</h2>
+<p>The primary unit shall provide updates at the following intervals:</p>
+<ul>
+  <li>Every major intersection or highway interchange.</li>
+  <li>Every direction change.</li>
+  <li>Every significant speed change (increase or decrease of 20+ mph).</li>
+  <li>Minimum every 30 seconds even if conditions are unchanged.</li>
+  <li>Immediately upon any of the following: suspect vehicle strikes another vehicle or object, suspect throws objects from vehicle, occupant bails out of vehicle, suspect displays or fires weapon, pursuit enters a new jurisdiction, pursuit enters a restricted zone (school, hospital, downtown core).</li>
+</ul>
+
+<h2>6.3 Dispatch Responsibilities</h2>
+<ul>
+  <li>Immediately clear the primary radio channel for pursuit traffic only.</li>
+  <li>Notify the on-duty supervisor and Watch Commander.</li>
+  <li>Run the suspect vehicle plate through the system and relay results (stolen vehicle confirmation, registered owner, warrants).</li>
+  <li>Notify adjacent jurisdictions if the pursuit is heading toward their boundaries.</li>
+  <li>Maintain a detailed pursuit log with timestamps for every update.</li>
+  <li>Stage EMS and Fire along the projected pursuit route.</li>
+  <li>Broadcast road closures or hazards in the pursuit path.</li>
+  <li>If the primary unit fails to provide an update for more than 45 seconds, dispatch shall request a status check.</li>
+</ul>
+
+<h2>6.4 Radio Discipline</h2>
+<ul>
+  <li>Only the primary unit, secondary unit, supervisor, Air-1, and dispatch should transmit on the pursuit channel.</li>
+  <li>All other units must remain off the channel unless they have critical information (spike strip positioned, suspect vehicle spotted on parallel road, etc.).</li>
+  <li>Transmissions must be brief, clear, and use standard 10-codes and phonetic alphabet.</li>
+  <li>Officers must not argue, debate, or express frustration on the pursuit channel.</li>
+  <li>The supervisor's order to terminate is final. Officers shall acknowledge with unit number and <code>10-4</code> and comply immediately.</li>
+</ul>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 7: PURSUIT DRIVING STANDARDS -->
+<!-- ============================================================ -->
+<h1 id="driving">7. Pursuit Driving Standards</h1>
+
+<h2>7.1 Emergency Vehicle Operation</h2>
+<p>All pursuit driving shall be conducted under <strong>Code 3</strong> conditions with emergency lights and siren activated continuously. Officers engaged in pursuit must adhere to the following standards:</p>
+
+<ul>
+  <li><strong>Due regard for safety:</strong> Despite operating in emergency mode, officers must still exercise due regard for the safety of all persons. Emergency vehicle privileges do not grant blanket immunity from liability for reckless driving.</li>
+  <li><strong>Speed differential:</strong> Officers should maintain a speed that allows them to keep visual contact with the suspect vehicle without exceeding their ability to safely control their vehicle. The goal is to follow, not to catch.</li>
+  <li><strong>Following distance:</strong> Maintain sufficient distance to react to sudden stops, turns, or obstacles. At highway speeds, this means a minimum of 4-6 seconds of following distance.</li>
+  <li><strong>Seatbelt use:</strong> Officers must wear seatbelts at all times during pursuit. No exceptions.</li>
+</ul>
+
+<h2>7.2 Intersection Clearing</h2>
+<p>Intersections are the most dangerous phase of any pursuit. Officers must:</p>
+<ul>
+  <li>Approach controlled intersections (stop signs, red lights) with caution.</li>
+  <li>Slow down sufficiently to confirm cross-traffic has yielded before proceeding.</li>
+  <li>If cross-traffic has not yielded, the officer must stop and wait for a safe gap.</li>
+  <li>Never assume other drivers will hear sirens or see lights in time to yield, especially in urban areas with ambient noise.</li>
+  <li>Secondary units must clear intersections independently &mdash; they cannot rely on the primary unit having already passed through.</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>INTERSECTION WARNING:</strong> The majority of pursuit-related civilian injuries and fatalities occur at intersections. Suspect vehicles frequently run red lights and stop signs at full speed. Officers must NOT blindly follow a suspect through an intersection without verifying it is safe. Losing visual contact for a few seconds is preferable to a broadside collision with an innocent motorist.
+</div>
+
+<h2>7.3 Speed Guidelines</h2>
+
+<table>
+  <tr>
+    <th>Zone Type</th>
+    <th>Maximum Pursuit Speed</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>Residential area</td>
+    <td>60 mph</td>
+    <td>Terminate if suspect exceeds 80 mph in residential</td>
+  </tr>
+  <tr>
+    <td>Commercial / downtown</td>
+    <td>50 mph</td>
+    <td>Extremely high pedestrian risk; terminate if conditions deteriorate</td>
+  </tr>
+  <tr>
+    <td>Highway / freeway</td>
+    <td>120 mph</td>
+    <td>Higher speeds permissible on open highway; reduce in traffic</td>
+  </tr>
+  <tr>
+    <td>Unpaved / dirt roads</td>
+    <td>40 mph</td>
+    <td>Only pursuit-rated SUVs/trucks; sedans must disengage</td>
+  </tr>
+  <tr>
+    <td>Parking structures</td>
+    <td>25 mph</td>
+    <td>Extreme caution; blind corners, pedestrians, low clearance</td>
+  </tr>
+  <tr>
+    <td>School zone (non-active hours)</td>
+    <td>40 mph</td>
+    <td>Active school hours: pursuit prohibited entirely (see Section 4)</td>
+  </tr>
+</table>
+
+<h2>7.4 Traffic Density Assessment</h2>
+<p>Officers must continuously evaluate traffic density and adjust pursuit tactics accordingly:</p>
+
+<table>
+  <tr>
+    <th>Traffic Level</th>
+    <th>Description</th>
+    <th>Pursuit Action</th>
+  </tr>
+  <tr>
+    <td><strong>Light</strong></td>
+    <td>Few vehicles, open roadway, clear sight lines</td>
+    <td>Pursuit may continue; maintain normal pursuit protocols</td>
+  </tr>
+  <tr>
+    <td><strong>Moderate</strong></td>
+    <td>Steady traffic flow, vehicles in most lanes, some congestion</td>
+    <td>Reduce speed; increase following distance; request Air-1; supervisor should evaluate continuation</td>
+  </tr>
+  <tr>
+    <td><strong>Heavy</strong></td>
+    <td>Congested traffic, slow-moving or stopped vehicles, limited maneuvering room</td>
+    <td>Strongly consider termination; only continue if suspect is an imminent danger and Air-1 is tracking</td>
+  </tr>
+  <tr>
+    <td><strong>Gridlock / Standstill</strong></td>
+    <td>Traffic stopped or near-stopped, no lane to maneuver</td>
+    <td>Terminate ground pursuit immediately; Air-1 continues overhead tracking</td>
+  </tr>
+</table>
+
+<h2>7.5 Prohibited Driving Conduct</h2>
+<p>The following driving behaviors are <strong>strictly prohibited</strong> during any pursuit:</p>
+<ul>
+  <li>Driving the wrong way on a one-way street or divided highway.</li>
+  <li>Driving on sidewalks, medians, or off-road surfaces (unless in an approved off-road vehicle with supervisor authorization).</li>
+  <li>Ramming the suspect vehicle (this is lethal force and requires separate authorization).</li>
+  <li>Pulling alongside the suspect vehicle at speed (creates crossfire risk and collision risk).</li>
+  <li>Passing other pursuing units in the pursuit formation without authorization.</li>
+  <li>Operating the vehicle while using a cell phone, MDT/computer, or any handheld device.</li>
+  <li>Disabling the dashcam/bodycam during pursuit.</li>
+</ul>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 8: TACTICAL INTERVENTIONS -->
+<!-- ============================================================ -->
+<h1 id="interventions">8. Tactical Interventions</h1>
+
+<h2>8.1 General Rules for Tactical Interventions</h2>
+<ul>
+  <li><strong>All tactical interventions require supervisor authorization</strong> before execution unless there is an immediate, articulable threat to life (e.g., suspect driving directly at pedestrians).</li>
+  <li>The supervisor must weigh the risk of the intervention against the risk of allowing the pursuit to continue.</li>
+  <li>Only officers who have received specific training and certification in the technique may execute it.</li>
+  <li>The executing officer must announce their intention on the radio before executing, giving the primary and secondary units time to adjust.</li>
+</ul>
+
+<h2>8.2 PIT Maneuver Authorization Matrix</h2>
+
+<div class="callout callout-critical">
+  <strong>CRITICAL - PIT MANEUVER:</strong> The PIT maneuver involves deliberate vehicle-to-vehicle contact and carries inherent risk of injury to the suspect, officers, and bystanders. At speeds above 45 mph, a PIT maneuver is classified as USE OF DEADLY FORCE because the risk of fatal injury increases dramatically. PIT maneuvers on motorcycles, vehicles with visible children, and large commercial vehicles are ALWAYS PROHIBITED regardless of speed or crime.
+</div>
+
+<table>
+  <tr>
+    <th>Suspect Speed</th>
+    <th>Non-Violent Felony</th>
+    <th>Violent Felony (No Weapon Displayed)</th>
+    <th>Violent Felony (Weapon Displayed / Used)</th>
+    <th>Imminent Threat to Life</th>
+  </tr>
+  <tr>
+    <td><strong>Under 25 mph</strong></td>
+    <td style="color:#4a4;">Authorized (Supervisor)</td>
+    <td style="color:#4a4;">Authorized (Supervisor)</td>
+    <td style="color:#4a4;">Authorized (Supervisor)</td>
+    <td style="color:#4a4;">Authorized (Officer Discretion)</td>
+  </tr>
+  <tr>
+    <td><strong>25-35 mph</strong></td>
+    <td style="color:#c4a265;">Conditional (Watch Cmdr)</td>
+    <td style="color:#4a4;">Authorized (Supervisor)</td>
+    <td style="color:#4a4;">Authorized (Supervisor)</td>
+    <td style="color:#4a4;">Authorized (Officer Discretion)</td>
+  </tr>
+  <tr>
+    <td><strong>36-45 mph</strong></td>
+    <td style="color:#e44;">DENIED</td>
+    <td style="color:#c4a265;">Conditional (Watch Cmdr)</td>
+    <td style="color:#4a4;">Authorized (Supervisor)</td>
+    <td style="color:#4a4;">Authorized (Officer Discretion)</td>
+  </tr>
+  <tr>
+    <td><strong>46-60 mph</strong></td>
+    <td style="color:#e44;">DENIED</td>
+    <td style="color:#e44;">DENIED</td>
+    <td style="color:#c4a265;">Conditional (Watch Cmdr) - DEADLY FORCE</td>
+    <td style="color:#c4a265;">Conditional (Watch Cmdr) - DEADLY FORCE</td>
+  </tr>
+  <tr>
+    <td><strong>Over 60 mph</strong></td>
+    <td style="color:#e44;">DENIED</td>
+    <td style="color:#e44;">DENIED</td>
+    <td style="color:#e44;">DENIED</td>
+    <td style="color:#c4a265;">Watch Commander ONLY - DEADLY FORCE</td>
+  </tr>
+</table>
+
+<p><strong>Legend:</strong></p>
+<ul>
+  <li><span style="color:#4a4;">Authorized</span> &mdash; May be executed with the stated approval level.</li>
+  <li><span style="color:#c4a265;">Conditional</span> &mdash; Requires higher-level authorization and must have documented justification.</li>
+  <li><span style="color:#e44;">DENIED</span> &mdash; Not authorized under any circumstances at this speed/crime combination.</li>
+</ul>
+
+<h2>8.3 PIT Maneuver Execution Rules</h2>
+<ol>
+  <li>Only EVOC-certified officers may execute a PIT maneuver.</li>
+  <li>Officer must announce <code>"Preparing to PIT"</code> on the radio and receive supervisor acknowledgment.</li>
+  <li>PIT must be executed on the suspect vehicle's rear quarter panel only. Front or side contact is not a PIT &mdash; it is ramming.</li>
+  <li>The area ahead of and beside the suspect vehicle must be clear of civilian vehicles, pedestrians, and fixed objects that could cause additional harm upon spin-out.</li>
+  <li>PIT maneuvers are <strong>PROHIBITED</strong> on: motorcycles, commercial trucks / tractor-trailers, vehicles with visible children, vehicles carrying hazardous materials (tanker trucks, placarded vehicles), vehicles on bridges or overpasses, vehicles on wet/icy roads above 25 mph.</li>
+  <li>After a successful PIT, officers must immediately transition to a felony stop posture with weapons drawn and verbal commands.</li>
+</ol>
+
+<h2>8.4 Tire Deflation Devices (Spike Strips / Stop Sticks)</h2>
+
+<h3>8.4.1 Deployment Authorization</h3>
+<ul>
+  <li>Supervisor authorization required. Officer may pre-position with permission.</li>
+  <li>Only officers trained in TDD deployment may handle or deploy the device.</li>
+  <li>Officer must be positioned in a safe location with cover and an escape route.</li>
+</ul>
+
+<h3>8.4.2 Deployment Procedures</h3>
+<ol>
+  <li>Select a deployment location with clear line of sight for at least 500 feet in the direction the suspect is approaching.</li>
+  <li>Position the TDD on the roadway in the suspect vehicle's projected path.</li>
+  <li>Communicate deployment location to the primary unit and dispatch: <code>"Stop sticks deployed northbound I-4 at mile marker 12."</code></li>
+  <li>Immediately pull the TDD out of the roadway after the suspect vehicle passes to prevent civilian tire damage.</li>
+  <li>If civilian vehicles are approaching and cannot be warned, do NOT deploy. Wait for a clear gap or reposition.</li>
+  <li>Report hit or miss to dispatch: <code>"Stop sticks - good hit, front tires"</code> or <code>"Stop sticks - missed."</code></li>
+</ol>
+
+<h3>8.4.3 TDD Prohibitions</h3>
+<ul>
+  <li>Never deploy against motorcycles &mdash; a tire blowout at speed is almost certainly fatal for a motorcycle rider.</li>
+  <li>Never deploy on curves, bridges, overpasses, or hills where a tire blowout could cause the vehicle to lose control into oncoming traffic or off the roadway at a dangerous point.</li>
+  <li>Never deploy when the officer cannot safely retreat to cover after deployment.</li>
+  <li>Never stand in the roadway or in the path of the approaching suspect vehicle to deploy.</li>
+</ul>
+
+<h2>8.5 Boxing / Containment Technique</h2>
+<p>Boxing is a technique where multiple patrol vehicles surround a suspect vehicle (front, both sides, rear) at low speed to gradually bring it to a controlled stop.</p>
+<ul>
+  <li><strong>Authorization:</strong> Supervisor approval required. Minimum 4 units needed.</li>
+  <li><strong>Speed limit:</strong> Boxing may only be attempted at speeds below <strong>35 mph</strong>.</li>
+  <li><strong>Conditions:</strong> Suspect vehicle must be slowing or in congested traffic. Not effective against a determined high-speed suspect.</li>
+  <li><strong>Procedure:</strong> Units close in gradually from all four sides. The front vehicle decelerates slowly. Side vehicles match speed and close the gap. Rear vehicle prevents backward escape.</li>
+  <li><strong>Risk:</strong> If the suspect accelerates into any of the boxing vehicles, the technique is aborted. Boxing vehicles must be prepared to disengage immediately.</li>
+</ul>
+
+<h2>8.6 Rolling Roadblock</h2>
+<p>A rolling roadblock involves positioning patrol vehicles ahead of the suspect on a multi-lane road and gradually reducing speed to force the suspect to slow and eventually stop.</p>
+<ul>
+  <li><strong>Authorization:</strong> Watch Commander approval required.</li>
+  <li><strong>Personnel:</strong> Minimum 3 units required to block all lanes on a standard highway.</li>
+  <li><strong>Speed:</strong> Effective only when suspect speed is below <strong>60 mph</strong> and decelerating.</li>
+  <li><strong>Civilian clearance:</strong> All civilian traffic ahead of the rolling roadblock must be cleared by dispatch and additional units.</li>
+  <li><strong>Risk level:</strong> High. If the suspect rams through the roadblock, responding officers are at risk. Only used when pursuit termination is deemed more dangerous than the roadblock itself.</li>
+</ul>
+
+<h2>8.7 Ramming / Deliberate Vehicle Contact</h2>
+
+<div class="callout callout-critical">
+  <strong>DEADLY FORCE:</strong> Deliberate ramming of a suspect vehicle (other than an authorized PIT maneuver) constitutes <strong>USE OF DEADLY FORCE</strong> and is subject to the department's Use of Force policy. Ramming may ONLY be authorized by the Watch Commander when the suspect poses an <strong>imminent threat of death or serious bodily injury</strong> to officers or civilians and no lesser intervention is available. This includes driving directly at pedestrians, officers, or occupied vehicles with apparent intent to kill.
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 9: AIR SUPPORT OPERATIONS -->
+<!-- ============================================================ -->
+<h1 id="air-support">9. Air Support Operations</h1>
+
+<h2>9.1 Requesting Air Support</h2>
+<ul>
+  <li>Air support (Air-1) should be requested at the earliest opportunity for any pursuit that is not immediately terminated.</li>
+  <li>Request is made by the primary unit or supervisor through dispatch.</li>
+  <li>Dispatch will confirm Air-1 availability and estimated time of arrival (ETA).</li>
+  <li>If Air-1 is unavailable, the supervisor must factor this into the risk assessment for continuation.</li>
+</ul>
+
+<h2>9.2 Air-1 Roles During Pursuit</h2>
+<table>
+  <tr>
+    <th>Function</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><strong>Visual tracking</strong></td>
+    <td>Maintain continuous visual on the suspect vehicle using camera systems. Provide real-time location, speed, and direction updates to ground units and dispatch.</td>
+  </tr>
+  <tr>
+    <td><strong>Ground unit coordination</strong></td>
+    <td>Direct ground units to optimal positions ahead of or parallel to the suspect. Identify safe TDD deployment locations. Recommend optimal PIT locations.</td>
+  </tr>
+  <tr>
+    <td><strong>Safety assessment</strong></td>
+    <td>Provide overhead assessment of traffic density, road conditions, and hazards that ground units cannot see. Alert ground units to approaching school zones, construction areas, and congested areas.</td>
+  </tr>
+  <tr>
+    <td><strong>Suspect behavior monitoring</strong></td>
+    <td>Observe suspect actions not visible to ground units: items thrown from vehicle, occupants preparing to bail, weapons being positioned, vehicle modifications (headlights off, plates removed).</td>
+  </tr>
+  <tr>
+    <td><strong>Post-pursuit tracking</strong></td>
+    <td>If the suspect abandons the vehicle, Air-1 tracks the suspect on foot to guide ground units to the arrest location. Maintains visual on the abandoned vehicle to preserve evidence.</td>
+  </tr>
+</table>
+
+<h2>9.3 Ground Unit Disengagement with Air-1 Overhead</h2>
+
+<div class="callout callout-success">
+  <strong>BEST PRACTICE:</strong> When Air-1 has confirmed visual contact with the suspect vehicle, the supervisor should seriously consider ordering ground units to disengage from active pursuit and fall back to a following distance where they are no longer pursuing aggressively. This dramatically reduces the risk to the public while maintaining the ability to apprehend the suspect. Air-1 tracking is the safest form of pursuit available.
+</div>
+
+<p>Procedure for Air-1 takeover:</p>
+<ol>
+  <li>Air-1 announces: <code>"Air-1 has the eye. Visual confirmed on suspect vehicle."</code></li>
+  <li>Supervisor evaluates whether ground disengagement is appropriate.</li>
+  <li>If authorized, supervisor orders: <code>"All ground units, slow to posted speed. Air-1 has primary visual."</code></li>
+  <li>Ground units deactivate sirens (lights may remain on), reduce to posted speed, and maintain a distant parallel track.</li>
+  <li>Ground units reposition to anticipated stop locations based on Air-1 direction reports.</li>
+  <li>Ground units re-engage only when the suspect vehicle stops or Air-1 loses visual.</li>
+</ol>
+
+<h2>9.4 Air-1 Limitations</h2>
+<ul>
+  <li>Air-1 may not be available at all times (maintenance, fuel, crew rest, weather).</li>
+  <li>Low cloud ceiling, fog, heavy rain, or high winds may prevent Air-1 operations.</li>
+  <li>Air-1 has limited fuel endurance (typically 2-3 hours maximum). Extended pursuits may require fuel rotation.</li>
+  <li>Dense urban canyons (tall buildings) may obstruct Air-1 line of sight intermittently.</li>
+  <li>Air-1 cannot physically stop a vehicle. Ground units are ultimately needed for apprehension.</li>
+</ul>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 10: INTER-JURISDICTIONAL PURSUITS -->
+<!-- ============================================================ -->
+<h1 id="inter-jurisdictional">10. Inter-Jurisdictional Pursuits</h1>
+
+<h2>10.1 Pursuit Entering Another Jurisdiction</h2>
+<p>When a pursuit crosses from one department's jurisdiction into another, the following procedures apply:</p>
+
+<ol>
+  <li><strong>Notification:</strong> The pursuing department's dispatch must notify the receiving jurisdiction's dispatch immediately when the pursuit is approaching their boundary. This notification must include: reason for pursuit, suspect vehicle description, number of units involved, current speed and direction, and whether the suspect is believed to be armed.</li>
+  <li><strong>Authority:</strong> The initiating department retains primary authority over the pursuit unless the receiving jurisdiction's Watch Commander assumes command or orders termination within their jurisdiction.</li>
+  <li><strong>Receiving jurisdiction response:</strong> The receiving jurisdiction may provide assistance (spike strips, roadblocks, additional units) or may decline involvement. If the receiving jurisdiction orders termination within their borders, the pursuing department must comply.</li>
+</ol>
+
+<h2>10.2 Jurisdiction Handoff Matrix</h2>
+
+<table>
+  <tr>
+    <th>Initiating Dept</th>
+    <th>Receiving Dept</th>
+    <th>Primary Unit</th>
+    <th>Handoff Procedure</th>
+  </tr>
+  <tr>
+    <td>LSPD</td>
+    <td>BCSO</td>
+    <td>LSPD retains primary unless BCSO assumes</td>
+    <td>LSPD dispatch notifies BCSO dispatch. BCSO supervisor may assume command, assign BCSO primary, and LSPD transitions to secondary.</td>
+  </tr>
+  <tr>
+    <td>LSPD</td>
+    <td>SASP</td>
+    <td>SASP assumes primary on state highways</td>
+    <td>SASP has primary jurisdiction on state highways and interstates. LSPD transitions to secondary. SASP supervisor assumes command.</td>
+  </tr>
+  <tr>
+    <td>BCSO</td>
+    <td>LSPD</td>
+    <td>LSPD assumes primary within city limits</td>
+    <td>BCSO dispatch notifies LSPD dispatch. LSPD unit assumes primary within city limits. BCSO transitions to secondary.</td>
+  </tr>
+  <tr>
+    <td>BCSO</td>
+    <td>SASP</td>
+    <td>SASP assumes primary on state highways</td>
+    <td>SASP has primary jurisdiction on state highways. BCSO transitions to secondary. Joint supervisor coordination.</td>
+  </tr>
+  <tr>
+    <td>SASP</td>
+    <td>LSPD / BCSO</td>
+    <td>SASP retains primary for state-initiated pursuits</td>
+    <td>SASP retains primary regardless of jurisdiction for pursuits initiated on state highways. Local PD/SO provides support only.</td>
+  </tr>
+  <tr>
+    <td>Any Dept</td>
+    <td>Federal property</td>
+    <td>Terminate unless federal authority approves</td>
+    <td>Pursuits onto military bases, federal buildings, or federal land require immediate federal coordination or termination.</td>
+  </tr>
+</table>
+
+<h2>10.3 Mutual Aid Guidelines</h2>
+<ul>
+  <li>All three departments (LSPD, BCSO, SASP) maintain standing mutual aid agreements for vehicle pursuits.</li>
+  <li>Mutual aid units shall operate under the policies of the department commanding the pursuit.</li>
+  <li>The receiving jurisdiction may place their own maximum unit count on their participating units.</li>
+  <li>Radio interoperability channels shall be established by dispatch. All units must switch to the designated shared channel.</li>
+  <li>If radio interoperability is not available, dispatch-to-dispatch phone bridges must be maintained.</li>
+</ul>
+
+<h2>10.4 Out-of-County / Extended Jurisdiction</h2>
+<p>If a pursuit exits the combined jurisdiction of LSPD, BCSO, and SASP entirely:</p>
+<ul>
+  <li>The supervisor must immediately evaluate whether continuation is justified.</li>
+  <li>Pursuits extending beyond the county line require Watch Commander authorization to continue.</li>
+  <li>The distant jurisdiction must be notified and must consent to the pursuit continuing within their borders.</li>
+  <li>If consent is not obtained, the pursuit must be terminated and Air-1 (if overhead) may continue passive tracking only.</li>
+</ul>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 11: PURSUIT TERMINATION -->
+<!-- ============================================================ -->
+<h1 id="termination">11. Pursuit Termination</h1>
+
+<div class="callout callout-critical">
+  <strong>CRITICAL - TERMINATION IS NOT FAILURE:</strong> Terminating a pursuit is a sound tactical decision that prioritizes public safety. It is never a sign of weakness or failure. Officers and supervisors who terminate pursuits in the interest of public safety will be supported by command staff. Conversely, officers who continue pursuits in violation of termination criteria will face accountability.
+</div>
+
+<h2>11.1 Mandatory Termination Criteria</h2>
+<p>A pursuit <strong>must be immediately terminated</strong> when any of the following conditions exist. There are no exceptions to mandatory termination unless the Watch Commander provides explicit, real-time authorization to continue and articulates specific reasons on the record:</p>
+
+<table>
+  <tr>
+    <th>#</th>
+    <th>Mandatory Termination Condition</th>
+    <th>Rationale</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Pursuit enters an active school zone during school hours (0700-0900, 1400-1600)</td>
+    <td>Children present; extreme vulnerability; cannot be mitigated</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Suspect drives the wrong way on a divided highway or freeway</td>
+    <td>Head-on collision risk to uninvolved motorists is extreme and unpredictable</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Visual contact is lost for more than 30 seconds without Air-1 overhead</td>
+    <td>Continuing blind pursuit means officers are driving Code 3 without a target, endangering the public</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Weather or road conditions deteriorate to the point where safe emergency driving is impossible</td>
+    <td>Rain, ice, fog, or road damage that makes pursuit driving inherently unsafe</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td>Suspect identity has been confirmed and there is no imminent threat to public safety</td>
+    <td>Warrant can be obtained and suspect arrested later without the risks of pursuit</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Civilian vehicle struck by either the suspect or pursuing officer</td>
+    <td>Collision indicates unacceptable risk level; civilian injury takes priority</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td>Pursuit enters a major public event (concert, parade, sporting event, protest)</td>
+    <td>Mass casualty potential; cannot be controlled</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td>Pursuing officer's vehicle sustains damage that affects handling or safety</td>
+    <td>Damaged vehicle is a hazard; officer cannot safely continue</td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td>Pursuing officer experiences fatigue, tunnel vision, or emotional compromise</td>
+    <td>Impaired judgment leads to dangerous decisions; officer must self-terminate</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td>Supervisor orders termination</td>
+    <td>Supervisor's order is absolute and must be obeyed immediately without debate</td>
+  </tr>
+</table>
+
+<h2>11.2 Pursuit Termination Decision Tree</h2>
+<p>Officers and supervisors should apply this decision tree continuously throughout the pursuit:</p>
+
+<table>
+  <tr>
+    <th>Step</th>
+    <th>Question</th>
+    <th>If YES</th>
+    <th>If NO</th>
+  </tr>
+  <tr>
+    <td><strong>1</strong></td>
+    <td>Does the suspect pose an immediate, ongoing threat to human life?</td>
+    <td>Proceed to Step 2</td>
+    <td><strong>TERMINATE</strong> &mdash; Obtain warrant, arrest later</td>
+  </tr>
+  <tr>
+    <td><strong>2</strong></td>
+    <td>Is the pursuit creating a greater danger to the public than the suspect's escape would?</td>
+    <td><strong>TERMINATE</strong> &mdash; Public safety outweighs apprehension</td>
+    <td>Proceed to Step 3</td>
+  </tr>
+  <tr>
+    <td><strong>3</strong></td>
+    <td>Do any mandatory termination conditions exist? (Section 11.1)</td>
+    <td><strong>TERMINATE</strong> &mdash; Mandatory criteria are absolute</td>
+    <td>Proceed to Step 4</td>
+  </tr>
+  <tr>
+    <td><strong>4</strong></td>
+    <td>Has a supervisor approved continuation?</td>
+    <td>Proceed to Step 5</td>
+    <td><strong>TERMINATE</strong> &mdash; No pursuit without supervisor oversight</td>
+  </tr>
+  <tr>
+    <td><strong>5</strong></td>
+    <td>Is a tactical intervention available that could safely end the pursuit?</td>
+    <td>Request authorization and execute if approved</td>
+    <td>Proceed to Step 6</td>
+  </tr>
+  <tr>
+    <td><strong>6</strong></td>
+    <td>Has the pursuit exceeded 10 minutes without resolution?</td>
+    <td><strong>TERMINATE</strong> unless Watch Commander authorizes continuation</td>
+    <td>Continue pursuit, re-evaluate every 60 seconds from Step 1</td>
+  </tr>
+</table>
+
+<h2>11.3 Termination Procedures</h2>
+<p>When a pursuit is terminated (whether voluntarily, by mandatory criteria, or by supervisor order):</p>
+<ol>
+  <li>The terminating officer announces on the radio: <code>"[Unit], 10-22, pursuit terminated at [location]."</code></li>
+  <li>Immediately deactivate emergency siren. Lights may remain on briefly for safety while slowing.</li>
+  <li>Reduce speed to the posted speed limit immediately.</li>
+  <li>Do NOT continue following the suspect vehicle's route, even at normal speeds, for at least 60 seconds. Pull to the side of the road if safe to do so.</li>
+  <li>All other units involved in the pursuit must also terminate immediately upon hearing the termination order.</li>
+  <li>Dispatch logs the termination with timestamp, location, and reason.</li>
+  <li>If Air-1 is overhead, they may continue to passively observe the suspect vehicle's direction of travel. Air-1 tracking is NOT considered a pursuit and does not require termination.</li>
+  <li>Officers shall resume normal patrol duties or respond to any collisions or injuries that occurred during the pursuit.</li>
+</ol>
+
+<div class="callout callout-warning">
+  <strong>WARNING - "SHADOW" PURSUITS PROHIBITED:</strong> After termination, officers may NOT follow the suspect at normal speeds hoping to re-initiate the pursuit. This is known as a "shadow" or "creeping" pursuit and is a violation of this policy. Once terminated, the pursuit is over. The suspect's last known direction and location are provided to dispatch for investigative follow-up.
+</div>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 12: POST-PURSUIT PROCEDURES -->
+<!-- ============================================================ -->
+<h1 id="post-pursuit">12. Post-Pursuit Procedures</h1>
+
+<h2>12.1 Suspect Apprehension</h2>
+<p>If the pursuit ends with the suspect vehicle stopping (whether voluntarily, by mechanical failure, collision, or tactical intervention):</p>
+<ol>
+  <li>Transition immediately to a <strong>felony / high-risk vehicle stop</strong> posture.</li>
+  <li>Maintain distance from the suspect vehicle. Do not approach until the scene is secured.</li>
+  <li>Use PA system to issue clear, loud verbal commands to the suspect(s): hands out the window, keys out of ignition, exit the vehicle one at a time, walk backward toward officers.</li>
+  <li>Cover officers maintain lethal and less-lethal cover on the suspect vehicle at all times.</li>
+  <li>Once suspects are out of the vehicle and in custody, approach the vehicle to clear for additional occupants.</li>
+  <li>Handcuff all suspects. Conduct a thorough search incident to arrest.</li>
+  <li>Do NOT conduct any interview or interrogation at the pursuit termination point. Transport to station for processing.</li>
+</ol>
+
+<h2>12.2 Foot Pursuit Following Vehicle Pursuit</h2>
+<p>If suspect(s) bail from the vehicle and flee on foot:</p>
+<ul>
+  <li>The primary unit should remain with the suspect vehicle to preserve evidence and prevent others from taking the vehicle.</li>
+  <li>The secondary unit and additional units may initiate a foot pursuit following standard foot pursuit guidelines.</li>
+  <li>Establish a perimeter quickly. Use Air-1 (if available) and K-9 units to track the suspect.</li>
+  <li>Officers engaged in foot pursuit must broadcast their location, direction, and suspect description.</li>
+  <li>Do NOT separate from your partner during a foot pursuit. Minimum two-officer teams.</li>
+  <li>If the suspect enters a structure, do NOT enter alone. Establish a perimeter and wait for sufficient units and a supervisor.</li>
+</ul>
+
+<h2>12.3 Vehicle Recovery and Evidence</h2>
+<ul>
+  <li>The suspect vehicle is evidence and must be preserved. Do not allow unauthorized persons to approach or access the vehicle.</li>
+  <li>Request a tow for the suspect vehicle. It shall be impounded as evidence.</li>
+  <li>Conduct an inventory search of the vehicle per department impound procedures.</li>
+  <li>Photograph the vehicle's exterior and interior before tow.</li>
+  <li>Document any damage to the suspect vehicle, both pre-existing and from the pursuit.</li>
+  <li>If weapons, contraband, or other evidence is visible, secure the scene and request a search warrant before disturbing the evidence.</li>
+</ul>
+
+<h2>12.4 Use of Force Reporting</h2>
+<p>If any force was used during the pursuit (PIT maneuver, TDD deployment, boxing, ramming, pointing weapons, physical force during apprehension):</p>
+<ul>
+  <li>A Use of Force report must be completed by every officer who used force.</li>
+  <li>The supervisor must review the Use of Force report within the same shift.</li>
+  <li>If the PIT maneuver was classified as deadly force (above 45 mph), the department's Officer-Involved Shooting / Deadly Force investigation protocol applies.</li>
+  <li>All dashcam, bodycam, Air-1 camera, and surveillance footage must be preserved and tagged as evidence.</li>
+</ul>
+
+<h2>12.5 Medical Assessment</h2>
+<ul>
+  <li>EMS must be requested to the termination location for any pursuit that involved a collision, tactical intervention, or suspect complaint of injury.</li>
+  <li>All suspects must be offered a medical assessment after apprehension, regardless of whether they appear injured.</li>
+  <li>If a suspect is injured, medical treatment takes priority over processing. Transport to hospital under guard.</li>
+  <li>Pursuing officers involved in a collision must also be medically evaluated before returning to duty.</li>
+  <li>If any civilian was injured as a result of the pursuit, the supervisor must ensure EMS response, document the injury, and notify the Watch Commander immediately.</li>
+</ul>
+
+<h2>12.6 Civilian Collision Response</h2>
+<p>If a civilian vehicle or pedestrian is struck during the pursuit (by either the suspect or pursuing officers):</p>
+<ol>
+  <li>The nearest non-essential pursuit unit must immediately stop and render aid.</li>
+  <li>Request EMS and Fire to the collision location.</li>
+  <li>Secure the collision scene as a secondary crime scene.</li>
+  <li>A traffic collision investigation must be conducted per department policy.</li>
+  <li>Obtain statements from civilian witnesses.</li>
+  <li>Notify the Watch Commander and the department's Risk Management / Legal Liaison.</li>
+  <li>Provide the involved civilian(s) with the department's complaint/claims information.</li>
+</ol>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 13: PURSUIT REVIEW & ACCOUNTABILITY -->
+<!-- ============================================================ -->
+<h1 id="review">13. Pursuit Review &amp; Accountability</h1>
+
+<h2>13.1 Mandatory Supervisor Review</h2>
+<p>Every vehicle pursuit, regardless of outcome, must be reviewed by the on-duty supervisor within <strong>24 hours</strong> of the pursuit's conclusion. The review must include:</p>
+
+<ul>
+  <li>Review of all radio communications (audio recordings).</li>
+  <li>Review of all available video (dashcam, bodycam, Air-1, traffic cameras, civilian footage).</li>
+  <li>Review of the pursuit log maintained by dispatch.</li>
+  <li>Interview with the primary unit officer.</li>
+  <li>Assessment of whether the pursuit initiation was justified under Section 3.</li>
+  <li>Assessment of whether pursuit driving complied with Section 7.</li>
+  <li>Assessment of whether tactical interventions were properly authorized and executed per Section 8.</li>
+  <li>Assessment of whether termination criteria were appropriately applied per Section 11.</li>
+  <li>Identification of any policy violations.</li>
+  <li>Identification of any training deficiencies.</li>
+</ul>
+
+<h2>13.2 Pursuit Critique Form</h2>
+<p>The supervisor must complete a <strong>Pursuit Critique Form</strong> documenting the following:</p>
+
+<table>
+  <tr>
+    <th>Section</th>
+    <th>Required Information</th>
+  </tr>
+  <tr>
+    <td><strong>Pursuit Identification</strong></td>
+    <td>Date, time, case number, primary unit, secondary unit, supervisor, all involved units, dispatch operator</td>
+  </tr>
+  <tr>
+    <td><strong>Initiation Details</strong></td>
+    <td>Initiating officer, reason/offense, location of initiation, suspect vehicle description, number of occupants, whether suspect was identified</td>
+  </tr>
+  <tr>
+    <td><strong>Pursuit Details</strong></td>
+    <td>Route traveled (major streets/intersections), estimated top speed, duration, traffic/weather conditions, number of units involved at peak, jurisdictions traversed</td>
+  </tr>
+  <tr>
+    <td><strong>Tactical Interventions</strong></td>
+    <td>Type of intervention(s) attempted, authorization level obtained, outcome, any collateral damage</td>
+  </tr>
+  <tr>
+    <td><strong>Termination Details</strong></td>
+    <td>How the pursuit ended (stop, collision, termination, suspect escape), location of termination, who ordered termination (if applicable), reason for termination</td>
+  </tr>
+  <tr>
+    <td><strong>Outcome</strong></td>
+    <td>Suspect arrested (Y/N), charges filed, suspect injuries, officer injuries, civilian injuries, property damage (officer vehicles, suspect vehicle, civilian vehicles, public/private property)</td>
+  </tr>
+  <tr>
+    <td><strong>Policy Compliance</strong></td>
+    <td>Were initiation criteria met? Were communication protocols followed? Were driving standards maintained? Were tactical interventions properly authorized? Were termination criteria appropriately applied?</td>
+  </tr>
+  <tr>
+    <td><strong>Supervisor Assessment</strong></td>
+    <td>Overall assessment (justified/unjustified), commendations, policy violations noted, training needs identified, referral to Internal Affairs (if applicable)</td>
+  </tr>
+</table>
+
+<h2>13.3 Chain of Review</h2>
+<p>The completed Pursuit Critique Form follows this chain of review:</p>
+<ol>
+  <li><strong>Shift Supervisor</strong> (Sergeant) &mdash; completes the initial review within 24 hours.</li>
+  <li><strong>Division Commander</strong> (Lieutenant) &mdash; reviews and adds comments within 72 hours.</li>
+  <li><strong>Bureau Commander</strong> (Captain) &mdash; reviews pursuits involving collisions, injuries, or policy concerns within 7 days.</li>
+  <li><strong>Department Head</strong> (Chief / Sheriff / Colonel) &mdash; reviews all pursuits resulting in serious injury, death, significant property damage, or policy violations within 14 days.</li>
+  <li><strong>Internal Affairs</strong> &mdash; reviews any pursuit referred by the chain of command, any pursuit resulting in civilian death or serious injury, any pursuit with a sustained policy violation finding.</li>
+</ol>
+
+<h2>13.4 Internal Affairs Referral Criteria</h2>
+<p>A pursuit must be referred to Internal Affairs for investigation when any of the following occur:</p>
+<ul>
+  <li>A civilian is killed or suffers serious bodily injury as a direct result of the pursuit.</li>
+  <li>An officer is killed or suffers serious bodily injury during the pursuit.</li>
+  <li>The pursuit was initiated without meeting the authorization criteria in Section 3.</li>
+  <li>The officer continued a pursuit after a mandatory termination condition was met (Section 11.1).</li>
+  <li>The officer disobeyed a direct supervisor order to terminate.</li>
+  <li>A PIT maneuver was executed without authorization or above the authorized speed threshold.</li>
+  <li>The officer engaged in prohibited driving conduct (Section 7.5).</li>
+  <li>Evidence suggests the officer falsified or materially omitted facts in the pursuit report.</li>
+  <li>A civilian or suspect complaint is filed regarding the pursuit.</li>
+</ul>
+
+<h2>13.5 Accountability Standards</h2>
+
+<table>
+  <tr>
+    <th>Violation Type</th>
+    <th>First Offense</th>
+    <th>Second Offense</th>
+    <th>Third Offense</th>
+  </tr>
+  <tr>
+    <td>Minor policy violation (documentation error, late report)</td>
+    <td>Written counseling + remedial training</td>
+    <td>Written reprimand</td>
+    <td>1-3 day suspension</td>
+  </tr>
+  <tr>
+    <td>Moderate violation (excessive units, poor communication, failure to request supervisor)</td>
+    <td>Written reprimand + mandatory EVOC refresher</td>
+    <td>3-5 day suspension + EVOC recertification</td>
+    <td>10+ day suspension + fitness for duty evaluation</td>
+  </tr>
+  <tr>
+    <td>Serious violation (unauthorized pursuit initiation, ignored termination order, unauthorized PIT)</td>
+    <td>5-10 day suspension + full IA investigation</td>
+    <td>Termination recommendation</td>
+    <td>N/A (termination at second offense)</td>
+  </tr>
+  <tr>
+    <td>Critical violation (pursuit resulting in civilian death due to policy violation, reckless driving causing serious injury)</td>
+    <td>Immediate suspension + IA investigation + criminal referral to DA</td>
+    <td>N/A</td>
+    <td>N/A</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 14: CIVILIAN SAFETY CONSIDERATIONS -->
+<!-- ============================================================ -->
+<h1 id="civilian-safety">14. Civilian Safety Considerations</h1>
+
+<h2>14.1 Guiding Principle</h2>
+<p>The safety of uninvolved civilians is the <strong>single most important factor</strong> in every pursuit decision. No arrest is worth the life of an innocent bystander. Officers must internalize this principle and apply it at every moment during a pursuit.</p>
+
+<blockquote>"We can always find the suspect later. We cannot undo a civilian death."</blockquote>
+
+<h2>14.2 Populated Areas</h2>
+<p>When a pursuit enters or approaches a populated area:</p>
+<ul>
+  <li><strong>Downtown / commercial districts:</strong> High pedestrian density, delivery vehicles, double-parked cars, jaywalkers. Pursuit should be terminated unless the suspect is an active threat to life. Maximum speed 50 mph.</li>
+  <li><strong>Residential neighborhoods:</strong> Children playing, joggers, cyclists, pets, vehicles backing out of driveways. Reduce speed. Terminate if suspect exceeds 80 mph in residential.</li>
+  <li><strong>Shopping centers / parking lots:</strong> Extreme pedestrian risk, shopping carts, families with children. Pursuit through a parking lot is strongly discouraged. Establish a perimeter and wait for the suspect to return to a roadway.</li>
+  <li><strong>Parks and recreational areas:</strong> Runners, cyclists, families, off-leash dogs, children on playgrounds. Terminate if the pursuit route passes through or adjacent to an active park.</li>
+</ul>
+
+<h2>14.3 School Zone Protocol</h2>
+
+<div class="callout callout-critical">
+  <strong>ABSOLUTE PROHIBITION - SCHOOL ZONES:</strong> No pursuit may be initiated or continued through a designated school zone during active school hours (0700-0900, 1400-1600 on school days). This prohibition has NO exceptions. If a pursuit approaches a school zone during these hours, the pursuit MUST be terminated before entering the zone. Violation of this prohibition is a <strong>Critical Violation</strong> (see Section 13.5) and will result in immediate suspension and Internal Affairs investigation.
+</div>
+
+<ul>
+  <li>During non-school hours, pursuits through school zones are permitted at reduced speed (40 mph max) with heightened awareness of after-school activities, sports practices, and school events.</li>
+  <li>Officers must know the locations of all schools in their patrol area and the designated school zone boundaries.</li>
+  <li>Dispatch shall maintain a list of school zone locations and alert pursuing units if their route is approaching a school zone during active hours.</li>
+</ul>
+
+<h2>14.4 Weather Considerations</h2>
+
+<table>
+  <tr>
+    <th>Weather Condition</th>
+    <th>Impact on Pursuit</th>
+    <th>Action Required</th>
+  </tr>
+  <tr>
+    <td><strong>Light rain</strong></td>
+    <td>Reduced traction, increased stopping distance, reduced visibility</td>
+    <td>Reduce speed 20%; increase following distance; heightened caution at intersections</td>
+  </tr>
+  <tr>
+    <td><strong>Heavy rain</strong></td>
+    <td>Hydroplaning risk, severely reduced visibility, road flooding possible</td>
+    <td>Strongly consider termination; continue only for imminent threat to life with supervisor authorization</td>
+  </tr>
+  <tr>
+    <td><strong>Fog (visibility under 200m)</strong></td>
+    <td>Cannot see suspect vehicle or hazards at pursuit speed</td>
+    <td><strong>MANDATORY TERMINATION</strong> if visibility drops below 100 meters</td>
+  </tr>
+  <tr>
+    <td><strong>Ice / snow</strong></td>
+    <td>Loss of vehicle control nearly certain at pursuit speeds</td>
+    <td><strong>MANDATORY TERMINATION</strong> &mdash; No pursuit on icy/snowy roads</td>
+  </tr>
+  <tr>
+    <td><strong>High wind (50+ mph)</strong></td>
+    <td>Vehicle stability compromised, debris in roadway</td>
+    <td>Reduce speed; terminate if vehicle handling is compromised</td>
+  </tr>
+  <tr>
+    <td><strong>Nighttime</strong></td>
+    <td>Reduced visibility, harder to see pedestrians and obstacles</td>
+    <td>Reduce maximum pursuit speed by 15%; heightened intersection clearing; request Air-1 with FLIR</td>
+  </tr>
+</table>
+
+<h2>14.5 Time-of-Day Considerations</h2>
+<ul>
+  <li><strong>Morning rush (0700-0900):</strong> Heavy commuter traffic, school buses, pedestrians at transit stops. Pursuit in urban areas during morning rush is strongly discouraged.</li>
+  <li><strong>Midday (1100-1300):</strong> Lunch traffic, delivery vehicles, construction zones active. Moderate risk.</li>
+  <li><strong>Afternoon rush (1500-1800):</strong> Heaviest traffic of the day. School dismissal (1400-1600) adds additional risk. Pursuit in urban areas during afternoon rush requires Watch Commander approval.</li>
+  <li><strong>Late night (2200-0500):</strong> Reduced traffic but increased risk of impaired drivers on the road, reduced visibility, and fatigue-related impairment for officers. Pursuit speed limits still apply.</li>
+  <li><strong>Bar close (0200-0300):</strong> Intoxicated pedestrians, impaired drivers, crowded entertainment districts. Terminate pursuits through entertainment/bar districts during these hours.</li>
+</ul>
+
+<h2>14.6 Traffic Density Reassessment</h2>
+<p>Traffic density is not static. Officers must reassess continuously:</p>
+<ul>
+  <li>A pursuit that begins on an empty highway may enter a congested urban area within minutes.</li>
+  <li>A pursuit during light traffic may encounter sudden congestion at a highway merge, accident scene, or construction zone.</li>
+  <li>Events (concerts, sports games, festivals) create temporary extreme density that may not be apparent until the pursuit is in the middle of it.</li>
+  <li>Dispatch should proactively alert pursuing units to known congestion points, events, and construction zones in the pursuit path.</li>
+</ul>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 15: TRAINING REQUIREMENTS -->
+<!-- ============================================================ -->
+<h1 id="training">15. Training Requirements</h1>
+
+<h2>15.1 Emergency Vehicle Operations Course (EVOC)</h2>
+<p>All sworn officers authorized to operate a department vehicle must complete the department-approved Emergency Vehicle Operations Course (EVOC). This training is mandatory before an officer may participate in any vehicle pursuit.</p>
+
+<h3>15.1.1 Initial EVOC Certification</h3>
+<ul>
+  <li>Completed during academy or field training program.</li>
+  <li>Minimum 40 hours of instruction including classroom and practical driving exercises.</li>
+  <li>Covers: emergency vehicle dynamics, braking techniques, evasive maneuvers, pursuit driving tactics, skid control, intersection navigation, Code 3 response, night driving, wet/adverse conditions driving.</li>
+  <li>Written examination with minimum 80% passing score.</li>
+  <li>Practical driving examination evaluated by certified EVOC instructor.</li>
+  <li>Officers who fail must remediate and retest before patrol assignment.</li>
+</ul>
+
+<h3>15.1.2 Annual EVOC Recertification</h3>
+<ul>
+  <li>All officers must complete a minimum of <strong>8 hours</strong> of EVOC refresher training annually.</li>
+  <li>Annual training must include at least 4 hours of practical driving exercises.</li>
+  <li>Officers who do not complete annual recertification by their anniversary date are <strong>suspended from pursuit participation</strong> until recertification is completed.</li>
+  <li>Recertification records are maintained by the Training Division and are subject to audit.</li>
+</ul>
+
+<h2>15.2 Pursuit Policy Training</h2>
+<ul>
+  <li>All officers must receive a minimum of <strong>4 hours</strong> of pursuit policy training annually.</li>
+  <li>Training must cover: current pursuit policy (this document), recent case law updates, department pursuit statistics and trends, scenario-based decision-making exercises.</li>
+  <li>Officers must sign an acknowledgment that they have read and understand the current pursuit policy.</li>
+  <li>New officers must complete pursuit policy training within 30 days of assignment to patrol.</li>
+</ul>
+
+<h2>15.3 PIT Maneuver Certification</h2>
+<ul>
+  <li>Only officers who have completed a department-approved PIT certification course may execute a PIT maneuver.</li>
+  <li>PIT certification requires: minimum 8 hours of classroom and practical training, demonstrated proficiency in controlled environment, successful execution at various speeds (15-35 mph) on a closed course.</li>
+  <li>PIT certification must be renewed annually with a minimum 4-hour refresher course including practical exercises.</li>
+  <li>Officers whose PIT certification has lapsed may NOT execute PIT maneuvers under any circumstances.</li>
+</ul>
+
+<h2>15.4 Tire Deflation Device Training</h2>
+<ul>
+  <li>All officers must complete a minimum of <strong>2 hours</strong> of TDD deployment training before they may handle or deploy tire deflation devices.</li>
+  <li>Training must include: device assembly and operation, safe deployment locations, deployment technique, retrieval after use, safety considerations (deploying officer's position, civilian traffic management, prohibited deployment locations).</li>
+  <li>Annual refresher of 1 hour required.</li>
+</ul>
+
+<h2>15.5 Pursuit Simulation Training</h2>
+<ul>
+  <li>The department should provide pursuit simulation training using driving simulators where available.</li>
+  <li>Simulation scenarios must include: initiation decision-making, pursuit communication exercises, termination decision points, tactical intervention decision-making, inter-jurisdictional handoff scenarios, Air-1 coordination scenarios.</li>
+  <li>Simulation training supplements but does not replace practical EVOC training.</li>
+  <li>Recommended frequency: minimum 2 simulation sessions per year per officer.</li>
+</ul>
+
+<h2>15.6 Supervisor Pursuit Management Training</h2>
+<p>All supervisors (Sergeant and above) must complete additional training in pursuit management:</p>
+<ul>
+  <li>Minimum <strong>8 hours</strong> of pursuit supervision training upon promotion to Sergeant.</li>
+  <li>Training covers: real-time risk assessment, authorization decision-making, multi-unit coordination, inter-agency coordination, termination authority and responsibility, post-pursuit review procedures, accountability standards.</li>
+  <li>Annual refresher of 4 hours required.</li>
+  <li>Supervisors who do not complete this training may not authorize or oversee pursuits.</li>
+</ul>
+
+<h2>15.7 Training Documentation</h2>
+<table>
+  <tr>
+    <th>Training Component</th>
+    <th>Initial Requirement</th>
+    <th>Annual Recertification</th>
+    <th>Consequence of Lapse</th>
+  </tr>
+  <tr>
+    <td>EVOC</td>
+    <td>40 hours (academy)</td>
+    <td>8 hours</td>
+    <td>Suspended from pursuit participation</td>
+  </tr>
+  <tr>
+    <td>Pursuit Policy</td>
+    <td>4 hours (within 30 days of assignment)</td>
+    <td>4 hours</td>
+    <td>Written reprimand; remedial training required</td>
+  </tr>
+  <tr>
+    <td>PIT Certification</td>
+    <td>8 hours</td>
+    <td>4 hours</td>
+    <td>Prohibited from executing PIT maneuvers</td>
+  </tr>
+  <tr>
+    <td>TDD Deployment</td>
+    <td>2 hours</td>
+    <td>1 hour</td>
+    <td>Prohibited from deploying TDD devices</td>
+  </tr>
+  <tr>
+    <td>Pursuit Simulation</td>
+    <td>Recommended</td>
+    <td>2 sessions recommended</td>
+    <td>No formal penalty; tracked in training record</td>
+  </tr>
+  <tr>
+    <td>Supervisor Pursuit Management</td>
+    <td>8 hours (upon promotion)</td>
+    <td>4 hours</td>
+    <td>Prohibited from supervising pursuits</td>
+  </tr>
+</table>
+
+<hr class="section-divider">
+
+
+<!-- ============================================================ -->
+<!-- SECTION 16: REVISION HISTORY & AMENDMENTS -->
+<!-- ============================================================ -->
+<h1 id="revisions">16. Revision History &amp; Amendments</h1>
+
+<h2>16.1 Document Control</h2>
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Date</th>
+    <th>Author / Authority</th>
+    <th>Description of Changes</th>
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td>February 2026</td>
+    <td>Chief of Police / Sheriff / Colonel (Joint LEO Command)</td>
+    <td>Initial release. Comprehensive vehicle pursuit policy establishing initiation criteria, roles, communication protocol, driving standards, tactical intervention matrix, air support procedures, inter-jurisdictional coordination, termination criteria, post-pursuit procedures, review and accountability framework, civilian safety protocols, and training requirements.</td>
+  </tr>
+</table>
+
+<h2>16.2 Amendment Procedures</h2>
+<p>This policy may be amended through the following process:</p>
+<ol>
+  <li><strong>Proposal:</strong> Any sworn member may submit a written proposal for policy amendment to their chain of command. The proposal must include: the section(s) to be amended, the proposed new language, the rationale for the change, and any supporting documentation (case law, incident reviews, best practice research).</li>
+  <li><strong>Review:</strong> The Training Division and Legal Bureau review the proposed amendment for operational feasibility and legal compliance.</li>
+  <li><strong>Approval:</strong> Amendments must be approved by the department head (Chief of Police, Sheriff, or Colonel) or their designee.</li>
+  <li><strong>Publication:</strong> Approved amendments are published in a General Order with an effective date. All personnel are notified and must acknowledge receipt.</li>
+  <li><strong>Training:</strong> Significant amendments require roll-call training or in-service training before the effective date.</li>
+</ol>
+
+<h2>16.3 Annual Review Requirement</h2>
+<p>This policy must be reviewed in its entirety at least once per calendar year by the department's Policy Review Board. The annual review must consider:</p>
+<ul>
+  <li>All pursuits conducted during the review period (statistics, outcomes, policy compliance).</li>
+  <li>Changes in state and local law affecting vehicle pursuits.</li>
+  <li>Relevant court decisions and case law.</li>
+  <li>National best practices and standards (IACP, CALEA, POST).</li>
+  <li>Feedback from officers, supervisors, and command staff.</li>
+  <li>Community input and concerns.</li>
+  <li>Technological advances (GPS tracking, automated license plate readers, drone surveillance) that may provide alternatives to traditional pursuits.</li>
+</ul>
+
+<h2>16.4 Acknowledgment</h2>
+<p>All sworn personnel must sign an acknowledgment form confirming that they have:</p>
+<ul>
+  <li>Received a copy of or access to this Vehicle Pursuit Policy (Version 1.0).</li>
+  <li>Read and understand the policy in its entirety.</li>
+  <li>Had the opportunity to ask questions and receive clarification.</li>
+  <li>Agree to comply with all provisions of this policy.</li>
+  <li>Understand that violation of this policy may result in disciplinary action, up to and including termination and criminal prosecution.</li>
+</ul>
+
+<p>The signed acknowledgment form is maintained in the officer's personnel file and must be renewed annually or upon any significant policy amendment.</p>
+
+<div class="callout callout-info">
+  <strong>DISTRIBUTION:</strong> This document is classified RESTRICTED - LAW ENFORCEMENT ONLY and is distributed to all sworn personnel of LSPD, BCSO, and SASP. Unauthorized distribution to non-law-enforcement personnel is prohibited. Questions regarding this policy should be directed to the Training Division or the officer's immediate supervisor.
+</div>
+
+</div><!-- end .content -->
+
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">
+  <div class="org">PROZILLI ENTERTAINMENT</div>
+  ZO SYNDICATE RP &mdash; Vehicle Pursuit Policy v1.0<br>
+  Classification: RESTRICTED &mdash; LAW ENFORCEMENT ONLY<br>
+  Effective: February 2026 &mdash; Authority: Joint LEO Command<br>
+  <br>
+  <a href="/zo/sop/lspd.html">LSPD SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/bcso.html">BCSO SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/sasp.html">SASP SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/ems.html">EMS SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/doj.html">DOJ SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/criminal-code.html">Criminal Code</a>
+  <br><br>
+  &copy; 2026 Prozilli Entertainment. All rights reserved.
+</div>
+
+</body>
+</html>

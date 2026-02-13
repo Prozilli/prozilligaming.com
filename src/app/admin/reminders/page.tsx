@@ -127,7 +127,7 @@ export default function RemindersPage() {
       </div>
 
       {/* Stream Reminders */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-sm font-semibold text-white">Stream Link Reminders</h3>
@@ -146,7 +146,7 @@ export default function RemindersPage() {
               })
             }
             className={`relative h-6 w-11 rounded-full transition-colors ${
-              config.streamReminders.enabled ? "bg-brand-red" : "bg-white/10"
+              config.streamReminders.enabled ? "bg-red" : "bg-raised"
             }`}
           >
             <span
@@ -176,7 +176,7 @@ export default function RemindersPage() {
                   },
                 })
               }
-              className="w-32 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+              className="w-32 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
             />
             <p className="mt-2 text-xs text-gray-500">
               Stream links will be posted every {config.streamReminders.intervalMinutes} minutes during a live stream.
@@ -186,7 +186,7 @@ export default function RemindersPage() {
       </div>
 
       {/* Scheduled Reminders */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-sm font-semibold text-white">Scheduled Reminders</h3>
@@ -196,7 +196,7 @@ export default function RemindersPage() {
           </div>
           <button
             onClick={addReminder}
-            className="flex items-center gap-1.5 rounded-lg bg-brand-red/10 px-3 py-1.5 text-xs font-medium text-brand-red transition-colors hover:bg-brand-red/20"
+            className="flex items-center gap-1.5 rounded-lg bg-red/10 px-3 py-1.5 text-xs font-medium text-red transition-colors hover:bg-red/20"
           >
             <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -206,14 +206,14 @@ export default function RemindersPage() {
         </div>
 
         {config.scheduled.length === 0 ? (
-          <div className="rounded-lg border border-dashed border-white/10 p-8 text-center">
+          <div className="rounded-lg border border-dashed border-[var(--color-border)] p-8 text-center">
             <svg className="mx-auto h-8 w-8 text-gray-600" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
             </svg>
             <p className="mt-2 text-sm text-gray-500">No scheduled reminders yet</p>
             <button
               onClick={addReminder}
-              className="mt-3 text-xs font-medium text-brand-red hover:text-brand-red/80 transition-colors"
+              className="mt-3 text-xs font-medium text-red hover:text-red/80 transition-colors"
             >
               Add your first reminder
             </button>
@@ -223,7 +223,7 @@ export default function RemindersPage() {
             {config.scheduled.map((reminder, index) => (
               <div
                 key={index}
-                className="rounded-lg border border-white/5 bg-white/[0.02] p-4 space-y-4"
+                className="rounded-lg border border-[var(--color-border)] bg-white/[0.02] p-4 space-y-4"
               >
                 {/* Reminder Header */}
                 <div className="flex items-center justify-between">
@@ -234,7 +234,7 @@ export default function RemindersPage() {
                     <button
                       onClick={() => updateReminder(index, { enabled: !reminder.enabled })}
                       className={`relative h-5 w-9 rounded-full transition-colors ${
-                        reminder.enabled ? "bg-brand-red" : "bg-white/10"
+                        reminder.enabled ? "bg-red" : "bg-raised"
                       }`}
                     >
                       <span
@@ -264,7 +264,7 @@ export default function RemindersPage() {
                     onChange={(e) => updateReminder(index, { message: e.target.value })}
                     placeholder="Enter the reminder message..."
                     rows={2}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
                   />
                 </div>
 
@@ -280,8 +280,8 @@ export default function RemindersPage() {
                         onClick={() => toggleDay(index, day)}
                         className={`rounded-md px-3 py-1.5 text-xs font-medium transition-colors ${
                           reminder.days.includes(day)
-                            ? "bg-brand-red text-white"
-                            : "bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white"
+                            ? "bg-red text-white"
+                            : "bg-surface text-gray-400 hover:bg-raised hover:text-white"
                         }`}
                       >
                         {day}
@@ -299,7 +299,7 @@ export default function RemindersPage() {
                     type="time"
                     value={reminder.time}
                     onChange={(e) => updateReminder(index, { time: e.target.value })}
-                    className="w-36 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-36 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   />
                 </div>
 
@@ -315,7 +315,7 @@ export default function RemindersPage() {
                           type="checkbox"
                           checked={reminder.platforms.includes(platform.id)}
                           onChange={() => togglePlatform(index, platform.id)}
-                          className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-red focus:ring-brand-red"
+                          className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red"
                         />
                         <span className="text-xs text-gray-300">{platform.label}</span>
                       </label>
@@ -339,7 +339,7 @@ export default function RemindersPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

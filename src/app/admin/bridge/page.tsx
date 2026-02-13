@@ -121,12 +121,12 @@ export default function BridgePage() {
       </div>
 
       {/* Bridge Status */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
             <div
               className={`flex h-12 w-12 items-center justify-center rounded-xl ${
-                bridgeEnabled ? "bg-green-500/20" : "bg-white/5"
+                bridgeEnabled ? "bg-green-500/20" : "bg-surface"
               }`}
             >
               <svg
@@ -166,7 +166,7 @@ export default function BridgePage() {
           <button
             onClick={() => setBridgeEnabled(!bridgeEnabled)}
             className={`relative h-7 w-14 rounded-full transition-colors ${
-              bridgeEnabled ? "bg-green-500" : "bg-white/10"
+              bridgeEnabled ? "bg-green-500" : "bg-raised"
             }`}
           >
             <span
@@ -179,7 +179,7 @@ export default function BridgePage() {
       </div>
 
       {/* Platform Toggles */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
         <h3 className="mb-4 text-sm font-semibold text-white">
           Platform Connections
         </h3>
@@ -189,8 +189,8 @@ export default function BridgePage() {
               key={platform.id}
               className={`flex items-center justify-between rounded-lg border p-4 transition-colors ${
                 platform.enabled
-                  ? "border-white/10 bg-white/5"
-                  : "border-white/5 bg-white/[0.02]"
+                  ? "border-[var(--color-border)] bg-surface"
+                  : "border-[var(--color-border)] bg-white/[0.02]"
               }`}
             >
               <div className="flex items-center gap-3">
@@ -229,7 +229,7 @@ export default function BridgePage() {
               <button
                 onClick={() => togglePlatform(platform.id)}
                 className={`relative h-6 w-11 rounded-full transition-colors ${
-                  platform.enabled ? "bg-green-500" : "bg-white/10"
+                  platform.enabled ? "bg-green-500" : "bg-raised"
                 }`}
               >
                 <span
@@ -244,7 +244,7 @@ export default function BridgePage() {
       </div>
 
       {/* Settings */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-6">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-6">
         <h3 className="mb-4 text-sm font-semibold text-white">Settings</h3>
         <div className="space-y-5">
           {/* Message Format */}
@@ -257,7 +257,7 @@ export default function BridgePage() {
               onChange={(e) =>
                 setFormat(e.target.value as "default" | "compact" | "full")
               }
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
             >
               {FORMAT_OPTIONS.map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -272,7 +272,7 @@ export default function BridgePage() {
             <label className="mb-2 block text-xs font-medium text-gray-400">
               Preview
             </label>
-            <div className="rounded-lg border border-white/5 bg-[#0d1117] p-4">
+            <div className="rounded-lg border border-[var(--color-border)] bg-base p-4">
               <div className="space-y-2">
                 {platforms
                   .filter((p) => p.enabled)
@@ -315,7 +315,7 @@ export default function BridgePage() {
           </div>
 
           {/* Exclude Bots */}
-          <div className="flex items-center justify-between rounded-lg border border-white/5 bg-white/[0.02] p-4">
+          <div className="flex items-center justify-between rounded-lg border border-[var(--color-border)] bg-white/[0.02] p-4">
             <div>
               <p className="text-sm font-medium text-white">Exclude Bots</p>
               <p className="text-xs text-gray-500">
@@ -325,7 +325,7 @@ export default function BridgePage() {
             <button
               onClick={() => setExcludeBots(!excludeBots)}
               className={`relative h-6 w-11 rounded-full transition-colors ${
-                excludeBots ? "bg-green-500" : "bg-white/10"
+                excludeBots ? "bg-green-500" : "bg-raised"
               }`}
             >
               <span
@@ -349,7 +349,7 @@ export default function BridgePage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

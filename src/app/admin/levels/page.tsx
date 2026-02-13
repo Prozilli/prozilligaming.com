@@ -147,7 +147,7 @@ export default function LevelsPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => updateConfig("enabled", !config.enabled)}
-            className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-green-500" : "bg-white/10"}`}
+            className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-green-500" : "bg-raised"}`}
           >
             <span className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${config.enabled ? "left-6" : "left-1"}`} />
           </button>
@@ -156,7 +156,7 @@ export default function LevelsPage() {
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 rounded-lg bg-white/5 p-1">
+      <div className="flex gap-1 rounded-lg bg-surface p-1">
         {[
           { id: "settings", label: "Settings" },
           { id: "rewards", label: "Role Rewards" },
@@ -165,7 +165,7 @@ export default function LevelsPage() {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id as TabType)}
-            className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${activeTab === tab.id ? "bg-brand-red text-white" : "text-gray-400 hover:text-white hover:bg-white/5"}`}
+            className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${activeTab === tab.id ? "bg-red text-white" : "text-gray-400 hover:text-white hover:bg-surface"}`}
           >
             {tab.label}
           </button>
@@ -176,7 +176,7 @@ export default function LevelsPage() {
       {activeTab === "settings" && (
         <div className="space-y-6">
           {/* Rank Card Preview */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <div className="flex items-center gap-2 mb-4">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="text-gray-400">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.64 0 8.577 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.64 0-8.577-3.007-9.963-7.178z" />
@@ -218,7 +218,7 @@ export default function LevelsPage() {
                         <h4 className="text-lg font-bold text-white truncate">
                           {leaderboard.length > 0 ? leaderboard[0].username : "ProzilliGaming"}
                         </h4>
-                        <span className="flex-shrink-0 rounded-md bg-brand-red/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-red">
+                        <span className="flex-shrink-0 rounded-md bg-red/20 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-red">
                           Rank #1
                         </span>
                       </div>
@@ -239,7 +239,7 @@ export default function LevelsPage() {
                             {leaderboard.length > 0 ? formatNumber(Math.ceil(leaderboard[0].xp * 1.2)) : "15,000"} XP
                           </span>
                         </div>
-                        <div className="h-2.5 w-full rounded-full bg-white/10 overflow-hidden">
+                        <div className="h-2.5 w-full rounded-full bg-raised overflow-hidden">
                           <div
                             className="h-full rounded-full transition-all duration-500"
                             style={{
@@ -254,15 +254,15 @@ export default function LevelsPage() {
                   </div>
                   {/* Stats Row */}
                   <div className="mt-4 grid grid-cols-3 gap-3">
-                    <div className="rounded-lg bg-white/5 px-3 py-2 text-center">
+                    <div className="rounded-lg bg-surface px-3 py-2 text-center">
                       <p className="text-xs text-gray-500">Messages</p>
                       <p className="text-sm font-bold text-white">{leaderboard.length > 0 ? formatNumber(leaderboard[0].messages) : "2,847"}</p>
                     </div>
-                    <div className="rounded-lg bg-white/5 px-3 py-2 text-center">
+                    <div className="rounded-lg bg-surface px-3 py-2 text-center">
                       <p className="text-xs text-gray-500">Total XP</p>
                       <p className="text-sm font-bold text-white">{leaderboard.length > 0 ? formatNumber(leaderboard[0].xp) : "12,450"}</p>
                     </div>
-                    <div className="rounded-lg bg-white/5 px-3 py-2 text-center">
+                    <div className="rounded-lg bg-surface px-3 py-2 text-center">
                       <p className="text-xs text-gray-500">Platform</p>
                       <p className="text-sm font-bold text-white">{leaderboard.length > 0 ? leaderboard[0].platform : "Discord"}</p>
                     </div>
@@ -274,32 +274,32 @@ export default function LevelsPage() {
 
           {/* Section Divider */}
           <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-surface" />
             <span className="text-xs font-medium uppercase tracking-wider text-gray-600">XP Settings</span>
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-surface" />
           </div>
 
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">XP Earning</h3>
             <div className="space-y-4">
               <div className="grid gap-4 sm:grid-cols-2">
                 <div>
                   <label className="block text-xs font-medium text-gray-400 mb-2">Min XP per Message</label>
-                  <input type="number" value={config.minXp} onChange={(e) => updateConfig("minXp", parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red" />
+                  <input type="number" value={config.minXp} onChange={(e) => updateConfig("minXp", parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red" />
                 </div>
                 <div>
                   <label className="block text-xs font-medium text-gray-400 mb-2">Max XP per Message</label>
-                  <input type="number" value={config.maxXp} onChange={(e) => updateConfig("maxXp", parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red" />
+                  <input type="number" value={config.maxXp} onChange={(e) => updateConfig("maxXp", parseInt(e.target.value) || 0)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red" />
                 </div>
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-2">Cooldown (seconds)</label>
-                <input type="number" value={config.cooldownMs / 1000} onChange={(e) => updateConfig("cooldownMs", (parseInt(e.target.value) || 60) * 1000)} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red" />
+                <input type="number" value={config.cooldownMs / 1000} onChange={(e) => updateConfig("cooldownMs", (parseInt(e.target.value) || 60) * 1000)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red" />
                 <p className="mt-1 text-xs text-gray-500">Time between XP gains to prevent spam</p>
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-2">XP Multiplier</label>
-                <select value={config.multiplier} onChange={(e) => updateConfig("multiplier", parseFloat(e.target.value))} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red">
+                <select value={config.multiplier} onChange={(e) => updateConfig("multiplier", parseFloat(e.target.value))} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red">
                   <option value={0.5}>0.5x (Slow)</option>
                   <option value={1}>1x (Normal)</option>
                   <option value={1.5}>1.5x (Fast)</option>
@@ -312,18 +312,18 @@ export default function LevelsPage() {
 
           {/* Section Divider */}
           <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-surface" />
             <span className="text-xs font-medium uppercase tracking-wider text-gray-600">Announcements</span>
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-surface" />
           </div>
 
           {/* Level Up Announcement */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Level Up Announcement</h3>
             <div className="space-y-4">
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-2">Announce Channel</label>
-                <select value={config.announceChannel || ""} onChange={(e) => updateConfig("announceChannel", e.target.value || null)} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red">
+                <select value={config.announceChannel || ""} onChange={(e) => updateConfig("announceChannel", e.target.value || null)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red">
                   <option value="">Don&apos;t Announce</option>
                   {textChannels.map(ch => (
                     <option key={ch.id} value={ch.id}>#{ch.name}</option>
@@ -331,14 +331,14 @@ export default function LevelsPage() {
                 </select>
               </div>
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={config.announceDm} onChange={(e) => updateConfig("announceDm", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-red focus:ring-brand-red" />
+                <input type="checkbox" checked={config.announceDm} onChange={(e) => updateConfig("announceDm", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red" />
                 <div>
                   <p className="text-sm text-white">Also DM the user</p>
                 </div>
               </label>
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-2">Message Template</label>
-                <textarea value={config.announceMessage} onChange={(e) => updateConfig("announceMessage", e.target.value)} rows={3} className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red resize-none" />
+                <textarea value={config.announceMessage} onChange={(e) => updateConfig("announceMessage", e.target.value)} rows={3} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red resize-none" />
                 <p className="mt-1 text-xs text-gray-500">Variables: {"{user}"}, {"{level}"}</p>
               </div>
             </div>
@@ -346,24 +346,24 @@ export default function LevelsPage() {
 
           {/* Section Divider */}
           <div className="flex items-center gap-3">
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-surface" />
             <span className="text-xs font-medium uppercase tracking-wider text-gray-600">Roles</span>
-            <div className="h-px flex-1 bg-white/5" />
+            <div className="h-px flex-1 bg-surface" />
           </div>
 
           {/* Role Behavior */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Role Behavior</h3>
             <div className="space-y-3">
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={config.stackRoles} onChange={(e) => updateConfig("stackRoles", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-red focus:ring-brand-red" />
+                <input type="checkbox" checked={config.stackRoles} onChange={(e) => updateConfig("stackRoles", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red" />
                 <div>
                   <p className="text-sm text-white">Stack Roles</p>
                   <p className="text-xs text-gray-500">Keep all earned roles instead of just the highest</p>
                 </div>
               </label>
               <label className="flex items-center gap-3 cursor-pointer">
-                <input type="checkbox" checked={config.removeOnLevelDown} onChange={(e) => updateConfig("removeOnLevelDown", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-red focus:ring-brand-red" />
+                <input type="checkbox" checked={config.removeOnLevelDown} onChange={(e) => updateConfig("removeOnLevelDown", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red" />
                 <div>
                   <p className="text-sm text-white">Remove on Level Down</p>
                   <p className="text-xs text-gray-500">Remove role rewards if member loses levels</p>
@@ -374,7 +374,7 @@ export default function LevelsPage() {
 
           <div className="flex items-center justify-end gap-3">
             {saveMsg && <span className="text-sm text-green-400">{saveMsg}</span>}
-            <button onClick={handleSaveConfig} disabled={saving} className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-red/90 disabled:opacity-50">
+            <button onClick={handleSaveConfig} disabled={saving} className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50">
               {saving ? "Saving..." : "Save Changes"}
             </button>
           </div>
@@ -384,23 +384,23 @@ export default function LevelsPage() {
       {/* Role Rewards Tab */}
       {activeTab === "rewards" && (
         <div className="space-y-6">
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Add Role Reward</h3>
             <div className="flex gap-3 items-end">
               <div className="w-24">
                 <label className="block text-xs font-medium text-gray-400 mb-2">Level</label>
-                <input type="number" min={1} value={newRewardLevel} onChange={(e) => setNewRewardLevel(parseInt(e.target.value) || 1)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none" />
+                <input type="number" min={1} value={newRewardLevel} onChange={(e) => setNewRewardLevel(parseInt(e.target.value) || 1)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none" />
               </div>
               <div className="flex-1">
                 <label className="block text-xs font-medium text-gray-400 mb-2">Role</label>
-                <select value={newRewardRoleId} onChange={(e) => setNewRewardRoleId(e.target.value)} className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none">
+                <select value={newRewardRoleId} onChange={(e) => setNewRewardRoleId(e.target.value)} className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none">
                   <option value="">Select a role...</option>
                   {roles.filter(r => !r.managed).map(role => (
                     <option key={role.id} value={role.id}>{role.name}</option>
                   ))}
                 </select>
               </div>
-              <button onClick={addReward} disabled={!newRewardRoleId} className="rounded-lg bg-brand-red px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-red/90 disabled:opacity-50">
+              <button onClick={addReward} disabled={!newRewardRoleId} className="rounded-lg bg-red px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50">
                 Add
               </button>
             </div>
@@ -408,15 +408,15 @@ export default function LevelsPage() {
 
           <div className="space-y-3">
             {rewards.length === 0 && (
-              <div className="rounded-xl border border-white/5 bg-[#161b22] p-8 text-center">
+              <div className="rounded-xl border border-[var(--color-border)] bg-surface p-8 text-center">
                 <p className="text-gray-400">No role rewards configured yet.</p>
               </div>
             )}
             {rewards.map((reward, index) => {
               const role = roles.find(r => r.id === reward.roleId);
               return (
-                <div key={index} className="flex items-center gap-4 rounded-xl border border-white/5 bg-[#161b22] p-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-white/5 text-xl font-bold text-white">
+                <div key={index} className="flex items-center gap-4 rounded-xl border border-[var(--color-border)] bg-surface p-4">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-surface text-xl font-bold text-white">
                     {reward.level}
                   </div>
                   <div className="flex-1">
@@ -438,7 +438,7 @@ export default function LevelsPage() {
 
           <div className="flex items-center justify-end gap-3">
             {saveMsg && <span className="text-sm text-green-400">{saveMsg}</span>}
-            <button onClick={handleSaveRewards} disabled={saving} className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-red/90 disabled:opacity-50">
+            <button onClick={handleSaveRewards} disabled={saving} className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50">
               {saving ? "Saving..." : "Save Rewards"}
             </button>
           </div>
@@ -448,10 +448,10 @@ export default function LevelsPage() {
       {/* Leaderboard Tab */}
       {activeTab === "leaderboard" && (
         <div className="space-y-6">
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-sm font-semibold text-white">Top Members</h3>
-              <button onClick={loadData} className="text-xs text-brand-red hover:text-white transition-colors">Refresh</button>
+              <button onClick={loadData} className="text-xs text-red hover:text-white transition-colors">Refresh</button>
             </div>
             {leaderboard.length === 0 ? (
               <p className="text-center text-gray-400 py-8">No XP data yet. Members will appear as they chat.</p>
@@ -464,12 +464,12 @@ export default function LevelsPage() {
                       i === 0 ? "bg-brand-gold/10 border border-brand-gold/20" :
                       i === 1 ? "bg-gray-400/5 border border-gray-400/10" :
                       i === 2 ? "bg-amber-700/10 border border-amber-700/15" :
-                      "bg-white/5 border border-transparent"
+                      "bg-surface border border-transparent"
                     }`}
                   >
                     {/* Rank Badge */}
                     <div className="relative flex-shrink-0">
-                      <span className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${i === 0 ? "bg-brand-gold text-black" : i === 1 ? "bg-gray-400 text-black" : i === 2 ? "bg-amber-700 text-white" : "bg-white/10 text-gray-400"}`}>
+                      <span className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold ${i === 0 ? "bg-brand-gold text-black" : i === 1 ? "bg-gray-400 text-black" : i === 2 ? "bg-amber-700 text-white" : "bg-raised text-gray-400"}`}>
                         {i + 1}
                       </span>
                       {i < 3 && (
@@ -479,7 +479,7 @@ export default function LevelsPage() {
                       )}
                     </div>
                     {/* Avatar */}
-                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-brand-red/20 text-brand-red font-medium">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red/20 text-red font-medium">
                       {user.username.charAt(0).toUpperCase()}
                     </div>
                     {/* Info */}
@@ -489,7 +489,7 @@ export default function LevelsPage() {
                     </div>
                     {/* Level */}
                     <div className="text-right flex-shrink-0">
-                      <p className={`text-lg font-bold ${i === 0 ? "text-brand-gold" : "text-white"}`}>Lv.{user.level}</p>
+                      <p className={`text-lg font-bold ${i === 0 ? "text-gold" : "text-white"}`}>Lv.{user.level}</p>
                     </div>
                   </div>
                 ))}
@@ -498,10 +498,10 @@ export default function LevelsPage() {
           </div>
 
           {/* Leaderboard Settings */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Leaderboard Settings</h3>
             <label className="flex items-center gap-3 cursor-pointer">
-              <input type="checkbox" checked={config.publicLeaderboard} onChange={(e) => updateConfig("publicLeaderboard", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-red focus:ring-brand-red" />
+              <input type="checkbox" checked={config.publicLeaderboard} onChange={(e) => updateConfig("publicLeaderboard", e.target.checked)} className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-brand-red" />
               <div>
                 <p className="text-sm text-white">Public Leaderboard</p>
                 <p className="text-xs text-gray-500">Allow members to view the leaderboard with !leaderboard</p>

@@ -1,6 +1,6 @@
-// PRISMAI backend URLs - configure via Cloudflare Pages environment variables
-const PRISMAI_CORE = process.env.PRISMAI_CORE_URL || "http://65.109.100.181:5084";
-const PRISMAI_ANALYTICS = process.env.PRISMAI_ANALYTICS_URL || "http://5.161.119.210:5018";
+// PRISMAI backend URLs — loaded from CF Pages env vars, fallback to hostnames (not IPs)
+const PRISMAI_CORE = "http://bot-service-na-west-01.cybrancee.com:5084";
+const PRISMAI_ANALYTICS = "http://cybrancee-bot-na-east-08.cybrancee.com:5018";
 
 const ALLOWED_ORIGINS = [
   "https://prozilli.com",

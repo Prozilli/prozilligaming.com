@@ -71,7 +71,7 @@ export default function EventFeed({ events }: EventFeedProps) {
                 <span className="text-xs">{PLATFORM_ICONS[evt.platform] || ""}</span>
               </div>
               {amount && (
-                <p className="text-sm font-bold text-brand-gold">{amount}</p>
+                <p className="text-sm font-bold text-gold">{amount}</p>
               )}
             </div>
             <span className="shrink-0 text-[10px] text-muted">{formatRelativeTime(evt.timestamp)}</span>

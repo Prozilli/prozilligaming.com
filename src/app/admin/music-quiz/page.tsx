@@ -98,7 +98,7 @@ export default function MusicQuizPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setConfig({ ...config, enabled: !config.enabled })}
-            className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-brand-red" : "bg-white/10"}`}
+            className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-red" : "bg-raised"}`}
           >
             <span className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${config.enabled ? "left-6" : "left-1"}`} />
           </button>
@@ -107,13 +107,13 @@ export default function MusicQuizPage() {
       </div>
 
       {/* Quiz Channel */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-4">Quiz Channel</h3>
         <p className="text-xs text-gray-500 mb-3">
           The Discord channel where music quiz games will be hosted
         </p>
         {channelsLoading ? (
-          <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+          <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
             Loading channels...
           </div>
         ) : channelsError ? (
@@ -124,7 +124,7 @@ export default function MusicQuizPage() {
           <select
             value={config.channelId}
             onChange={(e) => setConfig({ ...config, channelId: e.target.value })}
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+            className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
           >
             <option value="">Select a channel</option>
             {channels.map((channel) => (
@@ -137,7 +137,7 @@ export default function MusicQuizPage() {
       </div>
 
       {/* Game Settings */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-4">Game Settings</h3>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
@@ -148,7 +148,7 @@ export default function MusicQuizPage() {
               max={120}
               value={config.roundDuration}
               onChange={(e) => setConfig({ ...config, roundDuration: parseInt(e.target.value) || 30 })}
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
             />
             <p className="mt-1 text-xs text-gray-500">
               How long members have to guess each song
@@ -162,7 +162,7 @@ export default function MusicQuizPage() {
               max={100}
               value={config.pointsPerAnswer}
               onChange={(e) => setConfig({ ...config, pointsPerAnswer: parseInt(e.target.value) || 10 })}
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
             />
             <p className="mt-1 text-xs text-gray-500">
               Points awarded for each correct guess
@@ -172,7 +172,7 @@ export default function MusicQuizPage() {
       </div>
 
       {/* Song Library */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <div className="flex items-center justify-between mb-4">
           <div>
             <h3 className="text-sm font-semibold text-white">Song Library</h3>
@@ -182,7 +182,7 @@ export default function MusicQuizPage() {
           </div>
           <button
             onClick={addSong}
-            className="flex items-center gap-1.5 rounded-lg bg-white/5 px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-white/10"
+            className="flex items-center gap-1.5 rounded-lg bg-surface px-3 py-2 text-xs font-medium text-white transition-colors hover:bg-raised"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -209,7 +209,7 @@ export default function MusicQuizPage() {
             {config.songs.map((song, index) => (
               <div
                 key={index}
-                className="grid grid-cols-1 sm:grid-cols-12 gap-3 rounded-lg bg-white/5 p-3 items-center"
+                className="grid grid-cols-1 sm:grid-cols-12 gap-3 rounded-lg bg-surface p-3 items-center"
               >
                 {/* Title */}
                 <div className="sm:col-span-3">
@@ -219,7 +219,7 @@ export default function MusicQuizPage() {
                     value={song.title}
                     onChange={(e) => updateSong(index, "title", e.target.value)}
                     placeholder="Song title"
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                   />
                 </div>
 
@@ -231,7 +231,7 @@ export default function MusicQuizPage() {
                     value={song.artist}
                     onChange={(e) => updateSong(index, "artist", e.target.value)}
                     placeholder="Artist name"
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                   />
                 </div>
 
@@ -243,7 +243,7 @@ export default function MusicQuizPage() {
                     value={song.url}
                     onChange={(e) => updateSong(index, "url", e.target.value)}
                     placeholder="https://youtube.com/watch?v=..."
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2 text-sm text-white focus:border-brand-red focus:outline-none"
                   />
                 </div>
 
@@ -275,7 +275,7 @@ export default function MusicQuizPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

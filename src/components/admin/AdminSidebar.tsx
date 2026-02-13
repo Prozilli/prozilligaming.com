@@ -161,26 +161,26 @@ export default function AdminSidebar({ children }: { children: React.ReactNode }
     .find((i) => pathname === i.href || (i.href !== "/admin" && pathname.startsWith(i.href + "/")));
 
   return (
-    <div className="flex min-h-screen bg-[#0d1117]">
+    <div className="flex min-h-screen bg-base">
       {/* Sidebar */}
-      <aside className={`fixed left-0 top-0 z-40 h-screen border-r border-white/5 bg-[#161b22] transition-all ${sidebarOpen ? "w-64" : "w-16"} overflow-y-auto`}>
+      <aside className={`fixed left-0 top-0 z-40 h-screen border-r border-[var(--color-border)] bg-surface transition-all ${sidebarOpen ? "w-64" : "w-16"} overflow-y-auto`}>
         {/* Logo */}
-        <div className="flex h-14 items-center gap-3 border-b border-white/5 px-4">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-brand-red">
+        <div className="flex h-14 items-center gap-3 border-b border-[var(--color-border)] px-4">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-red">
             <span className="text-sm font-bold text-white">P</span>
           </div>
           {sidebarOpen && (
             <div>
               <span className="font-bold text-white">PRISMAI</span>
-              <span className="ml-1 text-[10px] text-brand-gold">Admin</span>
+              <span className="ml-1 text-[10px] text-gold">Admin</span>
             </div>
           )}
         </div>
 
         {/* Server selector */}
         {sidebarOpen && (
-          <div className="border-b border-white/5 p-3">
-            <button className="flex w-full items-center gap-3 rounded-lg bg-white/5 p-2.5 transition-colors hover:bg-white/10">
+          <div className="border-b border-[var(--color-border)] p-3">
+            <button className="flex w-full items-center gap-3 rounded-lg bg-surface p-2.5 transition-colors hover:bg-raised">
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#5865F2] text-white font-bold text-sm">
                 PG
               </div>
@@ -215,8 +215,8 @@ export default function AdminSidebar({ children }: { children: React.ReactNode }
                         href={item.href}
                         className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
                           isActive
-                            ? "bg-brand-red/10 text-brand-red"
-                            : "text-gray-400 hover:bg-white/5 hover:text-white"
+                            ? "bg-red/10 text-red"
+                            : "text-gray-400 hover:bg-surface hover:text-white"
                         }`}
                         title={!sidebarOpen ? item.name : undefined}
                       >
@@ -225,7 +225,7 @@ export default function AdminSidebar({ children }: { children: React.ReactNode }
                           <>
                             <span className="flex-1 truncate">{item.name}</span>
                             {item.badge && (
-                              <span className="rounded bg-brand-gold/20 px-1.5 py-0.5 text-[9px] font-semibold text-brand-gold">
+                              <span className="rounded bg-gold/20 px-1.5 py-0.5 text-[9px] font-semibold text-gold">
                                 {item.badge}
                               </span>
                             )}
@@ -244,11 +244,11 @@ export default function AdminSidebar({ children }: { children: React.ReactNode }
       {/* Main content */}
       <main className={`flex-1 transition-all ${sidebarOpen ? "ml-64" : "ml-16"}`}>
         {/* Top bar */}
-        <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-white/5 bg-[#0d1117]/80 px-6 backdrop-blur-xl">
+        <header className="sticky top-0 z-30 flex h-14 items-center justify-between border-b border-[var(--color-border)] bg-base/80 px-6 backdrop-blur-xl">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="rounded-md p-1.5 text-gray-400 hover:bg-white/5 hover:text-white"
+              className="rounded-md p-1.5 text-gray-400 hover:bg-surface hover:text-white"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -266,8 +266,8 @@ export default function AdminSidebar({ children }: { children: React.ReactNode }
               <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
               <span className="text-[11px] font-medium text-green-400">Connected</span>
             </div>
-            <button className="flex items-center gap-2 rounded-md bg-white/5 px-3 py-1.5 transition-colors hover:bg-white/10">
-              <div className="h-6 w-6 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold font-bold text-xs">
+            <button className="flex items-center gap-2 rounded-md bg-surface px-3 py-1.5 transition-colors hover:bg-raised">
+              <div className="h-6 w-6 rounded-full bg-gold/20 flex items-center justify-center text-gold font-bold text-xs">
                 P
               </div>
               <span className="text-sm text-white">Pro</span>

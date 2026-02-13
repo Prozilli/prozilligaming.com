@@ -79,7 +79,7 @@ export default function BirthdaysPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={() => setConfig({ ...config, enabled: !config.enabled })}
-            className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-brand-red" : "bg-white/10"}`}
+            className={`relative h-6 w-11 rounded-full transition-colors ${config.enabled ? "bg-red" : "bg-raised"}`}
           >
             <span className={`absolute top-1 h-4 w-4 rounded-full bg-white transition-transform ${config.enabled ? "left-6" : "left-1"}`} />
           </button>
@@ -88,13 +88,13 @@ export default function BirthdaysPage() {
       </div>
 
       {/* Announce Channel */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-4">Announce Channel</h3>
         <p className="text-xs text-gray-500 mb-3">
           Where birthday announcements will be posted each day
         </p>
         {channelsLoading ? (
-          <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+          <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
             Loading channels...
           </div>
         ) : channelsError ? (
@@ -105,7 +105,7 @@ export default function BirthdaysPage() {
           <select
             value={config.channelId}
             onChange={(e) => setConfig({ ...config, channelId: e.target.value })}
-            className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+            className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
           >
             <option value="">Select a channel</option>
             {channels.map((channel) => (
@@ -118,7 +118,7 @@ export default function BirthdaysPage() {
       </div>
 
       {/* Schedule */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-4">Schedule</h3>
         <p className="text-xs text-gray-500 mb-3">
           When to check and send birthday announcements
@@ -129,7 +129,7 @@ export default function BirthdaysPage() {
             <select
               value={config.hour}
               onChange={(e) => setConfig({ ...config, hour: parseInt(e.target.value) })}
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
             >
               {Array.from({ length: 24 }, (_, i) => {
                 const label = i === 0 ? "12:00 AM" : i < 12 ? `${i}:00 AM` : i === 12 ? "12:00 PM" : `${i - 12}:00 PM`;
@@ -146,7 +146,7 @@ export default function BirthdaysPage() {
             <select
               value={config.timezone}
               onChange={(e) => setConfig({ ...config, timezone: e.target.value })}
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
             >
               {US_TIMEZONES.map((tz) => (
                 <option key={tz.value} value={tz.value}>
@@ -159,24 +159,24 @@ export default function BirthdaysPage() {
       </div>
 
       {/* Message Template */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-4">Message Template</h3>
         <textarea
           value={config.messageTemplate}
           onChange={(e) => setConfig({ ...config, messageTemplate: e.target.value })}
           rows={4}
           placeholder="Happy Birthday, {user}!"
-          className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red resize-none"
+          className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red resize-none"
         />
         <div className="mt-3">
           <p className="text-xs font-medium text-gray-500 mb-2">Available Variables</p>
           <div className="grid gap-2 text-xs">
             <div className="flex justify-between">
-              <code className="text-brand-gold">{"{user}"}</code>
+              <code className="text-gold">{"{user}"}</code>
               <span className="text-gray-500">@mention the birthday member</span>
             </div>
             <div className="flex justify-between">
-              <code className="text-brand-gold">{"{age}"}</code>
+              <code className="text-gold">{"{age}"}</code>
               <span className="text-gray-500">Member&apos;s new age (if set)</span>
             </div>
           </div>
@@ -184,7 +184,7 @@ export default function BirthdaysPage() {
       </div>
 
       {/* Auto-Role */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-4">Birthday Role</h3>
         <p className="text-xs text-gray-500 mb-3">
           Automatically assign a special role on the member&apos;s birthday
@@ -193,7 +193,7 @@ export default function BirthdaysPage() {
           <div>
             <label className="block text-xs font-medium text-gray-400 mb-2">Role</label>
             {rolesLoading ? (
-              <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+              <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                 Loading roles...
               </div>
             ) : (
@@ -202,7 +202,7 @@ export default function BirthdaysPage() {
                 onChange={(e) =>
                   setConfig({ ...config, autoRole: { ...config.autoRole, roleId: e.target.value } })
                 }
-                className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+                className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
               >
                 <option value="">No birthday role</option>
                 {roles
@@ -228,7 +228,7 @@ export default function BirthdaysPage() {
                   autoRole: { ...config.autoRole, durationDays: parseInt(e.target.value) || 1 },
                 })
               }
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none focus:ring-1 focus:ring-brand-red"
             />
             <p className="mt-1 text-xs text-gray-500">
               Role will be automatically removed after this many days
@@ -248,7 +248,7 @@ export default function BirthdaysPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>

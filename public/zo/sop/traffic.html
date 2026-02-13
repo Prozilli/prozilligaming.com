@@ -1,0 +1,2103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Traffic Procedures SOP v1.0 - ZO Syndicate RP</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: #0d0d0d;
+    color: #d9d9d9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.75;
+    font-size: 15px;
+  }
+
+  /* --- HEADER BANNER --- */
+  .header-banner {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a0a0a 50%, #0a0a0a 100%);
+    border-bottom: 3px solid #a30000;
+    padding: 40px 30px 30px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-banner::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(163,0,0,0.03) 2px,
+      rgba(163,0,0,0.03) 4px
+    );
+    pointer-events: none;
+  }
+  .header-org {
+    font-size: 11px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: #c4a265;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .header-server {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 20px;
+  }
+  .header-dept {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .header-subtitle {
+    font-size: 16px;
+    color: #a30000;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    color: #777;
+  }
+  .header-meta span { white-space: nowrap; }
+  .header-meta strong { color: #999; }
+  .badge-classified {
+    display: inline-block;
+    background: #a30000;
+    color: #fff;
+    padding: 4px 16px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    border: 1px solid #c44;
+  }
+
+  /* --- MAIN CONTENT --- */
+  .content {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 30px 30px 60px;
+  }
+
+  /* --- TABLE OF CONTENTS --- */
+  .toc {
+    background: #111;
+    border: 1px solid #222;
+    border-left: 4px solid #a30000;
+    padding: 24px 28px;
+    margin: 0 0 40px;
+  }
+  .toc h2 {
+    color: #a30000;
+    font-size: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin: 0 0 14px;
+    border: none;
+    padding: 0;
+  }
+  .toc ol {
+    margin: 0;
+    padding-left: 22px;
+    columns: 2;
+    column-gap: 30px;
+  }
+  .toc li {
+    margin-bottom: 5px;
+    break-inside: avoid;
+  }
+  .toc a {
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13.5px;
+    transition: color 0.2s;
+  }
+  .toc a:hover { color: #a30000; }
+
+  /* --- HEADINGS --- */
+  h1 {
+    color: #a30000;
+    border-bottom: 2px solid #a30000;
+    padding-bottom: 10px;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-top: 50px;
+  }
+  h2 {
+    color: #c44;
+    margin-top: 35px;
+    font-size: 18px;
+    border-bottom: 1px solid #1f1f1f;
+    padding-bottom: 6px;
+  }
+  h3 {
+    color: #ddd;
+    font-size: 15px;
+    margin-top: 22px;
+  }
+  h4 {
+    color: #aaa;
+    font-size: 14px;
+    margin-top: 16px;
+    font-weight: 600;
+  }
+
+  /* --- TABLES --- */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+    font-size: 14px;
+  }
+  th, td {
+    border: 1px solid #222;
+    padding: 9px 12px;
+    text-align: left;
+  }
+  th {
+    background: #141414;
+    color: #a30000;
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  td { background: #0f0f0f; }
+  tr:hover td { background: #151010; }
+
+  /* --- CALLOUT BOXES --- */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  .callout-critical {
+    background: #1f0a0a;
+    border: 1px solid #331111;
+    border-left: 4px solid #a30000;
+  }
+  .callout-warning {
+    background: #1f1a0a;
+    border: 1px solid #33290e;
+    border-left: 4px solid #c4a265;
+  }
+  .callout-info {
+    background: #0a0f1f;
+    border: 1px solid #0e1a33;
+    border-left: 4px solid #3366aa;
+  }
+  .callout-critical strong { color: #e44; }
+  .callout-warning strong { color: #c4a265; }
+  .callout-info strong { color: #6699cc; }
+
+  /* --- MISC --- */
+  code {
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 13px;
+    color: #ccc;
+    border: 1px solid #222;
+  }
+  ul, ol { padding-left: 22px; }
+  li { margin-bottom: 5px; }
+  blockquote {
+    border-left: 3px solid #a30000;
+    margin: 16px 0;
+    padding: 10px 18px;
+    background: #111;
+    color: #aaa;
+    font-style: italic;
+  }
+  .section-divider {
+    border: none;
+    border-top: 1px solid #1a1a1a;
+    margin: 40px 0;
+  }
+  strong { color: #eee; }
+  a { color: #a30000; text-decoration: none; }
+  a:hover { color: #c44; text-decoration: underline; }
+
+  /* --- FOOTER --- */
+  .footer {
+    text-align: center;
+    padding: 40px 20px 30px;
+    border-top: 2px solid #a30000;
+    margin-top: 60px;
+    color: #555;
+    font-size: 12px;
+    line-height: 2;
+  }
+  .footer .org { color: #c4a265; font-weight: 600; letter-spacing: 2px; }
+  .footer a { color: #666; }
+  .footer a:hover { color: #a30000; }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 700px) {
+    .header-dept { font-size: 22px; }
+    .header-meta { gap: 14px; }
+    .toc ol { columns: 1; }
+    .content { padding: 20px 16px 40px; }
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================== HEADER ============================== -->
+<div class="header-banner">
+  <div class="header-org">PROZILLI ENTERTAINMENT</div>
+  <div class="header-server">ZO SYNDICATE RP</div>
+  <div class="header-dept">TRAFFIC PROCEDURES</div>
+  <div class="header-subtitle">STANDARD OPERATING PROCEDURES</div>
+  <div class="badge-classified">LAW ENFORCEMENT</div>
+  <div class="header-meta">
+    <span><strong>Version:</strong> 1.0</span>
+    <span><strong>Effective:</strong> February 2026</span>
+    <span><strong>Classification:</strong> RESTRICTED - LEO ONLY</span>
+    <span><strong>Authority:</strong> Traffic Division Commander</span>
+  </div>
+</div>
+
+<!-- ============================== CONTENT ============================== -->
+<div class="content">
+
+<!-- TABLE OF CONTENTS -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#s1">Purpose &amp; Authority</a></li>
+    <li><a href="#s2">Traffic Stop Initiation</a></li>
+    <li><a href="#s3">High-Risk (Felony) Traffic Stops</a></li>
+    <li><a href="#s4">Routine Traffic Stop Procedures</a></li>
+    <li><a href="#s5">Citation &amp; Warning Procedures</a></li>
+    <li><a href="#s6">DUI/DWI Procedures</a></li>
+    <li><a href="#s7">Commercial Vehicle Enforcement</a></li>
+    <li><a href="#s8">Motorcycle &amp; Bicycle Stops</a></li>
+    <li><a href="#s9">Pedestrian Stops</a></li>
+    <li><a href="#s10">Speed Enforcement</a></li>
+    <li><a href="#s11">Checkpoint Operations</a></li>
+    <li><a href="#s12">Accident Investigation</a></li>
+    <li><a href="#s13">Hit &amp; Run Procedures</a></li>
+    <li><a href="#s14">Towing &amp; Impoundment</a></li>
+    <li><a href="#s15">Special Traffic Situations</a></li>
+    <li><a href="#s16">Traffic Control Devices</a></li>
+    <li><a href="#s17">Report Documentation</a></li>
+    <li><a href="#s18">Revision History &amp; Amendments</a></li>
+  </ol>
+</div>
+
+<!-- ================================================================== -->
+<h1 id="s1">1. Purpose &amp; Authority</h1>
+<!-- ================================================================== -->
+
+<h2>1.1 Purpose</h2>
+<p>This Standard Operating Procedures document establishes uniform traffic enforcement guidelines for all sworn law enforcement officers operating within the jurisdiction of San Andreas. These procedures ensure consistent, lawful, and professional traffic enforcement that protects the safety of both officers and civilians.</p>
+
+<h2>1.2 Scope</h2>
+<p>This SOP applies to <strong>all traffic-related enforcement activities</strong> conducted by officers of the following departments:</p>
+<ul>
+  <li><strong>Los Santos Police Department (LSPD)</strong> -- Primary jurisdiction: City of Los Santos</li>
+  <li><strong>Blaine County Sheriff's Office (BCSO)</strong> -- Primary jurisdiction: Blaine County, Paleto Bay, Sandy Shores</li>
+  <li><strong>San Andreas State Police (SASP)</strong> -- Statewide jurisdiction: Highways, interstates, and state routes</li>
+</ul>
+
+<h2>1.3 Applicable Departments</h2>
+<table>
+  <tr>
+    <th>Department</th>
+    <th>Primary Traffic Zone</th>
+    <th>Traffic Division</th>
+    <th>Special Units</th>
+  </tr>
+  <tr>
+    <td>LSPD</td>
+    <td>City of Los Santos (urban streets, city highways)</td>
+    <td>Metro Traffic Division</td>
+    <td>Motorcycle Unit, DUI Task Force</td>
+  </tr>
+  <tr>
+    <td>BCSO</td>
+    <td>Blaine County (rural roads, county routes)</td>
+    <td>Highway Patrol Unit</td>
+    <td>Commercial Vehicle Enforcement</td>
+  </tr>
+  <tr>
+    <td>SASP</td>
+    <td>Statewide (Route 1, Route 68, Great Ocean Hwy)</td>
+    <td>Highway Division</td>
+    <td>Speed Enforcement, Checkpoint Operations</td>
+  </tr>
+</table>
+
+<h2>1.4 Legal Basis</h2>
+<p>All traffic enforcement activities are conducted under the authority of:</p>
+<ul>
+  <li><strong>San Andreas Vehicle Code (SAVC)</strong> -- Governs all motor vehicle operations</li>
+  <li><strong>San Andreas Penal Code (SAPC)</strong> -- Criminal offenses related to vehicle operation</li>
+  <li><strong>ZO Syndicate RP Criminal Code</strong> -- Server-specific legal framework</li>
+  <li><strong>Fourth Amendment protections</strong> -- All stops require reasonable suspicion or probable cause</li>
+  <li><strong>Terry v. Ohio standard</strong> -- Brief investigative detentions for pedestrian stops</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>INTERAGENCY AUTHORITY:</strong> All three departments maintain mutual aid agreements. Any sworn officer may conduct traffic enforcement outside their primary jurisdiction when: (a) in fresh pursuit, (b) requested by the jurisdictional agency, or (c) an immediate hazard is observed.
+</div>
+
+<h2>1.5 Chain of Command</h2>
+<p>Traffic enforcement policy is set by the <strong>Traffic Division Commander</strong> of each department. Operational decisions in the field follow standard chain of command. Any deviation from these procedures requires supervisor approval and documentation in the incident report.</p>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s2">2. Traffic Stop Initiation</h1>
+<!-- ================================================================== -->
+
+<h2>2.1 Reasonable Suspicion</h2>
+<p>A traffic stop may be initiated when an officer has <strong>reasonable articulable suspicion</strong> that a traffic violation has occurred, is occurring, or is about to occur. This includes:</p>
+<ul>
+  <li>Observed moving violations (running a red light, illegal lane change, failure to signal)</li>
+  <li>Equipment violations (broken headlight, expired registration, illegal tint)</li>
+  <li>Erratic driving patterns suggesting impairment</li>
+  <li>Matching description of a BOLO vehicle</li>
+  <li>Expired or missing license plates</li>
+</ul>
+
+<h2>2.2 Probable Cause</h2>
+<p>Probable cause elevates the stop and permits additional enforcement actions such as arrest or vehicle search. Probable cause exists when:</p>
+<ul>
+  <li>Officer directly observes a crime in progress (e.g., DUI, reckless driving endangering life)</li>
+  <li>A warrant exists for the vehicle owner or occupants</li>
+  <li>Contraband is in plain view inside the vehicle</li>
+  <li>The odor of illegal substances emanates from the vehicle</li>
+  <li>A K-9 unit alerts on the vehicle during a lawful stop</li>
+</ul>
+
+<h2>2.3 When to Initiate a Stop</h2>
+<table>
+  <tr>
+    <th>Scenario</th>
+    <th>Action</th>
+    <th>Priority</th>
+  </tr>
+  <tr>
+    <td>Moving violation observed (speeding, running stop sign)</td>
+    <td>Initiate stop immediately</td>
+    <td>Standard</td>
+  </tr>
+  <tr>
+    <td>DUI/Reckless driving suspected</td>
+    <td>Initiate stop; request backup</td>
+    <td>High</td>
+  </tr>
+  <tr>
+    <td>BOLO match (stolen vehicle, wanted person)</td>
+    <td>Follow at safe distance; request backup; initiate felony stop</td>
+    <td>Critical</td>
+  </tr>
+  <tr>
+    <td>Equipment violation only (taillight out)</td>
+    <td>Initiate stop; educational contact or citation</td>
+    <td>Low</td>
+  </tr>
+  <tr>
+    <td>Expired registration / no plates</td>
+    <td>Initiate stop; verify registration status</td>
+    <td>Standard</td>
+  </tr>
+</table>
+
+<h2>2.4 When NOT to Initiate a Stop</h2>
+<div class="callout callout-critical">
+  <strong>DO NOT initiate a traffic stop under the following conditions:</strong>
+  <ul>
+    <li>You are responding to a higher-priority call (active shooting, pursuit, officer down)</li>
+    <li>Road conditions make a stop hazardous (blind curve, narrow bridge, no shoulder)</li>
+    <li>You are operating in an unmarked vehicle without emergency lights (unless exigent circumstances)</li>
+    <li>The violation is minor and the area is tactically disadvantageous (construction zone with no safe pullover location)</li>
+    <li>You are off-duty and not in a department-issued vehicle</li>
+    <li>The stop would require crossing into oncoming traffic at high speed</li>
+  </ul>
+</div>
+
+<h2>2.5 Initiating the Stop</h2>
+<ol>
+  <li><strong>Notify dispatch:</strong> Provide your unit number, location, direction of travel, vehicle description (make, model, color), and license plate number</li>
+  <li><strong>Activate emergency lights:</strong> Activate overhead lights (Code 2) to signal the vehicle to pull over</li>
+  <li><strong>Use siren if needed:</strong> A single chirp or short burst if the driver does not respond to lights within 5 seconds</li>
+  <li><strong>Select a safe location:</strong> Guide the vehicle to a well-lit, wide-shouldered area when possible</li>
+  <li><strong>Maintain safe following distance:</strong> Stay 1.5-2 car lengths behind during the pullover</li>
+  <li><strong>Call in the stop:</strong> Confirm location and any additional occupant information visible</li>
+</ol>
+
+<div class="callout callout-warning">
+  <strong>OFFICER SAFETY:</strong> If a vehicle does not stop within a reasonable time or distance (approximately 1/4 mile), escalate to a pursuit determination. Notify a supervisor and follow pursuit policy guidelines.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s3">3. High-Risk (Felony) Traffic Stops</h1>
+<!-- ================================================================== -->
+
+<h2>3.1 When to Conduct a Felony Stop</h2>
+<p>A high-risk (felony) traffic stop is warranted when the officer has reason to believe the occupant(s) may be armed, dangerous, or connected to a serious crime:</p>
+<ul>
+  <li>Vehicle matches a stolen vehicle BOLO</li>
+  <li>Occupants are wanted for violent felonies (armed robbery, homicide, assault with deadly weapon)</li>
+  <li>Weapons visible inside the vehicle</li>
+  <li>Vehicle fled from a crime scene</li>
+  <li>Driver or passengers display aggressive, threatening behavior during a routine stop (escalation)</li>
+  <li>Intelligence indicates gang affiliation with known violent history</li>
+</ul>
+
+<h2>3.2 Felony Stop Procedure</h2>
+<div class="callout callout-critical">
+  <strong>MINIMUM 2 OFFICERS REQUIRED FOR A FELONY STOP.</strong> Do not attempt alone unless life is in immediate danger. Wait for backup before initiating commands.
+</div>
+
+<h3>Step-by-Step Protocol</h3>
+<ol>
+  <li><strong>Request backup immediately.</strong> Provide exact location, vehicle description, number of occupants, and reason for felony stop.</li>
+  <li><strong>Position the patrol vehicle</strong> at a 15-20 degree angle, offset to the left, approximately 15-20 feet behind the suspect vehicle. This creates cover behind the engine block.</li>
+  <li><strong>Both officers exit</strong> and take positions behind their respective doors (primary: driver-side rear; secondary: passenger-side rear).</li>
+  <li><strong>Activate the PA system.</strong> All commands are given via PA -- never approach until all occupants are secured.</li>
+  <li><strong>Issue commands clearly and one at a time:</strong>
+    <ul>
+      <li>"Driver, turn off your engine and drop the keys out the window."</li>
+      <li>"Driver, put both hands out the window where I can see them."</li>
+      <li>"Driver, open the door from the outside and step out slowly."</li>
+      <li>"Walk backward toward the sound of my voice. Stop. Kneel. Cross your ankles. Hands behind your head, interlace your fingers."</li>
+    </ul>
+  </li>
+  <li><strong>Secondary officer moves forward</strong> to handcuff while the primary maintains lethal cover.</li>
+  <li><strong>Repeat for each occupant</strong>, starting with the driver, then rear passengers, then front passenger.</li>
+  <li><strong>Clear the vehicle.</strong> After all occupants are secured, approach with cover and visually clear the interior (front seats, rear seats, floor, trunk).</li>
+</ol>
+
+<h2>3.3 Backup Positioning</h2>
+<table>
+  <tr>
+    <th>Unit</th>
+    <th>Position</th>
+    <th>Role</th>
+  </tr>
+  <tr>
+    <td>Primary Unit</td>
+    <td>15-20 ft behind, offset left</td>
+    <td>Commands via PA, lethal cover</td>
+  </tr>
+  <tr>
+    <td>Secondary Unit</td>
+    <td>Behind primary, passenger side</td>
+    <td>Cover officer, hands-on cuffing</td>
+  </tr>
+  <tr>
+    <td>Tertiary Unit (if available)</td>
+    <td>Flanking position, 45 degrees</td>
+    <td>Perimeter security, spike strip standby</td>
+  </tr>
+</table>
+
+<h2>3.4 Handcuffing &amp; Securing Occupants</h2>
+<ul>
+  <li>All occupants are handcuffed behind the back, double-locked</li>
+  <li>Pat-down search for weapons immediately upon cuffing</li>
+  <li>Each occupant is placed in a separate patrol vehicle if possible</li>
+  <li>If more occupants than vehicles, seat suspects facing opposite directions in the same vehicle</li>
+  <li>Inform dispatch of the number of detained individuals</li>
+</ul>
+
+<h2>3.5 Vehicle Clearing</h2>
+<p>After all occupants are removed and secured:</p>
+<ol>
+  <li>Approach from the passenger side at an angle, using the vehicle as cover</li>
+  <li>Visually clear the front seats, rear seats, and floorboards through windows</li>
+  <li>Open the trunk (if applicable) with cover officer maintaining aim</li>
+  <li>Announce "VEHICLE CLEAR" once confirmed empty</li>
+  <li>Secure the vehicle (close doors, remove keys) pending tow or release</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s4">4. Routine Traffic Stop Procedures</h1>
+<!-- ================================================================== -->
+
+<h2>4.1 Vehicle Positioning</h2>
+<p>Upon the violator pulling to the right side of the roadway:</p>
+<ul>
+  <li>Position your patrol vehicle approximately <strong>12-15 feet</strong> behind the stopped vehicle</li>
+  <li>Offset your vehicle slightly to the left (approximately 3 feet into the traffic lane) to create a safety buffer</li>
+  <li>Leave emergency lights activated for the duration of the stop</li>
+  <li>At night, activate the takedown lights and spotlight on the violator's driver-side mirror</li>
+</ul>
+
+<h2>4.2 Approach Procedures</h2>
+
+<h3>Driver-Side Approach (Standard)</h3>
+<ol>
+  <li>Exit the patrol vehicle and move along the driver side</li>
+  <li>Touch the rear trunk/tailgate area (leaving a fingerprint for evidence purposes)</li>
+  <li>Observe the rear seat and interior through side windows as you approach</li>
+  <li>Stop at the B-pillar (rear edge of the driver's door) to make initial contact</li>
+  <li>Stand slightly behind the driver's position to maintain a tactical advantage</li>
+  <li>Keep your weapon side away from the vehicle</li>
+</ol>
+
+<h3>Passenger-Side Approach (Alternative)</h3>
+<p>Used on high-speed roads, multi-lane highways, or when traffic is heavy on the driver side:</p>
+<ol>
+  <li>Exit the patrol vehicle and walk along the passenger side</li>
+  <li>Touch the trunk/tailgate area</li>
+  <li>Observe the interior from the passenger side</li>
+  <li>Make contact at the passenger window -- request the driver to lower it or lean across</li>
+  <li>This approach provides a tactical advantage as suspects rarely expect contact from this side</li>
+</ol>
+
+<div class="callout callout-warning">
+  <strong>HIGHWAY STOPS:</strong> On Route 1, Great Ocean Highway, or any road with speed limits above 60 MPH, the <strong>passenger-side approach is mandatory</strong> unless the vehicle is fully off the roadway on a wide shoulder.
+</div>
+
+<h2>4.3 Initial Contact</h2>
+<p>Upon reaching the driver's window, the officer shall:</p>
+<ol>
+  <li><strong>Greet the driver professionally:</strong> "Good [morning/afternoon/evening], I'm [Rank] [Name] with the [Department]."</li>
+  <li><strong>State the reason for the stop:</strong> "I stopped you because [specific violation]."</li>
+  <li><strong>Request documents:</strong> "May I see your driver's license, vehicle registration, and proof of insurance?"</li>
+  <li><strong>Observe the driver's demeanor</strong> -- signs of impairment, nervousness, reaching movements, visible contraband</li>
+</ol>
+
+<h2>4.4 Officer Safety During the Stop</h2>
+<ul>
+  <li>Never stand directly in front of the driver's door -- maintain the B-pillar position</li>
+  <li>Keep your flashlight in your support hand at night, held high and away from your body</li>
+  <li>Watch the driver's hands at all times</li>
+  <li>If the driver reaches into the glove box or under seats, ask them to stop and explain what they are reaching for</li>
+  <li>If you feel unsafe at any point, you may order all occupants to place their hands on the dashboard or out of the windows</li>
+  <li>Never lean into the vehicle</li>
+</ul>
+
+<h2>4.5 Passenger Contact</h2>
+<p>Officers may lawfully order passengers to remain in or exit the vehicle during a traffic stop. When addressing passengers:</p>
+<ul>
+  <li>Greet them and explain you are conducting a routine traffic stop</li>
+  <li>Request identification <strong>only if</strong> you have independent reasonable suspicion involving the passenger</li>
+  <li>If a passenger is uncooperative but not committing a crime, note their description and do not escalate</li>
+  <li>If a passenger has an active warrant, they may be detained and arrested independently of the traffic stop</li>
+</ul>
+
+<h2>4.6 Identification Verification</h2>
+<ol>
+  <li>Run the driver's license through dispatch or MDT for validity, warrants, and prior contacts</li>
+  <li>Verify the vehicle registration matches the license plate and VIN</li>
+  <li>Check insurance status</li>
+  <li>Note any discrepancies (name mismatch, stolen registration, suspended license)</li>
+  <li>If the driver cannot produce a license, obtain name, date of birth, and run manually</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s5">5. Citation &amp; Warning Procedures</h1>
+<!-- ================================================================== -->
+
+<h2>5.1 Officer Discretion</h2>
+<p>Officers have discretion in determining whether to issue a citation or a warning. Consider the following factors:</p>
+<ul>
+  <li><strong>Severity of the violation</strong> -- minor equipment failures vs. dangerous driving</li>
+  <li><strong>Driver's attitude and cooperation</strong> -- respectful and compliant vs. hostile and evasive</li>
+  <li><strong>Driver's record</strong> -- first offense vs. habitual violator</li>
+  <li><strong>Circumstances</strong> -- emergency situations, medical necessity, unfamiliarity with area</li>
+  <li><strong>Public safety impact</strong> -- was anyone endangered by the violation?</li>
+</ul>
+
+<h2>5.2 When a Citation is MANDATORY</h2>
+<div class="callout callout-critical">
+  <strong>Officers MUST issue a citation (no discretion) for the following violations:</strong>
+  <ul>
+    <li>DUI / DWI (any blood alcohol level above 0.08)</li>
+    <li>Reckless driving</li>
+    <li>Street racing / exhibition of speed</li>
+    <li>Driving on a suspended/revoked license</li>
+    <li>Hit and run (any severity)</li>
+    <li>School zone violations</li>
+    <li>Evading an officer</li>
+    <li>Vehicular assault</li>
+  </ul>
+</div>
+
+<h2>5.3 Written Warnings</h2>
+<p>A written warning is a formal record that the officer observed a violation but chose not to impose a fine. Written warnings:</p>
+<ul>
+  <li>Are recorded in the MDT and remain on the driver's file for <strong>90 days</strong></li>
+  <li>May be used by future officers to establish a pattern (e.g., second warning escalates to citation)</li>
+  <li>Must include: date, time, location, violation type, officer name and badge number</li>
+  <li>Should include a brief explanation to the driver of why a warning is being issued instead of a citation</li>
+</ul>
+
+<h2>5.4 Citation Types</h2>
+<table>
+  <tr>
+    <th>Citation Type</th>
+    <th>Description</th>
+    <th>Appearance Required</th>
+  </tr>
+  <tr>
+    <td>Infraction</td>
+    <td>Minor violation, fine only, no jail time possible</td>
+    <td>No (pay or contest by date)</td>
+  </tr>
+  <tr>
+    <td>Misdemeanor Citation</td>
+    <td>Criminal traffic offense, possible jail time up to 1 year</td>
+    <td>Yes (mandatory court date)</td>
+  </tr>
+  <tr>
+    <td>Felony Citation</td>
+    <td>Serious criminal traffic offense (DUI w/ injury, vehicular manslaughter)</td>
+    <td>Yes (arrest and booking required)</td>
+  </tr>
+</table>
+
+<h2>5.5 Fine Amounts by Violation</h2>
+<table>
+  <tr>
+    <th>Violation</th>
+    <th>Code</th>
+    <th>Fine ($)</th>
+    <th>Points</th>
+    <th>Type</th>
+  </tr>
+  <tr>
+    <td>Speeding (1-15 MPH over)</td>
+    <td>SAVC 22350(a)</td>
+    <td>$250</td>
+    <td>1</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Speeding (16-25 MPH over)</td>
+    <td>SAVC 22350(b)</td>
+    <td>$500</td>
+    <td>2</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Speeding (26-40 MPH over)</td>
+    <td>SAVC 22350(c)</td>
+    <td>$1,000</td>
+    <td>3</td>
+    <td>Misdemeanor</td>
+  </tr>
+  <tr>
+    <td>Speeding (41+ MPH over)</td>
+    <td>SAVC 22350(d)</td>
+    <td>$2,500</td>
+    <td>4</td>
+    <td>Misdemeanor</td>
+  </tr>
+  <tr>
+    <td>Running a red light</td>
+    <td>SAVC 21453</td>
+    <td>$500</td>
+    <td>2</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Running a stop sign</td>
+    <td>SAVC 22450</td>
+    <td>$350</td>
+    <td>1</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Failure to signal</td>
+    <td>SAVC 22107</td>
+    <td>$200</td>
+    <td>1</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Illegal U-turn</td>
+    <td>SAVC 22100</td>
+    <td>$300</td>
+    <td>1</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Illegal lane change</td>
+    <td>SAVC 21658</td>
+    <td>$300</td>
+    <td>1</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Driving without a license</td>
+    <td>SAVC 12500</td>
+    <td>$1,000</td>
+    <td>0</td>
+    <td>Misdemeanor</td>
+  </tr>
+  <tr>
+    <td>Driving on suspended license</td>
+    <td>SAVC 14601</td>
+    <td>$2,000</td>
+    <td>0</td>
+    <td>Misdemeanor</td>
+  </tr>
+  <tr>
+    <td>No insurance</td>
+    <td>SAVC 16028</td>
+    <td>$750</td>
+    <td>0</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Expired registration</td>
+    <td>SAVC 4000</td>
+    <td>$350</td>
+    <td>0</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Illegal window tint</td>
+    <td>SAVC 26708</td>
+    <td>$250</td>
+    <td>0</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Reckless driving</td>
+    <td>SAVC 23103</td>
+    <td>$3,000</td>
+    <td>4</td>
+    <td>Misdemeanor</td>
+  </tr>
+  <tr>
+    <td>Street racing</td>
+    <td>SAVC 23109</td>
+    <td>$5,000</td>
+    <td>4</td>
+    <td>Misdemeanor</td>
+  </tr>
+  <tr>
+    <td>Exhibition of speed</td>
+    <td>SAVC 23109(c)</td>
+    <td>$2,000</td>
+    <td>2</td>
+    <td>Misdemeanor</td>
+  </tr>
+  <tr>
+    <td>Failure to yield to emergency vehicle</td>
+    <td>SAVC 21806</td>
+    <td>$750</td>
+    <td>2</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Seatbelt violation</td>
+    <td>SAVC 27315</td>
+    <td>$150</td>
+    <td>0</td>
+    <td>Infraction</td>
+  </tr>
+  <tr>
+    <td>Cell phone while driving</td>
+    <td>SAVC 23123</td>
+    <td>$350</td>
+    <td>1</td>
+    <td>Infraction</td>
+  </tr>
+</table>
+
+<div class="callout callout-info">
+  <strong>POINTS SYSTEM:</strong> Drivers accumulate points on their license for moving violations. At <strong>6 points</strong>, the driver receives a mandatory traffic school notice. At <strong>10 points</strong> within 12 months, the driver's license is automatically <strong>suspended for 30 days</strong>. At <strong>14 points</strong>, the license is <strong>revoked</strong> and the driver must reapply.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s6">6. DUI/DWI Procedures</h1>
+<!-- ================================================================== -->
+
+<h2>6.1 Indicators of Impairment</h2>
+<p>Officers should look for the following signs of impairment during any traffic stop or patrol observation:</p>
+<ul>
+  <li>Weaving, swerving, or drifting between lanes</li>
+  <li>Unusually slow speed (15+ MPH under the limit)</li>
+  <li>Delayed response to traffic signals</li>
+  <li>Near-collisions or striking curbs</li>
+  <li>Driving without headlights at night</li>
+  <li>Slurred speech, bloodshot eyes, odor of alcohol</li>
+  <li>Inability to produce documents or confusion about location</li>
+  <li>Open containers visible in the vehicle</li>
+</ul>
+
+<h2>6.2 Field Sobriety Tests (FST)</h2>
+<p>When DUI is suspected, the officer shall administer the <strong>Standardized Field Sobriety Test (SFST)</strong> battery:</p>
+
+<h3>Test 1: Horizontal Gaze Nystagmus (HGN)</h3>
+<ul>
+  <li>Hold a stimulus (pen, finger) 12-15 inches from the subject's face</li>
+  <li>Move slowly from center to far left, then far right</li>
+  <li>Observe for involuntary jerking of the eyes</li>
+  <li>Check: lack of smooth pursuit, distinct nystagmus at maximum deviation, onset before 45 degrees</li>
+  <li>4+ clues out of 6 indicates impairment</li>
+</ul>
+
+<h3>Test 2: Walk and Turn</h3>
+<ul>
+  <li>Instruct the subject to take 9 heel-to-toe steps along a straight line</li>
+  <li>Turn around in a specific manner and return 9 steps</li>
+  <li>Observe for: cannot balance during instructions, starts too soon, stops walking, misses heel-to-toe, steps off line, uses arms for balance, wrong number of steps, improper turn</li>
+  <li>2+ clues out of 8 indicates impairment</li>
+</ul>
+
+<h3>Test 3: One Leg Stand</h3>
+<ul>
+  <li>Instruct the subject to raise one foot approximately 6 inches off the ground</li>
+  <li>Count aloud "one thousand one, one thousand two..." for 30 seconds</li>
+  <li>Observe for: swaying, using arms for balance, hopping, putting foot down</li>
+  <li>2+ clues out of 4 indicates impairment</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>FST LIMITATIONS:</strong> Field sobriety tests may not be accurate for subjects with physical disabilities, injuries, or those over 65 years of age. Document any such conditions and rely more heavily on breathalyzer results and behavioral observations.
+</div>
+
+<h2>6.3 Breathalyzer Procedures</h2>
+<ol>
+  <li>Inform the subject that you are requesting a breath sample to determine blood alcohol content (BAC)</li>
+  <li>Advise the subject that refusal may result in automatic license suspension under implied consent law</li>
+  <li>Observe the subject for a <strong>15-minute observation period</strong> (no eating, drinking, smoking, or vomiting)</li>
+  <li>Administer two breath samples -- results must be within 0.02 of each other</li>
+  <li>Record both results, the device serial number, and last calibration date</li>
+</ol>
+
+<h2>6.4 BAC Thresholds &amp; Penalties</h2>
+<table>
+  <tr>
+    <th>BAC Level</th>
+    <th>Classification</th>
+    <th>Fine ($)</th>
+    <th>Jail Time</th>
+    <th>License Suspension</th>
+    <th>Additional</th>
+  </tr>
+  <tr>
+    <td>0.08 - 0.10</td>
+    <td>DUI (Misdemeanor)</td>
+    <td>$3,000</td>
+    <td>Up to 6 months</td>
+    <td>6 months</td>
+    <td>Mandatory DUI school</td>
+  </tr>
+  <tr>
+    <td>0.10 - 0.15</td>
+    <td>DUI (Misdemeanor)</td>
+    <td>$5,000</td>
+    <td>Up to 12 months</td>
+    <td>12 months</td>
+    <td>DUI school + ignition interlock</td>
+  </tr>
+  <tr>
+    <td>0.15 - 0.20</td>
+    <td>Aggravated DUI</td>
+    <td>$7,500</td>
+    <td>Up to 18 months</td>
+    <td>18 months</td>
+    <td>DUI school + vehicle impound 30 days</td>
+  </tr>
+  <tr>
+    <td>0.20+</td>
+    <td>Extreme DUI</td>
+    <td>$10,000</td>
+    <td>Up to 24 months</td>
+    <td>24 months</td>
+    <td>Vehicle seizure + mandatory treatment</td>
+  </tr>
+  <tr>
+    <td>Refusal</td>
+    <td>Implied Consent Violation</td>
+    <td>$5,000</td>
+    <td>N/A</td>
+    <td>12 months automatic</td>
+    <td>Blood draw warrant may be obtained</td>
+  </tr>
+</table>
+
+<h2>6.5 DUI Penalty Escalation</h2>
+<table>
+  <tr>
+    <th>Offense Number</th>
+    <th>Fine Multiplier</th>
+    <th>Minimum Jail Time</th>
+    <th>License Suspension</th>
+    <th>Additional Consequence</th>
+  </tr>
+  <tr>
+    <td>1st Offense</td>
+    <td>1x (base fine)</td>
+    <td>48 hours</td>
+    <td>6 months</td>
+    <td>DUI school (12 weeks)</td>
+  </tr>
+  <tr>
+    <td>2nd Offense (within 5 years)</td>
+    <td>2x base fine</td>
+    <td>10 days</td>
+    <td>18 months</td>
+    <td>Ignition interlock device + 18-week DUI school</td>
+  </tr>
+  <tr>
+    <td>3rd Offense (within 10 years)</td>
+    <td>3x base fine</td>
+    <td>120 days</td>
+    <td>36 months (revocation)</td>
+    <td>Felony DUI charge + vehicle seizure</td>
+  </tr>
+  <tr>
+    <td>4th+ Offense</td>
+    <td>4x base fine</td>
+    <td>16 months state prison</td>
+    <td>Permanent revocation</td>
+    <td>Habitual offender designation</td>
+  </tr>
+</table>
+
+<h2>6.6 Blood Draw Authorization</h2>
+<p>If a subject refuses a breathalyzer or is unable to provide a sample (unconscious, injured):</p>
+<ol>
+  <li>Contact a judge or on-call magistrate for a blood draw warrant</li>
+  <li>Transport the subject to Pillbox Medical Center or Sandy Shores Medical</li>
+  <li>A licensed phlebotomist or paramedic must perform the draw</li>
+  <li>Two vials collected: one for the state lab, one for the defense</li>
+  <li>Chain of custody documentation must be completed on-scene</li>
+</ol>
+
+<h2>6.7 DUI Impoundment</h2>
+<p>The vehicle of a DUI-arrested driver shall be impounded for a minimum of <strong>72 hours</strong>. If a valid licensed driver is present in the vehicle (sober passenger), the vehicle may be released to that individual at the officer's discretion.</p>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s7">7. Commercial Vehicle Enforcement</h1>
+<!-- ================================================================== -->
+
+<h2>7.1 CDL Requirements</h2>
+<p>All operators of commercial motor vehicles (CMV) within San Andreas must possess a valid Commercial Driver's License (CDL). A CMV is defined as:</p>
+<ul>
+  <li>Any vehicle with a gross vehicle weight rating (GVWR) of <strong>26,001 lbs or more</strong></li>
+  <li>Any vehicle towing a trailer with a GVWR of <strong>10,001 lbs or more</strong> (combined weight exceeds 26,001 lbs)</li>
+  <li>Any vehicle designed to transport <strong>16 or more passengers</strong> (including the driver)</li>
+  <li>Any vehicle carrying hazardous materials requiring placards</li>
+</ul>
+
+<h2>7.2 CDL Classes</h2>
+<table>
+  <tr>
+    <th>Class</th>
+    <th>Description</th>
+    <th>Vehicles Authorized</th>
+  </tr>
+  <tr>
+    <td>Class A</td>
+    <td>Combination vehicles</td>
+    <td>Tractor-trailers, flatbeds, tankers with trailers</td>
+  </tr>
+  <tr>
+    <td>Class B</td>
+    <td>Heavy straight vehicles</td>
+    <td>Buses, dump trucks, box trucks, cement mixers</td>
+  </tr>
+  <tr>
+    <td>Class C</td>
+    <td>Small CMV / hazmat / passenger</td>
+    <td>Hazmat vans, small passenger buses (16+ PAX)</td>
+  </tr>
+</table>
+
+<h2>7.3 DOT Inspection Points</h2>
+<p>Officers assigned to Commercial Vehicle Enforcement shall conduct the following inspection during a roadside stop:</p>
+<ul>
+  <li><strong>Driver credentials:</strong> CDL, medical examiner's certificate, driver logs (hours of service)</li>
+  <li><strong>Vehicle documents:</strong> Registration, proof of insurance, IRP (International Registration Plan) cab card</li>
+  <li><strong>Safety inspection:</strong> Tires (tread depth, inflation), brakes (air brake check), lights (all exterior functional), mirrors, windshield condition, coupling devices</li>
+  <li><strong>Cargo securement:</strong> Load properly secured per FMCSA regulations, no shifting or overhanging cargo</li>
+  <li><strong>Hazmat verification:</strong> Proper placarding, shipping papers accessible, emergency response info present</li>
+</ul>
+
+<h2>7.4 Weight Limits</h2>
+<table>
+  <tr>
+    <th>Configuration</th>
+    <th>Max Gross Weight</th>
+    <th>Overweight Fine (per 1,000 lbs over)</th>
+  </tr>
+  <tr>
+    <td>Single axle</td>
+    <td>20,000 lbs</td>
+    <td>$500</td>
+  </tr>
+  <tr>
+    <td>Tandem axle</td>
+    <td>34,000 lbs</td>
+    <td>$500</td>
+  </tr>
+  <tr>
+    <td>Gross vehicle weight (5-axle semi)</td>
+    <td>80,000 lbs</td>
+    <td>$1,000</td>
+  </tr>
+</table>
+
+<h2>7.5 Hazmat Procedures</h2>
+<div class="callout callout-critical">
+  <strong>HAZMAT STOPS:</strong> When stopping a vehicle carrying hazardous materials, officers shall: (1) maintain a <strong>minimum 100-foot distance</strong> upwind during approach, (2) NEVER allow smoking or open flame near the vehicle, (3) contact Fire/EMS dispatch immediately if any leak, spill, or damage to cargo containers is observed, (4) consult the Emergency Response Guidebook (ERG) for the specific placard number.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s8">8. Motorcycle &amp; Bicycle Stops</h1>
+<!-- ================================================================== -->
+
+<h2>8.1 Motorcycle Stop Considerations</h2>
+<p>Motorcycle stops present unique safety challenges for officers:</p>
+<ul>
+  <li><strong>Visibility:</strong> Motorcycles are smaller and harder to track. Use full light bar, not just rear flashers.</li>
+  <li><strong>Flight risk:</strong> Motorcycles can accelerate faster and maneuver through gaps. Be prepared for evasion.</li>
+  <li><strong>No trunk touch:</strong> There is no trunk to touch for evidence. Note the license plate on approach instead.</li>
+  <li><strong>Helmet removal:</strong> Request the rider to remove their helmet for identification. This also improves communication.</li>
+  <li><strong>Kickstand positioning:</strong> Instruct the rider to deploy the kickstand and remain seated until directed.</li>
+</ul>
+
+<h2>8.2 Motorcycle Approach</h2>
+<ol>
+  <li>Position the patrol vehicle at a 15-degree angle, 10-12 feet behind the motorcycle</li>
+  <li>Approach on the <strong>left (driver) side</strong> -- motorcycles have no passenger-side blind spot concern</li>
+  <li>Instruct the rider: "Please turn off your engine, leave it in gear on the kickstand, and keep your hands on the handlebars."</li>
+  <li>Have the rider dismount only if necessary for sobriety tests or arrest</li>
+  <li>Check for concealed weapons in saddlebags only with probable cause or consent</li>
+</ol>
+
+<h2>8.3 Bicycle Stops</h2>
+<p>Bicyclists are subject to the same traffic laws as motor vehicles under SAVC. Officers may stop bicyclists for:</p>
+<ul>
+  <li>Running stop signs or red lights</li>
+  <li>Riding against traffic (wrong way)</li>
+  <li>No lights/reflectors at night (SAVC 21201)</li>
+  <li>Riding on sidewalks in prohibited zones</li>
+  <li>DUI on a bicycle (yes, this is enforceable)</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>BICYCLE CITATIONS:</strong> Bicycle infractions carry reduced fines (50% of the standard motor vehicle fine). However, DUI on a bicycle carries the <strong>same penalties</strong> as a motor vehicle DUI. Bicyclists cannot have their license suspended for non-DUI bicycle violations.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s9">9. Pedestrian Stops</h1>
+<!-- ================================================================== -->
+
+<h2>9.1 Terry Stop Standards</h2>
+<p>A pedestrian stop (also called a Terry stop or investigative detention) requires <strong>reasonable articulable suspicion</strong> that the person is engaged in, has engaged in, or is about to engage in criminal activity. An officer may briefly detain and question the individual.</p>
+
+<h2>9.2 Reasonable Suspicion Factors</h2>
+<ul>
+  <li>Person matches the description of a suspect from a recent crime</li>
+  <li>Person is observed in a high-crime area at an unusual hour engaging in suspicious behavior</li>
+  <li>Person appears to be casing a business or vehicle</li>
+  <li>Person is observed making hand-to-hand transactions consistent with drug dealing</li>
+  <li>Person is observed fleeing from the scene of a reported crime</li>
+  <li>Person is visibly armed in a manner inconsistent with lawful carry</li>
+</ul>
+
+<h2>9.3 Pat-Down (Frisk) Procedures</h2>
+<p>A pat-down may be conducted <strong>only if the officer reasonably believes the person may be armed and dangerous</strong>. The frisk is limited to a search for weapons on the outer clothing.</p>
+<ol>
+  <li>Inform the person: "For my safety and yours, I'm going to conduct a brief pat-down for weapons."</li>
+  <li>Use the back of your hands on sensitive areas</li>
+  <li>Check waistband, pockets, jacket lining, boots/ankles</li>
+  <li>If a weapon-like object is felt, you may reach into the clothing to retrieve it</li>
+  <li>If contraband (not a weapon) is felt and is <strong>immediately identifiable as contraband</strong> through plain feel, it may be seized (Plain Feel Doctrine)</li>
+</ol>
+
+<div class="callout callout-warning">
+  <strong>LEGAL LIMITATION:</strong> You may NOT convert a pat-down into a full search. Squeezing, manipulating, or sliding objects in pockets to determine their nature exceeds the scope of a Terry frisk. If you need a full search, you must establish probable cause for arrest first.
+</div>
+
+<h2>9.4 Pedestrian Stop Documentation</h2>
+<p>All pedestrian stops must be logged with:</p>
+<ul>
+  <li>Date, time, and location</li>
+  <li>Reason for the stop (specific articulable facts)</li>
+  <li>Duration of the stop</li>
+  <li>Whether a pat-down was conducted and the result</li>
+  <li>Outcome (released, cited, arrested)</li>
+  <li>Demographics of the individual (for department statistics and compliance reporting)</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s10">10. Speed Enforcement</h1>
+<!-- ================================================================== -->
+
+<h2>10.1 Speed Detection Methods</h2>
+<table>
+  <tr>
+    <th>Method</th>
+    <th>Accuracy</th>
+    <th>Effective Range</th>
+    <th>Certification Required</th>
+  </tr>
+  <tr>
+    <td>Radar (stationary)</td>
+    <td>+/- 1 MPH</td>
+    <td>Up to 1,500 ft</td>
+    <td>40-hour radar operator course</td>
+  </tr>
+  <tr>
+    <td>Radar (moving)</td>
+    <td>+/- 2 MPH</td>
+    <td>Up to 1,000 ft</td>
+    <td>40-hour radar operator course</td>
+  </tr>
+  <tr>
+    <td>LIDAR (laser)</td>
+    <td>+/- 1 MPH</td>
+    <td>Up to 3,000 ft</td>
+    <td>24-hour LIDAR certification</td>
+  </tr>
+  <tr>
+    <td>Pacing</td>
+    <td>+/- 3 MPH</td>
+    <td>Must pace for 1/4 mile minimum</td>
+    <td>Speedometer calibration within 6 months</td>
+  </tr>
+  <tr>
+    <td>Aircraft (SASP only)</td>
+    <td>+/- 1 MPH</td>
+    <td>Timed sections marked on roadway</td>
+    <td>Special operations assignment</td>
+  </tr>
+</table>
+
+<h2>10.2 Radar/LIDAR Operations</h2>
+<ul>
+  <li>Radar and LIDAR devices must be calibrated at the <strong>start and end of each shift</strong> using tuning forks (radar) or alignment tests (LIDAR)</li>
+  <li>Calibration records must be maintained and available in court</li>
+  <li>Officers must be currently certified on the specific device model being used</li>
+  <li>LIDAR must target the <strong>front or rear</strong> of the vehicle (largest reflective surface) -- never the side</li>
+  <li>Readings taken through glass (windshield) may be challenged in court -- take measurements outside the vehicle when possible</li>
+</ul>
+
+<h2>10.3 Speed Zone Penalties</h2>
+<table>
+  <tr>
+    <th>Zone</th>
+    <th>Speed Limit</th>
+    <th>Fine Multiplier</th>
+    <th>Special Conditions</th>
+  </tr>
+  <tr>
+    <td>Standard road</td>
+    <td>Posted limit</td>
+    <td>1x</td>
+    <td>Standard fine schedule</td>
+  </tr>
+  <tr>
+    <td>School zone (active hours)</td>
+    <td>15-25 MPH</td>
+    <td>2x</td>
+    <td>Active when lights flashing or children present</td>
+  </tr>
+  <tr>
+    <td>Construction zone (workers present)</td>
+    <td>Reduced limit posted</td>
+    <td>2x</td>
+    <td>Workers must be present for multiplier</td>
+  </tr>
+  <tr>
+    <td>Hospital zone</td>
+    <td>25 MPH</td>
+    <td>1.5x</td>
+    <td>Within 500 ft of hospital entrance</td>
+  </tr>
+  <tr>
+    <td>Residential area</td>
+    <td>25-35 MPH</td>
+    <td>1x</td>
+    <td>Standard, unless children playing (then 1.5x)</td>
+  </tr>
+  <tr>
+    <td>Highway / Interstate</td>
+    <td>65-80 MPH</td>
+    <td>1x</td>
+    <td>SASP primary enforcement</td>
+  </tr>
+</table>
+
+<h2>10.4 Speed Penalty Chart (Combined)</h2>
+<table>
+  <tr>
+    <th>MPH Over Limit</th>
+    <th>Standard Zone ($)</th>
+    <th>School Zone ($)</th>
+    <th>Construction Zone ($)</th>
+    <th>Points</th>
+  </tr>
+  <tr>
+    <td>1-10 MPH</td>
+    <td>$150</td>
+    <td>$300</td>
+    <td>$300</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>11-15 MPH</td>
+    <td>$250</td>
+    <td>$500</td>
+    <td>$500</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td>16-20 MPH</td>
+    <td>$500</td>
+    <td>$1,000</td>
+    <td>$1,000</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>21-25 MPH</td>
+    <td>$750</td>
+    <td>$1,500</td>
+    <td>$1,500</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>26-30 MPH</td>
+    <td>$1,000</td>
+    <td>$2,000</td>
+    <td>$2,000</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>31-40 MPH</td>
+    <td>$1,500</td>
+    <td>$3,000</td>
+    <td>$3,000</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>41+ MPH</td>
+    <td>$2,500</td>
+    <td>$5,000</td>
+    <td>$5,000</td>
+    <td>4</td>
+  </tr>
+</table>
+
+<div class="callout callout-critical">
+  <strong>MANDATORY ARREST:</strong> Any driver exceeding the posted speed limit by <strong>41+ MPH</strong> in any zone, or exceeding <strong>100 MPH</strong> regardless of the posted limit, shall be placed under arrest for reckless driving / exhibition of speed. The vehicle shall be impounded for 30 days.
+</div>
+
+<h2>10.5 Speed Trap Positioning</h2>
+<p>Approved speed enforcement positions are designated by the Traffic Division Commander. Officers shall:</p>
+<ul>
+  <li>Position the vehicle in an approved stationary location with clear line-of-sight</li>
+  <li>Be in a <strong>marked patrol vehicle</strong> (unmarked vehicles may not conduct stationary speed enforcement unless part of a special operation)</li>
+  <li>Ensure the radar/LIDAR device is properly aimed and has no obstructions</li>
+  <li>Not operate speed enforcement from a concealed position behind obstructions that prevent the public from seeing the patrol vehicle (transparency policy)</li>
+  <li>Rotate positions every 60-90 minutes to maximize deterrent effect</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s11">11. Checkpoint Operations</h1>
+<!-- ================================================================== -->
+
+<h2>11.1 Legal Requirements</h2>
+<p>All checkpoints must comply with the following legal standards to be constitutionally valid:</p>
+<ul>
+  <li><strong>Supervisory authority:</strong> A checkpoint must be authorized by a supervisor at the rank of Sergeant or above</li>
+  <li><strong>Neutral selection criteria:</strong> Vehicles must be selected in a non-discriminatory pattern (e.g., every 3rd vehicle, every 5th vehicle)</li>
+  <li><strong>Advance public notice:</strong> The checkpoint must be announced at least 24 hours in advance via dispatch, department social media, or news bulletin</li>
+  <li><strong>Visible signage:</strong> "DUI CHECKPOINT AHEAD" or "SAFETY CHECKPOINT" signs must be placed a minimum of 200 feet before the checkpoint</li>
+  <li><strong>Safe escape route:</strong> Drivers must have the legal option to turn around before reaching the checkpoint (no roadblocks forcing entry)</li>
+  <li><strong>Minimal detention:</strong> Each stop at the checkpoint should last no longer than 60-90 seconds unless reasonable suspicion develops</li>
+</ul>
+
+<h2>11.2 DUI Checkpoint Setup</h2>
+<table>
+  <tr>
+    <th>Element</th>
+    <th>Specification</th>
+    <th>Responsible</th>
+  </tr>
+  <tr>
+    <td>Advance signage</td>
+    <td>200+ feet before checkpoint, illuminated at night</td>
+    <td>Traffic control officer</td>
+  </tr>
+  <tr>
+    <td>Cone pattern</td>
+    <td>Lane reduction from 2 lanes to 1, gradual taper (50 ft minimum)</td>
+    <td>Traffic control officer</td>
+  </tr>
+  <tr>
+    <td>Lighting</td>
+    <td>Scene lights, multiple patrol vehicles with activated light bars</td>
+    <td>All units on scene</td>
+  </tr>
+  <tr>
+    <td>Contact point</td>
+    <td>Single stop point where the officer speaks with the driver</td>
+    <td>Screening officer</td>
+  </tr>
+  <tr>
+    <td>Secondary screening area</td>
+    <td>Pull-off area for FST/breathalyzer if suspicion develops</td>
+    <td>DUI specialist</td>
+  </tr>
+  <tr>
+    <td>Arrest/processing area</td>
+    <td>Separate from traffic flow, secured by perimeter officers</td>
+    <td>Arrest team</td>
+  </tr>
+  <tr>
+    <td>Tow staging area</td>
+    <td>Pre-staged tow truck for impounded vehicles</td>
+    <td>Tow coordinator</td>
+  </tr>
+</table>
+
+<h2>11.3 Safety Checkpoint Procedures</h2>
+<p>Safety checkpoints (non-DUI) may be used to check for:</p>
+<ul>
+  <li>Valid driver's licenses and registration</li>
+  <li>Proof of insurance</li>
+  <li>Seatbelt compliance</li>
+  <li>Vehicle equipment safety (lights, tires, mirrors)</li>
+  <li>Outstanding warrants</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>STAFFING MINIMUMS:</strong> A DUI checkpoint requires a minimum of <strong>6 officers</strong> (1 supervisor, 2 screening officers, 1 DUI specialist, 1 traffic control, 1 perimeter/arrest). A safety checkpoint requires a minimum of <strong>4 officers</strong> (1 supervisor, 2 screening officers, 1 traffic control).
+</div>
+
+<h2>11.4 Checkpoint Duration &amp; Timing</h2>
+<ul>
+  <li>DUI checkpoints are typically conducted between <strong>2100-0300 hours</strong> (Friday/Saturday nights)</li>
+  <li>Safety checkpoints may operate at any time but are most effective during <strong>morning rush (0700-0900)</strong> and <strong>evening commute (1600-1800)</strong></li>
+  <li>Maximum checkpoint duration: <strong>4 hours</strong> per operation</li>
+  <li>All checkpoint operations must be logged with start time, end time, location, number of vehicles screened, citations issued, and arrests made</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s12">12. Accident Investigation</h1>
+<!-- ================================================================== -->
+
+<h2>12.1 Accident Classification</h2>
+<table>
+  <tr>
+    <th>Classification</th>
+    <th>Description</th>
+    <th>Investigation Level</th>
+    <th>Supervisor Required</th>
+  </tr>
+  <tr>
+    <td>Non-injury (fender bender)</td>
+    <td>Property damage only, all vehicles drivable</td>
+    <td>Basic report</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>Minor injury</td>
+    <td>Complaints of pain, no visible serious injury</td>
+    <td>Standard investigation</td>
+    <td>No</td>
+  </tr>
+  <tr>
+    <td>Major injury</td>
+    <td>Visible injuries, broken bones, lacerations, hospitalization</td>
+    <td>Full investigation</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Fatal</td>
+    <td>One or more fatalities</td>
+    <td>Major Collision Investigation Team (MCIT)</td>
+    <td>Yes (Lieutenant+)</td>
+  </tr>
+  <tr>
+    <td>Involving LEO/city vehicle</td>
+    <td>Any accident involving a department vehicle</td>
+    <td>Internal Affairs + standard investigation</td>
+    <td>Yes</td>
+  </tr>
+</table>
+
+<h2>12.2 Scene Management</h2>
+<p>The first arriving officer is the <strong>Incident Commander (IC)</strong> until relieved by a higher-ranking officer or specialist. Responsibilities include:</p>
+<ol>
+  <li><strong>Safety first:</strong> Check for injuries, request EMS if needed, ensure scene is safe (no fire, fuel leak, downed power lines)</li>
+  <li><strong>Secure the scene:</strong> Establish a perimeter using cones, flares, or patrol vehicles to protect the accident scene from traffic</li>
+  <li><strong>Preserve evidence:</strong> Do not move vehicles until the scene is documented (unless blocking traffic and all parties agree, or for life safety)</li>
+  <li><strong>Identify parties:</strong> Obtain driver's license, registration, and insurance from all involved parties</li>
+  <li><strong>Identify witnesses:</strong> Obtain names, contact info, and brief statements from any witnesses</li>
+  <li><strong>Traffic control:</strong> Redirect traffic around the scene; request additional units if needed</li>
+</ol>
+
+<h2>12.3 Documentation Requirements</h2>
+
+<h3>Photographs (all accidents)</h3>
+<ul>
+  <li>Overall scene from all four compass directions</li>
+  <li>Close-ups of vehicle damage (each vehicle, all damaged areas)</li>
+  <li>License plates of all vehicles</li>
+  <li>Skid marks, debris fields, and final rest positions</li>
+  <li>Traffic control devices (signals, signs, road markings) relevant to the accident</li>
+  <li>Road conditions (wet, icy, potholes, construction)</li>
+  <li>Injuries (with victim's consent)</li>
+</ul>
+
+<h3>Measurements (major injury / fatal only)</h3>
+<ul>
+  <li>Total station or tape measurements from fixed reference points (curbs, poles, lane markings)</li>
+  <li>Skid mark lengths (pre-impact and post-impact)</li>
+  <li>Vehicle final rest positions (distance from curb, distance from each other)</li>
+  <li>Debris scatter pattern and distances</li>
+  <li>Road width and lane configuration at the accident location</li>
+</ul>
+
+<h2>12.4 Witness Interviews</h2>
+<ul>
+  <li>Separate witnesses from each other and from the involved parties before taking statements</li>
+  <li>Record each witness's name, phone number, and address</li>
+  <li>Ask open-ended questions: "Tell me what you saw in your own words."</li>
+  <li>Note the witness's vantage point (where were they standing/driving?)</li>
+  <li>Record statements in writing or via body camera</li>
+</ul>
+
+<h2>12.5 Fault Determination</h2>
+<p>The investigating officer shall make a preliminary fault determination based on:</p>
+<ul>
+  <li>Physical evidence (skid marks, point of impact, vehicle damage patterns)</li>
+  <li>Witness statements</li>
+  <li>Driver statements</li>
+  <li>Traffic control devices and right-of-way rules</li>
+  <li>Environmental conditions</li>
+  <li>Any contributing violations (speeding, DUI, running a red light)</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>FAULT VS. LIABILITY:</strong> Officer fault determination is a <strong>preliminary assessment</strong> for the accident report. It does not constitute a legal finding of liability. Civil liability is determined by insurance companies and courts. Officers should state facts and observations, not legal conclusions.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s13">13. Hit &amp; Run Procedures</h1>
+<!-- ================================================================== -->
+
+<h2>13.1 Classification</h2>
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Charge</th>
+    <th>Priority</th>
+  </tr>
+  <tr>
+    <td>Hit &amp; Run (property damage)</td>
+    <td>Driver leaves scene of accident with property damage only</td>
+    <td>Misdemeanor (SAVC 20002)</td>
+    <td>Standard</td>
+  </tr>
+  <tr>
+    <td>Hit &amp; Run (injury)</td>
+    <td>Driver leaves scene where any person is injured</td>
+    <td>Felony (SAVC 20001)</td>
+    <td>High</td>
+  </tr>
+  <tr>
+    <td>Hit &amp; Run (fatal)</td>
+    <td>Driver leaves scene where a death has occurred</td>
+    <td>Felony (SAVC 20001 + SAPC 192)</td>
+    <td>Critical</td>
+  </tr>
+</table>
+
+<h2>13.2 Immediate Response</h2>
+<ol>
+  <li><strong>Render aid</strong> to the victim. Request EMS if injuries are present.</li>
+  <li><strong>Broadcast a BOLO</strong> immediately with: vehicle description (make, model, color, damage location), direction of travel, license plate (full or partial), driver description if available.</li>
+  <li><strong>Secure the scene</strong> and preserve all evidence (paint transfer, debris, broken parts, fluid trails).</li>
+  <li><strong>Canvass for witnesses</strong> -- check nearby businesses, pedestrians, other drivers.</li>
+  <li><strong>Check for CCTV/surveillance cameras</strong> in the area. Request footage preservation (send written request within 24 hours).</li>
+</ol>
+
+<h2>13.3 Evidence Collection</h2>
+<ul>
+  <li><strong>Paint transfer:</strong> Collect samples from the victim's vehicle for color matching and manufacturer identification</li>
+  <li><strong>Vehicle parts:</strong> Headlight fragments, mirror housings, bumper pieces, and emblems can identify make/model/year</li>
+  <li><strong>Tire marks:</strong> Photograph and measure skid marks; tire impression patterns can identify tire brand and size</li>
+  <li><strong>Fluid trails:</strong> Coolant, oil, or transmission fluid trails may lead to the suspect's location</li>
+  <li><strong>Broken glass:</strong> Headlight and windshield glass patterns are unique to manufacturers</li>
+</ul>
+
+<h2>13.4 Follow-Up Investigation</h2>
+<ul>
+  <li>Run partial plate combinations through the MDT database</li>
+  <li>Contact local body shops and auto parts stores for recent repair inquiries matching the damage profile</li>
+  <li>Monitor online marketplaces for parts matching the suspected vehicle being sold</li>
+  <li>Review CCTV footage from nearby intersections, gas stations, and businesses</li>
+  <li>Issue a community notification if the suspect remains unidentified after 48 hours</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>HIT &amp; RUN WITH INJURIES:</strong> There is <strong>no statute of limitations</strong> for felony hit and run investigations. The case remains open until the suspect is identified or all leads are exhausted. Assign a detective for cases with serious injury or death.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s14">14. Towing &amp; Impoundment</h1>
+<!-- ================================================================== -->
+
+<h2>14.1 Authorized Tow Reasons</h2>
+<table>
+  <tr>
+    <th>Reason</th>
+    <th>Authority</th>
+    <th>Hold Period</th>
+    <th>Release Conditions</th>
+  </tr>
+  <tr>
+    <td>DUI arrest</td>
+    <td>SAVC 22651(h)</td>
+    <td>72 hours minimum</td>
+    <td>Proof of sobriety + valid license + release fee</td>
+  </tr>
+  <tr>
+    <td>Suspended/revoked license</td>
+    <td>SAVC 22651(p)</td>
+    <td>30 days</td>
+    <td>Valid license obtained + release fee</td>
+  </tr>
+  <tr>
+    <td>Stolen vehicle recovery</td>
+    <td>SAVC 22651(b)</td>
+    <td>Evidence hold (varies)</td>
+    <td>Investigation complete + owner retrieval</td>
+  </tr>
+  <tr>
+    <td>Blocking roadway / hazard</td>
+    <td>SAVC 22651(a)</td>
+    <td>None (immediate release)</td>
+    <td>Tow fee payment</td>
+  </tr>
+  <tr>
+    <td>Abandoned vehicle</td>
+    <td>SAVC 22669</td>
+    <td>72-hour notice, then tow</td>
+    <td>Registration + tow fees + storage</td>
+  </tr>
+  <tr>
+    <td>Evidence in a crime</td>
+    <td>SAPC 1524</td>
+    <td>Duration of investigation</td>
+    <td>Court order or case closure</td>
+  </tr>
+  <tr>
+    <td>Reckless driving / street racing</td>
+    <td>SAVC 23109.2</td>
+    <td>30 days</td>
+    <td>Release fee + proof of insurance + valid license</td>
+  </tr>
+  <tr>
+    <td>5+ unpaid parking tickets</td>
+    <td>SAVC 22651(i)</td>
+    <td>Until tickets paid</td>
+    <td>Pay all outstanding tickets + tow/storage fees</td>
+  </tr>
+</table>
+
+<h2>14.2 Impound Fee Schedule</h2>
+<table>
+  <tr>
+    <th>Fee Type</th>
+    <th>Standard Vehicle</th>
+    <th>Motorcycle</th>
+    <th>Commercial Vehicle</th>
+  </tr>
+  <tr>
+    <td>Tow fee (base)</td>
+    <td>$250</td>
+    <td>$150</td>
+    <td>$500</td>
+  </tr>
+  <tr>
+    <td>Daily storage (per day)</td>
+    <td>$50</td>
+    <td>$35</td>
+    <td>$100</td>
+  </tr>
+  <tr>
+    <td>After-hours release surcharge</td>
+    <td>$75</td>
+    <td>$75</td>
+    <td>$75</td>
+  </tr>
+  <tr>
+    <td>Administrative fee</td>
+    <td>$100</td>
+    <td>$100</td>
+    <td>$150</td>
+  </tr>
+  <tr>
+    <td>DUI impound surcharge</td>
+    <td>$200</td>
+    <td>$200</td>
+    <td>N/A</td>
+  </tr>
+</table>
+
+<h2>14.3 72-Hour Hold Procedure</h2>
+<ol>
+  <li>Complete the impound report (vehicle description, VIN, plate, reason for impound, location recovered)</li>
+  <li>Notify dispatch of the impound and the tow company used</li>
+  <li>Conduct a <strong>vehicle inventory search</strong> prior to tow (document all valuables, personal property, and any contraband found)</li>
+  <li>The vehicle is transported to the designated impound lot</li>
+  <li>The registered owner is notified within 24 hours (by mail or phone) of the impound, location, and release requirements</li>
+  <li>The vehicle may not be released before the hold period expires unless authorized by a supervisor</li>
+</ol>
+
+<div class="callout callout-info">
+  <strong>INVENTORY SEARCH:</strong> An inventory search is NOT a criminal search. Its purpose is to document the contents of the vehicle for liability protection. However, any contraband discovered in plain view during an inventory search <strong>may be seized and used as evidence</strong>. The inventory must follow a standardized department checklist.
+</div>
+
+<h2>14.4 Impound Lot Release Procedures</h2>
+<p>To release a vehicle from the impound lot, the registered owner (or authorized representative) must:</p>
+<ol>
+  <li>Present valid government-issued photo identification</li>
+  <li>Present the vehicle registration or title proving ownership</li>
+  <li>Present valid proof of insurance</li>
+  <li>Present a valid driver's license (if the vehicle was impounded for a license-related offense, the license must be reinstated)</li>
+  <li>Pay all applicable fees (tow, storage, administrative, surcharges)</li>
+  <li>Sign the vehicle release form</li>
+</ol>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s15">15. Special Traffic Situations</h1>
+<!-- ================================================================== -->
+
+<h2>15.1 Funeral Escorts</h2>
+<p>Funeral escort procedures ensure the funeral procession travels safely and without interruption:</p>
+<ul>
+  <li>Escort requests must be submitted to the Traffic Division at least <strong>48 hours in advance</strong></li>
+  <li>A minimum of <strong>2 motor units</strong> (or 2 patrol vehicles) are required for a standard procession</li>
+  <li>The lead vehicle activates emergency lights and proceeds through intersections, blocking cross-traffic</li>
+  <li>All vehicles in the procession should have headlights on and hazard lights activated</li>
+  <li>Officers at key intersections hold traffic until the entire procession passes</li>
+  <li>Processions have the right-of-way; civilian vehicles may not break into the procession line</li>
+  <li>Maximum procession speed: <strong>35 MPH</strong> on surface streets, <strong>55 MPH</strong> on highways</li>
+</ul>
+
+<h2>15.2 Oversize Load Escorts</h2>
+<p>Oversize or overweight loads requiring escort must have:</p>
+<ul>
+  <li>A valid oversize/overweight permit issued by the Department of Transportation</li>
+  <li>Proper signage: "OVERSIZE LOAD" banners on front and rear</li>
+  <li>Pilot cars with flags and rotating amber lights (front and rear for loads over 14 feet wide)</li>
+  <li>LEO escort required for loads exceeding: <strong>16 feet wide</strong>, <strong>120 feet long</strong>, or when traveling through urban areas</li>
+  <li>Escorts travel at a maximum of <strong>45 MPH</strong> and are restricted to daylight hours (sunrise to sunset)</li>
+</ul>
+
+<h2>15.3 Emergency Vehicle Response Protocol</h2>
+<p>When an emergency vehicle approaches with lights and sirens:</p>
+<ul>
+  <li>Civilian vehicles must pull to the <strong>right and stop</strong> until the emergency vehicle passes</li>
+  <li>Failure to yield: $750 fine (SAVC 21806)</li>
+  <li>If an emergency vehicle is stopped on the roadway, all passing vehicles must move over one lane or reduce speed to 25 MPH (Move Over Law)</li>
+  <li>This law also applies to tow trucks and Caltrans vehicles with activated amber lights</li>
+</ul>
+
+<h2>15.4 Road Closures</h2>
+<p>Road closures may be initiated for:</p>
+<ul>
+  <li><strong>Crime scenes</strong> -- detectives authorize duration; minimum closure until scene is processed</li>
+  <li><strong>Accident investigation</strong> -- IC authorizes; fatal accidents may require 4-8 hours</li>
+  <li><strong>Hazmat incidents</strong> -- Fire Department IC authorizes; may last 12-24 hours</li>
+  <li><strong>Special events</strong> -- planned closures require 7 days advance notice to Traffic Division</li>
+  <li><strong>Natural disasters</strong> -- Emergency Management authorizes; indefinite duration</li>
+</ul>
+
+<div class="callout callout-warning">
+  <strong>DETOUR REQUIREMENTS:</strong> Any road closure lasting more than <strong>30 minutes</strong> requires an established detour route. Officers must be posted at each detour decision point, and temporary signage must be placed. Notify dispatch to update GPS/navigation systems through the traffic management center.
+</div>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s16">16. Traffic Control Devices</h1>
+<!-- ================================================================== -->
+
+<h2>16.1 Directing Traffic (Manual Traffic Control)</h2>
+<p>Officers directing traffic shall:</p>
+<ul>
+  <li>Wear a <strong>high-visibility reflective vest</strong> at all times when in the roadway</li>
+  <li>Stand in the center of the intersection or at the point requiring direction</li>
+  <li>Use clear, deliberate hand signals visible from all directions</li>
+  <li>Face the traffic you are <strong>stopping</strong>, not the traffic you are releasing</li>
+  <li>Use a whistle: one long blast to stop, two short blasts to proceed</li>
+  <li>Override malfunctioning traffic signals -- inform dispatch to request signal repair</li>
+</ul>
+
+<h2>16.2 Standard Hand Signals</h2>
+<table>
+  <tr>
+    <th>Signal</th>
+    <th>Description</th>
+    <th>Meaning</th>
+  </tr>
+  <tr>
+    <td>Palm facing traffic, arm extended</td>
+    <td>Arm raised, palm flat toward oncoming traffic</td>
+    <td>STOP</td>
+  </tr>
+  <tr>
+    <td>Beckoning motion</td>
+    <td>Arm extended toward traffic, hand sweeps toward body</td>
+    <td>PROCEED</td>
+  </tr>
+  <tr>
+    <td>Pointing at specific vehicle + beckoning</td>
+    <td>Point directly at the vehicle, then beckon forward</td>
+    <td>YOU -- PROCEED</td>
+  </tr>
+  <tr>
+    <td>Circular arm motion overhead</td>
+    <td>Arm raised, rotating in a circle above the head</td>
+    <td>SPEED UP / KEEP MOVING</td>
+  </tr>
+  <tr>
+    <td>Both palms out, arms extended</td>
+    <td>Both arms extended to the sides, palms facing outward</td>
+    <td>ALL DIRECTIONS STOP</td>
+  </tr>
+</table>
+
+<h2>16.3 Flare Placement Patterns</h2>
+
+<h3>Straight Road Closure</h3>
+<ul>
+  <li>Place the first flare <strong>200 feet</strong> before the hazard on the approach side</li>
+  <li>Place additional flares every <strong>50 feet</strong> in a tapered line leading traffic away from the hazard</li>
+  <li>Place flares on both sides if the hazard affects both directions</li>
+  <li>Minimum of <strong>6 flares</strong> per direction</li>
+</ul>
+
+<h3>Curve / Hill Closure</h3>
+<ul>
+  <li>Begin flare placement <strong>before</strong> the curve or crest of the hill (drivers must see the warning before the hazard)</li>
+  <li>Place the first flare a minimum of <strong>500 feet</strong> before the hazard on high-speed roads</li>
+  <li>Use double the standard flare count for reduced-visibility situations</li>
+</ul>
+
+<div class="callout callout-critical">
+  <strong>FLARE SAFETY:</strong> Do NOT use flares near fuel spills, propane leaks, or any flammable material. In these situations, use reflective triangles or LED flares only. Standard road flares ignite at 450 degrees F and burn at 1,400 degrees F.
+</div>
+
+<h2>16.4 Cone Patterns</h2>
+<table>
+  <tr>
+    <th>Situation</th>
+    <th>Taper Length</th>
+    <th>Cone Spacing</th>
+    <th>Buffer Zone</th>
+  </tr>
+  <tr>
+    <td>Lane closure (35 MPH or less)</td>
+    <td>100 feet</td>
+    <td>20 feet apart</td>
+    <td>50 feet beyond hazard</td>
+  </tr>
+  <tr>
+    <td>Lane closure (36-55 MPH)</td>
+    <td>250 feet</td>
+    <td>40 feet apart</td>
+    <td>100 feet beyond hazard</td>
+  </tr>
+  <tr>
+    <td>Lane closure (56+ MPH / highway)</td>
+    <td>500 feet</td>
+    <td>60 feet apart</td>
+    <td>200 feet beyond hazard</td>
+  </tr>
+  <tr>
+    <td>Full road closure</td>
+    <td>Per lane closure + barricades</td>
+    <td>10 feet apart across road</td>
+    <td>Detour signage required</td>
+  </tr>
+</table>
+
+<h2>16.5 Temporary Traffic Signals</h2>
+<p>Portable traffic signals may be deployed when a permanent signal is non-functional and manual traffic control is not sustainable. Deployment requires:</p>
+<ul>
+  <li>Authorization from the Traffic Division Sergeant or higher</li>
+  <li>Coordination with the city/county traffic engineering department</li>
+  <li>Officers must remain on scene until the portable signal is confirmed operational</li>
+  <li>Portable signals are programmed for a standard 60-second cycle (adjustable)</li>
+  <li>The permanent signal must be reported to the traffic management center for repair dispatch</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s17">17. Report Documentation</h1>
+<!-- ================================================================== -->
+
+<h2>17.1 Accident Reports</h2>
+<p>All accident reports shall be completed using the department's standard <strong>Collision Report Form (CRF)</strong> and submitted within the following timeframes:</p>
+<table>
+  <tr>
+    <th>Accident Type</th>
+    <th>Report Due</th>
+    <th>Submitted To</th>
+  </tr>
+  <tr>
+    <td>Non-injury (property damage only)</td>
+    <td>End of shift</td>
+    <td>Records Division</td>
+  </tr>
+  <tr>
+    <td>Minor injury</td>
+    <td>End of shift</td>
+    <td>Records Division + Traffic Division</td>
+  </tr>
+  <tr>
+    <td>Major injury</td>
+    <td>Within 24 hours</td>
+    <td>Records + Traffic + Supervisor review</td>
+  </tr>
+  <tr>
+    <td>Fatal</td>
+    <td>Within 24 hours (preliminary); 72 hours (full)</td>
+    <td>Records + Traffic + MCIT + Command Staff</td>
+  </tr>
+  <tr>
+    <td>Hit &amp; Run</td>
+    <td>End of shift (initial); supplements as needed</td>
+    <td>Records + Detectives</td>
+  </tr>
+</table>
+
+<h3>Required Report Elements</h3>
+<ul>
+  <li>Date, time, and exact location (cross streets, mile marker, GPS coordinates if available)</li>
+  <li>Weather and road conditions at the time of the accident</li>
+  <li>Description of all vehicles involved (year, make, model, color, plate, VIN)</li>
+  <li>Driver information (name, DOB, license number, address, phone, insurance)</li>
+  <li>Passenger information (names, injuries)</li>
+  <li>Witness information (names, contact, statements)</li>
+  <li>Diagram of the accident scene (positions, directions of travel, point of impact)</li>
+  <li>Narrative description of events leading to the collision</li>
+  <li>Contributing factors and preliminary fault determination</li>
+  <li>Photographs attached or referenced by evidence number</li>
+  <li>Citations issued (if applicable)</li>
+  <li>Tow information (company, destination, impound reason)</li>
+</ul>
+
+<h2>17.2 Citation Logs</h2>
+<p>Each officer shall maintain a <strong>daily citation log</strong> that includes:</p>
+<ul>
+  <li>Citation number (sequential)</li>
+  <li>Date and time issued</li>
+  <li>Location of the violation</li>
+  <li>Violator's name and driver's license number</li>
+  <li>Vehicle information (plate, make, model)</li>
+  <li>Violation code and description</li>
+  <li>Fine amount</li>
+  <li>Whether a court appearance is required</li>
+  <li>Disposition (citation, written warning, verbal warning)</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>MONTHLY REPORTS:</strong> The Traffic Division compiles monthly statistics from all citation logs, including: total stops, citations issued, warnings issued, arrest-to-stop ratio, top violation types, enforcement by location, and DUI arrest totals. These reports are submitted to the division commander and used for resource allocation.
+</div>
+
+<h2>17.3 Daily Traffic Stop Logs</h2>
+<p>All traffic stops (including those resulting in no action) must be logged in the MDT system with:</p>
+<table>
+  <tr>
+    <th>Field</th>
+    <th>Description</th>
+    <th>Required</th>
+  </tr>
+  <tr>
+    <td>Unit number</td>
+    <td>Officer's call sign / unit ID</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Date/Time</td>
+    <td>Start and end time of the stop</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Location</td>
+    <td>Street address or intersection</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Vehicle description</td>
+    <td>Year, make, model, color, plate</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Reason for stop</td>
+    <td>Specific violation or suspicion</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Driver demographics</td>
+    <td>Race, gender, approximate age</td>
+    <td>Yes (statistical)</td>
+  </tr>
+  <tr>
+    <td>Search conducted</td>
+    <td>Yes/No; if yes, basis (consent, probable cause, incident to arrest)</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Contraband found</td>
+    <td>Yes/No; if yes, type and quantity</td>
+    <td>If applicable</td>
+  </tr>
+  <tr>
+    <td>Disposition</td>
+    <td>Citation, warning, arrest, no action</td>
+    <td>Yes</td>
+  </tr>
+  <tr>
+    <td>Use of force</td>
+    <td>Yes/No; if yes, type and level</td>
+    <td>Yes</td>
+  </tr>
+</table>
+
+<h2>17.4 Record Retention</h2>
+<ul>
+  <li><strong>Accident reports:</strong> Retained for 10 years (fatal: permanent)</li>
+  <li><strong>Citations:</strong> Retained for 5 years from date of final disposition</li>
+  <li><strong>Written warnings:</strong> Retained for 90 days, then purged</li>
+  <li><strong>Traffic stop logs:</strong> Retained for 3 years</li>
+  <li><strong>DUI case files:</strong> Retained permanently</li>
+  <li><strong>Checkpoint logs:</strong> Retained for 5 years</li>
+  <li><strong>Impound records:</strong> Retained for 3 years from release date</li>
+</ul>
+
+<hr class="section-divider">
+
+<!-- ================================================================== -->
+<h1 id="s18">18. Revision History &amp; Amendments</h1>
+<!-- ================================================================== -->
+
+<h2>18.1 Version History</h2>
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Date</th>
+    <th>Author</th>
+    <th>Changes</th>
+  </tr>
+  <tr>
+    <td>1.0</td>
+    <td>February 2026</td>
+    <td>Traffic Division Command Staff</td>
+    <td>Initial release -- comprehensive traffic enforcement procedures for LSPD, BCSO, and SASP</td>
+  </tr>
+</table>
+
+<h2>18.2 Amendment Process</h2>
+<p>Amendments to this SOP may be proposed by any sworn officer of Sergeant rank or above. The amendment process is as follows:</p>
+<ol>
+  <li><strong>Proposal:</strong> Submit a written amendment proposal to the Traffic Division Commander, including the section to be amended, the proposed change, and the justification.</li>
+  <li><strong>Review:</strong> The Traffic Division Commander reviews the proposal and consults with Legal Counsel and the affected department(s).</li>
+  <li><strong>Approval:</strong> Amendments must be approved by the Traffic Division Commander and countersigned by the Chief of Police / Sheriff / State Police Colonel (depending on department).</li>
+  <li><strong>Publication:</strong> Approved amendments are published as a numbered addendum and appended to this document. All officers are notified via department bulletin.</li>
+  <li><strong>Training:</strong> Significant amendments require a training bulletin or roll-call briefing within 14 days of publication.</li>
+</ol>
+
+<h2>18.3 Annual Review</h2>
+<p>This SOP shall be reviewed in its entirety <strong>annually</strong> by the Traffic Division Command Staff. The annual review shall consider:</p>
+<ul>
+  <li>Changes in state or local traffic law</li>
+  <li>Court rulings affecting enforcement procedures</li>
+  <li>Trends in traffic accident data and enforcement statistics</li>
+  <li>Officer safety incidents related to traffic enforcement</li>
+  <li>Community feedback and complaints</li>
+  <li>Best practices from other agencies and professional organizations</li>
+</ul>
+
+<h2>18.4 Acknowledgment</h2>
+<p>All sworn officers assigned to traffic enforcement duties are required to read, understand, and sign an acknowledgment form confirming receipt of this SOP. Acknowledgment forms are maintained by the Training Division.</p>
+
+<blockquote>
+  "Effective traffic enforcement is not about revenue generation -- it is about saving lives. Every traffic stop is an opportunity to educate, deter dangerous behavior, and protect the citizens of San Andreas."<br>
+  -- Traffic Division Command Staff
+</blockquote>
+
+</div>
+<!-- END CONTENT -->
+
+<!-- ============================== FOOTER ============================== -->
+<div class="footer">
+  <div class="org">PROZILLI ENTERTAINMENT</div>
+  ZO Syndicate RP &mdash; Traffic Procedures SOP v1.0<br>
+  Classification: RESTRICTED &mdash; LAW ENFORCEMENT ONLY<br>
+  <a href="/zo/sop/lspd.html">LSPD SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/bcso.html">BCSO SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/sasp.html">SASP SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/ems.html">EMS SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/doj.html">DOJ SOP</a> &nbsp;|&nbsp;
+  <a href="/zo/sop/criminal-code.html">Criminal Code</a><br>
+  &copy; 2026 Prozilli Entertainment. All rights reserved.
+</div>
+
+</body>
+</html>

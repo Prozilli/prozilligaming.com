@@ -188,7 +188,7 @@ export default function ModeratorPage() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1 rounded-lg bg-white/5 p-1">
+      <div className="flex gap-1 rounded-lg bg-surface p-1">
         {[
           { id: "automod", label: "AutoMod" },
           { id: "warnings", label: "Warnings" },
@@ -200,8 +200,8 @@ export default function ModeratorPage() {
             onClick={() => setActiveTab(tab.id as TabType)}
             className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
               activeTab === tab.id
-                ? "bg-brand-red text-white"
-                : "text-gray-400 hover:text-white hover:bg-white/5"
+                ? "bg-red text-white"
+                : "text-gray-400 hover:text-white hover:bg-surface"
             }`}
           >
             {tab.label}
@@ -218,13 +218,13 @@ export default function ModeratorPage() {
               {rules.map((rule) => (
                 <div
                   key={rule.id}
-                  className="flex items-center justify-between rounded-xl border border-white/5 bg-[#161b22] p-4"
+                  className="flex items-center justify-between rounded-xl border border-[var(--color-border)] bg-surface p-4"
                 >
                   <div className="flex items-center gap-4">
                     <button
                       onClick={() => toggleRule(rule.id)}
                       className={`relative h-6 w-11 rounded-full transition-colors ${
-                        rule.enabled ? "bg-green-500" : "bg-white/10"
+                        rule.enabled ? "bg-green-500" : "bg-raised"
                       }`}
                     >
                       <span
@@ -281,20 +281,20 @@ export default function ModeratorPage() {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold text-white">Settings</h3>
 
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5 space-y-4">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5 space-y-4">
               <div>
                 <label className="block text-xs font-medium text-gray-400 mb-2">
                   Log Channel
                 </label>
                 {channelsLoading ? (
-                  <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                  <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                     Loading...
                   </div>
                 ) : (
                   <select
                     value={logChannelId}
                     onChange={(e) => setLogChannelId(e.target.value)}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   >
                     <option value="">Select a channel</option>
                     {channels.map((channel) => (
@@ -311,14 +311,14 @@ export default function ModeratorPage() {
                   Mute Role
                 </label>
                 {rolesLoading ? (
-                  <div className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-gray-500">
+                  <div className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-gray-500">
                     Loading...
                   </div>
                 ) : (
                   <select
                     value={muteRoleId}
                     onChange={(e) => setMuteRoleId(e.target.value)}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                   >
                     <option value="">Select a role</option>
                     {roles.map((role) => (
@@ -342,7 +342,7 @@ export default function ModeratorPage() {
                   }
                   min={1}
                   max={10}
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
                 />
                 <p className="mt-1 text-[10px] text-gray-500">
                   Warnings before action is taken
@@ -365,7 +365,7 @@ export default function ModeratorPage() {
                             : action === "kick"
                             ? "bg-orange-500 text-white"
                             : "bg-yellow-500 text-black"
-                          : "bg-white/5 text-gray-400 hover:bg-white/10"
+                          : "bg-surface text-gray-400 hover:bg-raised"
                       }`}
                     >
                       {action.charAt(0).toUpperCase() + action.slice(1)}
@@ -385,7 +385,7 @@ export default function ModeratorPage() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="w-full rounded-lg bg-brand-red px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+                className="w-full rounded-lg bg-red px-4 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
               >
                 {saving ? "Saving..." : "Save Settings"}
               </button>
@@ -398,15 +398,15 @@ export default function ModeratorPage() {
         <div className="space-y-4">
           <div className="flex items-center justify-between">
             <h3 className="text-sm font-semibold text-white">Recent Warnings</h3>
-            <button className="rounded-lg bg-brand-red px-4 py-2 text-sm font-medium text-white hover:bg-brand-red/90">
+            <button className="rounded-lg bg-red px-4 py-2 text-sm font-medium text-white hover:bg-red/90">
               Issue Warning
             </button>
           </div>
 
-          <div className="rounded-xl border border-white/5 bg-[#161b22] overflow-hidden">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface overflow-hidden">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-white/5 bg-white/5">
+                <tr className="border-b border-[var(--color-border)] bg-surface">
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-400">
                     User
                   </th>
@@ -431,7 +431,7 @@ export default function ModeratorPage() {
                 {MOCK_WARNINGS.map((warning) => (
                   <tr
                     key={warning.id}
-                    className="border-b border-white/5 last:border-0"
+                    className="border-b border-[var(--color-border)] last:border-0"
                   >
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
@@ -479,12 +479,12 @@ export default function ModeratorPage() {
       )}
 
       {activeTab === "logs" && (
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-sm font-semibold text-white">
               Moderation Activity
             </h3>
-            <select className="rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white focus:border-brand-red focus:outline-none">
+            <select className="rounded-lg border border-[var(--color-border)] bg-surface px-3 py-1.5 text-xs text-white focus:border-brand-red focus:outline-none">
               <option>All Actions</option>
               <option>Bans</option>
               <option>Kicks</option>
@@ -521,7 +521,7 @@ export default function ModeratorPage() {
             ].map((log, i) => (
               <div
                 key={i}
-                className="flex items-center gap-4 rounded-lg bg-white/5 p-3"
+                className="flex items-center gap-4 rounded-lg bg-surface p-3"
               >
                 <span
                   className={`rounded px-2 py-1 text-xs font-bold ${
@@ -548,7 +548,7 @@ export default function ModeratorPage() {
 
       {activeTab === "banned" && (
         <div className="grid gap-6 lg:grid-cols-2">
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">
               Banned Words
             </h3>
@@ -557,13 +557,13 @@ export default function ModeratorPage() {
               value={bannedWords}
               onChange={(e) => setBannedWords(e.target.value)}
               placeholder="One word per line..."
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none font-mono"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none font-mono"
             />
             <p className="mt-2 text-xs text-gray-500">
               Messages containing these words will be automatically deleted
             </p>
           </div>
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">
               Allowed Links
             </h3>
@@ -572,7 +572,7 @@ export default function ModeratorPage() {
               value={allowedLinks}
               onChange={(e) => setAllowedLinks(e.target.value)}
               placeholder="One domain per line..."
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none font-mono"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none font-mono"
             />
             <p className="mt-2 text-xs text-gray-500">
               Only links from these domains are allowed (if Link Filter is
@@ -589,7 +589,7 @@ export default function ModeratorPage() {
             <button
               onClick={handleSave}
               disabled={saving}
-              className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+              className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
             >
               {saving ? "Saving..." : "Save Changes"}
             </button>

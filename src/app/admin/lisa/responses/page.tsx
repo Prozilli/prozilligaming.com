@@ -137,7 +137,7 @@ export default function LisaResponsesPage() {
       </div>
 
       {/* Create New */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-4">
           Create Response
         </h3>
@@ -155,7 +155,7 @@ export default function LisaResponsesPage() {
                     triggerType: e.target.value as CustomResponse["triggerType"],
                   })
                 }
-                className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-xs text-white focus:border-brand-red focus:outline-none"
+                className="rounded-lg border border-[var(--color-border)] bg-surface px-3 py-2.5 text-xs text-white focus:border-brand-red focus:outline-none"
               >
                 <option value="contains">Contains</option>
                 <option value="exact">Exact Match</option>
@@ -168,7 +168,7 @@ export default function LisaResponsesPage() {
                   setNewResponse({ ...newResponse, trigger: e.target.value })
                 }
                 placeholder="when is the next stream"
-                className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
               />
             </div>
           </div>
@@ -186,7 +186,7 @@ export default function LisaResponsesPage() {
                 })
               }
               min={0}
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
             />
           </div>
           <div className="md:col-span-2">
@@ -200,14 +200,14 @@ export default function LisaResponsesPage() {
               }
               rows={3}
               placeholder="LISA's response when triggered..."
-              className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
+              className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none resize-none"
             />
           </div>
         </div>
         <div className="mt-4 flex justify-end">
           <button
             onClick={createResponse}
-            className="rounded-lg bg-brand-red px-4 py-2 text-sm font-medium text-white hover:bg-brand-red/90"
+            className="rounded-lg bg-red px-4 py-2 text-sm font-medium text-white hover:bg-red/90"
           >
             Create Response
           </button>
@@ -234,7 +234,7 @@ export default function LisaResponsesPage() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search responses..."
-          className="w-full rounded-lg border border-white/10 bg-[#161b22] py-3 pl-12 pr-4 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+          className="w-full rounded-lg border border-[var(--color-border)] bg-surface py-3 pl-12 pr-4 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
         />
       </div>
 
@@ -243,7 +243,7 @@ export default function LisaResponsesPage() {
         {filteredResponses.map((response) => (
           <div
             key={response.id}
-            className={`rounded-xl border border-white/5 bg-[#161b22] p-4 ${
+            className={`rounded-xl border border-[var(--color-border)] bg-surface p-4 ${
               !response.enabled ? "opacity-50" : ""
             }`}
           >
@@ -261,7 +261,7 @@ export default function LisaResponsesPage() {
                   >
                     {response.triggerType.toUpperCase()}
                   </span>
-                  <code className="rounded bg-white/10 px-2 py-0.5 text-xs text-brand-gold">
+                  <code className="rounded bg-raised px-2 py-0.5 text-xs text-gold">
                     {response.trigger}
                   </code>
                 </div>
@@ -275,7 +275,7 @@ export default function LisaResponsesPage() {
                 <button
                   onClick={() => toggleResponse(response.id)}
                   className={`relative h-5 w-9 rounded-full transition-colors ${
-                    response.enabled ? "bg-green-500" : "bg-white/10"
+                    response.enabled ? "bg-green-500" : "bg-raised"
                   }`}
                 >
                   <span
@@ -284,7 +284,7 @@ export default function LisaResponsesPage() {
                     }`}
                   />
                 </button>
-                <button className="rounded p-1.5 text-gray-400 hover:bg-white/5 hover:text-white">
+                <button className="rounded p-1.5 text-gray-400 hover:bg-surface hover:text-white">
                   <svg
                     className="h-4 w-4"
                     fill="none"
@@ -324,41 +324,41 @@ export default function LisaResponsesPage() {
       </div>
 
       {/* Variables Reference */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <h3 className="text-sm font-semibold text-white mb-3">
           Available Variables
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-xs">
           <div>
-            <code className="text-brand-gold">{"{user}"}</code>
+            <code className="text-gold">{"{user}"}</code>
             <p className="text-gray-500">Username</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{channel}"}</code>
+            <code className="text-gold">{"{channel}"}</code>
             <p className="text-gray-500">Channel name</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{game}"}</code>
+            <code className="text-gold">{"{game}"}</code>
             <p className="text-gray-500">Current game</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{title}"}</code>
+            <code className="text-gold">{"{title}"}</code>
             <p className="text-gray-500">Stream title</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{uptime}"}</code>
+            <code className="text-gold">{"{uptime}"}</code>
             <p className="text-gray-500">Stream duration</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{viewers}"}</code>
+            <code className="text-gold">{"{viewers}"}</code>
             <p className="text-gray-500">Viewer count</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{time}"}</code>
+            <code className="text-gold">{"{time}"}</code>
             <p className="text-gray-500">Current time</p>
           </div>
           <div>
-            <code className="text-brand-gold">{"{random:1-100}"}</code>
+            <code className="text-gold">{"{random:1-100}"}</code>
             <p className="text-gray-500">Random number</p>
           </div>
         </div>

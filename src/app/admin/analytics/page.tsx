@@ -174,7 +174,7 @@ export default function AnalyticsPage() {
             value={summary?.revenue.total ?? 0}
             prefix="$"
             change={summary?.revenue.change}
-            color="text-brand-gold"
+            color="text-gold"
           />
           <StatCard
             label="Total Messages"
@@ -185,7 +185,7 @@ export default function AnalyticsPage() {
             label="New Followers"
             value={summary?.followers.total ?? 0}
             change={summary?.followers.change}
-            color="text-brand-red"
+            color="text-red"
           />
           <StatCard
             label="Total Events"
@@ -197,31 +197,31 @@ export default function AnalyticsPage() {
 
         {/* Revenue Section */}
         <div className="mb-8">
-          <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-brand-gold">
+          <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
             Revenue
           </h2>
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Revenue Timeline Chart */}
-            <div className="glass rounded-xl p-6">
+            <div className="panel rounded-xl p-6">
               <h3 className="mb-4 text-sm font-medium text-white">Daily Revenue</h3>
               <LineChart labels={revLabels} series={revSeries} height={220} />
             </div>
 
             {/* Top Supporters */}
-            <div className="glass rounded-xl p-6">
+            <div className="panel rounded-xl p-6">
               <h3 className="mb-4 text-sm font-medium text-white">Top Supporters</h3>
               {revenue?.topSupporters && revenue.topSupporters.length > 0 ? (
                 <div className="space-y-3">
                   {revenue.topSupporters.map((s, i) => (
                     <div key={s.user} className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
-                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-gold/20 text-xs font-bold text-brand-gold">
+                        <span className="flex h-6 w-6 items-center justify-center rounded-full bg-brand-gold/20 text-xs font-bold text-gold">
                           {i + 1}
                         </span>
                         <span className="text-white">{s.user}</span>
                       </div>
                       <div className="text-right">
-                        <span className="text-sm font-bold text-brand-gold">
+                        <span className="text-sm font-bold text-gold">
                           ${s.total_amount.toFixed(2)}
                         </span>
                         <span className="ml-2 text-xs text-muted">
@@ -240,18 +240,18 @@ export default function AnalyticsPage() {
 
         {/* Engagement Section */}
         <div className="mb-8">
-          <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-brand-red">
+          <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-red">
             Engagement
           </h2>
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Message Volume Chart */}
-            <div className="glass rounded-xl p-6">
+            <div className="panel rounded-xl p-6">
               <h3 className="mb-4 text-sm font-medium text-white">Message Volume</h3>
               <LineChart labels={engagementLabels} series={engagementSeries} height={220} />
             </div>
 
             {/* Peak Hours HeatMap */}
-            <div className="glass rounded-xl p-6">
+            <div className="panel rounded-xl p-6">
               <h3 className="mb-4 text-sm font-medium text-white">Peak Hours</h3>
               <HeatMap data={engagement?.peakHours || []} />
             </div>
@@ -263,7 +263,7 @@ export default function AnalyticsPage() {
           <h2 className="mb-4 text-xs font-semibold uppercase tracking-[0.2em] text-white">
             Platform Comparison
           </h2>
-          <div className="glass rounded-xl p-6">
+          <div className="panel rounded-xl p-6">
             <PlatformCompare data={platformData?.platforms || []} />
           </div>
         </div>
@@ -275,13 +275,13 @@ export default function AnalyticsPage() {
           </h2>
           <div className="grid gap-6 lg:grid-cols-2">
             {/* Event Timeline Chart */}
-            <div className="glass rounded-xl p-6">
+            <div className="panel rounded-xl p-6">
               <h3 className="mb-4 text-sm font-medium text-white">Event Trends</h3>
               <LineChart labels={evtLabels} series={evtSeries} height={220} />
             </div>
 
             {/* Recent Events Feed */}
-            <div className="glass rounded-xl p-6">
+            <div className="panel rounded-xl p-6">
               <h3 className="mb-4 text-sm font-medium text-white">Recent Events</h3>
               <EventFeed events={events?.recent || []} />
             </div>

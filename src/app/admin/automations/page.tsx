@@ -96,7 +96,7 @@ export default function AutomationsPage() {
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 rounded-lg bg-brand-red px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90"
+          className="flex items-center gap-2 rounded-lg bg-red px-4 py-2.5 text-sm font-medium text-white hover:bg-red/90"
         >
           <svg
             className="h-4 w-4"
@@ -117,18 +117,18 @@ export default function AutomationsPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-4">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-4">
           <p className="text-2xl font-bold text-white">{automations.length}</p>
           <p className="text-xs text-gray-500">Total Automations</p>
         </div>
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-4">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-4">
           <p className="text-2xl font-bold text-green-400">
             {automations.filter((a) => a.enabled).length}
           </p>
           <p className="text-xs text-gray-500">Active</p>
         </div>
-        <div className="rounded-xl border border-white/5 bg-[#161b22] p-4">
-          <p className="text-2xl font-bold text-brand-gold">
+        <div className="rounded-xl border border-[var(--color-border)] bg-surface p-4">
+          <p className="text-2xl font-bold text-gold">
             {automations.reduce((sum, a) => sum + a.runs, 0).toLocaleString()}
           </p>
           <p className="text-xs text-gray-500">Total Runs</p>
@@ -140,13 +140,13 @@ export default function AutomationsPage() {
         {automations.map((automation) => (
           <div
             key={automation.id}
-            className={`rounded-xl border border-white/5 bg-[#161b22] p-5 ${
+            className={`rounded-xl border border-[var(--color-border)] bg-surface p-5 ${
               !automation.enabled ? "opacity-50" : ""
             }`}
           >
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-start gap-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 text-2xl">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-surface text-2xl">
                   {getTriggerIcon(automation.triggerType)}
                 </div>
                 <div>
@@ -160,7 +160,7 @@ export default function AutomationsPage() {
                     {automation.actions.map((action, i) => (
                       <span
                         key={i}
-                        className="rounded-full bg-white/5 px-3 py-1 text-xs text-gray-400"
+                        className="rounded-full bg-surface px-3 py-1 text-xs text-gray-400"
                       >
                         {action}
                       </span>
@@ -175,7 +175,7 @@ export default function AutomationsPage() {
                 <button
                   onClick={() => toggleAutomation(automation.id)}
                   className={`relative h-6 w-11 rounded-full transition-colors ${
-                    automation.enabled ? "bg-green-500" : "bg-white/10"
+                    automation.enabled ? "bg-green-500" : "bg-raised"
                   }`}
                 >
                   <span
@@ -184,7 +184,7 @@ export default function AutomationsPage() {
                     }`}
                   />
                 </button>
-                <button className="rounded-lg bg-white/5 p-2 text-gray-400 hover:bg-white/10 hover:text-white">
+                <button className="rounded-lg bg-surface p-2 text-gray-400 hover:bg-raised hover:text-white">
                   <svg
                     className="h-4 w-4"
                     fill="none"
@@ -201,7 +201,7 @@ export default function AutomationsPage() {
                 </button>
                 <button
                   onClick={() => deleteAutomation(automation.id)}
-                  className="rounded-lg bg-white/5 p-2 text-gray-400 hover:bg-red-500/10 hover:text-red-400"
+                  className="rounded-lg bg-surface p-2 text-gray-400 hover:bg-red-500/10 hover:text-red-400"
                 >
                   <svg
                     className="h-4 w-4"
@@ -226,7 +226,7 @@ export default function AutomationsPage() {
       {/* Create Modal */}
       {showCreateModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-          <div className="w-full max-w-2xl rounded-xl border border-white/10 bg-[#161b22] p-6">
+          <div className="w-full max-w-2xl rounded-xl border border-[var(--color-border)] bg-surface p-6">
             <h2 className="text-lg font-bold text-white mb-6">
               Create Automation
             </h2>
@@ -247,7 +247,7 @@ export default function AutomationsPage() {
                 ].map((trigger) => (
                   <button
                     key={trigger.type}
-                    className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/5 p-4 text-left hover:border-brand-red hover:bg-brand-red/5 transition-colors"
+                    className="flex items-center gap-3 rounded-lg border border-[var(--color-border)] bg-surface p-4 text-left hover:border-brand-red hover:bg-red/5 transition-colors"
                   >
                     <span className="text-2xl">{trigger.icon}</span>
                     <span className="text-sm text-white">{trigger.label}</span>
@@ -288,11 +288,11 @@ export default function AutomationsPage() {
             <div className="flex justify-end gap-3">
               <button
                 onClick={() => setShowCreateModal(false)}
-                className="rounded-lg bg-white/5 px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-white/10 hover:text-white"
+                className="rounded-lg bg-surface px-4 py-2.5 text-sm font-medium text-gray-400 hover:bg-raised hover:text-white"
               >
                 Cancel
               </button>
-              <button className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90">
+              <button className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90">
                 Create Automation
               </button>
             </div>

@@ -134,7 +134,7 @@ export default function TicketsPage() {
     return (
       <div className="flex items-center justify-center py-20">
         <div className="text-center">
-          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-brand-red border-t-transparent" />
+          <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-red border-t-transparent" />
           <p className="mt-3 text-sm text-gray-400">
             Loading ticket configuration...
           </p>
@@ -157,7 +157,7 @@ export default function TicketsPage() {
           <div className="flex items-center gap-2 rounded-lg bg-brand-gold/10 px-3 py-2">
             <span className="text-lg">{"\uD83C\uDFAB"}</span>
             <div>
-              <p className="text-sm font-medium text-brand-gold">
+              <p className="text-sm font-medium text-gold">
                 {openTickets.length}
               </p>
               <p className="text-[10px] text-gray-400">Open Tickets</p>
@@ -167,13 +167,13 @@ export default function TicketsPage() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-1 rounded-lg bg-white/5 p-1">
+      <div className="flex gap-1 rounded-lg bg-surface p-1">
         <button
           onClick={() => setActiveTab("open")}
           className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
             activeTab === "open"
-              ? "bg-brand-red text-white"
-              : "text-gray-400 hover:text-white hover:bg-white/5"
+              ? "bg-red text-white"
+              : "text-gray-400 hover:text-white hover:bg-surface"
           }`}
         >
           Open ({openTickets.length})
@@ -182,8 +182,8 @@ export default function TicketsPage() {
           onClick={() => setActiveTab("closed")}
           className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
             activeTab === "closed"
-              ? "bg-brand-red text-white"
-              : "text-gray-400 hover:text-white hover:bg-white/5"
+              ? "bg-red text-white"
+              : "text-gray-400 hover:text-white hover:bg-surface"
           }`}
         >
           Closed ({closedTickets.length})
@@ -192,8 +192,8 @@ export default function TicketsPage() {
           onClick={() => setActiveTab("settings")}
           className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-colors ${
             activeTab === "settings"
-              ? "bg-brand-red text-white"
-              : "text-gray-400 hover:text-white hover:bg-white/5"
+              ? "bg-red text-white"
+              : "text-gray-400 hover:text-white hover:bg-surface"
           }`}
         >
           Settings
@@ -205,7 +205,7 @@ export default function TicketsPage() {
           {(activeTab === "open" ? openTickets : closedTickets).map((ticket) => (
             <div
               key={ticket.id}
-              className="flex items-center gap-4 rounded-xl border border-white/5 bg-[#161b22] p-4 hover:border-white/10 transition-colors cursor-pointer"
+              className="flex items-center gap-4 rounded-xl border border-[var(--color-border)] bg-surface p-4 hover:border-[var(--color-border)] transition-colors cursor-pointer"
             >
               <div
                 className={`flex h-10 w-10 items-center justify-center rounded-full font-bold text-sm ${
@@ -232,7 +232,7 @@ export default function TicketsPage() {
                   >
                     {ticket.status.toUpperCase()}
                   </span>
-                  <span className="rounded bg-white/5 px-1.5 py-0.5 text-[10px] text-gray-400">
+                  <span className="rounded bg-surface px-1.5 py-0.5 text-[10px] text-gray-400">
                     {ticket.category}
                   </span>
                 </div>
@@ -250,14 +250,14 @@ export default function TicketsPage() {
                   {ticket.messages} messages
                 </p>
               </div>
-              <button className="rounded-lg bg-white/5 px-3 py-2 text-xs font-medium text-white hover:bg-white/10">
+              <button className="rounded-lg bg-surface px-3 py-2 text-xs font-medium text-white hover:bg-raised">
                 View
               </button>
             </div>
           ))}
 
           {(activeTab === "open" ? openTickets : closedTickets).length === 0 && (
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-12 text-center">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-12 text-center">
               <span className="text-4xl">{"\uD83C\uDFAB"}</span>
               <h3 className="mt-4 text-lg font-medium text-white">
                 No {activeTab} tickets
@@ -276,7 +276,7 @@ export default function TicketsPage() {
         <div className="grid gap-6 lg:grid-cols-2">
           {/* General Settings */}
           <div className="space-y-6">
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <div className="flex items-center justify-between mb-4">
                 <div>
                   <h3 className="text-sm font-semibold text-white">
@@ -291,7 +291,7 @@ export default function TicketsPage() {
                     updateSettings("enabled", !config.enabled)
                   }
                   className={`relative h-6 w-11 rounded-full transition-colors ${
-                    config.enabled ? "bg-green-500" : "bg-white/10"
+                    config.enabled ? "bg-green-500" : "bg-raised"
                   }`}
                 >
                   <span
@@ -303,7 +303,7 @@ export default function TicketsPage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <h3 className="text-sm font-semibold text-white mb-4">
                 Configuration
               </h3>
@@ -317,7 +317,7 @@ export default function TicketsPage() {
                     onChange={(e) =>
                       updateSettings("categoryId", e.target.value)
                     }
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
                   >
                     <option value="">
                       {channelsLoading
@@ -343,7 +343,7 @@ export default function TicketsPage() {
                     onChange={(e) =>
                       updateSettings("logChannelId", e.target.value)
                     }
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
                   >
                     <option value="">
                       {channelsLoading
@@ -372,7 +372,7 @@ export default function TicketsPage() {
                     }
                     min={1}
                     max={10}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
                   />
                 </div>
                 <div>
@@ -389,7 +389,7 @@ export default function TicketsPage() {
                       )
                     }
                     min={0}
-                    className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                    className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
                   />
                   <p className="mt-1 text-[10px] text-gray-500">
                     0 to disable auto-close
@@ -402,7 +402,7 @@ export default function TicketsPage() {
                     onChange={(e) =>
                       updateSettings("dmTranscript", e.target.checked)
                     }
-                    className="h-4 w-4 rounded border-white/20 bg-white/5 text-brand-red focus:ring-brand-red"
+                    className="h-4 w-4 rounded border-white/20 bg-surface text-red focus:ring-red"
                   />
                   <div>
                     <p className="text-sm text-white">DM Transcript on Close</p>
@@ -417,12 +417,12 @@ export default function TicketsPage() {
 
           {/* Categories */}
           <div className="space-y-6">
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-white">
                   Ticket Categories
                 </h3>
-                <button className="rounded-lg bg-brand-red px-3 py-1.5 text-xs font-medium text-white hover:bg-brand-red/90">
+                <button className="rounded-lg bg-red px-3 py-1.5 text-xs font-medium text-white hover:bg-red/90">
                   Add Category
                 </button>
               </div>
@@ -430,7 +430,7 @@ export default function TicketsPage() {
                 {categories.map((cat) => (
                   <div
                     key={cat.id}
-                    className="flex items-center justify-between rounded-lg bg-white/5 p-3"
+                    className="flex items-center justify-between rounded-lg bg-surface p-3"
                   >
                     <div className="flex items-center gap-3">
                       <span className="text-xl">{cat.emoji}</span>
@@ -440,7 +440,7 @@ export default function TicketsPage() {
                       <button
                         onClick={() => toggleCategory(cat.id)}
                         className={`relative h-5 w-9 rounded-full transition-colors ${
-                          cat.enabled ? "bg-green-500" : "bg-white/10"
+                          cat.enabled ? "bg-green-500" : "bg-raised"
                         }`}
                       >
                         <span
@@ -470,7 +470,7 @@ export default function TicketsPage() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+            <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
               <h3 className="text-sm font-semibold text-white mb-4">
                 Panel Message
               </h3>
@@ -479,7 +479,7 @@ export default function TicketsPage() {
               </p>
               <div className="rounded-lg bg-[#36393f] p-3">
                 <div
-                  className="rounded border-l-4 border-brand-red bg-[#2f3136] p-3"
+                  className="rounded border-l-4 border-red bg-[#2f3136] p-3"
                 >
                   <p className="font-semibold text-white text-sm">
                     Need Help?
@@ -494,7 +494,7 @@ export default function TicketsPage() {
                       .map((cat) => (
                         <button
                           key={cat.id}
-                          className="flex items-center gap-1 rounded bg-white/10 px-3 py-1.5 text-xs text-white hover:bg-white/20"
+                          className="flex items-center gap-1 rounded bg-raised px-3 py-1.5 text-xs text-white hover:bg-white/20"
                         >
                           {cat.emoji} {cat.name}
                         </button>
@@ -521,8 +521,8 @@ export default function TicketsPage() {
               disabled={saving}
               className={`rounded-lg px-6 py-2.5 text-sm font-medium text-white transition-colors ${
                 saving
-                  ? "bg-brand-red/50 cursor-not-allowed"
-                  : "bg-brand-red hover:bg-brand-red/90"
+                  ? "bg-red/50 cursor-not-allowed"
+                  : "bg-red hover:bg-red/90"
               }`}
             >
               {saving ? "Saving..." : "Save Changes"}

@@ -30,7 +30,7 @@ export default function ShopGrid({ products, storeUrl }: ShopGridProps) {
     <>
       {/* Category Filter */}
       {categories.length > 2 && (
-        <section className="border-b border-white/5 bg-brand-darker">
+        <section className="border-b border-[var(--color-border)] bg-surface">
           <div className="mx-auto max-w-7xl px-6 py-4">
             <div className="flex flex-wrap items-center justify-center gap-2">
               {categories.map((cat) => (
@@ -39,8 +39,8 @@ export default function ShopGrid({ products, storeUrl }: ShopGridProps) {
                   onClick={() => setActiveCategory(cat)}
                   className={`rounded-full px-4 py-2 text-xs font-medium tracking-wide transition-all ${
                     cat === activeCategory
-                      ? "bg-brand-red text-white"
-                      : "border border-white/10 text-brand-silver hover:border-brand-red/30 hover:text-white"
+                      ? "bg-red text-white"
+                      : "border border-[var(--color-border)] text-muted hover:border-red/30 hover:text-white"
                   }`}
                 >
                   {cat}
@@ -66,7 +66,7 @@ export default function ShopGrid({ products, storeUrl }: ShopGridProps) {
         {/* No products message */}
         {filteredProducts.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
-            <div className="mb-4 rounded-full bg-white/5 p-6">
+            <div className="mb-4 rounded-full bg-surface p-6">
               <svg
                 className="h-12 w-12 text-muted"
                 fill="none"
@@ -89,7 +89,7 @@ export default function ShopGrid({ products, storeUrl }: ShopGridProps) {
               href={storeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-6 inline-flex items-center gap-2 rounded-sm bg-brand-red px-6 py-3 text-sm font-medium tracking-wide text-white transition-all hover:bg-brand-red/80"
+              className="mt-6 inline-flex items-center gap-2 rounded-lg bg-red px-6 py-3 text-sm font-medium tracking-wide text-white transition-all hover:bg-red/80"
             >
               Visit Fourthwall Store
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -126,7 +126,7 @@ function ProductCard({
   return (
     <button
       onClick={onClick}
-      className="glass glow-border group rounded-lg overflow-hidden transition-all text-left w-full"
+      className="panel group overflow-hidden transition-all text-left w-full"
     >
       {/* Product Image */}
       <div className="relative aspect-square bg-gradient-to-br from-white/5 to-transparent overflow-hidden">
@@ -144,20 +144,20 @@ function ProductCard({
           </div>
         )}
         {/* Hover overlay */}
-        <div className="absolute inset-0 flex items-center justify-center bg-brand-red/0 transition-colors group-hover:bg-brand-red/10">
+        <div className="absolute inset-0 flex items-center justify-center bg-red/0 transition-colors group-hover:bg-red/10">
           <span className="translate-y-4 text-sm font-medium tracking-wide text-white opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
             Quick View
           </span>
         </div>
         {/* Compare at price badge */}
         {product.compareAtPrice && (
-          <div className="absolute top-3 left-3 rounded-sm bg-brand-red px-2 py-1 text-xs font-semibold text-white">
+          <div className="absolute top-3 left-3 rounded-lg bg-red px-2 py-1 text-xs font-semibold text-white">
             SALE
           </div>
         )}
         {/* Out of stock badge */}
         {!product.available && (
-          <div className="absolute top-3 right-3 rounded-sm bg-white/10 px-2 py-1 text-xs font-medium text-white/60">
+          <div className="absolute top-3 right-3 rounded-lg bg-raised px-2 py-1 text-xs font-medium text-white/60">
             Sold Out
           </div>
         )}
@@ -165,12 +165,12 @@ function ProductCard({
         {product.hasVariants && (product.availableColors.length > 1 || product.availableSizes.length > 1) && (
           <div className="absolute bottom-3 left-3 flex gap-1">
             {product.availableColors.length > 1 && (
-              <span className="rounded-sm bg-black/60 px-2 py-1 text-xs text-white/80">
+              <span className="rounded-lg bg-black/60 px-2 py-1 text-xs text-white/80">
                 {product.availableColors.length} colors
               </span>
             )}
             {product.availableSizes.length > 1 && (
-              <span className="rounded-sm bg-black/60 px-2 py-1 text-xs text-white/80">
+              <span className="rounded-lg bg-black/60 px-2 py-1 text-xs text-white/80">
                 {product.availableSizes.length} sizes
               </span>
             )}
@@ -180,16 +180,16 @@ function ProductCard({
 
       {/* Product Info */}
       <div className="p-6">
-        <span className="text-xs uppercase tracking-wider text-brand-red">
+        <span className="text-xs uppercase tracking-wider text-red">
           {product.category}
         </span>
-        <h3 className="mt-2 text-base font-semibold tracking-wide text-white transition-colors group-hover:text-brand-red">
+        <h3 className="mt-2 text-base font-semibold tracking-wide text-white transition-colors group-hover:text-red">
           {product.name}
         </h3>
         <p className="mt-2 text-xs text-muted line-clamp-2">{product.description}</p>
         <div className="mt-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-brand-gold">
+            <span className="text-lg font-bold text-gold">
               {formatPrice(product.price)}
             </span>
             {product.compareAtPrice && (
@@ -198,7 +198,7 @@ function ProductCard({
               </span>
             )}
           </div>
-          <span className="rounded-sm bg-brand-red/10 border border-brand-red/30 px-4 py-2 text-xs font-medium tracking-wide text-brand-red transition-all group-hover:bg-brand-red group-hover:text-white">
+          <span className="rounded-lg bg-red/10 border border-red/30 px-4 py-2 text-xs font-medium tracking-wide text-red transition-all group-hover:bg-red group-hover:text-white">
             View
           </span>
         </div>

@@ -170,7 +170,7 @@ export default function PollsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center py-20">
-        <div className="h-8 w-8 animate-spin rounded-full border-2 border-brand-red border-t-transparent" />
+        <div className="h-8 w-8 animate-spin rounded-full border-2 border-red border-t-transparent" />
       </div>
     );
   }
@@ -186,7 +186,7 @@ export default function PollsPage() {
       </div>
 
       {/* Enable Toggle */}
-      <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+      <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
         <div className="flex items-center justify-between">
           <div>
             <h3 className="text-sm font-semibold text-white">Enable Polls</h3>
@@ -197,7 +197,7 @@ export default function PollsPage() {
           <button
             onClick={() => setConfig({ ...config, enabled: !config.enabled })}
             className={`relative h-6 w-11 rounded-full transition-colors ${
-              config.enabled ? "bg-brand-red" : "bg-white/10"
+              config.enabled ? "bg-red" : "bg-raised"
             }`}
           >
             <span
@@ -212,7 +212,7 @@ export default function PollsPage() {
       {config.enabled && (
         <>
           {/* Create Poll */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Create Poll</h3>
             <div className="space-y-4">
               <div>
@@ -224,7 +224,7 @@ export default function PollsPage() {
                   value={question}
                   onChange={(e) => setQuestion(e.target.value)}
                   placeholder="What do you want to ask?"
-                  className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                  className="w-full rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-red focus:outline-none"
                 />
               </div>
 
@@ -241,7 +241,7 @@ export default function PollsPage() {
                         value={opt}
                         onChange={(e) => updateOption(i, e.target.value)}
                         placeholder={`Option ${i + 1}`}
-                        className="flex-1 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-brand-red focus:outline-none"
+                        className="flex-1 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white placeholder-gray-500 focus:border-red focus:outline-none"
                       />
                       {options.length > 2 && (
                         <button
@@ -259,7 +259,7 @@ export default function PollsPage() {
                 {options.length < 4 && (
                   <button
                     onClick={addOption}
-                    className="mt-2 flex items-center gap-1.5 text-xs text-brand-red hover:text-brand-red/80 transition-colors"
+                    className="mt-2 flex items-center gap-1.5 text-xs text-red hover:text-red/80 transition-colors"
                   >
                     <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -279,7 +279,7 @@ export default function PollsPage() {
                   max={60}
                   value={duration}
                   onChange={(e) => setDuration(parseInt(e.target.value) || 5)}
-                  className="w-32 rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white focus:border-brand-red focus:outline-none"
+                  className="w-32 rounded-lg border border-[var(--color-border)] bg-surface px-4 py-2.5 text-sm text-white focus:border-red focus:outline-none"
                 />
               </div>
 
@@ -287,7 +287,7 @@ export default function PollsPage() {
                 <button
                   onClick={handleCreatePoll}
                   disabled={creating || !question.trim() || options.filter((o) => o.trim()).length < 2}
-                  className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-brand-red/90 disabled:opacity-50"
+                  className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-red/90 disabled:opacity-50"
                 >
                   {creating ? "Creating..." : "Create Poll"}
                 </button>
@@ -296,18 +296,18 @@ export default function PollsPage() {
           </div>
 
           {/* Active Polls */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <h3 className="text-sm font-semibold text-white mb-4">Active Polls</h3>
             {pollsLoading && activePolls.length === 0 ? (
               <div className="flex items-center justify-center py-8">
-                <div className="h-6 w-6 animate-spin rounded-full border-2 border-brand-red border-t-transparent" />
+                <div className="h-6 w-6 animate-spin rounded-full border-2 border-red border-t-transparent" />
               </div>
             ) : activePolls.length === 0 ? (
               <p className="text-sm text-gray-500">No active polls right now.</p>
             ) : (
               <div className="space-y-4">
                 {activePolls.map((poll) => (
-                  <div key={poll.id} className="rounded-lg border border-white/5 bg-white/[0.02] p-4">
+                  <div key={poll.id} className="rounded-lg border border-[var(--color-border)] bg-white/[0.02] p-4">
                     <div className="flex items-start justify-between mb-3">
                       <h4 className="text-sm font-medium text-white">{poll.question}</h4>
                       {poll.ends_at && (
@@ -326,9 +326,9 @@ export default function PollsPage() {
                               <span className="text-gray-300">{opt.text}</span>
                               <span className="text-gray-500">{opt.votes} votes ({pct}%)</span>
                             </div>
-                            <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                            <div className="h-2 rounded-full bg-surface overflow-hidden">
                               <div
-                                className="h-full rounded-full bg-brand-red transition-all"
+                                className="h-full rounded-full bg-red transition-all"
                                 style={{ width: `${pct}%` }}
                               />
                             </div>
@@ -354,7 +354,7 @@ export default function PollsPage() {
           </div>
 
           {/* Poll History */}
-          <div className="rounded-xl border border-white/5 bg-[#161b22] p-5">
+          <div className="rounded-xl border border-[var(--color-border)] bg-surface p-5">
             <button
               onClick={() => setHistoryExpanded(!historyExpanded)}
               className="flex w-full items-center justify-between"
@@ -384,7 +384,7 @@ export default function PollsPage() {
                   <p className="text-sm text-gray-500">No polls yet.</p>
                 ) : (
                   pastPolls.map((poll) => (
-                    <div key={poll.id} className="rounded-lg border border-white/5 bg-white/[0.02] p-4 opacity-75">
+                    <div key={poll.id} className="rounded-lg border border-[var(--color-border)] bg-white/[0.02] p-4 opacity-75">
                       <div className="flex items-start justify-between mb-3">
                         <h4 className="text-sm font-medium text-white">{poll.question}</h4>
                         <span className="text-xs text-gray-500 shrink-0 ml-3">
@@ -398,15 +398,15 @@ export default function PollsPage() {
                           return (
                             <div key={i} className="relative">
                               <div className="flex items-center justify-between text-xs mb-1">
-                                <span className={isWinner ? "text-brand-gold font-medium" : "text-gray-300"}>
+                                <span className={isWinner ? "text-gold font-medium" : "text-gray-300"}>
                                   {opt.text} {isWinner && poll.total_votes > 0 && "(Winner)"}
                                 </span>
                                 <span className="text-gray-500">{opt.votes} votes ({pct}%)</span>
                               </div>
-                              <div className="h-2 rounded-full bg-white/5 overflow-hidden">
+                              <div className="h-2 rounded-full bg-surface overflow-hidden">
                                 <div
                                   className={`h-full rounded-full transition-all ${
-                                    isWinner ? "bg-brand-gold" : "bg-white/20"
+                                    isWinner ? "bg-gold" : "bg-white/20"
                                   }`}
                                   style={{ width: `${pct}%` }}
                                 />
@@ -436,7 +436,7 @@ export default function PollsPage() {
         <button
           onClick={handleSave}
           disabled={saving}
-          className="rounded-lg bg-brand-red px-6 py-2.5 text-sm font-medium text-white hover:bg-brand-red/90 disabled:opacity-50"
+          className="rounded-lg bg-red px-6 py-2.5 text-sm font-medium text-white hover:bg-red/90 disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>
