@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { api, ModerationConfig } from "@/lib/api";
 
 /* ============================================================
    Moderation Page
@@ -9,21 +10,30 @@ import { useState } from "react";
 interface ModRule {
   id: string;
   name: string;
+  configKey: keyof ModerationConfig;
   description: string;
   enabled: boolean;
   severity: "low" | "medium" | "high";
   action: string;
 }
 
-const AUTO_MOD_RULES: ModRule[] = [
-  { id: "links", name: "Link Filter", description: "Block unauthorized links. Permits whitelisted domains.", enabled: true, severity: "medium", action: "Delete + Warn" },
-  { id: "spam", name: "Spam Detection", description: "Detect repeated messages, character spam, and copypasta.", enabled: true, severity: "medium", action: "Delete + Timeout 5m" },
-  { id: "caps", name: "Caps Filter", description: "Limit messages with excessive capitalization (>70% caps).", enabled: true, severity: "low", action: "Delete + Warn" },
-  { id: "banned", name: "Banned Words", description: "Filter messages containing blacklisted words/phrases.", enabled: true, severity: "high", action: "Delete + Warn" },
-  { id: "slow", name: "Slow Mode", description: "Require delay between messages per user.", enabled: false, severity: "low", action: "Rate limit 5s" },
-  { id: "emotes", name: "Emote Spam", description: "Limit excessive emote usage in a single message.", enabled: false, severity: "low", action: "Delete" },
-  { id: "mentions", name: "Mass Mentions", description: "Block messages that @mention too many users.", enabled: true, severity: "high", action: "Delete + Timeout 10m" },
-  { id: "invites", name: "Discord Invites", description: "Block Discord server invite links.", enabled: true, severity: "high", action: "Delete + Warn" },
+// Map between UI rule ids and API config keys
+const RULE_DEFINITIONS: {
+  id: string;
+  name: string;
+  configKey: string;
+  description: string;
+  severity: "low" | "medium" | "high";
+  action: string;
+}[] = [
+  { id: "links", name: "Link Filter", configKey: "linkFilter", description: "Block unauthorized links. Permits whitelisted domains.", severity: "medium", action: "Delete + Warn" },
+  { id: "spam", name: "Spam Detection", configKey: "spamFilter", description: "Detect repeated messages, character spam, and copypasta.", severity: "medium", action: "Delete + Timeout 5m" },
+  { id: "caps", name: "Caps Filter", configKey: "capsFilter", description: "Limit messages with excessive capitalization (>70% caps).", severity: "low", action: "Delete + Warn" },
+  { id: "banned", name: "Banned Words", configKey: "bannedWords", description: "Filter messages containing blacklisted words/phrases.", severity: "high", action: "Delete + Warn" },
+  { id: "slow", name: "Slow Mode", configKey: "slowMode", description: "Require delay between messages per user.", severity: "low", action: "Rate limit 5s" },
+  { id: "emotes", name: "Emote Spam", configKey: "emoteSpam", description: "Limit excessive emote usage in a single message.", severity: "low", action: "Delete" },
+  { id: "mentions", name: "Mass Mentions", configKey: "massMentions", description: "Block messages that @mention too many users.", severity: "high", action: "Delete + Timeout 10m" },
+  { id: "invites", name: "Discord Invites", configKey: "discordInvites", description: "Block Discord server invite links.", severity: "high", action: "Delete + Warn" },
 ];
 
 const ESCALATION_STEPS = [
@@ -54,15 +64,148 @@ const BANNED_USERS = [
 ];
 
 export default function ModerationPage() {
-  const [rules, setRules] = useState(AUTO_MOD_RULES);
+  const [rules, setRules] = useState<ModRule[]>([]);
+  const [modConfig, setModConfig] = useState<ModerationConfig | null>(null);
+  const [configLoading, setConfigLoading] = useState(true);
+  const [configError, setConfigError] = useState("");
+  const [saving, setSaving] = useState(false);
+  const [saveResult, setSaveResult] = useState<{ ok: boolean; message: string } | null>(null);
   const [searchUser, setSearchUser] = useState("");
   const [activeTab, setActiveTab] = useState<"rules" | "log" | "bans" | "escalation">("rules");
 
-  const toggleRule = (id: string) => {
+  // Fetch moderation config from API
+  const fetchConfig = useCallback(async () => {
+    try {
+      setConfigLoading(true);
+      setConfigError("");
+      const config = await api.moderationConfig();
+      setModConfig(config);
+
+      // Build rules from API config merged with definitions
+      const builtRules: ModRule[] = RULE_DEFINITIONS.map((def) => {
+        const configValue = config[def.configKey];
+        let enabled: boolean;
+        if (typeof configValue === "boolean") {
+          enabled = configValue;
+        } else if (def.configKey === "bannedWords") {
+          // bannedWords is an array — rule is "enabled" if there are words
+          enabled = Array.isArray(configValue) && configValue.length > 0;
+        } else {
+          // For keys not in the config, default to false
+          enabled = !!configValue;
+        }
+        return {
+          id: def.id,
+          name: def.name,
+          configKey: def.configKey as keyof ModerationConfig,
+          description: def.description,
+          enabled,
+          severity: def.severity,
+          action: def.action,
+        };
+      });
+      setRules(builtRules);
+    } catch (err) {
+      setConfigError(err instanceof Error ? err.message : "Failed to fetch moderation config");
+      // Fall back to default rules
+      setRules(
+        RULE_DEFINITIONS.map((def) => ({
+          id: def.id,
+          name: def.name,
+          configKey: def.configKey as keyof ModerationConfig,
+          description: def.description,
+          enabled: false,
+          severity: def.severity,
+          action: def.action,
+        }))
+      );
+    } finally {
+      setConfigLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchConfig();
+  }, [fetchConfig]);
+
+  // Toggle a rule and save to API
+  const toggleRule = async (id: string) => {
+    const rule = rules.find((r) => r.id === id);
+    if (!rule) return;
+
+    const newEnabled = !rule.enabled;
+
+    // Optimistic update
     setRules((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, enabled: !r.enabled } : r))
+      prev.map((r) => (r.id === id ? { ...r, enabled: newEnabled } : r))
     );
+
+    // Build the partial config update
+    const update: Partial<ModerationConfig> = {};
+    const configKey = rule.configKey;
+
+    if (configKey === "bannedWords") {
+      // Cannot toggle bannedWords as a boolean, skip the save for this one
+      return;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (update as any)[configKey] = newEnabled;
+
+    setSaving(true);
+    setSaveResult(null);
+    try {
+      await api.moderationSave(update);
+      setSaveResult({ ok: true, message: `${rule.name} ${newEnabled ? "enabled" : "disabled"}` });
+      // Update local config mirror
+      if (modConfig) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        setModConfig({ ...modConfig, [configKey]: newEnabled } as any);
+      }
+      setTimeout(() => setSaveResult(null), 3000);
+    } catch (err) {
+      // Revert optimistic update
+      setRules((prev) =>
+        prev.map((r) => (r.id === id ? { ...r, enabled: !newEnabled } : r))
+      );
+      setSaveResult({
+        ok: false,
+        message: err instanceof Error ? err.message : "Failed to save",
+      });
+      setTimeout(() => setSaveResult(null), 5000);
+    } finally {
+      setSaving(false);
+    }
   };
+
+  // Toggle master enable/disable
+  const toggleMasterEnabled = async () => {
+    if (!modConfig) return;
+    const newEnabled = !modConfig.enabled;
+    const prevConfig = { ...modConfig };
+
+    // Optimistic update
+    setModConfig({ ...modConfig, enabled: newEnabled });
+
+    setSaving(true);
+    setSaveResult(null);
+    try {
+      await api.moderationSave({ enabled: newEnabled });
+      setSaveResult({ ok: true, message: `Auto-mod ${newEnabled ? "enabled" : "disabled"}` });
+      setTimeout(() => setSaveResult(null), 3000);
+    } catch (err) {
+      setModConfig(prevConfig);
+      setSaveResult({
+        ok: false,
+        message: err instanceof Error ? err.message : "Failed to save",
+      });
+      setTimeout(() => setSaveResult(null), 5000);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const activeRulesCount = rules.filter((r) => r.enabled).length;
 
   return (
     <div className="space-y-6">
@@ -73,14 +216,53 @@ export default function ModerationPage() {
           <p className="text-sm text-muted mt-1">Auto-mod rules, user management, and moderation logs</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="badge badge-emerald">
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
-            </svg>
-            Auto-Mod Active
-          </div>
+          {configLoading ? (
+            <div className="badge badge-gold">
+              <svg className="w-3 h-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4} />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+              </svg>
+              Loading...
+            </div>
+          ) : modConfig?.enabled ? (
+            <button onClick={toggleMasterEnabled} disabled={saving} className="badge badge-emerald cursor-pointer hover:opacity-80 transition-opacity disabled:opacity-50">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" />
+              </svg>
+              Auto-Mod Active
+            </button>
+          ) : (
+            <button onClick={toggleMasterEnabled} disabled={saving} className="badge badge-red cursor-pointer hover:opacity-80 transition-opacity disabled:opacity-50">
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+              Auto-Mod Disabled
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Save feedback toast */}
+      {saveResult && (
+        <div className={`p-3 rounded-lg border text-xs ${
+          saveResult.ok
+            ? "bg-emerald/10 border-emerald/20 text-emerald"
+            : "bg-error/10 border-error/20 text-error"
+        }`}>
+          <div className="flex items-center gap-2">
+            {saveResult.ok ? (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            ) : (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
+            )}
+            {saveResult.message}
+          </div>
+        </div>
+      )}
 
       {/* Tabs */}
       <div className="flex gap-1 p-1 rounded-lg bg-glass border border-glass-border w-fit">
@@ -105,7 +287,7 @@ export default function ModerationPage() {
           {/* Quick Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
-              { label: "Rules Active", value: rules.filter((r) => r.enabled).length, total: rules.length, color: "text-emerald" },
+              { label: "Rules Active", value: configLoading ? "--" : activeRulesCount, total: configLoading ? "" : rules.length, color: "text-emerald" },
               { label: "Actions Today", value: "47", total: "", color: "text-electric" },
               { label: "Users Warned", value: "12", total: "", color: "text-warning" },
               { label: "Users Banned", value: "2", total: "", color: "text-error" },
@@ -120,41 +302,96 @@ export default function ModerationPage() {
           </div>
 
           {/* Rules Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {rules.map((rule) => (
-              <div key={rule.id} className={`card p-4 ${!rule.enabled ? "opacity-50" : ""}`}>
-                <div className="flex items-start justify-between mb-2">
-                  <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full ${
-                      rule.severity === "high" ? "bg-error" :
-                      rule.severity === "medium" ? "bg-warning" : "bg-info"
-                    }`} />
-                    <span className="text-sm font-bold">{rule.name}</span>
+          {configLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                <div key={i} className="card p-4 animate-pulse">
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-2 h-2 rounded-full bg-glass" />
+                      <div className="h-3 bg-glass rounded w-24" />
+                    </div>
+                    <div className="w-10 h-5 rounded-full bg-glass" />
                   </div>
-                  <button
-                    onClick={() => toggleRule(rule.id)}
-                    className={`w-10 h-5 rounded-full transition-colors flex-shrink-0 ${
-                      rule.enabled ? "bg-emerald" : "bg-dim"
-                    }`}
-                  >
-                    <div className={`w-4 h-4 rounded-full bg-white mt-0.5 transition-transform ${
-                      rule.enabled ? "translate-x-5" : "translate-x-0.5"
-                    }`} />
-                  </button>
+                  <div className="h-2 bg-glass rounded w-full mb-3" />
+                  <div className="flex items-center justify-between">
+                    <div className="h-4 bg-glass rounded w-12" />
+                    <div className="h-2 bg-glass rounded w-20" />
+                  </div>
                 </div>
-                <p className="text-xs text-muted mb-3">{rule.description}</p>
-                <div className="flex items-center justify-between">
-                  <span className={`text-[10px] px-2 py-0.5 rounded-full ${
-                    rule.severity === "high" ? "bg-error/10 text-error" :
-                    rule.severity === "medium" ? "bg-warning/10 text-warning" : "bg-info/10 text-info"
-                  }`}>
-                    {rule.severity}
-                  </span>
-                  <span className="text-[10px] text-dim">{rule.action}</span>
-                </div>
+              ))}
+            </div>
+          ) : configError ? (
+            <div className="card p-6 text-center">
+              <p className="text-xs text-error mb-3">{configError}</p>
+              <button onClick={fetchConfig} className="btn btn-ghost btn-sm text-xs">
+                Retry
+              </button>
+              <p className="text-[10px] text-dim mt-2">Showing default rule definitions below (not synced with server)</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                {rules.map((rule) => (
+                  <div key={rule.id} className={`card p-4 ${!rule.enabled ? "opacity-50" : ""}`}>
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <div className={`w-2 h-2 rounded-full ${
+                          rule.severity === "high" ? "bg-error" :
+                          rule.severity === "medium" ? "bg-warning" : "bg-info"
+                        }`} />
+                        <span className="text-sm font-bold">{rule.name}</span>
+                      </div>
+                    </div>
+                    <p className="text-xs text-muted mb-3">{rule.description}</p>
+                    <div className="flex items-center justify-between">
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full ${
+                        rule.severity === "high" ? "bg-error/10 text-error" :
+                        rule.severity === "medium" ? "bg-warning/10 text-warning" : "bg-info/10 text-info"
+                      }`}>
+                        {rule.severity}
+                      </span>
+                      <span className="text-[10px] text-dim">{rule.action}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {rules.map((rule) => (
+                <div key={rule.id} className={`card p-4 transition-opacity ${!rule.enabled ? "opacity-50" : ""}`}>
+                  <div className="flex items-start justify-between mb-2">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-2 h-2 rounded-full ${
+                        rule.severity === "high" ? "bg-error" :
+                        rule.severity === "medium" ? "bg-warning" : "bg-info"
+                      }`} />
+                      <span className="text-sm font-bold">{rule.name}</span>
+                    </div>
+                    <button
+                      onClick={() => toggleRule(rule.id)}
+                      disabled={saving}
+                      className={`w-10 h-5 rounded-full transition-colors flex-shrink-0 ${
+                        rule.enabled ? "bg-emerald" : "bg-dim"
+                      } ${saving ? "opacity-50 cursor-wait" : ""}`}
+                    >
+                      <div className={`w-4 h-4 rounded-full bg-white mt-0.5 transition-transform ${
+                        rule.enabled ? "translate-x-5" : "translate-x-0.5"
+                      }`} />
+                    </button>
+                  </div>
+                  <p className="text-xs text-muted mb-3">{rule.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className={`text-[10px] px-2 py-0.5 rounded-full ${
+                      rule.severity === "high" ? "bg-error/10 text-error" :
+                      rule.severity === "medium" ? "bg-warning/10 text-warning" : "bg-info/10 text-info"
+                    }`}>
+                      {rule.severity}
+                    </span>
+                    <span className="text-[10px] text-dim">{rule.action}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

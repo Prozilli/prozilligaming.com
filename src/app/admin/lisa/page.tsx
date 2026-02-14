@@ -1,58 +1,52 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { api, NpcBotStatus } from "@/lib/api";
 
 /* ============================================================
    LISA AI Configuration Page
    ============================================================ */
 
-const NPC_CHARACTERS = [
-  {
-    name: "Vania",
+const NPC_DEFAULTS: Record<
+  string,
+  { role: string; color: string; personality: string; platform: string }
+> = {
+  Vania: {
     role: "The Romantic Intellectual",
-    status: "online",
     color: "#e4405f",
-    personality: "Sultry librarian meets philosophy professor. Quotes Nietzsche then roasts your gaming skills.",
+    personality:
+      "Sultry librarian meets philosophy professor. Quotes Nietzsche then roasts your gaming skills.",
     platform: "Discord",
-    messages: 1247,
   },
-  {
-    name: "Benny",
+  Benny: {
     role: "The Street-Smart Hustler",
-    status: "online",
     color: "#53fc18",
-    personality: "Fast-talking Brooklyn energy. Knows everybody, sells everything, trusts nobody.",
+    personality:
+      "Fast-talking Brooklyn energy. Knows everybody, sells everything, trusts nobody.",
     platform: "Discord",
-    messages: 892,
   },
-  {
-    name: "Dolores",
+  Dolores: {
     role: "The Motherly Enforcer",
-    status: "online",
     color: "#c4a265",
-    personality: "Abuela who bakes empanadas AND runs the numbers. Warm but terrifying.",
+    personality:
+      "Abuela who bakes empanadas AND runs the numbers. Warm but terrifying.",
     platform: "Discord",
-    messages: 634,
   },
-  {
-    name: "Snake",
+  Snake: {
     role: "The Paranoid Conspiracy Theorist",
-    status: "online",
     color: "#9146ff",
-    personality: "Every conversation leads to government surveillance. Has three burner phones.",
+    personality:
+      "Every conversation leads to government surveillance. Has three burner phones.",
     platform: "Discord",
-    messages: 1051,
   },
-  {
-    name: "Tony",
+  Tony: {
     role: "The Old-School Boss",
-    status: "online",
     color: "#ff0000",
-    personality: "Runs things the traditional way. Speaks in metaphors about respect and loyalty.",
+    personality:
+      "Runs things the traditional way. Speaks in metaphors about respect and loyalty.",
     platform: "Discord",
-    messages: 788,
   },
-];
+};
 
 const AI_PROVIDERS = [
   {
@@ -99,13 +93,84 @@ export default function LisaPage() {
   const [memoryDepth, setMemoryDepth] = useState(50);
   const [testInput, setTestInput] = useState("");
   const [testResponse, setTestResponse] = useState("");
+  const [testUserMessage, setTestUserMessage] = useState("");
+  const [testLoading, setTestLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleTestChat = () => {
+  // NPC bot state
+  const [npcBots, setNpcBots] = useState<NpcBotStatus[]>([]);
+  const [npcLoading, setNpcLoading] = useState(true);
+  const [npcError, setNpcError] = useState("");
+
+  // Fetch NPC bot status from API
+  const fetchNpcStatus = useCallback(async () => {
+    try {
+      setNpcLoading(true);
+      setNpcError("");
+      const data = await api.npcBotStatus();
+      setNpcBots(data);
+    } catch (err) {
+      setNpcError(err instanceof Error ? err.message : "Failed to fetch NPC status");
+    } finally {
+      setNpcLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchNpcStatus();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchNpcStatus, 30000);
+    return () => clearInterval(interval);
+  }, [fetchNpcStatus]);
+
+  // Test LISA via real API
+  const handleTestChat = async () => {
     if (!testInput.trim()) return;
-    setTestResponse("Hey! That's a solid question. Let me break it down for you... *adjusts invisible glasses* Okay so basically, I've been processing chat across 9 platforms and I can tell you that the ZO Syndicate server is absolutely popping right now. But between us? I think Benny's been skimming off the top of the casino revenue. Don't tell Tony I said that.");
+    const userMsg = testInput.trim();
+    setTestUserMessage(userMsg);
     setTestInput("");
+    setTestLoading(true);
+    setTestResponse("");
+    try {
+      const data = await api.lisaAsk(userMsg);
+      setTestResponse(data.response);
+    } catch (err) {
+      setTestResponse(`[Error: ${err instanceof Error ? err.message : "Failed to reach LISA"}]`);
+    } finally {
+      setTestLoading(false);
+    }
   };
+
+  // Merge API data with local defaults for display
+  const npcCards = npcBots.length > 0
+    ? npcBots.map((bot) => {
+        const defaults = NPC_DEFAULTS[bot.name] || {
+          role: bot.character || "NPC",
+          color: "#888888",
+          personality: "",
+          platform: "Discord",
+        };
+        return {
+          name: bot.name,
+          role: defaults.role,
+          color: defaults.color,
+          personality: defaults.personality,
+          platform: defaults.platform,
+          online: bot.online,
+          character: bot.character,
+        };
+      })
+    : Object.entries(NPC_DEFAULTS).map(([name, defaults]) => ({
+        name,
+        role: defaults.role,
+        color: defaults.color,
+        personality: defaults.personality,
+        platform: defaults.platform,
+        online: false,
+        character: name,
+      }));
+
+  const onlineCount = npcCards.filter((n) => n.online).length;
 
   const filteredRelationships = RELATIONSHIP_SAMPLES.filter((r) =>
     r.user.toLowerCase().includes(searchQuery.toLowerCase())
@@ -208,38 +273,73 @@ export default function LisaPage() {
             </div>
           </div>
 
-          {/* NPC Character Management */}
+          {/* NPC Character Management — Real API Data */}
           <div className="card p-5">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-sm font-bold">NPC Characters</h2>
-              <span className="text-data text-xs text-dim">5 bots online</span>
+              {npcLoading ? (
+                <span className="text-data text-xs text-dim">Loading...</span>
+              ) : npcError ? (
+                <button onClick={fetchNpcStatus} className="text-xs text-error hover:underline">
+                  Retry
+                </button>
+              ) : (
+                <span className="text-data text-xs text-dim">
+                  {onlineCount} bot{onlineCount !== 1 ? "s" : ""} online
+                </span>
+              )}
             </div>
-            <div className="space-y-3">
-              {NPC_CHARACTERS.map((npc) => (
-                <div key={npc.name} className="flex items-start gap-4 p-4 rounded-lg bg-glass border border-glass-border hover:border-glass-border-hover transition-all">
-                  <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
-                    style={{ backgroundColor: `${npc.color}20`, color: npc.color }}
-                  >
-                    {npc.name.charAt(0)}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-sm font-bold">{npc.name}</span>
-                      <span className="text-[10px] text-dim">({npc.role})</span>
-                      <div className={`w-1.5 h-1.5 rounded-full ${npc.status === "online" ? "bg-emerald" : "bg-error"}`} />
-                    </div>
-                    <p className="text-xs text-muted mb-2">{npc.personality}</p>
-                    <div className="flex items-center gap-3 text-[10px] text-dim">
-                      <span>{npc.platform}</span>
-                      <span>&middot;</span>
-                      <span>{npc.messages.toLocaleString()} messages</span>
+
+            {npcLoading ? (
+              <div className="space-y-3">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="flex items-start gap-4 p-4 rounded-lg bg-glass border border-glass-border animate-pulse">
+                    <div className="w-10 h-10 rounded-full bg-glass flex-shrink-0" />
+                    <div className="flex-1 space-y-2">
+                      <div className="h-3 bg-glass rounded w-1/3" />
+                      <div className="h-2 bg-glass rounded w-2/3" />
+                      <div className="h-2 bg-glass rounded w-1/4" />
                     </div>
                   </div>
-                  <button className="btn btn-ghost btn-sm text-xs flex-shrink-0">Configure</button>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            ) : npcError ? (
+              <div className="p-6 rounded-lg bg-error/10 border border-error/20 text-center">
+                <p className="text-xs text-error mb-2">{npcError}</p>
+                <button onClick={fetchNpcStatus} className="btn btn-ghost btn-sm text-xs">
+                  Try Again
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {npcCards.map((npc) => (
+                  <div key={npc.name} className="flex items-start gap-4 p-4 rounded-lg bg-glass border border-glass-border hover:border-glass-border-hover transition-all">
+                    <div
+                      className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0"
+                      style={{ backgroundColor: `${npc.color}20`, color: npc.color }}
+                    >
+                      {npc.name.charAt(0)}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-sm font-bold">{npc.name}</span>
+                        <span className="text-[10px] text-dim">({npc.role})</span>
+                        <div className={`w-1.5 h-1.5 rounded-full ${npc.online ? "bg-emerald" : "bg-error"}`} />
+                      </div>
+                      <p className="text-xs text-muted mb-2">{npc.personality}</p>
+                      <div className="flex items-center gap-3 text-[10px] text-dim">
+                        <span>{npc.platform}</span>
+                        <span>&middot;</span>
+                        <span className={npc.online ? "text-emerald" : "text-error"}>
+                          {npc.online ? "Online" : "Offline"}
+                        </span>
+                      </div>
+                    </div>
+                    <button className="btn btn-ghost btn-sm text-xs flex-shrink-0">Configure</button>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Banned Topics */}
@@ -270,20 +370,29 @@ export default function LisaPage() {
 
         {/* Right Column: Test Chat + Relationships */}
         <div className="space-y-6">
-          {/* Test Chat */}
+          {/* Test Chat — Real LISA API */}
           <div className="card p-5">
-            <h2 className="text-sm font-bold mb-4">Test Chat</h2>
+            <h2 className="text-sm font-bold mb-4">Test LISA</h2>
             <div className="h-64 rounded-lg bg-glass border border-glass-border p-3 mb-3 overflow-y-auto">
-              {testResponse ? (
+              {testUserMessage || testResponse || testLoading ? (
                 <div className="space-y-3">
-                  <div className="flex gap-2">
-                    <span className="text-xs font-bold text-muted flex-shrink-0">You:</span>
-                    <span className="text-xs text-muted">Hey LISA, what&apos;s going on?</span>
-                  </div>
-                  <div className="flex gap-2">
-                    <span className="text-xs font-bold text-electric flex-shrink-0">LISA:</span>
-                    <span className="text-xs text-foreground">{testResponse}</span>
-                  </div>
+                  {testUserMessage && (
+                    <div className="flex gap-2">
+                      <span className="text-xs font-bold text-muted flex-shrink-0">You:</span>
+                      <span className="text-xs text-muted">{testUserMessage}</span>
+                    </div>
+                  )}
+                  {testLoading ? (
+                    <div className="flex gap-2">
+                      <span className="text-xs font-bold text-electric flex-shrink-0">LISA:</span>
+                      <span className="text-xs text-dim animate-pulse">Thinking...</span>
+                    </div>
+                  ) : testResponse ? (
+                    <div className="flex gap-2">
+                      <span className="text-xs font-bold text-electric flex-shrink-0">LISA:</span>
+                      <span className="text-xs text-foreground">{testResponse}</span>
+                    </div>
+                  ) : null}
                 </div>
               ) : (
                 <div className="h-full flex items-center justify-center">
@@ -296,14 +405,26 @@ export default function LisaPage() {
                 type="text"
                 value={testInput}
                 onChange={(e) => setTestInput(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleTestChat()}
+                onKeyDown={(e) => e.key === "Enter" && !testLoading && handleTestChat()}
                 placeholder="Type a message..."
-                className="flex-1 px-3 py-2 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-electric/50 transition-colors"
+                disabled={testLoading}
+                className="flex-1 px-3 py-2 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-electric/50 transition-colors disabled:opacity-50"
               />
-              <button onClick={handleTestChat} className="btn btn-primary btn-sm">
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
-                </svg>
+              <button
+                onClick={handleTestChat}
+                disabled={testLoading || !testInput.trim()}
+                className="btn btn-primary btn-sm disabled:opacity-50"
+              >
+                {testLoading ? (
+                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4} />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                  </svg>
+                ) : (
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>

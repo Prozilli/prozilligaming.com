@@ -1,19 +1,23 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { api, PlatformStatus } from "@/lib/api";
 
 /* ============================================================
    Stream Management Page
    ============================================================ */
 
-const STREAM_PLATFORMS = [
-  { id: "twitch", name: "Twitch", color: "#9146ff", enabled: true, status: "offline" },
-  { id: "kick", name: "Kick", color: "#53fc18", enabled: true, status: "offline" },
-  { id: "youtube", name: "YouTube", color: "#ff0000", enabled: true, status: "offline" },
-  { id: "facebook", name: "Facebook", color: "#1877f2", enabled: false, status: "offline" },
-  { id: "trovo", name: "Trovo", color: "#19d65c", enabled: true, status: "offline" },
-  { id: "tiktok", name: "TikTok", color: "#ff0050", enabled: false, status: "disconnected" },
-];
+const PLATFORM_COLORS: Record<string, string> = {
+  twitch: "#9146ff",
+  kick: "#53fc18",
+  youtube: "#ff0000",
+  facebook: "#1877f2",
+  trovo: "#19d65c",
+  tiktok: "#ff0050",
+  discord: "#5865f2",
+  x: "#000000",
+  instagram: "#e4405f",
+};
 
 const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const TIME_SLOTS = ["12PM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM", "7PM", "8PM", "9PM", "10PM", "11PM"];
@@ -40,13 +44,95 @@ export default function StreamPage() {
   const [streamGame, setStreamGame] = useState("Grand Theft Auto V");
   const [streamTags, setStreamTags] = useState("English, FiveM, Roleplay, ZOSyndicate");
   const [chatBridgeEnabled, setChatBridgeEnabled] = useState(false);
-  const [platformToggles, setPlatformToggles] = useState<Record<string, boolean>>(
-    Object.fromEntries(STREAM_PLATFORMS.map((p) => [p.id, p.enabled]))
-  );
 
-  const togglePlatform = (id: string) => {
-    setPlatformToggles((prev) => ({ ...prev, [id]: !prev[id] }));
+  // Live status from API
+  const [isLive, setIsLive] = useState(false);
+  const [liveCount, setLiveCount] = useState(0);
+  const [platforms, setPlatforms] = useState<PlatformStatus[]>([]);
+  const [liveLoading, setLiveLoading] = useState(true);
+  const [liveError, setLiveError] = useState("");
+
+  // Chat send state
+  const [chatPlatform, setChatPlatform] = useState("");
+  const [chatMessage, setChatMessage] = useState("");
+  const [chatSending, setChatSending] = useState(false);
+  const [chatResult, setChatResult] = useState<{ ok: boolean; message: string } | null>(null);
+
+  // Platform toggles (for go-live targeting, derived from API data)
+  const [platformToggles, setPlatformToggles] = useState<Record<string, boolean>>({});
+
+  const fetchLiveStatus = useCallback(async () => {
+    try {
+      setLiveError("");
+      const data = await api.live();
+      setIsLive(data.isLive);
+      setLiveCount(data.liveCount);
+      setPlatforms(data.platforms);
+
+      // Initialize toggles from connected platforms on first load
+      setPlatformToggles((prev) => {
+        if (Object.keys(prev).length === 0) {
+          return Object.fromEntries(
+            data.platforms.map((p) => [p.name.toLowerCase(), p.connected])
+          );
+        }
+        return prev;
+      });
+
+      // Default chat platform to first connected platform
+      if (!chatPlatform && data.platforms.length > 0) {
+        const firstConnected = data.platforms.find((p) => p.connected);
+        if (firstConnected) setChatPlatform(firstConnected.name.toLowerCase());
+      }
+    } catch (err) {
+      setLiveError(err instanceof Error ? err.message : "Failed to fetch live status");
+    } finally {
+      setLiveLoading(false);
+    }
+  }, [chatPlatform]);
+
+  useEffect(() => {
+    fetchLiveStatus();
+    const interval = setInterval(fetchLiveStatus, 15000);
+    return () => clearInterval(interval);
+  }, [fetchLiveStatus]);
+
+  const togglePlatform = (name: string) => {
+    setPlatformToggles((prev) => ({ ...prev, [name]: !prev[name] }));
   };
+
+  const handleChatSend = async () => {
+    if (!chatMessage.trim() || !chatPlatform) return;
+    setChatSending(true);
+    setChatResult(null);
+    try {
+      await api.chatSend(chatPlatform, chatMessage.trim());
+      setChatResult({ ok: true, message: `Sent to ${chatPlatform}` });
+      setChatMessage("");
+      setTimeout(() => setChatResult(null), 3000);
+    } catch (err) {
+      setChatResult({
+        ok: false,
+        message: err instanceof Error ? err.message : "Failed to send",
+      });
+    } finally {
+      setChatSending(false);
+    }
+  };
+
+  // Build display list merging API data with known colors
+  const platformDisplay = platforms.map((p) => {
+    const key = p.name.toLowerCase();
+    return {
+      id: key,
+      name: p.name,
+      color: PLATFORM_COLORS[key] || "#888888",
+      connected: p.connected,
+      live: p.live,
+    };
+  });
+
+  const connectedPlatforms = platformDisplay.filter((p) => p.connected);
 
   return (
     <div className="space-y-6">
@@ -57,10 +143,22 @@ export default function StreamPage() {
           <p className="text-sm text-muted mt-1">Go live, manage streams, and schedule content</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="badge badge-red">
-            <span className="w-1.5 h-1.5 rounded-full bg-dim" />
-            Offline
-          </div>
+          {liveLoading ? (
+            <div className="badge badge-red">
+              <span className="w-1.5 h-1.5 rounded-full bg-dim animate-pulse" />
+              Loading...
+            </div>
+          ) : isLive ? (
+            <div className="badge badge-emerald">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald animate-pulse" />
+              Live on {liveCount} platform{liveCount !== 1 ? "s" : ""}
+            </div>
+          ) : (
+            <div className="badge badge-red">
+              <span className="w-1.5 h-1.5 rounded-full bg-dim" />
+              Offline
+            </div>
+          )}
           <button className="btn btn-primary btn-sm">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
@@ -113,41 +211,83 @@ export default function StreamPage() {
             </div>
           </div>
 
-          {/* Multi-Platform Targets */}
+          {/* Multi-Platform Targets — Real API Data */}
           <div className="card p-5">
-            <h2 className="text-sm font-bold mb-4">Platform Targets</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-              {STREAM_PLATFORMS.map((platform) => (
-                <button
-                  key={platform.id}
-                  onClick={() => togglePlatform(platform.id)}
-                  className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
-                    platformToggles[platform.id]
-                      ? "bg-glass-active border-glass-border-hover"
-                      : "bg-glass/50 border-glass-border opacity-50"
-                  } ${platform.status === "disconnected" ? "cursor-not-allowed opacity-30" : "cursor-pointer"}`}
-                  disabled={platform.status === "disconnected"}
-                >
-                  <div
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
-                    style={{ backgroundColor: `${platform.color}20`, color: platform.color }}
-                  >
-                    {platform.name.charAt(0)}
-                  </div>
-                  <div className="text-left min-w-0">
-                    <div className="text-xs font-semibold truncate">{platform.name}</div>
-                    <div className="text-[10px] text-dim capitalize">{platform.status}</div>
-                  </div>
-                  <div className={`ml-auto w-8 h-4.5 rounded-full transition-colors flex-shrink-0 ${
-                    platformToggles[platform.id] ? "bg-emerald" : "bg-dim"
-                  }`}>
-                    <div className={`w-3.5 h-3.5 rounded-full bg-white mt-0.5 transition-transform ${
-                      platformToggles[platform.id] ? "translate-x-4" : "translate-x-0.5"
-                    }`} />
-                  </div>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-sm font-bold">Platform Status</h2>
+              {liveError ? (
+                <button onClick={fetchLiveStatus} className="text-xs text-error hover:underline">
+                  Retry
                 </button>
-              ))}
+              ) : (
+                <span className="text-data text-xs text-dim">
+                  {connectedPlatforms.length} connected
+                </span>
+              )}
             </div>
+            {liveLoading ? (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {[1, 2, 3, 4, 5, 6].map((i) => (
+                  <div key={i} className="flex items-center gap-3 p-3 rounded-lg border border-glass-border bg-glass animate-pulse">
+                    <div className="w-8 h-8 rounded-lg bg-glass flex-shrink-0" />
+                    <div className="flex-1 space-y-1">
+                      <div className="h-3 bg-glass rounded w-2/3" />
+                      <div className="h-2 bg-glass rounded w-1/3" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : liveError ? (
+              <div className="p-6 rounded-lg bg-error/10 border border-error/20 text-center">
+                <p className="text-xs text-error mb-2">{liveError}</p>
+                <button onClick={fetchLiveStatus} className="btn btn-ghost btn-sm text-xs">
+                  Try Again
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                {platformDisplay.map((platform) => (
+                  <button
+                    key={platform.id}
+                    onClick={() => platform.connected && togglePlatform(platform.id)}
+                    className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
+                      platform.connected && platformToggles[platform.id]
+                        ? "bg-glass-active border-glass-border-hover"
+                        : "bg-glass/50 border-glass-border opacity-50"
+                    } ${!platform.connected ? "cursor-not-allowed opacity-30" : "cursor-pointer"}`}
+                    disabled={!platform.connected}
+                  >
+                    <div
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0"
+                      style={{ backgroundColor: `${platform.color}20`, color: platform.color }}
+                    >
+                      {platform.name.charAt(0)}
+                    </div>
+                    <div className="text-left min-w-0">
+                      <div className="text-xs font-semibold truncate">{platform.name}</div>
+                      <div className={`text-[10px] capitalize ${
+                        platform.live ? "text-emerald" :
+                        platform.connected ? "text-muted" : "text-error"
+                      }`}>
+                        {platform.live ? "Live" : platform.connected ? "Connected" : "Disconnected"}
+                      </div>
+                    </div>
+                    {platform.connected && (
+                      <div className={`ml-auto w-8 h-4.5 rounded-full transition-colors flex-shrink-0 ${
+                        platformToggles[platform.id] ? "bg-emerald" : "bg-dim"
+                      }`}>
+                        <div className={`w-3.5 h-3.5 rounded-full bg-white mt-0.5 transition-transform ${
+                          platformToggles[platform.id] ? "translate-x-4" : "translate-x-0.5"
+                        }`} />
+                      </div>
+                    )}
+                    {platform.live && (
+                      <span className="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald animate-pulse" />
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Chat Bridge */}
@@ -178,6 +318,82 @@ export default function StreamPage() {
                 </div>
               </div>
             )}
+          </div>
+
+          {/* Send Chat Message */}
+          <div className="card p-5">
+            <h2 className="text-sm font-bold mb-4">Send Chat Message</h2>
+            <div className="space-y-3">
+              <div>
+                <label className="text-xs font-semibold text-dim block mb-1.5">Platform</label>
+                <select
+                  value={chatPlatform}
+                  onChange={(e) => setChatPlatform(e.target.value)}
+                  className="w-full px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground focus:outline-none focus:border-red/50 transition-colors"
+                >
+                  <option value="">Select platform...</option>
+                  {connectedPlatforms.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name} {p.live ? "(Live)" : ""}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-dim block mb-1.5">Message</label>
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    value={chatMessage}
+                    onChange={(e) => setChatMessage(e.target.value)}
+                    onKeyDown={(e) => e.key === "Enter" && !chatSending && handleChatSend()}
+                    placeholder="Type a message to send..."
+                    disabled={chatSending}
+                    className="flex-1 px-4 py-2.5 rounded-lg bg-glass border border-glass-border text-sm text-foreground placeholder-dim focus:outline-none focus:border-red/50 transition-colors disabled:opacity-50"
+                  />
+                  <button
+                    onClick={handleChatSend}
+                    disabled={chatSending || !chatMessage.trim() || !chatPlatform}
+                    className="btn btn-primary btn-sm disabled:opacity-50"
+                  >
+                    {chatSending ? (
+                      <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth={4} />
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
+                      </svg>
+                    ) : (
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                      </svg>
+                    )}
+                    Send
+                  </button>
+                </div>
+              </div>
+              {chatResult && (
+                <div className={`p-3 rounded-lg border text-xs ${
+                  chatResult.ok
+                    ? "bg-emerald/10 border-emerald/20 text-emerald"
+                    : "bg-error/10 border-error/20 text-error"
+                }`}>
+                  {chatResult.ok ? (
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      {chatResult.message}
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                      </svg>
+                      {chatResult.message}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Clip Creation */}

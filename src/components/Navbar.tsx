@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const NAV_LINKS = [
   { href: "/watch", label: "Watch" },
@@ -35,10 +36,18 @@ export function Navbar() {
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
-            <span className="text-xl font-extrabold tracking-tight">
+            <Image
+              src="/logos/ProzilliGaming_Logo.png"
+              alt="Prozilli Gaming"
+              width={40}
+              height={40}
+              className="transition-transform group-hover:scale-105"
+              priority
+            />
+            <span className="text-lg font-extrabold tracking-tight hidden sm:inline">
               PROZILLI
-              <span className="text-red-bright group-hover:text-shimmer-red transition-colors">
-                GAMING
+              <span className="text-red-bright group-hover:text-gold transition-colors">
+                {" "}GAMING
               </span>
             </span>
           </Link>
@@ -55,16 +64,14 @@ export function Navbar() {
               </Link>
             ))}
             <div className="ml-3 flex items-center gap-2">
-              <Link
-                href="https://prozilli.com"
+              <a
+                href="https://discord.gg/prozillihq"
                 target="_blank"
+                rel="noopener noreferrer"
                 className="badge badge-gold text-[10px]"
               >
-                Corporate
-              </Link>
-              <Link href="/admin" className="btn btn-ghost btn-sm">
-                Admin
-              </Link>
+                Discord
+              </a>
             </div>
           </div>
 
