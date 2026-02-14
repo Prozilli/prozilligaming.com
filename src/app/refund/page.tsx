@@ -172,8 +172,8 @@ export default function RefundPolicyPage() {
 
           {/* SECTION 4 */}
           <section id="vip-subscriptions">
-            <h2>4. VIP Subscriptions (Tebex)</h2>
-            <p>VIP subscriptions for our FiveM server and other services are offered in three tiers: Supporter, VIP, and Elite. These are managed through Tebex.</p>
+            <h2>4. In-Game VIP Subscriptions (Tebex)</h2>
+            <p>In-game VIP subscriptions for our FiveM server (ZO Syndicate RP) are offered in three tiers: Associate, Connected, and Inner Circle. These are managed through Tebex and are purchased from within the game.</p>
 
             <h3>4.1 Subscription Cancellation</h3>
             <ul>

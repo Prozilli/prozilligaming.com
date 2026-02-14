@@ -29,7 +29,7 @@ const FOOTER_LINKS = {
   ],
   Shop: [
     { label: "Merch Store", href: "/shop" },
-    { label: "VIP Store", href: "https://zo-syndicate.tebex.io" },
+    { label: "VIP Info", href: "/support#memberships" },
     { label: "Connect Accounts", href: "/connect" },
     { label: "Link Platforms", href: "/link" },
   ],

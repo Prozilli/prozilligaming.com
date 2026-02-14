@@ -59,7 +59,7 @@ const PAST_WINNERS = [
   { name: "VibeCheck_Pro", prize: "Prozilli Hoodie + Hat", date: "December 2025" },
   { name: "SilentShadow", prize: "ZO Syndicate Starter Pack", date: "December 2025" },
   { name: "StreamQueen_X", prize: "Elgato Stream Deck Mini", date: "November 2025" },
-  { name: "CasualChaos", prize: "3-Month Supporter Sub", date: "November 2025" },
+  { name: "CasualChaos", prize: "3-Month Associate Membership", date: "November 2025" },
 ];
 
 const RULES = [

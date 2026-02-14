@@ -375,7 +375,7 @@ export default function TermsOfServicePage() {
             <p>Physical and digital merchandise is available through our Fourthwall-powered shop. All merchandise purchases are processed by Fourthwall and are subject to Fourthwall&rsquo;s terms of service in addition to these Terms. Prices are displayed in U.S. Dollars (USD) unless otherwise indicated. Shipping costs, taxes, and delivery times are calculated at checkout.</p>
 
             <h3>11.2 VIP Subscriptions</h3>
-            <p>VIP subscriptions (Supporter, VIP, Elite tiers) for the FiveM server and other services are available through Tebex. Subscriptions are recurring and will automatically renew unless cancelled before the renewal date. You may cancel your subscription at any time; cancellation takes effect at the end of the current billing period. No partial refunds are given for unused subscription time.</p>
+            <p>VIP subscriptions (Associate, Connected, Inner Circle tiers) for the FiveM server and other services are available through Tebex. Subscriptions are recurring and will automatically renew unless cancelled before the renewal date. You may cancel your subscription at any time; cancellation takes effect at the end of the current billing period. No partial refunds are given for unused subscription time.</p>
 
             <h3>11.3 Tips and Donations</h3>
             <p>Tips and donations made through StreamElements, PayPal, or other platforms are <strong>voluntary, non-refundable gifts</strong>. Tips and donations are not purchases of goods or services. They do not entitle you to any specific benefits, access, or services beyond what may be offered as a courtesy. You understand that tips and donations cannot be reversed, refunded, or charged back.</p>

@@ -107,7 +107,7 @@ const ANNOUNCEMENTS = [
   {
     title: "VIP System Launch: Tebex + Multi-Platform Sync",
     description:
-      "The zo_vip system is live with three tiers (Supporter, VIP, Elite) that sync across Discord, FiveM, Twitch, YouTube, and Patreon. Subscribe on any platform and your perks follow you everywhere via PRISMAI.",
+      "The zo_vip system is live with three ranks (Associate, Connected, Inner Circle) that sync across Discord, FiveM, Twitch, YouTube, and Patreon. Subscribe on any platform and your perks follow you everywhere via PRISMAI.",
     category: "Features",
     date: "February 5, 2026",
     badge: "Launch",

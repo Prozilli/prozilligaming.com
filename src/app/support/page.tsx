@@ -16,55 +16,53 @@ const PAYPAL_CLIENT_ID =
 
 const VIP_TIERS = [
   {
-    name: "Supporter",
+    name: "Associate",
     price: "$4.99",
     period: "/month",
     color: "emerald",
     badge: "badge-emerald",
-    tebexUrl: "https://zo-syndicate.tebex.io/category/supporter",
+    tagline: "You just got noticed.",
     features: [
-      "Supporter role in Discord",
-      "Custom name color in chat",
-      "Priority queue in ZO Syndicate",
-      "Supporter badge on stream overlays",
-      "Access to supporter-only Discord channels",
-      "Monthly supporter shoutout",
+      "Priority queue — skip the line",
+      "Associate chat tag & Discord role",
+      "Access to members-only Discord channels",
+      "LISA recognizes you by name",
+      "Monthly shoutout on stream",
     ],
   },
   {
-    name: "VIP",
+    name: "Connected",
     price: "$9.99",
     period: "/month",
     color: "electric",
     badge: "badge-electric",
     popular: true,
-    tebexUrl: "https://zo-syndicate.tebex.io/category/vip",
+    tagline: "Doors open when you walk in.",
     features: [
-      "Everything in Supporter, plus:",
-      "VIP role with exclusive Discord channels",
-      "Custom vehicle plate in ZO Syndicate",
-      "VIP inventory slots (+10 extra)",
+      "Everything in Associate, plus:",
+      "Custom vehicle plate — make it yours",
+      "+2 extra character slots",
+      "Exclusive clothing items",
+      "+10 inventory slots",
       "LISA remembers you with priority",
       "Early access to new features",
       "Monthly VIP-only giveaways",
-      "Vote on stream game choices",
     ],
   },
   {
-    name: "Elite",
+    name: "Inner Circle",
     price: "$24.99",
     period: "/month",
     color: "gold",
     badge: "badge-gold",
-    tebexUrl: "https://zo-syndicate.tebex.io/category/elite",
+    tagline: "You sit at the table.",
     features: [
-      "Everything in VIP, plus:",
-      "Elite role — top of the hierarchy",
-      "Custom character in ZO Syndicate",
-      "Exclusive Elite Discord lounge",
+      "Everything in Connected, plus:",
+      "+4 character slots (6 total)",
+      "Exclusive emotes & clothing",
+      "Custom LISA greeting — she knows you're special",
       "Direct line to Pro for suggestions",
       "Name in stream credits",
-      "Custom LISA greeting message",
       "Priority bug fixes & feature requests",
       "Quarterly merch surprise package",
     ],
@@ -264,14 +262,9 @@ export default function SupportPage() {
                 className="flex flex-wrap gap-3 animate-reveal"
                 style={{ animationDelay: "0.3s" }}
               >
-                <a
-                  href="https://zo-syndicate.tebex.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-secondary"
-                >
-                  VIP Store
-                </a>
+                <Link href="#memberships" className="btn btn-secondary">
+                  VIP Memberships
+                </Link>
                 <Link href="/shop" className="btn btn-ghost">
                   Browse Merch
                 </Link>
@@ -491,9 +484,9 @@ export default function SupportPage() {
               </div>
             </a>
 
-            {/* Tebex Store */}
+            {/* Discord */}
             <a
-              href="https://zo-syndicate.tebex.io"
+              href="https://discord.gg/zosyndicate"
               target="_blank"
               rel="noopener noreferrer"
               className="card-holo p-6 group block"
@@ -501,11 +494,11 @@ export default function SupportPage() {
               <div className="relative z-10">
                 <div className="flex items-center gap-3 mb-3">
                   <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#5865f215", color: "#5865f2" }}>
-                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" /></svg>
+                    <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286z" /></svg>
                   </div>
-                  <h3 className="font-bold group-hover:text-foreground transition-colors">Tebex Store</h3>
+                  <h3 className="font-bold group-hover:text-foreground transition-colors">Discord</h3>
                 </div>
-                <p className="text-xs text-muted">VIP packages, in-game perks, and ZO Syndicate upgrades.</p>
+                <p className="text-xs text-muted">Join the community, get server roles, and connect.</p>
               </div>
             </a>
           </div>
@@ -515,16 +508,17 @@ export default function SupportPage() {
       <div className="divider-red" />
 
       {/* ====== VIP TIERS ====== */}
-      <section className="py-24 bg-base">
+      <section id="memberships" className="py-24 bg-base">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="badge badge-gold mb-4">VIP Memberships</div>
+            <div className="badge badge-gold mb-4">The Syndicate</div>
             <h2 className="text-headline mb-4">
-              Unlock <span className="text-shimmer">VIP Perks</span>
+              Pick Your <span className="text-shimmer">Rank</span>
             </h2>
             <p className="text-body-lg max-w-2xl mx-auto">
-              Monthly memberships with exclusive access, custom perks in ZO Syndicate,
-              priority LISA interactions, and a direct line to shape the ecosystem.
+              Three levels. Each one opens doors the last one didn&apos;t.
+              Exclusive perks in ZO Syndicate, priority LISA interactions,
+              and a seat closer to the table.
             </p>
           </div>
 
@@ -547,6 +541,9 @@ export default function SupportPage() {
                     <span className="text-4xl font-extrabold text-foreground">{tier.price}</span>
                     <span className="text-sm text-muted">{tier.period}</span>
                   </div>
+                  {"tagline" in tier && (
+                    <p className="text-xs text-muted mt-2 italic">{(tier as any).tagline}</p>
+                  )}
                 </div>
                 <div className="divider mb-6" />
                 <ul className="space-y-3 mb-8">
@@ -560,13 +557,16 @@ export default function SupportPage() {
                   ))}
                 </ul>
                 <a
-                  href={tier.tebexUrl}
+                  href="https://discord.gg/zosyndicate"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`btn w-full text-center ${tier.popular ? "btn-primary" : "btn-secondary"}`}
                 >
-                  Subscribe
+                  Subscribe via Discord
                 </a>
+                <p className="text-xs text-dim mt-3 text-center">
+                  For in-game VIP perks, visit the Tebex store from within ZO Syndicate
+                </p>
               </div>
             ))}
           </div>
@@ -588,14 +588,9 @@ export default function SupportPage() {
                 <Link href="/shop" className="btn btn-primary">
                   Visit the Shop
                 </Link>
-                <a
-                  href="https://zo-syndicate.tebex.io"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn btn-secondary"
-                >
-                  VIP Store
-                </a>
+                <Link href="#memberships" className="btn btn-secondary">
+                  VIP Memberships
+                </Link>
               </div>
             </div>
 
