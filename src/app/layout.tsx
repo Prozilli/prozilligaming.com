@@ -36,9 +36,43 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://prozilligaming.com/#organization",
+      "name": "Prozilli Entertainment",
+      "url": "https://prozilligaming.com",
+      "logo": "https://prozilligaming.com/images/logo.png",
+      "sameAs": [
+        "https://twitch.tv/prozilligaming",
+        "https://youtube.com/@prozilligaming",
+        "https://twitter.com/prozilligaming",
+        "https://kick.com/prozilligaming",
+        "https://discord.gg/prozillihq",
+        "https://prozilli.com",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://prozilligaming.com/#website",
+      "url": "https://prozilligaming.com",
+      "name": "Prozilli Gaming",
+      "publisher": { "@id": "https://prozilligaming.com/#organization" },
+    },
+  ],
+};
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body className="bg-void text-foreground antialiased">
         <a href="#main" className="skip-to-content">
           Skip to content

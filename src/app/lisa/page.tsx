@@ -31,7 +31,7 @@ const CREW = [
   {
     name: "Vania",
     role: "City Guide & Welcoming Committee",
-    image: "/images/npc/vania.png",
+    image: "/images/npc/vania.webp",
     color: "#00b4d8",
     desc: "Warm, enthusiastic, and genuinely helpful. Vania is the first friendly face new players see in Los Santos. She has her own memories, her own relationships, and a knack for making everyone feel at home.",
     quote: "Welcome to Los Santos! Let me show you around — this city has stories in every alley.",
@@ -41,7 +41,7 @@ const CREW = [
   {
     name: "Benny Torres",
     role: "Master Mechanic",
-    image: "/images/npc/benny.png",
+    image: "/images/npc/benny.webp",
     color: "#f97316",
     desc: "Grease monkey with a heart of gold. Benny has his own memory system, his own opinions about cars, and a running history with every vehicle that comes through his shop.",
     quote: "That engine's running rougher than my ex's personality. Let me take a look.",
@@ -51,7 +51,7 @@ const CREW = [
   {
     name: "Dolores",
     role: "Dispatch Operator",
-    image: "/images/npc/dolores.png",
+    image: "/images/npc/dolores.webp",
     color: "#3b82f6",
     desc: "Calm under pressure, precise in delivery. Dolores runs her own dispatch system with independent memory. She remembers every officer, every call, every shift.",
     quote: "All units, 10-31 in progress at Fleeca Bank, Hawick. Respond code 3.",
@@ -61,7 +61,7 @@ const CREW = [
   {
     name: "Snake",
     role: "Underground Contact",
-    image: "/images/npc/snake.png",
+    image: "/images/npc/snake.webp",
     color: "#8b5cf6",
     desc: "Street-smart operator with his own network and his own memory. Snake remembers who owes him, who's trustworthy, and who's been asking too many questions.",
     quote: "I got what you need. The question is: what do you got for me?",
@@ -71,7 +71,7 @@ const CREW = [
   {
     name: "Tony Rossi",
     role: "Premium Car Salesman",
-    image: "/images/npc/tony.png",
+    image: "/images/npc/tony.webp",
     color: "#eab308",
     desc: "Smooth-talking car dealer with his own client list and his own memory of every deal he's closed. Tony remembers your taste and always has something to upsell.",
     quote: "This beauty right here? Zero to sixty in 3.2 seconds. And for you? I'll make it work.",
@@ -176,7 +176,7 @@ export default function LisaPage() {
               <div className="relative">
                 <div className="w-80 h-80 rounded-2xl overflow-hidden border border-glass-border shadow-2xl animate-float-slow">
                   <Image
-                    src="/images/lisa-hero.png"
+                    src="/images/lisa-hero.webp"
                     alt="Lisa Vision"
                     width={320}
                     height={320}
@@ -241,7 +241,7 @@ export default function LisaPage() {
                   <div className="relative z-10">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="w-6 h-6 rounded-full overflow-hidden flex-shrink-0">
-                        <Image src="/images/lisa-hero.png" alt="LISA" width={24} height={24} className="w-full h-full object-cover" />
+                        <Image src="/images/lisa-hero.webp" alt="LISA" width={24} height={24} className="w-full h-full object-cover" />
                       </div>
                       <div>
                         <div className="text-xs font-bold">Lisa Vision</div>

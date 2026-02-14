@@ -940,3 +940,180 @@ body {
     radial-gradient(ellipse at 70% 60%, rgba(196 165 90 / 0.04) 0%, transparent 50%);
   pointer-events: none;
 }
+
+/* ============================================================
+   Blog Content — Article body styling
+   ============================================================ */
+
+.blog-content {
+  color: var(--color-muted);
+}
+
+.blog-content h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: var(--color-foreground);
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.blog-content h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-foreground);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.blog-content h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-foreground);
+}
+
+.blog-content h4 {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  color: var(--color-foreground);
+}
+
+.blog-content p {
+  margin-bottom: 1.25rem;
+  line-height: 1.85;
+}
+
+.blog-content a {
+  color: var(--color-gold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(212 175 55 / 0.3);
+  transition: text-decoration-color 0.3s;
+}
+
+.blog-content a:hover {
+  color: var(--color-gold-bright);
+  text-decoration-color: var(--color-gold);
+}
+
+.blog-content ul,
+.blog-content ol {
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+  line-height: 1.85;
+}
+
+.blog-content li {
+  margin-bottom: 0.5rem;
+}
+
+.blog-content li::marker {
+  color: var(--color-dim);
+}
+
+.blog-content blockquote {
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-left: 3px solid var(--color-red);
+  background: rgba(145 0 0 / 0.04);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--color-foreground);
+  font-style: italic;
+}
+
+.blog-content pre {
+  margin: 1.5rem 0;
+  padding: 1rem 1.25rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: var(--color-foreground);
+}
+
+.blog-content code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: rgba(107 163 214 / 0.1);
+  color: var(--color-electric);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+}
+
+.blog-content pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+  border-radius: 0;
+  font-size: 1em;
+}
+
+.blog-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-glass-border);
+  margin: 1.5rem 0;
+}
+
+.blog-content hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--color-glass-border-hover), transparent);
+  margin: 2.5rem 0;
+}
+
+.blog-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+}
+
+.blog-content th,
+.blog-content td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.blog-content th {
+  color: var(--color-foreground);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.blog-content strong {
+  color: var(--color-foreground);
+  font-weight: 600;
+}
+
+.blog-content em {
+  font-style: italic;
+}
+
+/* Line clamp utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}

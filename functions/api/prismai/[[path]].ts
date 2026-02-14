@@ -7,7 +7,24 @@ const ALLOWED_ORIGINS = [
   "https://www.prozilli.com",
   "https://prozilligaming.com",
   "https://www.prozilligaming.com",
+  "http://localhost:3000",
+  "http://localhost:3001",
 ];
+
+// Whitelist of allowed path prefixes that can be proxied to PRISMAI
+const ALLOWED_PATH_PREFIXES = [
+  "platforms", "live", "chat", "stats", "twitch", "shop", "webhook",
+  "vip", "npc-bots", "autopost", "schedules", "blog", "admin",
+  "moderation", "commands", "analytics", "stream", "lisa", "tokens",
+  "discord", "circuit-breakers", "health", "python-analytics",
+  "community-polls", "fivem", "tts", "stt", "alerts",
+];
+
+function isAllowedPath(path: string): boolean {
+  if (!path || path === "") return true; // root health check is OK
+  const firstSegment = path.split("/")[0];
+  return ALLOWED_PATH_PREFIXES.includes(firstSegment);
+}
 
 function getCorsHeaders(origin: string | null): Record<string, string> {
   const allowedOrigin = origin && ALLOWED_ORIGINS.includes(origin)
@@ -22,9 +39,30 @@ function getCorsHeaders(origin: string | null): Record<string, string> {
   };
 }
 
+// Paths that should never be cached (sensitive/dynamic data)
+const SENSITIVE_PATH_PREFIXES = [
+  "tokens", "admin", "webhook", "moderation", "commands",
+  "vip", "discord", "alerts", "tts", "stt",
+];
+
+function isSensitivePath(path: string): boolean {
+  if (!path) return false;
+  const firstSegment = path.split("/")[0];
+  return SENSITIVE_PATH_PREFIXES.includes(firstSegment);
+}
+
+function getCacheHeaders(path: string): Record<string, string> {
+  if (isSensitivePath(path)) {
+    return { "Cache-Control": "no-store" };
+  }
+  return { "Cache-Control": "public, max-age=60, stale-while-revalidate=300" };
+}
+
 async function safeFetch(url: string): Promise<{ ok: boolean; data: any }> {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      signal: AbortSignal.timeout(10000),
+    });
     const text = await res.text();
     try {
       return { ok: true, data: JSON.parse(text) };
@@ -32,6 +70,9 @@ async function safeFetch(url: string): Promise<{ ok: boolean; data: any }> {
       return { ok: false, data: { error: "Invalid JSON from server", raw: text.substring(0, 200) } };
     }
   } catch (err: any) {
+    if (err?.name === "TimeoutError" || err?.name === "AbortError") {
+      return { ok: false, data: { error: "Request timeout", message: "Backend did not respond within 10 seconds" } };
+    }
     return { ok: false, data: { error: "Connection failed", message: err?.message || "Unknown error" } };
   }
 }
@@ -42,6 +83,14 @@ export const onRequestOptions: PagesFunction = async (context) => {
 
 export const onRequestGet: PagesFunction = async (context) => {
   const path = (context.params.path as string[])?.join("/") || "";
+
+  // Block requests to non-whitelisted paths (prevents proxying to debug/test endpoints)
+  if (!isAllowedPath(path)) {
+    return new Response(
+      JSON.stringify({ error: "Not found" }),
+      { status: 404, headers: getCorsHeaders(context.request.headers.get("Origin")) }
+    );
+  }
 
   if (path === "health") {
     const [core, analytics] = await Promise.allSettled([
@@ -58,21 +107,26 @@ export const onRequestGet: PagesFunction = async (context) => {
 
     return new Response(
       JSON.stringify({ core: coreResult, analytics: analyticsResult }),
-      { headers: getCorsHeaders(context.request.headers.get("Origin")) }
+      { headers: { ...getCorsHeaders(context.request.headers.get("Origin")), "Cache-Control": "public, max-age=30, stale-while-revalidate=60" } }
     );
   }
 
   // SSE: Stream chat/stream through without buffering
   if (path === "chat/stream") {
     try {
-      const res = await fetch(`${PRISMAI_CORE}/chat/stream`);
+      const origin = context.request.headers.get("Origin");
+      const sseAllowedOrigin = origin && ALLOWED_ORIGINS.includes(origin) ? origin : ALLOWED_ORIGINS[2];
+      const res = await fetch(`${PRISMAI_CORE}/chat/stream`, {
+        signal: AbortSignal.timeout(10000),
+      });
       return new Response(res.body, {
         headers: {
           "Content-Type": "text/event-stream",
-          "Cache-Control": "no-cache",
-          "Access-Control-Allow-Origin": "*",
+          "Cache-Control": "no-cache, no-store",
+          "Access-Control-Allow-Origin": sseAllowedOrigin,
           "Access-Control-Allow-Methods": "GET, OPTIONS",
           "Access-Control-Allow-Headers": "Content-Type",
+          "Access-Control-Allow-Credentials": "true",
         },
       });
     } catch {
@@ -91,17 +145,27 @@ export const onRequestGet: PagesFunction = async (context) => {
   const result = await safeFetch(`${baseUrl}/${path}${queryString}`);
 
   if (result.ok) {
-    return new Response(JSON.stringify(result.data), { headers: getCorsHeaders(context.request.headers.get("Origin")) });
+    return new Response(JSON.stringify(result.data), {
+      headers: { ...getCorsHeaders(context.request.headers.get("Origin")), ...getCacheHeaders(path) },
+    });
   }
 
   return new Response(
     JSON.stringify(result.data),
-    { status: 502, headers: getCorsHeaders(context.request.headers.get("Origin")) }
+    { status: 502, headers: { ...getCorsHeaders(context.request.headers.get("Origin")), "Cache-Control": "no-store" } }
   );
 };
 
 async function proxyMutatingRequest(context: Parameters<PagesFunction>[0], method: string) {
   const path = (context.params.path as string[])?.join("/") || "";
+
+  // Block requests to non-whitelisted paths
+  if (!isAllowedPath(path)) {
+    return new Response(
+      JSON.stringify({ error: "Not found" }),
+      { status: 404, headers: getCorsHeaders(context.request.headers.get("Origin")) }
+    );
+  }
 
   try {
     const body = await context.request.text();
@@ -113,13 +177,20 @@ async function proxyMutatingRequest(context: Parameters<PagesFunction>[0], metho
       method,
       headers,
       body: body || undefined,
+      signal: AbortSignal.timeout(10000),
     });
     const text = await res.text();
-    return new Response(text, { status: res.status, headers: getCorsHeaders(context.request.headers.get("Origin")) });
+    return new Response(text, {
+      status: res.status,
+      headers: { ...getCorsHeaders(context.request.headers.get("Origin")), "Cache-Control": "no-store" },
+    });
   } catch (err: any) {
+    const message = (err?.name === "TimeoutError" || err?.name === "AbortError")
+      ? "Backend did not respond within 10 seconds"
+      : (err?.message || "Unknown");
     return new Response(
-      JSON.stringify({ error: "Connection failed", message: err?.message || "Unknown" }),
-      { status: 502, headers: getCorsHeaders(context.request.headers.get("Origin")) }
+      JSON.stringify({ error: "Connection failed", message }),
+      { status: 502, headers: { ...getCorsHeaders(context.request.headers.get("Origin")), "Cache-Control": "no-store" } }
     );
   }
 }

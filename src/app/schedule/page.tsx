@@ -1,13 +1,33 @@
+"use client";
+
+import { useState, useEffect, useMemo, useCallback } from "react";
 import Link from "next/link";
-import type { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Stream Schedule",
-  description:
-    "ProzilliGaming weekly stream schedule. Know when to catch live streams across 9 platforms. GTA V RP, variety gaming, community nights, and more.",
-};
+/* ============================================================
+   Types
+   ============================================================ */
 
-const SCHEDULE = [
+interface StreamEntry {
+  time: string | null;
+  duration: string | null;
+  title: string;
+  game: string;
+  platforms: string[];
+  desc: string;
+  featured: boolean;
+}
+
+interface DaySchedule {
+  day: string;
+  short: string;
+  streams: StreamEntry[];
+}
+
+/* ============================================================
+   Hardcoded Fallback Schedule (EST times)
+   ============================================================ */
+
+const FALLBACK_SCHEDULE: DaySchedule[] = [
   {
     day: "Monday",
     short: "MON",
@@ -127,16 +147,222 @@ const PLATFORM_ROTATION = [
   { platform: "Trovo", frequency: "2-3 days/week", note: "Alternative platform with LISA chat integration.", color: "#19d65c" },
 ];
 
-const TIMEZONES = [
-  { zone: "EST", offset: "UTC-5", label: "Eastern (US)", primary: true },
-  { zone: "CST", offset: "UTC-6", label: "Central (US)", primary: false },
-  { zone: "MST", offset: "UTC-7", label: "Mountain (US)", primary: false },
-  { zone: "PST", offset: "UTC-8", label: "Pacific (US)", primary: false },
-  { zone: "GMT", offset: "UTC+0", label: "London", primary: false },
-  { zone: "CET", offset: "UTC+1", label: "Central Europe", primary: false },
+/* ============================================================
+   Timezone Configuration
+   All schedule times are stored in EST (UTC-5).
+   Offsets are relative to UTC in hours.
+   ============================================================ */
+
+interface TimezoneInfo {
+  zone: string;
+  offset: number; // UTC offset in hours
+  label: string;
+}
+
+const TIMEZONES: TimezoneInfo[] = [
+  { zone: "EST", offset: -5, label: "Eastern (US)" },
+  { zone: "CST", offset: -6, label: "Central (US)" },
+  { zone: "MST", offset: -7, label: "Mountain (US)" },
+  { zone: "PST", offset: -8, label: "Pacific (US)" },
+  { zone: "GMT", offset: 0, label: "London" },
+  { zone: "CET", offset: 1, label: "Central Europe" },
 ];
 
+const EST_OFFSET = -5; // Source timezone is EST (UTC-5)
+
+/**
+ * Detect the user's timezone and return the matching TIMEZONES entry,
+ * or default to EST if no match found.
+ */
+function detectUserTimezone(): TimezoneInfo {
+  try {
+    const now = new Date();
+    // getTimezoneOffset returns minutes west of UTC, so negate and convert to hours
+    const userOffsetHours = -(now.getTimezoneOffset() / 60);
+    // Find the closest matching timezone
+    const match = TIMEZONES.find((tz) => tz.offset === userOffsetHours);
+    if (match) return match;
+  } catch {
+    // Fall through to default
+  }
+  return TIMEZONES[0]; // Default to EST
+}
+
+/**
+ * Convert a time string like "7:00 PM" from EST to target timezone.
+ * Returns the converted time string in the same format.
+ */
+function convertTime(timeStr: string, targetTz: TimezoneInfo): string {
+  // Parse the time string (e.g., "7:00 PM", "3:00 PM", "8:00 PM")
+  const match = timeStr.match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!match) return timeStr;
+
+  let hours = parseInt(match[1], 10);
+  const minutes = parseInt(match[2], 10);
+  const period = match[3].toUpperCase();
+
+  // Convert to 24-hour format
+  if (period === "PM" && hours !== 12) hours += 12;
+  if (period === "AM" && hours === 12) hours = 0;
+
+  // Calculate the offset difference: target - source
+  const diffHours = targetTz.offset - EST_OFFSET;
+
+  // Apply the offset
+  let newHours = hours + diffHours;
+
+  // Handle day wrapping
+  if (newHours < 0) newHours += 24;
+  if (newHours >= 24) newHours -= 24;
+
+  // Convert back to 12-hour format
+  const newPeriod = newHours >= 12 ? "PM" : "AM";
+  let displayHours = newHours % 12;
+  if (displayHours === 0) displayHours = 12;
+
+  return `${displayHours}:${minutes.toString().padStart(2, "0")} ${newPeriod}`;
+}
+
+/* ============================================================
+   Schedule Page Component
+   ============================================================ */
+
 export default function SchedulePage() {
+  const [schedule, setSchedule] = useState<DaySchedule[]>(FALLBACK_SCHEDULE);
+  const [loading, setLoading] = useState(true);
+  const [dataSource, setDataSource] = useState<"api" | "fallback">("fallback");
+  const [activeTz, setActiveTz] = useState<TimezoneInfo>(TIMEZONES[0]);
+
+  // Detect user's timezone on mount
+  useEffect(() => {
+    setActiveTz(detectUserTimezone());
+  }, []);
+
+  /**
+   * Transform API platform_schedules segments into DaySchedule format.
+   * Each segment has: title, category, start_time, end_time, platform, data
+   */
+  const transformApiSegments = useCallback((segments: Array<Record<string, unknown>>): DaySchedule[] => {
+    const dayMap: Record<string, DaySchedule> = {};
+    const dayOrder = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayShorts: Record<string, string> = {
+      Sunday: "SUN", Monday: "MON", Tuesday: "TUE", Wednesday: "WED",
+      Thursday: "THU", Friday: "FRI", Saturday: "SAT",
+    };
+
+    for (const seg of segments) {
+      const startTime = new Date(seg.start_time as string);
+      const dayName = dayOrder[startTime.getDay()];
+
+      if (!dayMap[dayName]) {
+        dayMap[dayName] = { day: dayName, short: dayShorts[dayName], streams: [] };
+      }
+
+      // Format time as "7:00 PM"
+      let hours = startTime.getHours();
+      const minutes = startTime.getMinutes();
+      const period = hours >= 12 ? "PM" : "AM";
+      if (hours > 12) hours -= 12;
+      if (hours === 0) hours = 12;
+      const timeStr = `${hours}:${minutes.toString().padStart(2, "0")} ${period}`;
+
+      // Calculate duration if end_time exists
+      let durationStr: string | null = null;
+      if (seg.end_time) {
+        const endTime = new Date(seg.end_time as string);
+        const diffMs = endTime.getTime() - startTime.getTime();
+        const diffHours = Math.round(diffMs / (1000 * 60 * 60));
+        durationStr = `${diffHours} hrs`;
+      }
+
+      // Try to parse extra data from the JSON data column
+      let extraData: Record<string, unknown> = {};
+      if (seg.data) {
+        try {
+          extraData = typeof seg.data === "string" ? JSON.parse(seg.data) : (seg.data as Record<string, unknown>);
+        } catch {
+          // ignore parse errors
+        }
+      }
+
+      dayMap[dayName].streams.push({
+        time: timeStr,
+        duration: durationStr,
+        title: (seg.title as string) || "Stream",
+        game: (seg.category as string) || (extraData.game as string) || "TBD",
+        platforms: extraData.platforms
+          ? (extraData.platforms as string[])
+          : [seg.platform as string].filter(Boolean),
+        desc: (extraData.desc as string) || (extraData.description as string) || "",
+        featured: (extraData.featured as boolean) || false,
+      });
+    }
+
+    // Sort by day order
+    return dayOrder
+      .filter((d) => dayMap[d])
+      .map((d) => dayMap[d]);
+  }, []);
+
+  // Fetch schedule from PRISMAI API
+  useEffect(() => {
+    const fetchSchedule = async () => {
+      try {
+        const res = await fetch("/api/prismai/schedules");
+        if (!res.ok) throw new Error("API error");
+        const data = await res.json();
+
+        // The API returns { segments: [...] } from the platform_schedules table.
+        // If segments exist and have data, we can attempt to transform them.
+        // However, the primary schedule data may be stored as settings or
+        // as custom JSON. We check both the segments format and a potential
+        // stream-schedule settings key.
+        if (data.segments && data.segments.length > 0) {
+          // Try to parse segments into our DaySchedule format
+          const transformed = transformApiSegments(data.segments);
+          if (transformed.length > 0) {
+            setSchedule(transformed);
+            setDataSource("api");
+          }
+        }
+      } catch {
+        // API failed or returned empty — keep fallback
+      }
+
+      // Also try loading from PRISMAI settings (stream-schedule key)
+      try {
+        const res = await fetch("/api/prismai/settings/stream-schedule");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.value && Array.isArray(data.value) && data.value.length > 0) {
+            setSchedule(data.value as DaySchedule[]);
+            setDataSource("api");
+          }
+        }
+      } catch {
+        // Settings API failed — keep whatever we have
+      }
+
+      setLoading(false);
+    };
+
+    fetchSchedule();
+  }, [transformApiSegments]);
+
+  // Memoize converted schedule
+  const displaySchedule = useMemo(() => {
+    return schedule.map((day) => ({
+      ...day,
+      streams: day.streams.map((stream) => ({
+        ...stream,
+        displayTime: stream.time ? convertTime(stream.time, activeTz) : null,
+      })),
+    }));
+  }, [schedule, activeTz]);
+
+  // Get today's day name
+  const today = new Date().toLocaleDateString("en-US", { weekday: "long" });
+
   return (
     <>
       {/* ====== HERO ====== */}
@@ -187,20 +413,21 @@ export default function SchedulePage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               <span className="text-label text-dim">All times shown in</span>
-              <span className="text-sm font-bold text-gold">EST (Eastern Standard Time)</span>
+              <span className="text-sm font-bold text-gold">{activeTz.zone} ({activeTz.label})</span>
             </div>
             <div className="flex flex-wrap gap-2">
               {TIMEZONES.map((tz) => (
-                <span
+                <button
                   key={tz.zone}
-                  className={`text-xs px-2.5 py-1 rounded-full border ${
-                    tz.primary
-                      ? "bg-gold/10 border-gold/25 text-gold font-bold"
-                      : "bg-glass border-glass-border text-muted"
+                  onClick={() => setActiveTz(tz)}
+                  className={`text-xs px-2.5 py-1 rounded-full border cursor-pointer transition-all duration-200 ${
+                    activeTz.zone === tz.zone
+                      ? "bg-gold/10 border-gold/25 text-gold font-bold scale-105"
+                      : "bg-glass border-glass-border text-muted hover:bg-white/[0.04] hover:text-foreground hover:border-glass-border-hover"
                   }`}
                 >
-                  {tz.zone} ({tz.offset})
-                </span>
+                  {tz.zone} (UTC{tz.offset >= 0 ? "+" : ""}{tz.offset})
+                </button>
               ))}
             </div>
           </div>
@@ -218,82 +445,123 @@ export default function SchedulePage() {
               Night and Saturday Marathon are the big events — full multi-platform broadcasts with
               extended hours.
             </p>
+            {!loading && dataSource === "api" && (
+              <div className="mt-3 flex items-center justify-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-emerald animate-pulse" />
+                <span className="text-xs text-emerald font-medium">Live from PRISMAI</span>
+              </div>
+            )}
           </div>
 
-          <div className="space-y-4 stagger">
-            {SCHEDULE.map((day) => (
-              <div
-                key={day.day}
-                className={`glass-raised overflow-hidden ${
-                  day.streams[0]?.featured ? "animate-border-glow" : ""
-                }`}
-              >
-                <div className="flex flex-col md:flex-row">
-                  {/* Day column */}
-                  <div
-                    className={`md:w-48 p-6 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-glass-border ${
-                      day.streams[0]?.featured ? "bg-gold/5" : ""
-                    }`}
-                  >
-                    <div className={`text-2xl font-extrabold ${day.streams[0]?.featured ? "text-gold" : "text-foreground"}`}>
-                      {day.short}
+          {/* Loading Skeleton */}
+          {loading && (
+            <div className="space-y-4">
+              {[1, 2, 3, 4, 5, 6, 7].map((i) => (
+                <div key={i} className="glass-raised overflow-hidden animate-pulse">
+                  <div className="flex flex-col md:flex-row">
+                    <div className="md:w-48 p-6 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-glass-border">
+                      <div className="h-7 w-12 bg-glass rounded mb-2" />
+                      <div className="h-4 w-20 bg-glass rounded" />
                     </div>
-                    <div className="text-sm text-muted">{day.day}</div>
-                    {day.streams[0]?.featured && (
-                      <div className="badge badge-gold mt-2 text-[10px]">Featured</div>
-                    )}
-                  </div>
-
-                  {/* Stream details */}
-                  <div className="flex-1 p-6">
-                    {day.streams.map((stream, i) => (
-                      <div key={i}>
-                        <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
-                          <div>
-                            <h3 className="text-lg font-bold">{stream.title}</h3>
-                            <div className="flex items-center gap-3 mt-1">
-                              <span className="text-data text-gold">
-                                {stream.game}
-                              </span>
-                              {stream.time && (
-                                <>
-                                  <span className="text-dim">|</span>
-                                  <span className="text-data text-muted">
-                                    {stream.time} EST
-                                  </span>
-                                </>
-                              )}
-                              {stream.duration && (
-                                <>
-                                  <span className="text-dim">|</span>
-                                  <span className="text-data text-dim">
-                                    {stream.duration}
-                                  </span>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                          {stream.platforms.length > 0 && (
-                            <div className="flex flex-wrap gap-1.5">
-                              {stream.platforms.map((platform) => (
-                                <span
-                                  key={platform}
-                                  className="text-xs px-2 py-1 rounded-full bg-glass border border-glass-border text-muted"
-                                >
-                                  {platform}
-                                </span>
-                              ))}
-                            </div>
-                          )}
+                    <div className="flex-1 p-6">
+                      <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
+                        <div>
+                          <div className="h-5 w-48 bg-glass rounded mb-2" />
+                          <div className="h-4 w-64 bg-glass rounded" />
                         </div>
-                        <p className="text-sm text-muted">{stream.desc}</p>
+                        <div className="flex gap-1.5">
+                          <div className="h-6 w-16 bg-glass rounded-full" />
+                          <div className="h-6 w-14 bg-glass rounded-full" />
+                        </div>
                       </div>
-                    ))}
+                      <div className="h-4 w-full bg-glass rounded" />
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
+
+          {/* Schedule Cards */}
+          {!loading && (
+            <div className="space-y-4 stagger">
+              {displaySchedule.map((day) => (
+                <div
+                  key={day.day}
+                  className={`glass-raised overflow-hidden ${
+                    day.streams[0]?.featured ? "animate-border-glow" : ""
+                  } ${day.day === today ? "ring-1 ring-gold/20" : ""}`}
+                >
+                  <div className="flex flex-col md:flex-row">
+                    {/* Day column */}
+                    <div
+                      className={`md:w-48 p-6 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-glass-border ${
+                        day.streams[0]?.featured ? "bg-gold/5" : ""
+                      }`}
+                    >
+                      <div className={`text-2xl font-extrabold ${day.streams[0]?.featured ? "text-gold" : "text-foreground"}`}>
+                        {day.short}
+                      </div>
+                      <div className="text-sm text-muted">{day.day}</div>
+                      {day.streams[0]?.featured && (
+                        <div className="badge badge-gold mt-2 text-[10px]">Featured</div>
+                      )}
+                      {day.day === today && (
+                        <div className="badge badge-emerald mt-2 text-[10px]">Today</div>
+                      )}
+                    </div>
+
+                    {/* Stream details */}
+                    <div className="flex-1 p-6">
+                      {day.streams.map((stream, i) => (
+                        <div key={i}>
+                          <div className="flex flex-wrap items-start justify-between gap-4 mb-3">
+                            <div>
+                              <h3 className="text-lg font-bold">{stream.title}</h3>
+                              <div className="flex items-center gap-3 mt-1">
+                                <span className="text-data text-gold">
+                                  {stream.game}
+                                </span>
+                                {stream.displayTime && (
+                                  <>
+                                    <span className="text-dim">|</span>
+                                    <span className="text-data text-muted">
+                                      {stream.displayTime} {activeTz.zone}
+                                    </span>
+                                  </>
+                                )}
+                                {stream.duration && (
+                                  <>
+                                    <span className="text-dim">|</span>
+                                    <span className="text-data text-dim">
+                                      {stream.duration}
+                                    </span>
+                                  </>
+                                )}
+                              </div>
+                            </div>
+                            {stream.platforms.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5">
+                                {stream.platforms.map((platform) => (
+                                  <span
+                                    key={platform}
+                                    className="text-xs px-2 py-1 rounded-full bg-glass border border-glass-border text-muted"
+                                  >
+                                    {platform}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+                          <p className="text-sm text-muted">{stream.desc}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

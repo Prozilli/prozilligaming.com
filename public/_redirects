@@ -1,0 +1,3 @@
+# Serve product detail page for any /shop/<slug> path
+# The client component reads the actual slug from the URL
+/shop/:slug /shop/placeholder 200

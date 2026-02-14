@@ -30,7 +30,12 @@ interface Product {
 
 export default function ProductDetail() {
   const params = useParams();
-  const slug = params?.slug as string;
+  const paramSlug = params?.slug as string;
+  // In static export, CF Pages _redirects serves /shop/placeholder for all /shop/:slug
+  // So useParams may return "placeholder" — fall back to reading from actual URL
+  const slug = (!paramSlug || paramSlug === "placeholder")
+    ? (typeof window !== "undefined" ? window.location.pathname.split("/shop/")[1]?.split("/")[0] || paramSlug : paramSlug)
+    : paramSlug;
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);

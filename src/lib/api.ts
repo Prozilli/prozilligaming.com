@@ -80,6 +80,31 @@ export interface EventsData {
   recent: { type: string; username: string; platform: string; timestamp: string; amount?: number; message?: string }[];
 }
 
+export interface ScheduleSegment {
+  id: number;
+  platform: string;
+  segment_id: string;
+  title: string;
+  category: string | null;
+  start_time: string;
+  end_time: string | null;
+  is_recurring: boolean;
+  canceled: boolean;
+  data: string | null;
+}
+
+export interface ScheduleEntryPayload {
+  day: string;
+  time: string;
+  duration: string;
+  title: string;
+  game: string;
+  platforms: string[];
+  desc: string;
+  featured: boolean;
+  timezone?: string;
+}
+
 export interface AutopostConfig {
   enabled: boolean;
   interval: number;
@@ -288,6 +313,18 @@ export const api = {
   // LISA
   lisaAsk: (message: string, context?: Record<string, unknown>) =>
     fetchAPI<{ response: string }>("lisa/ask", { method: "POST", body: JSON.stringify({ message, ...context }) }),
+
+  // Schedules
+  schedules: (platform?: string) => {
+    const params = platform ? `?platform=${platform}` : "";
+    return fetchAPI<{ segments: ScheduleSegment[] }>(`schedules${params}`);
+  },
+  scheduleCreate: (entry: ScheduleEntryPayload) =>
+    fetchAPI<{ ok: boolean; id?: number }>("schedules", { method: "POST", body: JSON.stringify(entry) }),
+  scheduleUpdate: (id: number, entry: Partial<ScheduleEntryPayload>) =>
+    fetchAPI<{ ok: boolean }>("schedules/" + id, { method: "PUT", body: JSON.stringify(entry) }),
+  scheduleDelete: (id: number) =>
+    fetchAPI<{ ok: boolean }>("schedules/" + id, { method: "DELETE" }),
 
   // Settings
   settings: () => fetchAPI<Record<string, unknown>>("settings"),

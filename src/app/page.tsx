@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
+import { AnimatedStats } from "@/components/AnimatedStats";
+import { DiscordWidget } from "@/components/DiscordWidget";
 
 export const metadata: Metadata = {
   title: "Prozilli Gaming — Command Center",
@@ -83,7 +85,7 @@ export default function HomePage() {
             {/* Hero Logo */}
             <div className="flex justify-center animate-reveal" style={{ animationDelay: "0.2s" }}>
               <Image
-                src="/logos/ProzilliGaming_Logo.png"
+                src="/logos/ProzilliGaming_Logo.webp"
                 alt="Prozilli Gaming"
                 width={360}
                 height={360}
@@ -98,20 +100,15 @@ export default function HomePage() {
       {/* ====== STATS BAR ====== */}
       <section className="bg-surface border-y border-glass-border">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-            {[
-              { label: "Platforms", value: "9" },
+          <AnimatedStats
+            stats={[
+              { label: "Platforms", value: "9", liveKey: "platformCount" },
               { label: "Custom Resources", value: "51" },
-              { label: "AI Characters", value: "6" },
+              { label: "AI Characters", value: "6", liveKey: "aiCharacters" },
               { label: "RP Slots", value: "48" },
               { label: "Lines of Code", value: "50K+" },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl font-extrabold text-foreground">{stat.value}</div>
-                <div className="text-label text-dim mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+            ]}
+          />
         </div>
       </section>
 
@@ -193,7 +190,7 @@ export default function HomePage() {
             </div>
             <div className="glass-raised p-8 text-center">
               <div className="w-32 h-32 mx-auto mb-6 rounded-full overflow-hidden border-2 border-electric/20 animate-float">
-                <Image src="/images/lisa-hero.png" alt="Lisa Vision" width={128} height={128} className="w-full h-full object-cover" />
+                <Image src="/images/lisa-hero.webp" alt="Lisa Vision" width={128} height={128} className="w-full h-full object-cover" />
               </div>
               <h3 className="text-xl font-bold mb-2">Lisa Vision</h3>
               <p className="text-label text-electric mb-4">
@@ -250,6 +247,46 @@ export default function HomePage() {
           <Link href="/zo-syndicate" className="btn btn-gold btn-lg">
             Explore ZO Syndicate
           </Link>
+        </div>
+      </section>
+
+      {/* ====== JOIN THE COMMUNITY ====== */}
+      <section className="py-24 bg-base border-t border-glass-border">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <div className="badge badge-electric mb-4">Community</div>
+              <h2 className="text-headline mb-6">
+                Join the <span className="text-shimmer">Family</span>
+              </h2>
+              <p className="text-body-lg mb-6">
+                Two Discord servers, voice chat hangouts, weekly giveaways, and a community
+                that shows up every day. LISA is in every channel, and Pro is always around.
+                This is where the Prozilli ecosystem lives.
+              </p>
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="https://discord.gg/prozillihq"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-primary"
+                >
+                  Join Prozilli HQ
+                </a>
+                <Link href="/community" className="btn btn-secondary">
+                  Community Hub
+                </Link>
+              </div>
+            </div>
+            <div className="flex justify-center">
+              <DiscordWidget
+                serverId="1297394066543087728"
+                theme="dark"
+                width={350}
+                height={500}
+              />
+            </div>
+          </div>
         </div>
       </section>
 

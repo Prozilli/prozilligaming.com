@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ContactForm } from "@/components/ContactForm";
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -164,68 +165,7 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="glass-raised p-8">
-              <form className="space-y-5" action="#">
-                <div className="grid md:grid-cols-2 gap-5">
-                  <div>
-                    <label className="text-label text-muted mb-2 block">Name</label>
-                    <input
-                      type="text"
-                      placeholder="Your name"
-                      className="w-full px-4 py-3 rounded-lg bg-glass border border-glass-border text-foreground placeholder:text-dim focus:outline-none focus:border-electric/50 transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-label text-muted mb-2 block">Email</label>
-                    <input
-                      type="email"
-                      placeholder="your@email.com"
-                      className="w-full px-4 py-3 rounded-lg bg-glass border border-glass-border text-foreground placeholder:text-dim focus:outline-none focus:border-electric/50 transition-colors"
-                    />
-                  </div>
-                </div>
-
-                <div>
-                  <label className="text-label text-muted mb-2 block">Subject</label>
-                  <select className="w-full px-4 py-3 rounded-lg bg-glass border border-glass-border text-muted focus:outline-none focus:border-electric/50 transition-colors appearance-none">
-                    <option value="">Select a topic</option>
-                    <option value="business">Business Inquiry</option>
-                    <option value="sponsorship">Sponsorship</option>
-                    <option value="collaboration">Collaboration</option>
-                    <option value="support">Technical Support</option>
-                    <option value="vip">VIP / Subscription</option>
-                    <option value="fivem">ZO Syndicate RP</option>
-                    <option value="feedback">Feedback</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label className="text-label text-muted mb-2 block">Discord Username</label>
-                  <input
-                    type="text"
-                    placeholder="username (optional)"
-                    className="w-full px-4 py-3 rounded-lg bg-glass border border-glass-border text-foreground placeholder:text-dim focus:outline-none focus:border-electric/50 transition-colors"
-                  />
-                </div>
-
-                <div>
-                  <label className="text-label text-muted mb-2 block">Message</label>
-                  <textarea
-                    rows={5}
-                    placeholder="Tell us what's on your mind..."
-                    className="w-full px-4 py-3 rounded-lg bg-glass border border-glass-border text-foreground placeholder:text-dim focus:outline-none focus:border-electric/50 transition-colors resize-none"
-                  />
-                </div>
-
-                <button type="submit" className="btn btn-primary btn-lg w-full">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                  Send Message
-                </button>
-              </form>
-            </div>
+            <ContactForm />
           </div>
         </div>
       </section>

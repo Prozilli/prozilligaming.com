@@ -5,6 +5,123 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 /* ============================================================
+   Admin Authentication
+   ============================================================ */
+
+async function sha256(message: string): Promise<string> {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Pre-computed SHA-256 of "prozilli2026!"
+const EXPECTED_HASH = "214d5beb46a33d4fb572f84968683414a697326dc7cfc9e0f75f88049b74550a";
+
+const AUTH_COOKIE_NAME = "prismai_admin_auth";
+const AUTH_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours
+
+function getAuthCookie(): string | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie.match(new RegExp(`(?:^|; )${AUTH_COOKIE_NAME}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function setAuthCookie(hash: string) {
+  const expires = new Date(Date.now() + AUTH_EXPIRY_MS).toUTCString();
+  document.cookie = `${AUTH_COOKIE_NAME}=${encodeURIComponent(hash)}; path=/admin; expires=${expires}; SameSite=Strict; Secure`;
+}
+
+function clearAuthCookie() {
+  document.cookie = `${AUTH_COOKIE_NAME}=; path=/admin; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Strict; Secure`;
+}
+
+/* ============================================================
+   Admin Login Screen
+   ============================================================ */
+
+function AdminLogin({ onAuthenticated }: { onAuthenticated: () => void }) {
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    try {
+      const hash = await sha256(password);
+      if (hash === EXPECTED_HASH) {
+        setAuthCookie(hash);
+        onAuthenticated();
+      } else {
+        setError("Invalid password");
+        setPassword("");
+      }
+    } catch {
+      setError("Authentication failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[60] flex items-center justify-center bg-void">
+      <div className="w-full max-w-sm mx-4">
+        {/* Logo / Branding */}
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 mx-auto rounded-2xl bg-red/20 flex items-center justify-center mb-4">
+            <svg className="w-8 h-8 text-red-bright" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="12" r="10" opacity="0.3" />
+              <circle cx="12" cy="12" r="4" />
+            </svg>
+          </div>
+          <h1 className="text-xl font-bold tracking-tight">
+            PRISMAI <span className="text-muted font-medium">Admin</span>
+          </h1>
+          <p className="text-sm text-dim mt-1">Enter your password to continue</p>
+        </div>
+
+        {/* Login Form */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Admin password"
+              autoFocus
+              className="w-full px-4 py-3 rounded-lg bg-base border border-glass-border text-foreground placeholder:text-dim focus:outline-none focus:ring-2 focus:ring-red/40 focus:border-red/50 transition-all"
+            />
+          </div>
+
+          {error && (
+            <div className="text-sm text-error bg-error/10 border border-error/20 rounded-lg px-4 py-2.5">
+              {error}
+            </div>
+          )}
+
+          <button
+            type="submit"
+            disabled={loading || !password}
+            className="w-full py-3 rounded-lg bg-red/90 hover:bg-red text-white font-semibold text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {loading ? "Authenticating..." : "Sign In"}
+          </button>
+        </form>
+
+        <div className="text-center mt-6">
+          <Link href="/" className="text-xs text-dim hover:text-muted transition-colors">
+            Back to site
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ============================================================
    Sidebar Navigation Items
    ============================================================ */
 
@@ -72,6 +189,11 @@ const NAV_SECTIONS = [
   {
     label: "Content",
     items: [
+      {
+        href: "/admin/schedule",
+        label: "Schedule",
+        icon: "M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z",
+      },
       {
         href: "/admin/autopost",
         label: "Auto-Post",
@@ -150,6 +272,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const [systemOnline, setSystemOnline] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
+
+  /* Validate auth cookie on mount */
+  useEffect(() => {
+    const cookie = getAuthCookie();
+    if (cookie === EXPECTED_HASH) {
+      setAuthenticated(true);
+    }
+    setAuthChecked(true);
+  }, []);
 
   /* Close mobile sidebar on route change */
   useEffect(() => {
@@ -158,6 +291,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   /* Ping PRISMAI status */
   useEffect(() => {
+    if (!authenticated) return;
     const checkStatus = async () => {
       try {
         const res = await fetch("https://api.prozilli.com/health", { signal: AbortSignal.timeout(5000) });
@@ -169,12 +303,22 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     checkStatus();
     const interval = setInterval(checkStatus, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [authenticated]);
 
   const isActive = (href: string) => {
     if (href === "/admin") return pathname === "/admin";
     return pathname.startsWith(href);
   };
+
+  /* Show nothing while checking auth state to prevent flash */
+  if (!authChecked) {
+    return <div className="fixed inset-0 z-[60] bg-void" />;
+  }
+
+  /* Show login screen if not authenticated */
+  if (!authenticated) {
+    return <AdminLogin onAuthenticated={() => setAuthenticated(true)} />;
+  }
 
   return (
     <div className="fixed inset-0 z-[60] flex overflow-hidden bg-void">
@@ -276,11 +420,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 <div className="text-xs font-semibold truncate">Pro</div>
                 <div className="text-[10px] text-dim">Administrator</div>
               </div>
-              <Link href="/" className="p-1.5 text-dim hover:text-muted transition-colors" title="Back to site">
+              <button
+                onClick={() => { clearAuthCookie(); setAuthenticated(false); }}
+                className="p-1.5 text-dim hover:text-error transition-colors"
+                title="Sign out"
+              >
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
                 </svg>
-              </Link>
+              </button>
             </div>
           ) : (
             <div className="flex justify-center">

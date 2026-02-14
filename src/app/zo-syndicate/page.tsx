@@ -6,6 +6,47 @@ export const metadata: Metadata = {
   title: "ZO Syndicate RP — FiveM Roleplay Server",
   description:
     "Join ZO Syndicate RP — a 48-slot FiveM roleplay server with 51 custom resources, 10 gangs, 5 law enforcement departments, 200+ items, AI NPCs, and a player-driven economy. Built by Prozilli Entertainment.",
+  openGraph: {
+    title: "ZO Syndicate RP — FiveM Roleplay Server",
+    description:
+      "48-slot FiveM server with 51 custom resources, 10 gangs, 5 LEO departments, AI NPCs, and a player-driven economy.",
+    url: "https://prozilligaming.com/zo-syndicate",
+    images: [{ url: "/images/heroes/hero-zo.webp", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ZO Syndicate RP — FiveM Roleplay Server",
+    description:
+      "48-slot FiveM server with 51 custom resources, 10 gangs, 5 LEO departments, AI NPCs, and a player-driven economy.",
+  },
+};
+
+const zoJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "ZO Syndicate RP",
+  "description":
+    "A 48-slot FiveM roleplay server with 51 custom resources, 10 gangs, 5 law enforcement departments, 200+ items, AI NPCs, and a player-driven economy. Built by Prozilli Entertainment.",
+  "url": "https://prozilligaming.com/zo-syndicate",
+  "gamePlatform": "PC",
+  "applicationCategory": "Game",
+  "operatingSystem": "Windows",
+  "author": {
+    "@type": "Organization",
+    "name": "Prozilli Entertainment",
+    "url": "https://prozilli.com",
+  },
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/InStock",
+  },
+  "numberOfPlayers": {
+    "@type": "QuantitativeValue",
+    "maxValue": 48,
+  },
+  "genre": ["Roleplay", "Open World", "Multiplayer"],
 };
 
 const STATS = [
@@ -74,6 +115,10 @@ const DEPARTMENTS = [
 export default function ZoSyndicatePage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(zoJsonLd) }}
+      />
       {/* ====== HERO ====== */}
       <section className="hero-section min-h-[90vh] bg-grid relative overflow-hidden">
         <div className="absolute inset-0 z-0">
@@ -211,7 +256,7 @@ export default function ZoSyndicatePage() {
               >
                 <div className="w-20 h-20 mx-auto mb-4 rounded-xl overflow-hidden bg-black/50 flex items-center justify-center border border-glass-border">
                   <Image
-                    src={`/zo/gangs/logos/${gang.key}.png`}
+                    src={`/zo/gangs/logos/${gang.key}.webp`}
                     alt={gang.name}
                     width={72}
                     height={72}
@@ -250,7 +295,7 @@ export default function ZoSyndicatePage() {
               <div key={dept.name} className="card p-5 text-center hover:scale-[1.02] transition-transform">
                 <div className="w-20 h-20 mx-auto mb-4 rounded-xl overflow-hidden bg-white/5 flex items-center justify-center">
                   <Image
-                    src={`/zo/departments/${dept.key}_badge.png`}
+                    src={`/zo/departments/${dept.key}_badge.webp`}
                     alt={dept.fullName}
                     width={64}
                     height={64}

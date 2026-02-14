@@ -248,7 +248,7 @@ export default function SupportPage() {
                 style={{ animationDelay: "0.1s" }}
               >
                 Fuel the{" "}
-                <span className="text-shimmer-red">Ecosystem</span>
+                <span className="text-shimmer-red">Chaos</span>
               </h1>
               <p
                 className="text-body-lg max-w-lg mb-6 animate-reveal"
@@ -511,14 +511,14 @@ export default function SupportPage() {
       <section id="memberships" className="py-24 bg-base">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <div className="badge badge-gold mb-4">The Syndicate</div>
+            <div className="badge badge-gold mb-4">Memberships</div>
             <h2 className="text-headline mb-4">
-              Pick Your <span className="text-shimmer">Rank</span>
+              Prozilli Gaming <span className="text-shimmer">Membership</span>
             </h2>
             <p className="text-body-lg max-w-2xl mx-auto">
-              Three levels. Each one opens doors the last one didn&apos;t.
-              Exclusive perks in ZO Syndicate, priority LISA interactions,
-              and a seat closer to the table.
+              Three tiers. Each one unlocks more perks than the last.
+              In-game VIP perks, priority LISA interactions,
+              exclusive Discord access, and a direct line to Pro.
             </p>
           </div>
 
@@ -557,15 +557,16 @@ export default function SupportPage() {
                   ))}
                 </ul>
                 <a
-                  href="https://discord.gg/zosyndicate"
+                  href="https://discord.gg/prozillihq"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`btn w-full text-center ${tier.popular ? "btn-primary" : "btn-secondary"}`}
                 >
-                  Subscribe via Discord
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 00-.607-.541c1.095 5.505-3.152 7.006-7.413 7.006h-2.19a1.58 1.58 0 00-1.563 1.338L8.19 22.284a.64.64 0 00.633.74h4.028a1.28 1.28 0 001.267-1.082l1.012-6.415c.082-.518.526-.9 1.05-.9h1.32c4.298 0 6.664-2.01 7.312-6.005.262-1.612.088-2.872-.59-3.703z"/></svg>
+                  PayPal Checkout via Discord
                 </a>
                 <p className="text-xs text-dim mt-3 text-center">
-                  For in-game VIP perks, visit the Tebex store from within ZO Syndicate
+                  In-game VIP perks included with all memberships
                 </p>
               </div>
             ))}
