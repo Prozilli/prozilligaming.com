@@ -255,7 +255,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="badge badge-electric mb-4">Community</div>
+              <div className="badge badge-red mb-4">Community</div>
               <h2 className="text-headline mb-6">
                 Join the <span className="text-shimmer">Family</span>
               </h2>

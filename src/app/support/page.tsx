@@ -14,6 +14,12 @@ declare global {
 const PAYPAL_CLIENT_ID =
   "AewAvHvMtwkFIRxCVqRBoIY-6J3nqEjAX5tZWsmx4j-Xw5xE9UBTAj-AzG2hGutKZ5Gowil8YtNvJ9om";
 
+const PAYPAL_PLAN_IDS: Record<string, string> = {
+  Associate: "P-2PH9411700792241UNGIMYQQ",
+  Connected: "P-64B193959D686450SNGIMYQQ",
+  "Inner Circle": "P-52V97089UP486662NNGIMYQQ",
+};
+
 const VIP_TIERS = [
   {
     name: "Associate",
@@ -34,8 +40,8 @@ const VIP_TIERS = [
     name: "Connected",
     price: "$9.99",
     period: "/month",
-    color: "electric",
-    badge: "badge-electric",
+    color: "gold",
+    badge: "badge-gold",
     popular: true,
     tagline: "Doors open when you walk in.",
     features: [
@@ -113,6 +119,8 @@ export default function SupportPage() {
   >("idle");
   const [donorName, setDonorName] = useState("");
   const paypalButtonRef = useRef<HTMLDivElement>(null);
+  const subButtonRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const [subStatus, setSubStatus] = useState<Record<string, "idle" | "success" | "error">>({});
 
   // Refs so PayPal callbacks always read latest values
   const amountRef = useRef<number | "">(amount);
@@ -129,7 +137,7 @@ export default function SupportPage() {
       return;
     }
     const script = document.createElement("script");
-    script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD&intent=capture&disable-funding=credit,card`;
+    script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD&vault=true&disable-funding=credit,card`;
     script.async = true;
     script.onload = () => setPaypalReady(true);
     script.onerror = () => setPaypalError("Failed to load PayPal. Try refreshing.");
@@ -195,6 +203,40 @@ export default function SupportPage() {
         },
       })
       .render(paypalButtonRef.current);
+  }, [paypalReady]);
+
+  // Render PayPal subscription buttons for each tier
+  useEffect(() => {
+    if (!paypalReady || !window.paypal) return;
+
+    for (const [tierName, planId] of Object.entries(PAYPAL_PLAN_IDS)) {
+      const container = subButtonRefs.current[tierName];
+      if (!container) continue;
+      if (container.childNodes.length > 0) continue; // already rendered
+
+      window.paypal
+        .Buttons({
+          style: {
+            color: "gold" as const,
+            shape: "rect" as const,
+            label: "subscribe" as const,
+            height: 45,
+            layout: "vertical" as const,
+            tagline: false,
+          },
+          createSubscription: (_data: any, actions: any) => {
+            return actions.subscription.create({ plan_id: planId });
+          },
+          onApprove: (data: any) => {
+            setSubStatus((prev) => ({ ...prev, [tierName]: "success" }));
+            console.log(`[Prozilli] Subscription created: ${tierName}`, data.subscriptionID);
+          },
+          onError: () => {
+            setSubStatus((prev) => ({ ...prev, [tierName]: "error" }));
+          },
+        })
+        .render(container);
+    }
   }, [paypalReady]);
 
   const handlePreset = (value: number) => {
@@ -527,12 +569,12 @@ export default function SupportPage() {
               <div
                 key={tier.name}
                 className={`glass-raised p-8 relative ${
-                  tier.popular ? "ring-2 ring-electric/30" : ""
+                  tier.popular ? "ring-2 ring-gold/30" : ""
                 }`}
               >
                 {tier.popular && (
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                    <span className="badge badge-electric">Most Popular</span>
+                    <span className="badge badge-gold">Most Popular</span>
                   </div>
                 )}
                 <div className="text-center mb-6">
@@ -556,15 +598,28 @@ export default function SupportPage() {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href="https://discord.gg/prozillihq"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`btn w-full text-center ${tier.popular ? "btn-primary" : "btn-secondary"}`}
-                >
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M7.076 21.337H2.47a.641.641 0 01-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 00-.607-.541c1.095 5.505-3.152 7.006-7.413 7.006h-2.19a1.58 1.58 0 00-1.563 1.338L8.19 22.284a.64.64 0 00.633.74h4.028a1.28 1.28 0 001.267-1.082l1.012-6.415c.082-.518.526-.9 1.05-.9h1.32c4.298 0 6.664-2.01 7.312-6.005.262-1.612.088-2.872-.59-3.703z"/></svg>
-                  PayPal Checkout via Discord
-                </a>
+                {subStatus[tier.name] === "success" ? (
+                  <div className="p-3 rounded-lg bg-emerald/10 border border-emerald/20 text-center">
+                    <p className="text-sm font-bold text-emerald">Subscribed!</p>
+                    <p className="text-xs text-muted mt-1">Welcome to {tier.name}. Check Discord for your role.</p>
+                  </div>
+                ) : subStatus[tier.name] === "error" ? (
+                  <div className="p-3 rounded-lg bg-error/10 border border-error/20 text-center">
+                    <p className="text-xs text-error">Something went wrong. Please try again.</p>
+                  </div>
+                ) : (
+                  <div
+                    ref={(el) => { subButtonRefs.current[tier.name] = el; }}
+                    className="min-h-[45px]"
+                  >
+                    {!paypalReady && (
+                      <div className="flex items-center justify-center py-3 gap-2">
+                        <div className="w-4 h-4 rounded-full border-2 border-gold border-t-transparent animate-spin" />
+                        <span className="text-xs text-dim">Loading PayPal...</span>
+                      </div>
+                    )}
+                  </div>
+                )}
                 <p className="text-xs text-dim mt-3 text-center">
                   In-game VIP perks included with all memberships
                 </p>

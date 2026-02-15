@@ -50,16 +50,20 @@ export function DiscordWidget({
             </svg>
             <span className="text-white font-bold text-sm tracking-wide">PROZILLI COMMUNITY</span>
           </div>
-          <iframe
-            src={`https://discord.com/widget?id=${serverId}&theme=${theme}`}
-            width={width}
-            height={height - 40}
-            allowTransparency={true}
-            frameBorder="0"
-            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-            title="Discord Community Widget"
-            loading="lazy"
-          />
+          {/* Clip Discord's built-in blue header with negative margin + overflow hidden */}
+          <div style={{ overflow: "hidden", height: height - 40 }}>
+            <iframe
+              src={`https://discord.com/widget?id=${serverId}&theme=${theme}`}
+              width={width}
+              height={height + 10}
+              style={{ marginTop: -50 }}
+              allowTransparency={true}
+              frameBorder="0"
+              sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+              title="Discord Community Widget"
+              loading="lazy"
+            />
+          </div>
         </div>
       ) : (
         <div
